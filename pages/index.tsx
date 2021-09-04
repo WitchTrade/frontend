@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import CustomHeader from '../components/core/CustomHeader';
 
 const Home: NextPage = () => {
@@ -11,7 +10,7 @@ const Home: NextPage = () => {
         url="https://witchtrade.org"
         image="https://imgur.com/WmcszU3.png"
       />
-      <p className="text-4xl text-purple-600 font-bold">Index page</p>
+      <p className="text-4xl text-wt-5 font-bold">Index page</p>
     </div>
   );
 };
