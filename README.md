@@ -1,34 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+![WitchTrade](https://i.imgur.com/Rjxtp6X.png)
+WitchTrade (https://witchtrade.org) is a trading website for the hide and seek game [Witch It](https://store.steampowered.com/app/559650/Witch_It/). It provides many features to facilitate trading Witch It cosmetic items.
 
-## Getting Started
+## Features
+**Search**
 
-First, run the development server:
+Search for a specific offer or use the advanced filter to search for the rarity, type or event of the items you are looking for.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+**Item list**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+WitchTrade offers a complete and up-to-date item list to look up all available items.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+**Game Servers**
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+The official Witch It game servers with the currently playing players can be viewed on the website.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+**Account**
 
-## Learn More
+Create an account to get access to the following features:
 
-To learn more about Next.js, take a look at the following resources:
+- **Create offers**: Offer your items on the website for other to see and respond to.
+- **Sync Steam Inventory**: Sync your Steam Witch It inventory with WitchTrade to see all your items in the item list and automatically sync your offers with your Steam inventory.
+- **Wish list**: Create a wish list with all the items you are looking for and get notified when an item is offered on the website.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contact
+Join the WitchTrade Discord Server if you want to give feedback, have any questions or found a bug: https://discord.gg/wm7sTW8MJq
+___
+> Made with ❤️ by GiyoMoon
