@@ -1,13 +1,13 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import Image from 'next/image';
-import themeManager from '../../shared/managers/themeManager';
+import themeService from '../../shared/services/themeService';
 import { Theme } from '../../shared/models/theme.model';
 
 const Footer: FunctionComponent = () => {
     const [theme, setTheme] = useState<Theme>();
 
     useEffect(() => {
-        const themeSub = themeManager.currentTheme$.subscribe(setTheme);
+        const themeSub = themeService.currentTheme$.subscribe(setTheme);
 
         return () => {
             themeSub.unsubscribe();

@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { Theme } from '../models/theme.model';
 
-class ThemeManager {
+class ThemeService {
     private _currentThemeSubj: BehaviorSubject<Theme> = new BehaviorSubject<Theme>({ theme: 'theme-dark', type: 'dark' });
     public currentTheme$ = this._currentThemeSubj.asObservable();
 
@@ -39,5 +39,5 @@ class ThemeManager {
     };
 }
 
-const themeManager = new ThemeManager();
-export default themeManager;
+const themeService = new ThemeService();
+export default themeService;
