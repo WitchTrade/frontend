@@ -3,11 +3,11 @@ import '../styles/global.scss';
 import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import Layout from '../components/core/Layout';
-import themeService from '../shared/services/themeService';
+import appService from '../shared/services/appService';
 
 function WitchTrade({ Component, pageProps }: AppProps) {
   useEffect(() => {
-    themeService.init();
+    appService.init();
   }, []);
 
   return (
