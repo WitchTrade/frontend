@@ -11,6 +11,12 @@ import { serverNotificationService } from '../stores/serverNotification/server-n
 
 class AppService {
     public init(): void {
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+
         dayjs.extend(relativeTime);
         dayjs.extend(duration);
 
