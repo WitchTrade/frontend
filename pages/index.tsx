@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         url="https://witchtrade.org"
         image="https://imgur.com/WmcszU3.png"
       />
-      <p className="text-4xl text-wt-5 font-bold">Index page</p>
+      <p className="text-4xl text-wt-default font-bold">Index page</p>
     </div>
   );
 };

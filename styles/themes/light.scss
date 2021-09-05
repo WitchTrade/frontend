@@ -1,7 +1,23 @@
 .theme-light {
-    --text-wt-5: #374151;
-    --bg-wt-4: #F9F9F9;
-    --bg-wt-5: #F1F1F1;
-    --bg-wt-6: #ECECEC;
-    --bg-wt-accent-4: #60A5FA;
+    --wt-text    : #000;
+    --wt-opposite: #000;
+
+    --wt-200: #cacaca;
+    --wt-300: #e1e1e1;
+    --wt-400: #eaeaea;
+    --wt-500: #fafafa;
+    --wt-600: #e1e1e1;
+    --wt-700: #f5f5f5;
+    --wt-800: #cacaca;
+
+    --wt-200-o: #4B5563;
+    --wt-300-o: #9CA3AF;
+    --wt-400-o: #9CA3AF;
+    --wt-500-o: #F3F4F6;
+    --wt-600-o: #F3F4F6;
+    --wt-700-o: #F9FAFB;
+    --wt-800-o: #fcfdfd;
+
+    --wt-accent-400: #60A5FA;
+    --wt-accent-500: #3B82F6;
 }
