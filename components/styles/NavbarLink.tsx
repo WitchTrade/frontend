@@ -4,13 +4,13 @@ interface Types {
     [key: string]: string;
 }
 
-type Props = {
+interface Props {
+    onClick?: React.MouseEventHandler<HTMLAnchorElement>;
     href?: string;
     type: string;
-    click?: () => void;
-};
+}
 
-const NavbarLink: FunctionComponent<Props> = forwardRef(({ href, children, type, click }, ref) => {
+const NavbarLink: FunctionComponent<Props> = forwardRef(({ onClick, href, children, type }, ref?: React.LegacyRef<HTMLAnchorElement>) => {
     const types: Types = {
         nav: 'text-wt-text hover:bg-wt-hover px-3 py-2 rounded-md text-sm font-medium cursor-pointer',
         navSelected: 'bg-wt-selected-dark text-wt-text px-3 py-2 rounded-md text-sm font-medium',
@@ -21,17 +21,9 @@ const NavbarLink: FunctionComponent<Props> = forwardRef(({ href, children, type,
     };
 
     return (
-        <>
-            {/*
-        // @ts-ignore */}
-            < a className={types[type]} href={href} ref={ref} onClick={() => {
-                if (click) {
-                    click();
-                }
-            }}>
-                {children}
-            </a >
-        </>
+        <a className={types[type]} href={href} onClick={onClick} ref={ref}>
+            {children}
+        </a>
     );
 });
 

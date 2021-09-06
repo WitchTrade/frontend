@@ -19,7 +19,6 @@ import themeService from '../../shared/services/themeService';
 
 const Navbar: FunctionComponent = () => {
     const router = useRouter();
-    const [pathName, setPathName] = useState<string>('');
 
     const [theme, setTheme] = useState<Theme>();
 
@@ -39,8 +38,6 @@ const Navbar: FunctionComponent = () => {
         const inventorySub = inventoryQuery.select().subscribe(setUserInventory);
 
         const notiSub = serverNotificationQuery.selectAll().subscribe(setNotifications);
-
-        setPathName(window.location.pathname);
 
         return (() => {
             themeSub.unsubscribe();
@@ -87,16 +84,16 @@ const Navbar: FunctionComponent = () => {
                                     <div className="hidden md:block">
                                         <div className="ml-10 flex items-baseline space-x-4">
                                             <Link href="/search" passHref>
-                                                <NavbarLink type={pathName.startsWith('/search') ? 'navSelected' : 'nav'}>Search</NavbarLink>
+                                                <NavbarLink type={router.pathname.startsWith('/search') ? 'navSelected' : 'nav'}>Search</NavbarLink>
                                             </Link>
                                             <Link href="/profiles" passHref>
-                                                <NavbarLink type={pathName.startsWith('/profiles') ? 'navSelected' : 'nav'}>Profiles</NavbarLink>
+                                                <NavbarLink type={router.pathname.startsWith('/profiles') ? 'navSelected' : 'nav'}>Profiles</NavbarLink>
                                             </Link>
                                             <Link href="/items" passHref>
-                                                <NavbarLink type={pathName.startsWith('/items') ? 'navSelected' : 'nav'}>Items</NavbarLink>
+                                                <NavbarLink type={router.pathname.startsWith('/items') ? 'navSelected' : 'nav'}>Items</NavbarLink>
                                             </Link>
                                             <Link href="/gameservers" passHref>
-                                                <NavbarLink type={pathName.startsWith('/gameservers') ? 'navSelected' : 'nav'}>Game Servers</NavbarLink>
+                                                <NavbarLink type={router.pathname.startsWith('/gameservers') ? 'navSelected' : 'nav'}>Game Servers</NavbarLink>
                                             </Link>
                                         </div>
                                     </div>
@@ -207,7 +204,7 @@ const Navbar: FunctionComponent = () => {
                                                             }
                                                             {!userState.loggedIn &&
                                                                 <Link href="/login" passHref>
-                                                                    <NavbarLink type={pathName.startsWith('/login') ? 'navSelected' : 'nav'}>Log in</NavbarLink>
+                                                                    <NavbarLink type={router.pathname.startsWith('/login') ? 'navSelected' : 'nav'}>Log in</NavbarLink>
                                                                 </Link>
                                                             }
                                                         </div>
@@ -227,21 +224,21 @@ const Navbar: FunctionComponent = () => {
                                                             >
                                                                 <Menu.Item>
                                                                     <Link href={`/profile/${userState.username}`} passHref>
-                                                                        <NavbarLink type={pathName.startsWith(`/profile/${userState.username}`) ? 'menuSelected' : 'menu'}>Profile</NavbarLink>
+                                                                        <NavbarLink type={router.pathname.startsWith(`/profile/${userState.username}`) ? 'menuSelected' : 'menu'}>Profile</NavbarLink>
                                                                     </Link>
                                                                 </Menu.Item>
                                                                 <Menu.Item>
                                                                     <Link href="/user/market" passHref>
-                                                                        <NavbarLink type={pathName.startsWith('/user/market') ? 'menuSelected' : 'menu'}>Manage Market</NavbarLink>
+                                                                        <NavbarLink type={router.pathname.startsWith('/user/market') ? 'menuSelected' : 'menu'}>Manage Market</NavbarLink>
                                                                     </Link>
                                                                 </Menu.Item>
                                                                 <Menu.Item>
                                                                     <Link href="/user/settings" passHref>
-                                                                        <NavbarLink type={pathName.startsWith('/user/settings') ? 'menuSelected' : 'menu'}>Settings</NavbarLink>
+                                                                        <NavbarLink type={router.pathname.startsWith('/user/settings') ? 'menuSelected' : 'menu'}>Settings</NavbarLink>
                                                                     </Link>
                                                                 </Menu.Item>
                                                                 <Menu.Item>
-                                                                    <NavbarLink type="menu" click={logout}>Log out</NavbarLink>
+                                                                    <NavbarLink type="menu" onClick={logout}>Log out</NavbarLink>
                                                                 </Menu.Item>
                                                             </Menu.Items>
                                                         </Transition>
@@ -273,28 +270,28 @@ const Navbar: FunctionComponent = () => {
                                 <Disclosure.Button as={Fragment}>
                                     <>
                                         <Link href="/search" passHref>
-                                            <NavbarLink type={pathName.startsWith('/search') ? 'hamburgerSelected' : 'hamburger'}>Search</NavbarLink>
+                                            <NavbarLink type={router.pathname.startsWith('/search') ? 'hamburgerSelected' : 'hamburger'}>Search</NavbarLink>
                                         </Link>
                                     </>
                                 </Disclosure.Button>
                                 <Disclosure.Button as={Fragment}>
                                     <>
                                         <Link href="/profiles" passHref>
-                                            <NavbarLink type={pathName.startsWith('/profiles') ? 'hamburgerSelected' : 'hamburger'}>Profiles</NavbarLink>
+                                            <NavbarLink type={router.pathname.startsWith('/profiles') ? 'hamburgerSelected' : 'hamburger'}>Profiles</NavbarLink>
                                         </Link>
                                     </>
                                 </Disclosure.Button>
                                 <Disclosure.Button as={Fragment}>
                                     <>
                                         <Link href="/items" passHref>
-                                            <NavbarLink type={pathName.startsWith('/items') ? 'hamburgerSelected' : 'hamburger'}>Items</NavbarLink>
+                                            <NavbarLink type={router.pathname.startsWith('/items') ? 'hamburgerSelected' : 'hamburger'}>Items</NavbarLink>
                                         </Link>
                                     </>
                                 </Disclosure.Button>
                                 <Disclosure.Button as={Fragment}>
                                     <>
                                         <Link href="/gameservers" passHref>
-                                            <NavbarLink type={pathName.startsWith('/gameservers') ? 'hamburgerSelected' : 'hamburger'}>Game Servers</NavbarLink>
+                                            <NavbarLink type={router.pathname.startsWith('/gameservers') ? 'hamburgerSelected' : 'hamburger'}>Game Servers</NavbarLink>
                                         </Link>
                                     </>
                                 </Disclosure.Button>
@@ -316,27 +313,27 @@ const Navbar: FunctionComponent = () => {
                                         <Disclosure.Button as={Fragment}>
                                             <>
                                                 <Link href={`/profile/${userState.username}`} passHref>
-                                                    <NavbarLink type={pathName.startsWith(`/profile/${userState.username}`) ? 'hamburgerSelected' : 'hamburger'}>Profile</NavbarLink>
+                                                    <NavbarLink type={router.pathname.startsWith(`/profile/${userState.username}`) ? 'hamburgerSelected' : 'hamburger'}>Profile</NavbarLink>
                                                 </Link>
                                             </>
                                         </Disclosure.Button>
                                         <Disclosure.Button as={Fragment}>
                                             <>
                                                 <Link href="/user/market" passHref>
-                                                    <NavbarLink type={pathName.startsWith('/user/market') ? 'hamburgerSelected' : 'hamburger'}>Manage Market</NavbarLink>
+                                                    <NavbarLink type={router.pathname.startsWith('/user/market') ? 'hamburgerSelected' : 'hamburger'}>Manage Market</NavbarLink>
                                                 </Link>
                                             </>
                                         </Disclosure.Button>
                                         <Disclosure.Button as={Fragment}>
                                             <>
                                                 <Link href="/user/settings" passHref>
-                                                    <NavbarLink type={pathName.startsWith('/user/settings') ? 'hamburgerSelected' : 'hamburger'}>Settings</NavbarLink>
+                                                    <NavbarLink type={router.pathname.startsWith('/user/settings') ? 'hamburgerSelected' : 'hamburger'}>Settings</NavbarLink>
                                                 </Link>
                                             </>
                                         </Disclosure.Button>
                                         <Disclosure.Button as={Fragment}>
                                             <>
-                                                <NavbarLink type="hamburger">Log out</NavbarLink>
+                                                <NavbarLink type="hamburger" onClick={logout}>Log out</NavbarLink>
                                             </>
                                         </Disclosure.Button>
                                     </div>
@@ -347,7 +344,7 @@ const Navbar: FunctionComponent = () => {
                                     <Disclosure.Button as={Fragment}>
                                         <>
                                             <Link href="/login" passHref>
-                                                <NavbarLink type={pathName.startsWith('/login') ? 'hamburgerSelected' : 'hamburger'}>Log in</NavbarLink>
+                                                <NavbarLink type={router.pathname.startsWith('/login') ? 'hamburgerSelected' : 'hamburger'}>Log in</NavbarLink>
                                             </Link>
                                         </>
                                     </Disclosure.Button>
