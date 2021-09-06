@@ -12,12 +12,12 @@ type Props = {
 
 const NavbarLink: FunctionComponent<Props> = forwardRef(({ href, children, type, click }, ref) => {
     const types: Types = {
-        nav: 'text-wt-200-o hover:bg-wt-600 hover:text-wt-default px-3 py-2 rounded-md text-sm font-medium cursor-pointer',
-        navSelected: 'bg-wt-800 text-wt-default px-3 py-2 rounded-md text-sm font-medium',
-        hamburger: 'text-wt-200-o hover:bg-wt-600 hover:text-wt-default block px-3 py-2 rounded-md text-base font-medium cursor-pointer',
-        hamburgerSelected: 'bg-wt-800 text-wt-default block px-3 py-2 rounded-md text-base font-medium',
-        menu: 'block px-4 py-2 text-sm text-wt-600 hover:bg-wt-200 cursor-pointer',
-        menuSelected: 'block px-4 py-2 text-sm text-wt-600 bg-wt-300 hover:bg-wt-400'
+        nav: 'text-wt-text hover:bg-wt-hover px-3 py-2 rounded-md text-sm font-medium cursor-pointer',
+        navSelected: 'bg-wt-selected-dark text-wt-text px-3 py-2 rounded-md text-sm font-medium',
+        hamburger: 'text-wt-text hover:bg-wt-hover block px-3 py-2 rounded-md text-base font-medium cursor-pointer',
+        hamburgerSelected: 'bg-wt-selected-dark text-wt-text block px-3 py-2 rounded-md text-base font-medium',
+        menu: 'block px-4 py-2 text-sm text-wt-dark hover:bg-wt-hover-light cursor-pointer',
+        menuSelected: 'block px-4 py-2 text-sm text-wt-dark bg-wt-selected-light hover:bg-wt-hover-light'
     };
 
     return (

@@ -16,11 +16,11 @@ const Footer: FunctionComponent = () => {
 
 
     return (
-        <div className="bg-wt-700 text-wt-default py-4">
+        <div className="bg-wt-surface-dark text-wt-text py-4">
             <div className="text-center w-full">
                 <div className="flex justify-center my-1">
                     <a className="rounded-full mb-1" href="https://discord.gg/wm7sTW8MJq" target="_blank" rel="noreferrer">
-                        <div className="bg-wt-500 rounded-full p-1 w-9 h-9 flex justify-center items-center hover:bg-wt-accent-400">
+                        <div className="bg-wt-surface rounded-full p-1 w-9 h-9 flex justify-center items-center hover:bg-wt-accent-light">
                             <Image src={`/assets/svgs/discord/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height={24} width={24} alt="Discord Logo" />
                         </div>
                     </a>
