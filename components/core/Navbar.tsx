@@ -204,7 +204,7 @@ const Navbar: FunctionComponent = () => {
                                                             }
                                                             {!userState.loggedIn &&
                                                                 <Link href="/login" passHref>
-                                                                    <NavbarLink type={router.pathname.startsWith('/login') ? 'navSelected' : 'nav'}>Log in</NavbarLink>
+                                                                    <NavbarLink type={router.pathname.startsWith('/login') || router.pathname.startsWith('/register') ? 'navSelected' : 'nav'}>Log in</NavbarLink>
                                                                 </Link>
                                                             }
                                                         </div>
@@ -344,7 +344,7 @@ const Navbar: FunctionComponent = () => {
                                     <Disclosure.Button as={Fragment}>
                                         <>
                                             <Link href="/login" passHref>
-                                                <NavbarLink type={router.pathname.startsWith('/login') ? 'hamburgerSelected' : 'hamburger'}>Log in</NavbarLink>
+                                                <NavbarLink type={router.pathname.startsWith('/login') || router.pathname.startsWith('/register') ? 'hamburgerSelected' : 'hamburger'}>Log in</NavbarLink>
                                             </Link>
                                         </>
                                     </Disclosure.Button>

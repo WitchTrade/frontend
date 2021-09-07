@@ -12,6 +12,7 @@ interface Props {
 
 const NavbarLink: FunctionComponent<Props> = forwardRef(({ onClick, href, children, type }, ref?: React.LegacyRef<HTMLAnchorElement>) => {
     const types: Types = {
+        action: 'text-wt-text bg-wt-hover hover:bg-wt-selected-dark px-3 py-2 rounded-md text-sm font-medium cursor-pointer',
         nav: 'text-wt-text hover:bg-wt-hover px-3 py-2 rounded-md text-sm font-medium cursor-pointer',
         navSelected: 'bg-wt-selected-dark text-wt-text px-3 py-2 rounded-md text-sm font-medium',
         hamburger: 'text-wt-text hover:bg-wt-hover block px-3 py-2 rounded-md text-base font-medium cursor-pointer',
