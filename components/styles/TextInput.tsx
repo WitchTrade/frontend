@@ -24,7 +24,7 @@ const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValu
             />
             {svgPath &&
                 <div className="absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none top-0 bot-0">
-                    <Image src={svgPath} height="24px" width="24px" />
+                    <Image src={svgPath} height="24px" width="24px" alt="Input Icon" />
                 </div>
             }
         </div>
