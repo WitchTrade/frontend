@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import Image from 'next/image';
-import themeService from '../../shared/services/themeService';
+import themeService from '../../shared/services/theme.service';
 import { Theme } from '../../shared/models/theme.model';
 
 const Footer: FunctionComponent = () => {

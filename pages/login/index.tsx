@@ -7,7 +7,7 @@ import NavbarLink from '../../components/styles/NavbarLink';
 import TextInput from '../../components/styles/TextInput';
 import LoginHandler from '../../shared/handlers/login.handler';
 import { Theme } from '../../shared/models/theme.model';
-import themeService from '../../shared/services/themeService';
+import themeService from '../../shared/services/theme.service';
 
 const Login: NextPage = () => {
   const [theme, setTheme] = useState<Theme>();

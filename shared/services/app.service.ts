@@ -4,7 +4,7 @@ import duration from 'dayjs/plugin/duration';
 
 import { itemsService } from '../stores/items/items.service';
 import { userService } from '../stores/user/user.service';
-import themeService from './themeService';
+import themeService from './theme.service';
 import { userQuery } from '../stores/user/user.query';
 import { inventoryService } from '../stores/inventory/inventory.service';
 import { serverNotificationService } from '../stores/serverNotification/server-notification.service';

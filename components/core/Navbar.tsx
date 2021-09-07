@@ -15,7 +15,7 @@ import { userService } from '../../shared/stores/user/user.service';
 import NavbarLink from '../styles/NavbarLink';
 import Image from 'next/image';
 import { Theme } from '../../shared/models/theme.model';
-import themeService from '../../shared/services/themeService';
+import themeService from '../../shared/services/theme.service';
 
 const Navbar: FunctionComponent = () => {
     const router = useRouter();
