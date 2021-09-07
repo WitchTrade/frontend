@@ -1,5 +1,7 @@
 import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
+import { createNotification } from '../stores/notification/notification.model';
+import { notificationService } from '../stores/notification/notification.service';
 import { userService } from '../stores/user/user.service';
 
 const LoginHandler = () => {
@@ -11,12 +13,12 @@ const LoginHandler = () => {
 
     const login = () => {
         if (!username || !password) {
-            /*const notification = createNotification({
+            const notification = createNotification({
                 content: 'Please fill out every field',
                 duration: 5000,
                 type: 'warning'
             });
-            notificationService.addNotification(notification);*/
+            notificationService.addNotification(notification);
             return;
         }
         userService.login(username, password, stayLoggedIn).subscribe(res => {
