@@ -37,7 +37,7 @@ const Login: NextPage = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8 mb-4">
+    <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
       <CustomHeader
         title="WitchTrade | Login"
         description="A Witch It trading website."
@@ -54,7 +54,7 @@ const Login: NextPage = () => {
       <div className="mb-4">
         <CheckboxInput placeholder="Keep me logged in on this device" value={stayLoggedIn} setValue={setStayLoggedIn} />
       </div>
-      <div className="text-center">
+      <div className="text-center mb-4">
         <NavbarLink type="action" onClick={login}>Login</NavbarLink>
       </div>
     </div>
