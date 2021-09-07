@@ -48,10 +48,10 @@ const Login: NextPage = () => {
       <div className="m-2 mt-4">
         <TextInput type="text" placeholder="Username" value={username} setValue={setUsername} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} handleKeyPress={checkKeyPress} />
       </div>
-      <div className="m-2 mb-4">
+      <div className="m-2">
         <TextInput type="password" placeholder="Password" value={password} setValue={setPassword} svgPath={`/assets/svgs/password/${theme?.type === 'light' ? 'black' : 'white'}.svg`} handleKeyPress={checkKeyPress} />
       </div>
-      <div className="m-2 mb-4">
+      <div className="mb-4">
         <CheckboxInput placeholder="Keep me logged in on this device" value={stayLoggedIn} setValue={setStayLoggedIn} />
       </div>
       <div className="text-center">
