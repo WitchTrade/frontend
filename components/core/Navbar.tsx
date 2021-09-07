@@ -195,7 +195,7 @@ const Navbar: FunctionComponent = () => {
                                                         <div>
                                                             {userState.loggedIn &&
                                                                 <div className="flex items-center">
-                                                                    <Menu.Button className="max-w-xs bg-wt-surface-dark rounded-full flex items-center text-sm font-bold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                                                    <Menu.Button className="max-w-xs bg-wt-surface-dark rounded-full flex items-center text-sm font-bold p-1 focus:outline-none focus:ring-2 focus:ring-wt-accent">
                                                                         <span className="sr-only">Open user menu</span>
                                                                         <Image className="rounded-full" src="/assets/images/piggy.png" height={32} width={32} alt="Profile Image" />
                                                                         <p className="text-wt-accent-light ml-1">{userState.displayName}</p>
@@ -248,7 +248,7 @@ const Navbar: FunctionComponent = () => {
                                         </div>
                                     </div>
                                     <div className="-mr-2 ml-2 flex md:hidden">
-                                        <Disclosure.Button className="bg-wt-surface-dark inline-flex items-center justify-center p-2 rounded-md text-wt-dark hover:bg-wt-surface focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                        <Disclosure.Button className="bg-wt-surface-dark inline-flex items-center justify-center p-2 rounded-md text-wt-dark hover:bg-wt-surface focus:outline-none focus:ring-2 focus:ring-wt-accent">
                                             <span className="sr-only">Open main menu</span>
                                             {open ? (
                                                 <div className="block h-6 w-6">
