@@ -15,7 +15,15 @@ module.exports = {
         "wt-surface-dark": "var(--wt-surface-dark)",
         "wt-selected-dark": "var(--wt-selected-dark)",
         "wt-accent-light": "var(--wt-accent-light)",
-        "wt-accent": "var(--wt-accent)"
+        "wt-accent": "var(--wt-accent)",
+        "wt-info": "var(--wt-info)",
+        "wt-info-light": "var(--wt-info-light)",
+        "wt-success": "var(--wt-success)",
+        "wt-success-light": "var(--wt-success-light)",
+        "wt-warning": "var(--wt-warning)",
+        "wt-warning-light": "var(--wt-warning-light)",
+        "wt-error": "var(--wt-error)",
+        "wt-error-light": "var(--wt-error-light)",
       }
     },
   },
