@@ -1,6 +1,9 @@
 ![WitchTrade](https://i.imgur.com/Rjxtp6X.png)
 WitchTrade (https://witchtrade.org) is a trading website for the hide and seek game [Witch It](https://store.steampowered.com/app/559650/Witch_It/). It provides many features to facilitate trading Witch It cosmetic items.
 
+## Rewrite Roadmap
+I'm in the process of rewriting the WitchTrade frontend. View the current progress [here](rewrite.md).
+
 ## Features
 **Search**
 
