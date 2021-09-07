@@ -58,3 +58,18 @@ export function createUserInfo(userInfo: Partial<UserInfo>): UserInfo {
         hidden: userInfo.hidden ? userInfo.hidden : false,
     } as UserInfo;
 }
+
+export interface RegisterUser {
+    username: string;
+    displayName: string;
+    password: string;
+    email: string;
+    steamUrl?: string;
+    steamTradeLink?: string;
+}
+
+const steamUrlRegex = /^(?:https?:\/\/)?steamcommunity\.com\/(?:profiles|id)\/[a-zA-Z0-9\-._~]+\/?$/;
+const steamTradeLinkRegex = /^(?:https?:\/\/)?steamcommunity\.com\/tradeoffer\/new\/[a-zA-Z0-9?=&-]+$/;
+const discordTagRegex = /^.{3,32}#[0-9]{4}$/;
+
+export { steamUrlRegex, steamTradeLinkRegex, discordTagRegex };

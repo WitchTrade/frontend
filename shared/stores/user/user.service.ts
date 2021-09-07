@@ -5,7 +5,7 @@ import { fromFetch } from 'rxjs/fetch';
 import { tap } from 'rxjs/operators';
 import { userQuery, UserQuery } from './user.query';
 import { of } from 'rxjs';
-import { createUser, DecodedToken, User } from './user.model';
+import { createUser, DecodedToken, RegisterUser, User } from './user.model';
 import { inventoryService, InventoryService } from '../inventory/inventory.service';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
@@ -107,7 +107,7 @@ export class UserService {
       );
   }
 
-  public register(user: Partial<User>) {
+  public register(user: RegisterUser) {
     // login user and save info to store
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/register`, {
       method: 'POST',

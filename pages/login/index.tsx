@@ -40,16 +40,16 @@ const Login: NextPage = () => {
     <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
       <CustomHeader
         title="WitchTrade | Login"
-        description="A Witch It trading website."
-        url="https://witchtrade.org"
+        description="Log in to WitchTrade."
+        url="https://witchtrade.org/login"
         image="https://imgur.com/WmcszU3.png"
       />
       <LoginNav />
       <div className="m-2 mt-4">
-        <TextInput type="text" placeholder="Username" value={username} setValue={setUsername} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} handleKeyPress={checkKeyPress} />
+        <TextInput type="text" placeholder="Username" value={username} setValue={setUsername} required={true} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} handleKeyPress={checkKeyPress} />
       </div>
       <div className="m-2">
-        <TextInput type="password" placeholder="Password" value={password} setValue={setPassword} svgPath={`/assets/svgs/password/${theme?.type === 'light' ? 'black' : 'white'}.svg`} handleKeyPress={checkKeyPress} />
+        <TextInput type="password" placeholder="Password" value={password} setValue={setPassword} required={true} svgPath={`/assets/svgs/password/${theme?.type === 'light' ? 'black' : 'white'}.svg`} handleKeyPress={checkKeyPress} />
       </div>
       <div className="mb-4">
         <CheckboxInput placeholder="Keep me logged in on this device" value={stayLoggedIn} setValue={setStayLoggedIn} />

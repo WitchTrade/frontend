@@ -8,7 +8,7 @@ Visit https://witchtrade.vercel.app/ where the current state is deployed. You ca
 - [x] footer
 - [x] /login 
 - [x] notifications
-- [ ] /register
+- [x] /register
 - [ ] /user/settings
 - [ ] /gameservers
 - [ ] /items

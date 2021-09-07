@@ -6,18 +6,19 @@ interface Props {
     placeholder: string;
     value: string;
     setValue: (value: string) => void;
+    required: boolean;
     svgPath?: string;
     handleKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValue, svgPath, handleKeyPress }) => {
+const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValue, required, svgPath, handleKeyPress }) => {
 
     return (
         <div className="relative" >
             <input
-                className={`w-full h-10 ${svgPath ? 'pl-9' : 'pl-3'} pr-3 text-base text-wt-text placeholder-wt-text border border-wt-accent-light rounded-lg bg-wt-surface-dark focus:outline-none`}
+                className={`w-full h-10 ${svgPath ? 'pl-9' : 'pl-3'} pr-3 text-base text-wt-text placeholder-wt-text border border-wt-accent-light rounded-lg bg-wt-surface-dark focus:outline-none focus:ring-2 focus:ring-wt-accent`}
                 type={type}
-                placeholder={placeholder}
+                placeholder={`${placeholder}${required ? '*' : ''}`}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onKeyPress={handleKeyPress}
