@@ -1,4 +1,10 @@
 ![WitchTrade](https://i.imgur.com/Rjxtp6X.png)
+
+[![Stars](https://img.shields.io/github/stars/GiyoMoon/WitchTrade-FE.svg?color=ff67e4)](https://github.com/GiyoMoon/WitchTrade-FE/stargazers)
+[![Commits](https://img.shields.io/github/commit-activity/m/GiyoMoon/WitchTrade-FE?color=ff67e4)](https://github.com/GiyoMoon/WitchTrade-FE/commits)
+[![License](https://img.shields.io/github/license/GiyoMoon/WitchTrade-FE.svg?color=ff67e4)](https://github.com/GiyoMoon/WitchTrade-FE/blob/master/LICENSE)
+[![CodeFactor](https://www.codefactor.io/repository/github/GiyoMoon/WitchTrade-FE/badge)](https://www.codefactor.io/repository/github/GiyoMoon/WitchTrade-FE)
+
 WitchTrade (https://witchtrade.org) is a trading website for the hide and seek game [Witch It](https://store.steampowered.com/app/559650/Witch_It/). It provides many features to facilitate trading Witch It cosmetic items.
 
 ## Rewrite Roadmap
