@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import CustomHeader from '../../components/core/CustomHeader';
 import LoginNav from '../../components/navs/LoginNav';
 import NavbarLink from '../../components/styles/NavbarLink';
+import PageHeader from '../../components/styles/PageHeader';
 import TextInput from '../../components/styles/TextInput';
 import RegisterHandler from '../../shared/handlers/register.handler';
 import { Theme } from '../../shared/models/theme.model';
@@ -48,6 +49,7 @@ const Register: NextPage = () => {
         image="https://imgur.com/WmcszU3.png"
       />
       <LoginNav />
+      <PageHeader title="Register" description="Register an account on WitchTrade and start creating offers!" />
       <div className="m-2 mt-4">
         <TextInput type="text" placeholder="Username" value={username} setValue={setUsername} required={true} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
       </div>

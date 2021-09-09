@@ -4,6 +4,7 @@ import CustomHeader from '../../components/core/CustomHeader';
 import LoginNav from '../../components/navs/LoginNav';
 import CheckboxInput from '../../components/styles/CheckboxInput';
 import NavbarLink from '../../components/styles/NavbarLink';
+import PageHeader from '../../components/styles/PageHeader';
 import TextInput from '../../components/styles/TextInput';
 import LoginHandler from '../../shared/handlers/login.handler';
 import { Theme } from '../../shared/models/theme.model';
@@ -45,6 +46,7 @@ const Login: NextPage = () => {
         image="https://imgur.com/WmcszU3.png"
       />
       <LoginNav />
+      <PageHeader title="Login" description="Log in to WitchTrade. Happy trading :)" />
       <div className="m-2 mt-4">
         <TextInput type="text" placeholder="Username" value={username} setValue={setUsername} required={true} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} handleKeyPress={checkKeyPress} />
       </div>
