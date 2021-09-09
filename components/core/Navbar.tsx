@@ -233,8 +233,8 @@ const Navbar: FunctionComponent = () => {
                                                                     </Link>
                                                                 </Menu.Item>
                                                                 <Menu.Item>
-                                                                    <Link href="/user/settings" passHref>
-                                                                        <NavbarLink type={router.pathname.startsWith('/user/settings') ? 'menuSelected' : 'menu'}>Settings</NavbarLink>
+                                                                    <Link href="/user/settings/customization" passHref>
+                                                                        <NavbarLink type={router.pathname.startsWith('/user/settings/customization') ? 'menuSelected' : 'menu'}>Settings</NavbarLink>
                                                                     </Link>
                                                                 </Menu.Item>
                                                                 <Menu.Item>
@@ -326,8 +326,8 @@ const Navbar: FunctionComponent = () => {
                                         </Disclosure.Button>
                                         <Disclosure.Button as={Fragment}>
                                             <>
-                                                <Link href="/user/settings" passHref>
-                                                    <NavbarLink type={router.pathname.startsWith('/user/settings') ? 'hamburgerSelected' : 'hamburger'}>Settings</NavbarLink>
+                                                <Link href="/user/settings/customization" passHref>
+                                                    <NavbarLink type={router.pathname.startsWith('/user/settings/customization') ? 'hamburgerSelected' : 'hamburger'}>Settings</NavbarLink>
                                                 </Link>
                                             </>
                                         </Disclosure.Button>

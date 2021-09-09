@@ -4,5 +4,14 @@ module.exports = {
   i18n: {
     locales: ['en-US'],
     defaultLocale: 'en-US'
-  }
+  },
+  async redirects() {
+    return [
+      {
+        source: '/user/settings',
+        destination: '/user/settings/customization',
+        permanent: true,
+      },
+    ];
+  },
 };
