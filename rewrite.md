@@ -1,7 +1,7 @@
 # Rewrite Roadmap of the WitchTrade Frontend
 Current progress on the rewrite of WitchTrade.
 
-Visit https://witchtrade.vercel.app/ where the current state is deployed. You can try things out as you like, this version uses a development database. 
+Visit https://preview.witchtrade.org/ where the current state is deployed. You can try things out as you like, this version uses a development database. 
 
 ## Views
 - [x] navbar
