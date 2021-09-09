@@ -1,4 +1,5 @@
 export interface Theme {
-    theme: string;
+    key: string;
     type: 'light' | 'dark';
+    displayName: string;
 }

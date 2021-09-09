@@ -2,27 +2,33 @@ import { BehaviorSubject } from 'rxjs';
 import { Theme } from '../models/theme.model';
 
 class ThemeService {
-    private _currentThemeSubj: BehaviorSubject<Theme> = new BehaviorSubject<Theme>({ theme: 'theme-dark', type: 'dark' });
+    public avaiableThemes: Theme[] = [
+        { key: 'theme-dark', type: 'dark', displayName: 'Dark' },
+        { key: 'theme-dracula', type: 'dark', displayName: 'Dracula' },
+        { key: 'theme-light', type: 'light', displayName: 'Light' },
+    ];
+
+    private _currentThemeSubj: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(this.avaiableThemes[0]);
     public currentTheme$ = this._currentThemeSubj.asObservable();
 
     public init(): void {
-        let theme = localStorage.getItem('theme');
-        let type = localStorage.getItem('theme-type') as 'light' | 'dark';
+        let storageTheme = localStorage.getItem('theme');
 
-        // set default theme is none is set
+        if (!storageTheme) {
+            localStorage.setItem('theme', this._currentThemeSubj.value.key);
+            storageTheme = this._currentThemeSubj.value.key;
+        }
+
+        let theme = this.avaiableThemes.find(availableTheme => availableTheme.key === storageTheme);
+
         if (!theme) {
-            localStorage.setItem('theme', this._currentThemeSubj.value.theme);
-            theme = this._currentThemeSubj.value.theme;
-        }
-        if (!type) {
-            localStorage.setItem('theme-type', this._currentThemeSubj.value.type);
-            type = this._currentThemeSubj.value.type;
+            return;
         }
 
-        this._currentThemeSubj.next({ theme, type });
+        this._currentThemeSubj.next(theme);
 
         // apply theme
-        document.body.className = theme;
+        document.body.className = theme.key;
     }
 
     /**
@@ -30,12 +36,11 @@ class ThemeService {
      * @param new theme to apply and save in local storage
      */
     public applyTheme(newTheme: Theme): void {
-        localStorage.setItem('theme', newTheme.theme);
-        localStorage.setItem('theme-type', newTheme.type);
-        this._currentThemeSubj.next({ theme: newTheme.theme, type: newTheme.type });
+        localStorage.setItem('theme', newTheme.key);
+        this._currentThemeSubj.next(newTheme);
 
         // apply theme
-        document.body.className = newTheme.theme;
+        document.body.className = newTheme.key;
     };
 }
 
