@@ -1,11 +1,14 @@
 import { BehaviorSubject } from 'rxjs';
 import { Theme } from '../models/theme.model';
+import { darkTheme } from '../themes/dark';
+import { draculaTheme } from '../themes/dracula';
+import { lightTheme } from '../themes/light';
 
 class ThemeService {
     public avaiableThemes: Theme[] = [
-        { key: 'theme-dark', type: 'dark', displayName: 'Dark' },
-        { key: 'theme-dracula', type: 'dark', displayName: 'Dracula' },
-        { key: 'theme-light', type: 'light', displayName: 'Light' },
+        { key: 'theme-dark', type: 'dark', displayName: 'Dark', colors: darkTheme },
+        { key: 'theme-dracula', type: 'dark', displayName: 'Dracula', colors: draculaTheme },
+        { key: 'theme-light', type: 'light', displayName: 'Light', colors: lightTheme },
     ];
 
     private _currentThemeSubj: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(this.avaiableThemes[0]);
@@ -26,9 +29,6 @@ class ThemeService {
         }
 
         this._currentThemeSubj.next(theme);
-
-        // apply theme
-        document.body.className = theme.key;
     }
 
     /**
@@ -38,9 +38,6 @@ class ThemeService {
     public applyTheme(newTheme: Theme): void {
         localStorage.setItem('theme', newTheme.key);
         this._currentThemeSubj.next(newTheme);
-
-        // apply theme
-        document.body.className = newTheme.key;
     };
 }
 
