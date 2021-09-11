@@ -118,6 +118,15 @@ const CustomizationHandler = () => {
             notificationService.addNotification(notification);
             return;
         }
+        if (availableThemes?.find(theme => theme.key === customTheme.displayName.toLowerCase())) {
+            const notification = createNotification({
+                content: 'There is already a theme with the same name',
+                duration: 5000,
+                type: 'warning'
+            });
+            notificationService.addNotification(notification);
+            return;
+        }
         const customThemesString = localStorage.getItem('customThemes');
         let customThemes: Theme[] = [];
         if (customThemesString) {
