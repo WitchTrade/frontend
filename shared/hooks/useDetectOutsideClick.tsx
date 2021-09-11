@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 
 const useDetectOutsideClick = (initState: boolean) => {
     const toggleRef = useRef<any>(null); // optional
-    const nodeRef = useRef<any>(null); // required 
-    const secondNodeRef = useRef<any>(null); // optional 
+    const nodeRef = useRef<any>(null); // required
+    const secondNodeRef = useRef<any>(null); // optional
 
     const [show, setShow] = useState(initState);
 

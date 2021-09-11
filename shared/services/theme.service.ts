@@ -5,16 +5,20 @@ import { draculaTheme } from '../themes/dracula';
 import { lightTheme } from '../themes/light';
 
 class ThemeService {
-    public avaiableThemes: Theme[] = [
-        { key: 'theme-dark', type: 'dark', displayName: 'Dark', colors: darkTheme },
-        { key: 'theme-dracula', type: 'dark', displayName: 'Dracula', colors: draculaTheme },
-        { key: 'theme-light', type: 'light', displayName: 'Light', colors: lightTheme },
+    public officialThemes: Theme[] = [
+        { key: 'dark', type: 'dark', displayName: 'Dark', colors: darkTheme, official: true },
+        { key: 'dracula', type: 'dark', displayName: 'Dracula', colors: draculaTheme, official: true },
+        { key: 'light', type: 'light', displayName: 'Light', colors: lightTheme, official: true },
     ];
 
-    private _currentThemeSubj: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(this.avaiableThemes[0]);
+    private _avaiableThemesSubj: BehaviorSubject<Theme[]> = new BehaviorSubject<Theme[]>([...this.officialThemes]);
+    public avaiableThemes$ = this._avaiableThemesSubj.asObservable();
+
+    private _currentThemeSubj: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(this._avaiableThemesSubj.getValue()[0]);
     public currentTheme$ = this._currentThemeSubj.asObservable();
 
     public init(): void {
+        this.loadCustomThemes();
         let storageTheme = localStorage.getItem('theme');
 
         if (!storageTheme) {
@@ -22,7 +26,7 @@ class ThemeService {
             storageTheme = this._currentThemeSubj.value.key;
         }
 
-        let theme = this.avaiableThemes.find(availableTheme => availableTheme.key === storageTheme);
+        let theme = this._avaiableThemesSubj.getValue().find(availableTheme => availableTheme.key === storageTheme);
 
         if (!theme) {
             return;
@@ -39,6 +43,17 @@ class ThemeService {
         localStorage.setItem('theme', newTheme.key);
         this._currentThemeSubj.next(newTheme);
     };
+
+    public loadCustomThemes() {
+        const customThemesString = localStorage.getItem('customThemes');
+        let customThemes: Theme[] = [];
+        if (customThemesString) {
+            customThemes = JSON.parse(customThemesString);
+        }
+        const tempThemes = [...this.officialThemes];
+        tempThemes.push(...customThemes);
+        this._avaiableThemesSubj.next(tempThemes);
+    }
 }
 
 const themeService = new ThemeService();

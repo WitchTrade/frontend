@@ -75,7 +75,7 @@ const Dropdown: FunctionComponent<Props> = ({ selectedValue, setValue, values })
                                                     {value.displayName}
                                                 </span>
                                             </div>
-                                            {selected ? (
+                                            {value.key === selectedValue.key ? (
                                                 <span
                                                     className="absolute inset-y-0 left-0 flex items-center pl-3"
                                                 >

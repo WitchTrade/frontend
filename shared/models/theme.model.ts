@@ -5,6 +5,7 @@ export interface Theme {
     type: 'light' | 'dark';
     displayName: string;
     colors: ThemeColors;
+    official: boolean;
 }
 
 export function createTheme(params: Partial<Theme>) {
@@ -12,6 +13,7 @@ export function createTheme(params: Partial<Theme>) {
         key: params.key ? params.key : null,
         type: params.type ? params.type : null,
         displayName: params.displayName ? params.displayName : null,
-        colors: params.colors ? params.colors : null
+        colors: params.colors ? params.colors : null,
+        official: params.official ? params.official : false
     } as Theme;
 }
