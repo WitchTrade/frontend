@@ -35,7 +35,11 @@ const Customization: NextPage = () => {
         downloadTheme,
         deleteTheme,
         themeUploadFile,
-        checkThemeInputFile
+        checkThemeInputFile,
+        notificationTypes,
+        notificationType,
+        setNotificationType,
+        createTestNotification
     } = CustomizationHandler();
 
     useEffect(() => {
@@ -163,7 +167,7 @@ const Customization: NextPage = () => {
                                     <ColorPicker title="Accent Light" hexColor={customTheme.colors.accentLight} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, accentLight: color } })} />
                                 </div>
                             </PickerArea>
-                            <PickerArea areaTitle="Notification colors">
+                            <PickerArea areaTitle="Status colors">
                                 <div className="flex flex-wrap justify-center">
                                     <div className="mx-1">
                                         <ColorPicker title="Info" hexColor={customTheme.colors.info} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, info: color } })} />
@@ -206,6 +210,15 @@ const Customization: NextPage = () => {
                                     </div>
                                     <div className="mx-1">
                                         <ColorPicker title="Error Dark" hexColor={customTheme.colors.errorDark} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, errorDark: color } })} />
+                                    </div>
+                                </div>
+                                <div className="bg-wt-surface p-2 rounded-lg">
+                                    <p className="text-wt-text">Test notification</p>
+                                    <div className="my-2">
+                                        <Dropdown selectedValue={notificationType} setValue={setNotificationType} values={notificationTypes} />
+                                    </div>
+                                    <div className="mx-1 flex justify-center">
+                                        <ActionButton type="neutral" onClick={createTestNotification}>Create</ActionButton>
                                     </div>
                                 </div>
                             </PickerArea>

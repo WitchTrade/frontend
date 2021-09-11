@@ -28,6 +28,15 @@ const CustomizationHandler = () => {
 
     const themeUploadFile = createRef<any>();
 
+    let notificationTypes: DropdownValue[] = [
+        { key: 'info', displayName: 'Info' },
+        { key: 'success', displayName: 'Success' },
+        { key: 'warning', displayName: 'Warning' },
+        { key: 'error', displayName: 'Error' }
+    ];
+
+    const [notificationType, setNotificationType] = useState(notificationTypes[0]);
+
     useEffect(() => {
         const themeSub = themeService.currentTheme$.subscribe(setSelectedTheme);
         const availableThemeSub = themeService.allThemes$.subscribe(setAllThemes);
@@ -226,6 +235,15 @@ const CustomizationHandler = () => {
         };
     };
 
+    const createTestNotification = () => {
+        const notification = createNotification({
+            content: 'Test notification',
+            duration: 2500,
+            type: notificationType.key
+        });
+        notificationService.addNotification(notification);
+    };
+
     return {
         allThemes,
         themeTypes,
@@ -244,7 +262,11 @@ const CustomizationHandler = () => {
         downloadTheme,
         deleteTheme,
         themeUploadFile,
-        checkThemeInputFile
+        checkThemeInputFile,
+        notificationTypes,
+        notificationType,
+        setNotificationType,
+        createTestNotification
     };
 };
 
