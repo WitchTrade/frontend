@@ -7,7 +7,7 @@ import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
 
 const CustomizationHandler = () => {
-    const [availableThemes, setAvailableThemes] = useState<Theme[]>();
+    const [allThemes, setAllThemes] = useState<Theme[]>();
 
     // selected theme in the dropdown
     const [selectedTheme, setSelectedTheme] = useState<Theme>();
@@ -30,7 +30,7 @@ const CustomizationHandler = () => {
 
     useEffect(() => {
         const themeSub = themeService.currentTheme$.subscribe(setSelectedTheme);
-        const availableThemeSub = themeService.avaiableThemes$.subscribe(setAvailableThemes);
+        const availableThemeSub = themeService.allThemes$.subscribe(setAllThemes);
 
         return () => {
             themeSub.unsubscribe();
@@ -65,7 +65,6 @@ const CustomizationHandler = () => {
         });
         const newType = themeTypes.find(type => type.key === theme.type);
         if (newType) {
-            console.log(newType);
             setThemeType(newType);
         }
         setCustomTheme(theme);
@@ -118,9 +117,18 @@ const CustomizationHandler = () => {
             notificationService.addNotification(notification);
             return;
         }
-        if (availableThemes?.find(theme => theme.key === customTheme.displayName.toLowerCase())) {
+        if (allThemes?.find(theme => theme.key === customTheme.displayName.toLowerCase().replaceAll(' ', '-'))) {
             const notification = createNotification({
                 content: 'There is already a theme with the same name',
+                duration: 5000,
+                type: 'warning'
+            });
+            notificationService.addNotification(notification);
+            return;
+        }
+        if (!/^[a-zA-Z0-9 _-]*$/.test(customTheme.displayName)) {
+            const notification = createNotification({
+                content: 'Theme names can only contain letters, numbers, -, _ and spaces',
                 duration: 5000,
                 type: 'warning'
             });
@@ -133,7 +141,7 @@ const CustomizationHandler = () => {
             customThemes = JSON.parse(customThemesString);
         }
         if (customTheme) {
-            const tempCustomTheme = { ...customTheme, key: customTheme.displayName.toLowerCase() };
+            const tempCustomTheme = { ...customTheme, key: customTheme.displayName.toLowerCase().replaceAll(' ', '-') };
             customThemes.push(tempCustomTheme);
             themeService.applyTheme(tempCustomTheme);
         }
@@ -152,7 +160,7 @@ const CustomizationHandler = () => {
         }
         if (selectedTheme) {
             const index = customThemes.findIndex(theme => theme.key === selectedTheme.key);
-            if (index <= 0) {
+            if (index >= 0) {
                 customThemes.splice(index, 1);
                 const notification = createNotification({
                     content: 'Theme deleted',
@@ -166,8 +174,8 @@ const CustomizationHandler = () => {
 
         themeService.loadCustomThemes();
 
-        if (availableThemes) {
-            themeService.applyTheme(availableThemes[0]);
+        if (allThemes) {
+            themeService.applyTheme(allThemes[0]);
         }
     };
 
@@ -219,7 +227,7 @@ const CustomizationHandler = () => {
     };
 
     return {
-        availableThemes,
+        allThemes,
         themeTypes,
         themeType,
         setThemeType,

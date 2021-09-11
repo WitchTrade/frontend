@@ -18,7 +18,7 @@ const Customization: NextPage = () => {
     const [theme, setTheme] = useState<Theme>();
 
     const {
-        availableThemes,
+        allThemes,
         themeTypes,
         themeType,
         setThemeType,
@@ -57,9 +57,9 @@ const Customization: NextPage = () => {
             <SettingNav />
             <div className="flex flex-col justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <PageHeader title="Customization" description="Customize your WitchTrade expirience" />
-                {selectedTheme && !creatingCustomTheme && availableThemes &&
+                {selectedTheme && !creatingCustomTheme && allThemes &&
                     <div className="w-60 self-center">
-                        <Dropdown selectedValue={selectedTheme} setValue={applyNewTheme} values={availableThemes} />
+                        <Dropdown selectedValue={selectedTheme} setValue={applyNewTheme} values={allThemes} />
                     </div>
                 }
                 <div className="flex justify-center text-center mt-2">

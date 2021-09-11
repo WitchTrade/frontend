@@ -11,10 +11,12 @@ class ThemeService {
         { key: 'light', type: 'light', displayName: 'Light', colors: lightTheme, official: true },
     ];
 
-    private _avaiableThemesSubj: BehaviorSubject<Theme[]> = new BehaviorSubject<Theme[]>([...this.officialThemes]);
-    public avaiableThemes$ = this._avaiableThemesSubj.asObservable();
+    // current all themes. Official and custom themes
+    private _allThemesSubj: BehaviorSubject<Theme[]> = new BehaviorSubject<Theme[]>([...this.officialThemes]);
+    public allThemes$ = this._allThemesSubj.asObservable();
 
-    private _currentThemeSubj: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(this._avaiableThemesSubj.getValue()[0]);
+    // current selected theme
+    private _currentThemeSubj: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(this._allThemesSubj.getValue()[0]);
     public currentTheme$ = this._currentThemeSubj.asObservable();
 
     public init(): void {
@@ -26,7 +28,7 @@ class ThemeService {
             storageTheme = this._currentThemeSubj.value.key;
         }
 
-        let theme = this._avaiableThemesSubj.getValue().find(availableTheme => availableTheme.key === storageTheme);
+        let theme = this._allThemesSubj.getValue().find(theme => theme.key === storageTheme);
 
         if (!theme) {
             return;
@@ -44,15 +46,16 @@ class ThemeService {
         this._currentThemeSubj.next(newTheme);
     };
 
+    // loads the custom themes from the local storage and loads them
     public loadCustomThemes() {
         const customThemesString = localStorage.getItem('customThemes');
         let customThemes: Theme[] = [];
         if (customThemesString) {
             customThemes = JSON.parse(customThemesString);
         }
-        const tempThemes = [...this.officialThemes];
-        tempThemes.push(...customThemes);
-        this._avaiableThemesSubj.next(tempThemes);
+        const allThemes = [...this.officialThemes];
+        allThemes.push(...customThemes);
+        this._allThemesSubj.next(allThemes);
     }
 }
 
