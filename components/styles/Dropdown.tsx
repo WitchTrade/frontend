@@ -31,7 +31,7 @@ const Dropdown: FunctionComponent<Props> = ({ selectedValue, setValue, values })
     return (
         <Listbox value={selectedValue} onChange={setValue}>
             {({ open }) => (
-                <div className="relative mt-1 text-wt-text">
+                <div className="relative mt-1">
                     <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-wt-surface-dark rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-wt-accent sm:text-sm">
                         <div className="flex">
                             {selectedValue.imagePath &&

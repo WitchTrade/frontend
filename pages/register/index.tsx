@@ -74,7 +74,7 @@ const Register: NextPage = () => {
       <div className="my-4">
         <div className="flex justify-center items-center h-10">
           <input id="acceptedLegalCheckbox" className="h-7 w-7 mr-2 text-wt-accent-light bg-wt-accent-light focus:outline-none focus:ring-2 focus:ring-wt-accent" type="checkbox" checked={acceptedLegal} onChange={() => setAcceptedLegal(!acceptedLegal)} />
-          <label className="text-wt-text w-11/12" htmlFor="acceptedLegalCheckbox">
+          <label className="w-11/12" htmlFor="acceptedLegalCheckbox">
             I accept how we collect, use, and share your data. (To learn more, please read our <a className="hover:underline text-wt-accent-light rounded-md focus:outline-none focus:ring-2 focus:ring-wt-accent" href="https://witchtrade.org/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>)
           </label>
         </div>

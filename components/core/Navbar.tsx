@@ -72,14 +72,14 @@ const Navbar: FunctionComponent = () => {
 
     return (
         <div>
-            <Disclosure as="nav" className="bg-wt-surface-dark fixed top-0 w-full z-40">
+            <Disclosure as="nav" className="bg-wt-surface-dark text-wt-text fixed top-0 w-full z-40">
                 {({ open }) => (
                     <>
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                             <div className="flex items-center justify-between h-16">
                                 <div className="flex items-center">
                                     <div className="flex-shrink-0">
-                                        <p className="text-wt-text font-bold text-3xl"><span className="text-wt-accent">Witch</span>Trade<span className="text-xl text-center text-wt-accent-light"> [Beta]</span></p>
+                                        <p className="font-bold text-3xl"><span className="text-wt-accent">Witch</span>Trade<span className="text-xl text-center text-wt-accent-light"> [Beta]</span></p>
                                     </div>
                                     <div className="hidden md:block">
                                         <div className="ml-10 flex items-baseline space-x-4">
@@ -105,10 +105,10 @@ const Navbar: FunctionComponent = () => {
                                                 {userState.loggedIn &&
                                                     <div className="flex items-center">
                                                         {userInventory.id &&
-                                                            <p className="text-wt-text text-sm mr-2 hidden lg:block">Inventory synced: <span className={lastSynced.old ? 'text-yellow-500' : 'text-green-500'}>{lastSynced.lastSyncedString}</span></p>
+                                                            <p className="text-sm mr-2 hidden lg:block">Inventory synced: <span className={lastSynced.old ? 'text-wt-warning' : 'text-wt-success'}>{lastSynced.lastSyncedString}</span></p>
                                                         }
                                                         <Menu.Button onClickCapture={() => setCustomOpen(!customOpen)}
-                                                            className="max-w-xs bg-wt-surface-dark rounded-full flex items-center text-sm font-bold focus:outline-none">
+                                                            className="max-w-xs rounded-full flex items-center text-sm font-bold focus:outline-none">
                                                             <span className="sr-only">Open Notifications</span>
                                                             {(notifications.length === 0 &&
                                                                 <>
@@ -123,7 +123,7 @@ const Navbar: FunctionComponent = () => {
                                                                     <div className="relative">
                                                                         <p className="font-bold absolute top-0 left-0 text-base text-wt-accent-light">{notifications.length < 10 ? notifications.length : '•'}</p>
                                                                     </div>
-                                                                    <div className="ml-2" >
+                                                                    <div className="ml-2 flex items-center" >
                                                                         {(customOpen &&
                                                                             <Image src={`/assets/svgs/bell/filledActive${theme?.type === 'light' ? 'Black' : 'White'}.svg`} height={24} width={24} alt="Notification Bell" />
                                                                         ) ||
@@ -154,9 +154,9 @@ const Navbar: FunctionComponent = () => {
                                                         <Menu.Item key={notification.id}>
                                                             {(notification.link &&
                                                                 <div className="flex justify-between items-center my-1">
-                                                                    <a className="flex justify-between items-center hover:bg-wt-lover-light" href={notification.link} target="">
+                                                                    <a className="flex justify-between items-center hover:bg-wt-hover-light" href={notification.link} target="">
                                                                         {notification.iconLink &&
-                                                                            <Image className="rounded-md ml-1" height="40px" src={notification.iconLink} alt={notification.text} />
+                                                                            <img className="rounded-md ml-1" width="40" src={notification.iconLink} alt={notification.text} />
                                                                         }
                                                                         <p className="block px-4 py-2 text-sm text-wt-dark">{notification.text}</p>
                                                                     </a>
@@ -167,7 +167,7 @@ const Navbar: FunctionComponent = () => {
                                                             ) ||
                                                                 <div className="flex justify-between items-center">
                                                                     {notification.iconLink &&
-                                                                        <Image className="rounded-md m-1" height="40px" src={notification.iconLink} alt={notification.text} />
+                                                                        <img className="rounded-md m-1" width="40" src={notification.iconLink} alt={notification.text} />
                                                                     }
                                                                     <p className="block px-4 py-2 text-sm text-wt-dark">{notification.text}</p>
                                                                     <button className="text-wt-dark bg-red-600 hover:bg-red-500 p-1 mr-1 rounded-md text-bg font-medium flex items-center" onClick={() => deleteNotification(notification)}>
@@ -248,7 +248,7 @@ const Navbar: FunctionComponent = () => {
                                         </div>
                                     </div>
                                     <div className="-mr-2 ml-2 flex md:hidden">
-                                        <Disclosure.Button className="bg-wt-surface-dark inline-flex items-center justify-center p-2 rounded-md text-wt-dark hover:bg-wt-surface focus:outline-none focus:ring-2 focus:ring-wt-accent">
+                                        <Disclosure.Button className="bg-wt-surface-dark inline-flex items-center justify-center p-2 rounded-md text-wt-dark hover:bg-wt-hover focus:outline-none focus:ring-2 focus:ring-wt-accent">
                                             <span className="sr-only">Open main menu</span>
                                             {open ? (
                                                 <div className="block h-6 w-6">
@@ -303,9 +303,9 @@ const Navbar: FunctionComponent = () => {
                                             <Image className="rounded-full" src="/assets/images/piggy.png" height={40} width={40} alt="Profile Image" />
                                         </div>
                                         <div className="ml-3">
-                                            <div className="text-base font-medium leading-none text-wt-text">{userState.displayName}</div>
+                                            <div className="text-base font-medium leading-none text-wt-accent-light">{userState.displayName}</div>
                                             {userInventory.id &&
-                                                <p className="text-wt-text text-sm mr-2">Inventory synced: <span className={lastSynced.old ? 'text-yellow-500' : 'text-green-500'}>{lastSynced.lastSyncedString}</span></p>
+                                                <p className="text-sm mr-2">Inventory synced: <span className={lastSynced.old ? 'text-yellow-500' : 'text-green-500'}>{lastSynced.lastSyncedString}</span></p>
                                             }
                                         </div>
                                     </div>

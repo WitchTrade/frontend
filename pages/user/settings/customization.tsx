@@ -81,7 +81,7 @@ const Customization: NextPage = () => {
                 {!creatingCustomTheme && !selectedTheme?.official &&
                     <div className="flex justify-center">
                         <div className="mt-2 bg-wt-surface-dark rounded-lg p-2 w-72">
-                            <p className="text-wt-text text-center">Custom theme <span className="text-wt-accent font-bold">{selectedTheme?.displayName}</span></p>
+                            <p className="text-center">Custom theme <span className="text-wt-accent font-bold">{selectedTheme?.displayName}</span></p>
                             <div className="flex justify-center text-center">
                                 <div className="mx-2">
                                     <ActionButton type="neutral" onClick={downloadTheme}>Export Theme</ActionButton>
@@ -116,7 +116,7 @@ const Customization: NextPage = () => {
                                 <TextInput type="input" value={customTheme.displayName} setValue={(value) => setCustomTheme({ ...customTheme, displayName: value })} placeholder="Theme name" required={true} svgPath={`/assets/svgs/bookmark/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
                             </div>
                             <div className="my-2">
-                                <p className="text-wt-text">Theme type</p>
+                                <p>Theme type</p>
                                 <Dropdown selectedValue={themeType} setValue={setThemeType} values={themeTypes} />
                             </div>
                         </div>
@@ -214,7 +214,7 @@ const Customization: NextPage = () => {
                                 </div>
                             </PickerArea>
                             <div className="m-2 rounded-lg">
-                                <p className="text-wt-text">Test notification</p>
+                                <p>Test notification</p>
                                 <div className="my-2">
                                     <Dropdown selectedValue={notificationType} setValue={setNotificationType} values={notificationTypes} />
                                 </div>

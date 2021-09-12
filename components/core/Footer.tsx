@@ -20,7 +20,7 @@ const Footer: FunctionComponent = () => {
             <div className="text-center w-full">
                 <div className="flex justify-center my-1">
                     <a className="rounded-full mb-1" href="https://discord.gg/wm7sTW8MJq" target="_blank" rel="noreferrer">
-                        <div className="bg-wt-surface rounded-full p-1 w-9 h-9 flex justify-center items-center hover:bg-wt-accent-light">
+                        <div className="bg-wt-surface rounded-full p-1 w-9 h-9 flex justify-center items-center hover:bg-wt-accent">
                             <Image src={`/assets/svgs/discord/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height={24} width={24} alt="Discord Logo" />
                         </div>
                     </a>
