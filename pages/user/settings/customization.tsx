@@ -212,16 +212,16 @@ const Customization: NextPage = () => {
                                         <ColorPicker title="Error Dark" hexColor={customTheme.colors.errorDark} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, errorDark: color } })} />
                                     </div>
                                 </div>
-                                <div className="bg-wt-surface p-2 rounded-lg">
-                                    <p className="text-wt-text">Test notification</p>
-                                    <div className="my-2">
-                                        <Dropdown selectedValue={notificationType} setValue={setNotificationType} values={notificationTypes} />
-                                    </div>
-                                    <div className="mx-1 flex justify-center">
-                                        <ActionButton type="neutral" onClick={createTestNotification}>Create</ActionButton>
-                                    </div>
-                                </div>
                             </PickerArea>
+                            <div className="m-2 rounded-lg">
+                                <p className="text-wt-text">Test notification</p>
+                                <div className="my-2">
+                                    <Dropdown selectedValue={notificationType} setValue={setNotificationType} values={notificationTypes} />
+                                </div>
+                                <div className="mx-1 flex justify-center">
+                                    <ActionButton type="neutral" onClick={createTestNotification}>Create</ActionButton>
+                                </div>
+                            </div>
                         </div>
                     </>
                 }
