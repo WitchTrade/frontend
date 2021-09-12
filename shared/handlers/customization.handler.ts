@@ -198,15 +198,25 @@ const CustomizationHandler = () => {
 
         reader.onload = () => {
             if (reader.result) {
-                const customThemesString = localStorage.getItem('customThemes');
-                let customThemes: Theme[] = [];
-                if (customThemesString) {
-                    customThemes = JSON.parse(customThemesString);
-                }
-                const importedTheme = JSON.parse(reader.result as string);
+                let importedObject: Theme;
 
-                // TODO: improve checking imported json
-                if (!importedTheme.key) {
+                // try parsing json to object
+                try {
+                    importedObject = JSON.parse(reader.result as string);
+                } catch {
+                    const notification = createNotification({
+                        content: 'Error while parsing file',
+                        duration: 5000,
+                        type: 'error'
+                    });
+                    notificationService.addNotification(notification);
+                    return;
+                }
+
+                const importedColors = createThemeColors(importedObject.colors);
+                const importedTheme = createTheme({ ...importedObject, colors: importedColors, official: false });
+
+                if (!importedTheme.key || !importedTheme.type || !importedTheme.displayName) {
                     const notification = createNotification({
                         content: 'File doesn\'t seem to be a WitchTrade theme file',
                         duration: 5000,
@@ -215,6 +225,34 @@ const CustomizationHandler = () => {
                     notificationService.addNotification(notification);
                     return;
                 }
+
+                if (!/^[a-zA-Z0-9_-]*$/.test(importedTheme.key)) {
+                    const notification = createNotification({
+                        content: 'Theme keys can only contain letters, numbers, - and _',
+                        duration: 5000,
+                        type: 'warning'
+                    });
+                    notificationService.addNotification(notification);
+                    return;
+                }
+
+                if (!/^[a-zA-Z0-9 _-]*$/.test(importedTheme.displayName)) {
+                    const notification = createNotification({
+                        content: 'Theme names can only contain letters, numbers, -, _ and spaces',
+                        duration: 5000,
+                        type: 'warning'
+                    });
+                    notificationService.addNotification(notification);
+                    return;
+                }
+
+                // get custom themes to add imported theme to
+                const customThemesString = localStorage.getItem('customThemes');
+                let customThemes: Theme[] = [];
+                if (customThemesString) {
+                    customThemes = JSON.parse(customThemesString);
+                }
+
                 if (customThemes.find(theme => theme.key === importedTheme.key)) {
                     const notification = createNotification({
                         content: 'There is already a theme with the same name',
@@ -224,13 +262,24 @@ const CustomizationHandler = () => {
                     notificationService.addNotification(notification);
                     return;
                 }
+
+                // add imported theme to custom themes
                 customThemes.push(importedTheme);
-                themeService.applyTheme(importedTheme);
                 localStorage.setItem('customThemes', JSON.stringify(customThemes));
 
+                // reload custom themes
                 themeService.loadCustomThemes();
 
-                setCreatingCustomTheme(false);
+                // apply imported theme
+                themeService.applyTheme(importedTheme);
+
+                const notification = createNotification({
+                    content: `${importedTheme.displayName} imported successfully`,
+                    duration: 5000,
+                    type: 'success'
+                });
+                notificationService.addNotification(notification);
+                return;
             }
         };
     };
