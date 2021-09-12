@@ -36,7 +36,6 @@ const Register: NextPage = () => {
         title="WitchTrade | Register"
         description="Register an account on WitchTrade and start creating offers!"
         url="https://witchtrade.org/register"
-        image="https://imgur.com/WmcszU3.png"
       />
       <LoginNav />
       <PageHeader title="Register" description="Register an account on WitchTrade and start creating offers!" />

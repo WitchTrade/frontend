@@ -4,12 +4,7 @@ import CustomHeader from '../components/core/CustomHeader';
 const Home: NextPage = () => {
   return (
     <div>
-      <CustomHeader
-        title="WitchTrade"
-        description="A Witch It trading website."
-        url="https://witchtrade.org"
-        image="https://imgur.com/WmcszU3.png"
-      />
+      <CustomHeader />
       <p className="text-4xl font-bold text-center">Index page</p>
     </div>
   );

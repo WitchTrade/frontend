@@ -2,13 +2,13 @@ import Head from 'next/head';
 import { FunctionComponent } from 'react';
 
 type Props = {
-    title: string;
-    description: string;
-    url: string;
-    image: string;
+    title?: string;
+    description?: string;
+    url?: string;
+    image?: string;
 };
 
-const CustomHeader: FunctionComponent<Props> = ({ title, description, url, image }) => {
+const CustomHeader: FunctionComponent<Props> = ({ title = 'WitchTrade', description = 'A Witch It trading website.', url = 'https://witchtrade.org', image = 'https://imgur.com/WmcszU3.pn' }) => {
     return (
         <Head>
             <title>{title}</title>

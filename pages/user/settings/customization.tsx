@@ -46,7 +46,6 @@ const Customization: NextPage = () => {
                 title="WitchTrade | Customization"
                 description="Customize your WitchTrade expirience"
                 url="https://witchtrade.org/user/settings/customization"
-                image="https://imgur.com/WmcszU3.png"
             />
             <SettingNav />
             <div className="flex flex-col justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

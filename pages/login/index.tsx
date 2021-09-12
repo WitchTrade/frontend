@@ -33,7 +33,6 @@ const Login: NextPage = () => {
         title="WitchTrade | Login"
         description="Log in to WitchTrade."
         url="https://witchtrade.org/login"
-        image="https://imgur.com/WmcszU3.png"
       />
       <LoginNav />
       <PageHeader title="Login" description="Log in to WitchTrade. Happy trading :)" />
