@@ -1,7 +1,7 @@
 import { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Disclosure, Transition } from '@headlessui/react';
 import dayjs from 'dayjs';
 
 import { createInventory, Inventory } from '../../shared/stores/inventory/inventory.model';
@@ -15,6 +15,7 @@ import { userService } from '../../shared/stores/user/user.service';
 import NavbarLink from '../styles/NavbarLink';
 import Image from 'next/image';
 import ThemeHandler from '../../shared/handlers/theme.handler';
+import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
 
 const Navbar: FunctionComponent = () => {
     const router = useRouter();
@@ -27,7 +28,8 @@ const Navbar: FunctionComponent = () => {
     const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();
     const [notifications, setNotifications] = useState<ServerNotification[]>([]);
 
-    const [customOpen, setCustomOpen] = useState(false);
+    const { show: showNotificationMenu, nodeRef: notificationMenuRef, toggleRef: notificationMenuToggleRef } = useDetectOutsideClick(false);
+    const { show: showUserMenu, nodeRef: userMenuRef, toggleRef: userMenuToggleRef } = useDetectOutsideClick(false, true);
 
     useEffect(() => {
         const userSub = userQuery.select().subscribe(setUser);
@@ -96,19 +98,21 @@ const Navbar: FunctionComponent = () => {
                                 </div>
                                 <div className="flex">
                                     <div className="ml-4 flex items-center md:ml-6">
-                                        <Menu as="div" className="ml-3 relative">
+                                        <div className="ml-3 relative">
                                             <div>
                                                 {user.loggedIn &&
                                                     <div className="flex items-center">
                                                         {inventory.id &&
                                                             <p className="text-sm mr-2 hidden lg:block">Inventory synced: <span className={lastSynced.old ? 'text-wt-warning' : 'text-wt-success'}>{lastSynced.lastSyncedString}</span></p>
                                                         }
-                                                        <Menu.Button onClickCapture={() => setCustomOpen(!customOpen)}
-                                                            className="max-w-xs rounded-full flex items-center text-sm font-bold focus:outline-none">
+                                                        <button
+                                                            className="max-w-xs rounded-full flex items-center text-sm font-bold focus:outline-none"
+                                                            ref={notificationMenuToggleRef}
+                                                        >
                                                             <span className="sr-only">Open Notifications</span>
                                                             {(notifications.length === 0 &&
                                                                 <>
-                                                                    {(customOpen &&
+                                                                    {(showNotificationMenu &&
                                                                         <Image src={`/assets/svgs/bell/filled${theme?.type === 'light' ? 'Black' : 'White'}.svg`} height={24} width={24} alt="Notification Bell" />
                                                                     ) ||
                                                                         <Image src={`/assets/svgs/bell/outlined${theme?.type === 'light' ? 'Black' : 'White'}.svg`} height={24} width={24} alt="Notification Bell" />
@@ -120,7 +124,7 @@ const Navbar: FunctionComponent = () => {
                                                                         <p className="font-bold absolute top-0 left-0 text-base text-wt-accent-light">{notifications.length < 10 ? notifications.length : '•'}</p>
                                                                     </div>
                                                                     <div className="ml-2 flex items-center" >
-                                                                        {(customOpen &&
+                                                                        {(showNotificationMenu &&
                                                                             <Image src={`/assets/svgs/bell/filledActive${theme?.type === 'light' ? 'Black' : 'White'}.svg`} height={24} width={24} alt="Notification Bell" />
                                                                         ) ||
                                                                             <Image src={`/assets/svgs/bell/outlinedActive${theme?.type === 'light' ? 'Black' : 'White'}.svg`} height={24} width={24} alt="Notification Bell" />
@@ -128,119 +132,107 @@ const Navbar: FunctionComponent = () => {
                                                                     </div>
                                                                 </div>
                                                             }
-                                                        </Menu.Button>
+                                                        </button>
                                                     </div>
                                                 }
                                             </div>
-                                            <Transition
-                                                show={customOpen}
-                                                as={Fragment}
-                                                enter="transition ease-out duration-100"
-                                                enterFrom="transform opacity-0 scale-95"
-                                                enterTo="transform opacity-100 scale-100"
-                                                leave="transition ease-in duration-75"
-                                                leaveFrom="transform opacity-100 scale-100"
-                                                leaveTo="transform opacity-0 scale-95"
-                                            >
-                                                <Menu.Items
-                                                    static
-                                                    className="origin-top-right absolute right-0 mt-2 w-60 rounded-md shadow-lg py-1 bg-wt-light ring-1 ring-black ring-opacity-5 focus:outline-none z-50 overflow-auto max-h-60"
+                                            <div ref={notificationMenuRef}>
+                                                <Transition
+                                                    show={showNotificationMenu}
+                                                    as={Fragment}
+                                                    enter="transition ease-out duration-100"
+                                                    enterFrom="transform opacity-0 scale-95"
+                                                    enterTo="transform opacity-100 scale-100"
+                                                    leave="transition ease-in duration-75"
+                                                    leaveFrom="transform opacity-100 scale-100"
+                                                    leaveTo="transform opacity-0 scale-95"
                                                 >
-                                                    {notifications.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()).map(notification => (
-                                                        <Menu.Item key={notification.id}>
-                                                            {(notification.link &&
-                                                                <div className="flex justify-between items-center my-1">
-                                                                    <a className="flex justify-between items-center hover:bg-wt-hover-light" href={notification.link} target="">
+                                                    <div
+                                                        className="origin-top-right absolute right-0 mt-2 w-60 rounded-md shadow-lg py-1 bg-wt-light ring-1 ring-black ring-opacity-5 focus:outline-none z-50 overflow-auto max-h-60"
+                                                    >
+                                                        {notifications.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()).map(notification => (
+                                                            <>
+                                                                {(notification.link &&
+                                                                    <div key={notification.id} className="flex justify-between items-center my-1">
+                                                                        <a className="flex justify-between items-center hover:bg-wt-hover-light" href={notification.link} target="">
+                                                                            {notification.iconLink &&
+                                                                                <img className="rounded-md ml-1" width="40" src={notification.iconLink} alt={notification.text} />
+                                                                            }
+                                                                            <p className="block px-4 py-2 text-sm text-wt-dark">{notification.text}</p>
+                                                                        </a>
+                                                                        <button className="text-wt-dark bg-red-600 hover:bg-red-500 p-1 mr-1 rounded-md text-bg font-medium flex items-center" onClick={() => deleteNotification(notification)}>
+                                                                            <Image src="/assets/svgs/bin/white.svg" height={24} width={24} alt="Bin" />
+                                                                        </button>
+                                                                    </div>
+                                                                ) ||
+                                                                    <div key={notification.id} className="flex justify-between items-center">
                                                                         {notification.iconLink &&
-                                                                            <img className="rounded-md ml-1" width="40" src={notification.iconLink} alt={notification.text} />
+                                                                            <img className="rounded-md m-1" width="40" src={notification.iconLink} alt={notification.text} />
                                                                         }
                                                                         <p className="block px-4 py-2 text-sm text-wt-dark">{notification.text}</p>
-                                                                    </a>
-                                                                    <button className="text-wt-dark bg-red-600 hover:bg-red-500 p-1 mr-1 rounded-md text-bg font-medium flex items-center" onClick={() => deleteNotification(notification)}>
-                                                                        <Image src="/assets/svgs/bin/white.svg" height={24} width={24} alt="Bin" />
-                                                                    </button>
-                                                                </div>
-                                                            ) ||
-                                                                <div className="flex justify-between items-center">
-                                                                    {notification.iconLink &&
-                                                                        <img className="rounded-md m-1" width="40" src={notification.iconLink} alt={notification.text} />
-                                                                    }
-                                                                    <p className="block px-4 py-2 text-sm text-wt-dark">{notification.text}</p>
-                                                                    <button className="text-wt-dark bg-red-600 hover:bg-red-500 p-1 mr-1 rounded-md text-bg font-medium flex items-center" onClick={() => deleteNotification(notification)}>
-                                                                        <Image src="/assets/svgs/bin/white.svg" height={24} width={24} alt="Bin" />
-                                                                    </button>
-                                                                </div>
-                                                            }
-                                                        </Menu.Item>
-                                                    ))}
-                                                    {notifications.length === 0 &&
-                                                        <Menu.Item>
+                                                                        <button className="text-wt-dark bg-red-600 hover:bg-red-500 p-1 mr-1 rounded-md text-bg font-medium flex items-center" onClick={() => deleteNotification(notification)}>
+                                                                            <Image src="/assets/svgs/bin/white.svg" height={24} width={24} alt="Bin" />
+                                                                        </button>
+                                                                    </div>
+                                                                }
+                                                            </>
+                                                        ))}
+                                                        {notifications.length === 0 &&
                                                             <p className="block px-4 py-2 text-sm text-wt-dark">No notifications</p>
-                                                        </Menu.Item>
-                                                    }
-                                                </Menu.Items>
-                                            </Transition>
-                                        </Menu>
+                                                        }
+                                                    </div>
+                                                </Transition>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className="hidden md:block">
                                         <div className="flex items-center ml-2">
                                             {/* Profile dropdown */}
-                                            <Menu as="div" className="relative">
-                                                {({ open }) => (
-                                                    <>
-                                                        <div>
-                                                            {user.loggedIn &&
-                                                                <div className="flex items-center">
-                                                                    <Menu.Button className="max-w-xs bg-wt-surface-dark rounded-full flex items-center text-sm font-bold p-1 focus:outline-none focus:ring-2 focus:ring-wt-accent">
-                                                                        <span className="sr-only">Open user menu</span>
-                                                                        <Image className="rounded-full" src="/assets/images/piggy.png" height={32} width={32} alt="Profile Image" />
-                                                                        <p className="text-wt-accent-light ml-1">{user.displayName}</p>
-                                                                    </Menu.Button>
-                                                                </div>
-                                                            }
-                                                            {!user.loggedIn &&
-                                                                <Link href="/login" passHref>
-                                                                    <NavbarLink type={router.pathname.startsWith('/login') || router.pathname.startsWith('/register') ? 'navSelected' : 'nav'}>Log in</NavbarLink>
-                                                                </Link>
-                                                            }
+                                            <div className="relative">
+                                                <div>
+                                                    {user.loggedIn &&
+                                                        <div className="flex items-center">
+                                                            <button className="max-w-xs bg-wt-surface-dark rounded-full flex items-center text-sm font-bold p-1 focus:outline-none focus:ring-2 focus:ring-wt-accent" ref={userMenuToggleRef}>
+                                                                <span className="sr-only">Open user menu</span>
+                                                                <Image className="rounded-full" src="/assets/images/piggy.png" height={32} width={32} alt="Profile Image" />
+                                                                <p className="text-wt-accent-light ml-1">{user.displayName}</p>
+                                                            </button>
                                                         </div>
-                                                        <Transition
-                                                            show={open}
-                                                            as={Fragment}
-                                                            enter="transition ease-out duration-100"
-                                                            enterFrom="transform opacity-0 scale-95"
-                                                            enterTo="transform opacity-100 scale-100"
-                                                            leave="transition ease-in duration-75"
-                                                            leaveFrom="transform opacity-100 scale-100"
-                                                            leaveTo="transform opacity-0 scale-95"
+                                                    }
+                                                    {!user.loggedIn &&
+                                                        <Link href="/login" passHref>
+                                                            <NavbarLink type={router.pathname.startsWith('/login') || router.pathname.startsWith('/register') ? 'navSelected' : 'nav'}>Log in</NavbarLink>
+                                                        </Link>
+                                                    }
+                                                </div>
+                                                <div ref={userMenuRef}>
+                                                    <Transition
+                                                        show={showUserMenu}
+                                                        as="div"
+                                                        enter="transition ease-out duration-100"
+                                                        enterFrom="transform opacity-0 scale-95"
+                                                        enterTo="transform opacity-100 scale-100"
+                                                        leave="transition ease-in duration-75"
+                                                        leaveFrom="transform opacity-100 scale-100"
+                                                        leaveTo="transform opacity-0 scale-95"
+                                                    >
+                                                        <div
+                                                            className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-wt-light ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
                                                         >
-                                                            <Menu.Items
-                                                                static
-                                                                className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-wt-light ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
-                                                            >
-                                                                <Menu.Item>
-                                                                    <Link href={`/profile/${user.username}`} passHref>
-                                                                        <NavbarLink type={router.pathname.startsWith(`/profile/${user.username}`) ? 'menuSelected' : 'menu'}>Profile</NavbarLink>
-                                                                    </Link>
-                                                                </Menu.Item>
-                                                                <Menu.Item>
-                                                                    <Link href="/user/market" passHref>
-                                                                        <NavbarLink type={router.pathname.startsWith('/user/market') ? 'menuSelected' : 'menu'}>Manage Market</NavbarLink>
-                                                                    </Link>
-                                                                </Menu.Item>
-                                                                <Menu.Item>
-                                                                    <Link href="/user/settings/customization" passHref>
-                                                                        <NavbarLink type={router.pathname.startsWith('/user/settings/customization') ? 'menuSelected' : 'menu'}>Settings</NavbarLink>
-                                                                    </Link>
-                                                                </Menu.Item>
-                                                                <Menu.Item>
-                                                                    <NavbarLink type="menu" onClick={logout}>Log out</NavbarLink>
-                                                                </Menu.Item>
-                                                            </Menu.Items>
-                                                        </Transition>
-                                                    </>
-                                                )}
-                                            </Menu>
+                                                            <Link href={`/profile/${user.username}`} passHref>
+                                                                <NavbarLink type={router.pathname.startsWith(`/profile/${user.username}`) ? 'menuSelected' : 'menu'}>Profile</NavbarLink>
+                                                            </Link>
+                                                            <Link href="/user/market" passHref>
+                                                                <NavbarLink type={router.pathname.startsWith('/user/market') ? 'menuSelected' : 'menu'}>Manage Market</NavbarLink>
+                                                            </Link>
+                                                            <Link href="/user/settings/customization" passHref>
+                                                                <NavbarLink type={router.pathname.startsWith('/user/settings') ? 'menuSelected' : 'menu'} onClick={() => { open = false; }}>Settings</NavbarLink>
+                                                            </Link>
+                                                            <NavbarLink type="menu" onClick={logout}>Log out</NavbarLink>
+                                                        </div>
+                                                    </Transition>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="-mr-2 ml-2 flex md:hidden">
