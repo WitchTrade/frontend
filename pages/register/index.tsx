@@ -39,25 +39,25 @@ const Register: NextPage = () => {
       />
       <LoginNav />
       <PageHeader title="Register" description="Register an account on WitchTrade and start creating offers!" />
-      <div className="m-2 mt-4">
+      <div className="m-1 mt-4">
         <TextInput type="text" placeholder="Username" value={username} setValue={setUsername} required={true} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
       </div>
-      <div className="m-2">
+      <div className="m-1">
         <TextInput type="password" placeholder="Password" value={password} setValue={setPassword} required={true} svgPath={`/assets/svgs/password/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
       </div>
-      <div className="m-2">
+      <div className="m-1">
         <TextInput type="password" placeholder="Repeat Password" value={repeatPassword} required={true} setValue={setRepeatPassword} svgPath={`/assets/svgs/password/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
       </div>
-      <div className="m-2 mt-4">
+      <div className="m-1">
         <TextInput type="text" placeholder="Display Name" value={displayName} required={true} setValue={setDisplayName} svgPath={`/assets/svgs/person/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
       </div>
-      <div className="m-2 mt-4">
+      <div className="m-1">
         <TextInput type="text" placeholder="Email" value={email} setValue={setEmail} required={true} svgPath={`/assets/svgs/email/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
       </div>
-      <div className="m-2 mt-4">
+      <div className="m-1 mt-4">
         <TextInput type="text" placeholder="Steam Profile Link" value={steamUrl} required={false} setValue={setSteamUrl} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
       </div>
-      <div className="m-2 mt-4">
+      <div className="m-1">
         <TextInput type="text" placeholder="Steam Trade Link" value={steamTradeLink} required={false} setValue={setSteamTradeLink} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
       </div>
       <div className="my-4">

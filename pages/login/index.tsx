@@ -36,10 +36,10 @@ const Login: NextPage = () => {
       />
       <LoginNav />
       <PageHeader title="Login" description="Log in to WitchTrade. Happy trading :)" />
-      <div className="m-2 mt-4">
+      <div className="m-1 mt-4">
         <TextInput type="text" placeholder="Username" value={username} setValue={setUsername} required={true} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} handleKeyPress={checkKeyPress} />
       </div>
-      <div className="m-2">
+      <div className="m-1">
         <TextInput type="password" placeholder="Password" value={password} setValue={setPassword} required={true} svgPath={`/assets/svgs/password/${theme?.type === 'light' ? 'black' : 'white'}.svg`} handleKeyPress={checkKeyPress} />
       </div>
       <div className="mb-4">

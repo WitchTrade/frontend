@@ -16,7 +16,7 @@ const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValu
     return (
         <div className="relative" >
             <input
-                className={`w-full h-10 ${svgPath ? 'pl-9' : 'pl-3'} pr-3 text-base placeholder-wt-text border border-wt-accent-light rounded-lg bg-wt-surface-dark focus:outline-none focus:ring-2 focus:ring-wt-accent`}
+                className={`w-full h-11 ${svgPath ? 'pl-9' : 'pl-3'} pr-3 text-base placeholder-wt-text border border-wt-accent-light rounded-lg bg-wt-surface-dark focus:outline-none focus:ring-2 focus:ring-wt-accent`}
                 type={type}
                 placeholder={`${placeholder}${required ? '*' : ''}`}
                 value={value}

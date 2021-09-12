@@ -58,7 +58,7 @@ const RegisterHandler = () => {
             const notification = createNotification({
                 content: 'Invalid steam profile url',
                 duration: 5000,
-                type: 'info'
+                type: 'warning'
             });
             notificationService.addNotification(notification);
             return;
@@ -69,7 +69,7 @@ const RegisterHandler = () => {
             const notification = createNotification({
                 content: 'Invalid steam trade link',
                 duration: 5000,
-                type: 'info'
+                type: 'warning'
             });
             notificationService.addNotification(notification);
             return;
