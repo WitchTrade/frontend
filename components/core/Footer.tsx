@@ -1,19 +1,9 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent } from 'react';
 import Image from 'next/image';
-import themeService from '../../shared/services/theme.service';
-import { Theme } from '../../shared/models/theme.model';
+import ThemeHandler from '../../shared/handlers/theme.handler';
 
 const Footer: FunctionComponent = () => {
-    const [theme, setTheme] = useState<Theme>();
-
-    useEffect(() => {
-        const themeSub = themeService.currentTheme$.subscribe(setTheme);
-
-        return () => {
-            themeSub.unsubscribe();
-        };
-    }, []);
-
+    const { theme } = ThemeHandler();
 
     return (
         <div className="bg-wt-surface-dark text-wt-text py-4">

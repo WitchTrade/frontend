@@ -9,13 +9,11 @@ import Dropdown from '../../../components/styles/Dropdown';
 import PageHeader from '../../../components/styles/PageHeader';
 import CustomizationHandler from '../../../shared/handlers/customization.handler';
 import TextInput from '../../../components/styles/TextInput';
-import themeService from '../../../shared/services/theme.service';
-import { useEffect, useState } from 'react';
-import { Theme } from '../../../shared/models/theme.model';
 import FileInput from '../../../components/styles/FileInput';
+import ThemeHandler from '../../../shared/handlers/theme.handler';
 
 const Customization: NextPage = () => {
-    const [theme, setTheme] = useState<Theme>();
+    const { theme } = ThemeHandler();
 
     const {
         allThemes,
@@ -41,14 +39,6 @@ const Customization: NextPage = () => {
         setNotificationType,
         createTestNotification
     } = CustomizationHandler();
-
-    useEffect(() => {
-        const themeSub = themeService.currentTheme$.subscribe(setTheme);
-
-        return (() => {
-            themeSub.unsubscribe();
-        });
-    }, []);
 
     return (
         <>

@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
 import CustomHeader from '../../components/core/CustomHeader';
 import LoginNav from '../../components/navs/LoginNav';
 import CheckboxInput from '../../components/styles/CheckboxInput';
@@ -7,11 +6,10 @@ import NavbarLink from '../../components/styles/NavbarLink';
 import PageHeader from '../../components/styles/PageHeader';
 import TextInput from '../../components/styles/TextInput';
 import LoginHandler from '../../shared/handlers/login.handler';
-import { Theme } from '../../shared/models/theme.model';
-import themeService from '../../shared/services/theme.service';
+import ThemeHandler from '../../shared/handlers/theme.handler';
 
 const Login: NextPage = () => {
-  const [theme, setTheme] = useState<Theme>();
+  const { theme } = ThemeHandler();
 
   const {
     username,
@@ -22,14 +20,6 @@ const Login: NextPage = () => {
     setStayLoggedIn,
     login
   } = LoginHandler();
-
-  useEffect(() => {
-    const themeSub = themeService.currentTheme$.subscribe(setTheme);
-
-    return (() => {
-      themeSub.unsubscribe();
-    });
-  }, []);
 
   const checkKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {

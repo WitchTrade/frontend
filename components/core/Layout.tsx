@@ -3,20 +3,11 @@ import DefaultHeader from './DefaultHeader';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Notification from './Notification';
-import { Theme } from '../../shared/models/theme.model';
-import themeService from '../../shared/services/theme.service';
+import ThemeHandler from '../../shared/handlers/theme.handler';
 
 const Layout: FunctionComponent = ({ children }) => {
-    const [theme, setTheme] = useState<Theme>();
+    const { theme } = ThemeHandler();
     const [themeStyles, setThemeStyles] = useState<any>();
-
-    useEffect(() => {
-        const themeSub = themeService.currentTheme$.subscribe(setTheme);
-
-        return () => {
-            themeSub.unsubscribe();
-        };
-    }, []);
 
     useEffect(() => {
         if (theme) {

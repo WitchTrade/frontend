@@ -14,16 +14,15 @@ import { userQuery } from '../../shared/stores/user/user.query';
 import { userService } from '../../shared/stores/user/user.service';
 import NavbarLink from '../styles/NavbarLink';
 import Image from 'next/image';
-import { Theme } from '../../shared/models/theme.model';
-import themeService from '../../shared/services/theme.service';
+import ThemeHandler from '../../shared/handlers/theme.handler';
 
 const Navbar: FunctionComponent = () => {
     const router = useRouter();
 
-    const [theme, setTheme] = useState<Theme>();
+    const { theme } = ThemeHandler();
 
-    const [userState, setUserState] = useState<User>(createUser({}));
-    const [userInventory, setUserInventory] = useState<Inventory>(createInventory({}));
+    const [user, setUser] = useState<User>(createUser({}));
+    const [inventory, setInventory] = useState<Inventory>(createInventory({}));
     const [lastSynced, setLastSynced] = useState({ old: false, lastSyncedString: '' });
     const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();
     const [notifications, setNotifications] = useState<ServerNotification[]>([]);
@@ -31,16 +30,13 @@ const Navbar: FunctionComponent = () => {
     const [customOpen, setCustomOpen] = useState(false);
 
     useEffect(() => {
-        const themeSub = themeService.currentTheme$.subscribe(setTheme);
+        const userSub = userQuery.select().subscribe(setUser);
 
-        const userSub = userQuery.select().subscribe(setUserState);
-
-        const inventorySub = inventoryQuery.select().subscribe(setUserInventory);
+        const inventorySub = inventoryQuery.select().subscribe(setInventory);
 
         const notiSub = serverNotificationQuery.selectAll().subscribe(setNotifications);
 
         return (() => {
-            themeSub.unsubscribe();
             userSub.unsubscribe();
             inventorySub.unsubscribe();
             notiSub.unsubscribe();
@@ -48,18 +44,18 @@ const Navbar: FunctionComponent = () => {
     }, []);
 
     useEffect(() => {
-        if (userInventory.id) {
+        if (inventory.id) {
             if (updateInterval) {
                 clearInterval(updateInterval);
             }
-            setLastSynced({ old: dayjs().unix() - dayjs(userInventory.lastSynced).unix() > 86400, lastSyncedString: dayjs().to(dayjs(userInventory.lastSynced)) });
+            setLastSynced({ old: dayjs().unix() - dayjs(inventory.lastSynced).unix() > 86400, lastSyncedString: dayjs().to(dayjs(inventory.lastSynced)) });
             const interval = setInterval(() => {
-                setLastSynced({ old: dayjs().unix() - dayjs(userInventory.lastSynced).unix() > 86400, lastSyncedString: dayjs().to(dayjs(userInventory.lastSynced)) });
+                setLastSynced({ old: dayjs().unix() - dayjs(inventory.lastSynced).unix() > 86400, lastSyncedString: dayjs().to(dayjs(inventory.lastSynced)) });
             }, 60000);
             setUpdateInterval(interval);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userInventory]);
+    }, [inventory]);
 
     const logout = (): void => {
         userService.logout();
@@ -67,7 +63,7 @@ const Navbar: FunctionComponent = () => {
     };
 
     const deleteNotification = (notification: ServerNotification): void => {
-        serverNotificationService.deleteNotification(notification, userState).subscribe();
+        serverNotificationService.deleteNotification(notification, user).subscribe();
     };
 
     return (
@@ -102,9 +98,9 @@ const Navbar: FunctionComponent = () => {
                                     <div className="ml-4 flex items-center md:ml-6">
                                         <Menu as="div" className="ml-3 relative">
                                             <div>
-                                                {userState.loggedIn &&
+                                                {user.loggedIn &&
                                                     <div className="flex items-center">
-                                                        {userInventory.id &&
+                                                        {inventory.id &&
                                                             <p className="text-sm mr-2 hidden lg:block">Inventory synced: <span className={lastSynced.old ? 'text-wt-warning' : 'text-wt-success'}>{lastSynced.lastSyncedString}</span></p>
                                                         }
                                                         <Menu.Button onClickCapture={() => setCustomOpen(!customOpen)}
@@ -193,16 +189,16 @@ const Navbar: FunctionComponent = () => {
                                                 {({ open }) => (
                                                     <>
                                                         <div>
-                                                            {userState.loggedIn &&
+                                                            {user.loggedIn &&
                                                                 <div className="flex items-center">
                                                                     <Menu.Button className="max-w-xs bg-wt-surface-dark rounded-full flex items-center text-sm font-bold p-1 focus:outline-none focus:ring-2 focus:ring-wt-accent">
                                                                         <span className="sr-only">Open user menu</span>
                                                                         <Image className="rounded-full" src="/assets/images/piggy.png" height={32} width={32} alt="Profile Image" />
-                                                                        <p className="text-wt-accent-light ml-1">{userState.displayName}</p>
+                                                                        <p className="text-wt-accent-light ml-1">{user.displayName}</p>
                                                                     </Menu.Button>
                                                                 </div>
                                                             }
-                                                            {!userState.loggedIn &&
+                                                            {!user.loggedIn &&
                                                                 <Link href="/login" passHref>
                                                                     <NavbarLink type={router.pathname.startsWith('/login') || router.pathname.startsWith('/register') ? 'navSelected' : 'nav'}>Log in</NavbarLink>
                                                                 </Link>
@@ -223,8 +219,8 @@ const Navbar: FunctionComponent = () => {
                                                                 className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-wt-light ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
                                                             >
                                                                 <Menu.Item>
-                                                                    <Link href={`/profile/${userState.username}`} passHref>
-                                                                        <NavbarLink type={router.pathname.startsWith(`/profile/${userState.username}`) ? 'menuSelected' : 'menu'}>Profile</NavbarLink>
+                                                                    <Link href={`/profile/${user.username}`} passHref>
+                                                                        <NavbarLink type={router.pathname.startsWith(`/profile/${user.username}`) ? 'menuSelected' : 'menu'}>Profile</NavbarLink>
                                                                     </Link>
                                                                 </Menu.Item>
                                                                 <Menu.Item>
@@ -296,15 +292,15 @@ const Navbar: FunctionComponent = () => {
                                     </>
                                 </Disclosure.Button>
                             </div>
-                            {userState.loggedIn &&
+                            {user.loggedIn &&
                                 <div className="pt-4 pb-3 border-t border-gray-700">
                                     <div className="flex items-center px-5">
                                         <div className="flex-shrink-0">
                                             <Image className="rounded-full" src="/assets/images/piggy.png" height={40} width={40} alt="Profile Image" />
                                         </div>
                                         <div className="ml-3">
-                                            <div className="text-base font-medium leading-none text-wt-accent-light">{userState.displayName}</div>
-                                            {userInventory.id &&
+                                            <div className="text-base font-medium leading-none text-wt-accent-light">{user.displayName}</div>
+                                            {inventory.id &&
                                                 <p className="text-sm mr-2">Inventory synced: <span className={lastSynced.old ? 'text-yellow-500' : 'text-green-500'}>{lastSynced.lastSyncedString}</span></p>
                                             }
                                         </div>
@@ -312,8 +308,8 @@ const Navbar: FunctionComponent = () => {
                                     <div className="mt-3 px-2 space-y-1">
                                         <Disclosure.Button as={Fragment}>
                                             <>
-                                                <Link href={`/profile/${userState.username}`} passHref>
-                                                    <NavbarLink type={router.pathname.startsWith(`/profile/${userState.username}`) ? 'hamburgerSelected' : 'hamburger'}>Profile</NavbarLink>
+                                                <Link href={`/profile/${user.username}`} passHref>
+                                                    <NavbarLink type={router.pathname.startsWith(`/profile/${user.username}`) ? 'hamburgerSelected' : 'hamburger'}>Profile</NavbarLink>
                                                 </Link>
                                             </>
                                         </Disclosure.Button>
@@ -339,7 +335,7 @@ const Navbar: FunctionComponent = () => {
                                     </div>
                                 </div>
                             }
-                            {!userState.loggedIn &&
+                            {!user.loggedIn &&
                                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                                     <Disclosure.Button as={Fragment}>
                                         <>

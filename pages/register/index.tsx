@@ -1,16 +1,14 @@
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
 import CustomHeader from '../../components/core/CustomHeader';
 import LoginNav from '../../components/navs/LoginNav';
 import NavbarLink from '../../components/styles/NavbarLink';
 import PageHeader from '../../components/styles/PageHeader';
 import TextInput from '../../components/styles/TextInput';
 import RegisterHandler from '../../shared/handlers/register.handler';
-import { Theme } from '../../shared/models/theme.model';
-import themeService from '../../shared/services/theme.service';
+import ThemeHandler from '../../shared/handlers/theme.handler';
 
 const Register: NextPage = () => {
-  const [theme, setTheme] = useState<Theme>();
+  const { theme } = ThemeHandler();
 
   const {
     username,
@@ -31,14 +29,6 @@ const Register: NextPage = () => {
     setAcceptedLegal,
     register
   } = RegisterHandler();
-
-  useEffect(() => {
-    const themeSub = themeService.currentTheme$.subscribe(setTheme);
-
-    return (() => {
-      themeSub.unsubscribe();
-    });
-  }, []);
 
   return (
     <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
