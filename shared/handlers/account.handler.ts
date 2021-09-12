@@ -108,7 +108,15 @@ const AccountSettingsHandler = () => {
             return;
         }
 
-        userService.updateAccountSettings(formValue).subscribe((res) => {
+        userService.updateAccountSettings({
+            displayName: formValue.displayName,
+            email: formValue.email,
+            steamUrl: formValue.steamUrl.trim() ? formValue.steamUrl : undefined,
+            steamTradeLink: formValue.steamTradeLink.trim() ? formValue.steamTradeLink : undefined,
+            steamAuth: formValue.steamAuth,
+            discordTag: formValue.discordTag.trim() ? formValue.discordTag : undefined,
+            hidden: formValue.hidden
+        }).subscribe((res) => {
             setEditing(false);
         });
     };

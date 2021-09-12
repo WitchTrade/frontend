@@ -18,10 +18,10 @@ const ValueDisplay: FunctionComponent<Props> = ({ name, value, link, svgPath }) 
                 }
                 <p className="ml-1">{name}:</p>
             </div>
-            {link &&
+            {link && value &&
                 <a className="hover:underline text-wt-accent-light rounded-md focus:outline-none focus:ring-2 focus:ring-wt-accent" href={value} target="_blank" rel="noreferrer">click here</a>
                 ||
-                <p className="font-bold">{value}</p>
+                <p className={value ? 'font-bold' : ''}>{value ? value : 'Not set'}</p>
             }
         </div >
     );
