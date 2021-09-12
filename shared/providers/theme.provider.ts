@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Theme } from '../models/theme.model';
 import themeService from '../services/theme.service';
 
-const ThemeHandler = () => {
+const useThemeProvider = () => {
     const [theme, setTheme] = useState<Theme>();
 
     useEffect(() => {
@@ -16,4 +16,4 @@ const ThemeHandler = () => {
     return { theme };
 };
 
-export default ThemeHandler;
+export default useThemeProvider;

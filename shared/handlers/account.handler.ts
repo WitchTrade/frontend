@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import useUserProvider from '../providers/user.provider';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
-import { createUser, discordTagRegex, steamTradeLinkRegex, steamUrlRegex, User } from '../stores/user/user.model';
-import { userQuery } from '../stores/user/user.query';
+import { discordTagRegex, steamTradeLinkRegex, steamUrlRegex } from '../stores/user/user.model';
 import { userService } from '../stores/user/user.service';
 
 const AccountSettingsHandler = () => {
-    const [user, setUser] = useState<User>(createUser({}));
+    const { user } = useUserProvider();
 
     const [editing, setEditing] = useState(false);
 
@@ -19,15 +19,6 @@ const AccountSettingsHandler = () => {
         discordTag: '',
         hidden: false
     });
-
-    useEffect(() => {
-        const userSub = userQuery.select().subscribe(setUser);
-
-        return () => {
-            userSub.unsubscribe();
-        };
-
-    }, []);
 
     const editAccountSettings = () => {
         setEditing(true);

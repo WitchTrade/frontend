@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import CustomHeader from '../../../components/core/CustomHeader';
+import LoginWrapper from '../../../components/core/LoginWrapper';
 import SettingNav from '../../../components/navs/SettingNav';
 import ActionButton from '../../../components/styles/ActionButton';
 import BooleanDisplay from '../../../components/styles/BooleanDisplay';
@@ -7,10 +8,10 @@ import CheckboxInput from '../../../components/styles/CheckboxInput';
 import TextInput from '../../../components/styles/TextInput';
 import ValueDisplay from '../../../components/styles/ValueDisplay';
 import AccountSettingsHandler from '../../../shared/handlers/account.handler';
-import ThemeHandler from '../../../shared/handlers/theme.handler';
+import useThemeProvider from '../../../shared/providers/theme.provider';
 
 const Account: NextPage = () => {
-    const { theme } = ThemeHandler();
+    const { theme } = useThemeProvider();
 
     const {
         user,
@@ -23,7 +24,7 @@ const Account: NextPage = () => {
     } = AccountSettingsHandler();
 
     return (
-        <>
+        <LoginWrapper>
             <CustomHeader
                 title="WitchTrade | Account Settings"
                 description="Account Settings"
@@ -97,7 +98,7 @@ const Account: NextPage = () => {
                     </div>
                 </div>
             }
-        </>
+        </LoginWrapper>
     );
 };
 

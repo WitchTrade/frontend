@@ -1,9 +1,9 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
-import ThemeHandler from '../../shared/handlers/theme.handler';
+import useThemeProvider from '../../shared/providers/theme.provider';
 
 const Footer: FunctionComponent = () => {
-    const { theme } = ThemeHandler();
+    const { theme } = useThemeProvider();
 
     return (
         <div className="bg-wt-surface-dark text-wt-text py-4">

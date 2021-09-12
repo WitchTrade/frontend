@@ -3,10 +3,10 @@ import DefaultHeader from './DefaultHeader';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Notification from './Notification';
-import ThemeHandler from '../../shared/handlers/theme.handler';
+import useThemeProvider from '../../shared/providers/theme.provider';
 
 const Layout: FunctionComponent = ({ children }) => {
-    const { theme } = ThemeHandler();
+    const { theme } = useThemeProvider();
     const [themeStyles, setThemeStyles] = useState<any>();
 
     useEffect(() => {

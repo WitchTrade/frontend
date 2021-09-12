@@ -15,9 +15,12 @@ export class UserService {
   constructor(private userStore: UserStore, private _userQuery: UserQuery, private _inventoryService: InventoryService) { }
 
   public async init() {
-    const user = createUser({});
+    const user = createUser({ loggedIn: false });
     const token = localStorage.getItem('jwt') ? localStorage.getItem('jwt') : sessionStorage.getItem('jwt');
-    if (!token) return;
+    if (!token) {
+      this.userStore.update(user);
+      return;
+    };
 
     // Decode token and check if it's still valid
     const decodedToken = jwt_decode<DecodedToken>(token);
@@ -251,7 +254,7 @@ export class UserService {
   public logout() {
     localStorage.removeItem('jwt');
     sessionStorage.removeItem('jwt');
-    this.userStore.update(createUser({}));
+    this.userStore.update(createUser({ loggedIn: false }));
     this._inventoryService.removeInventory();
     const notification = createNotification({
       content: 'Logged out',

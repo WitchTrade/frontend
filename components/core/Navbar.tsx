@@ -9,20 +9,19 @@ import { inventoryQuery } from '../../shared/stores/inventory/inventory.query';
 import { ServerNotification } from '../../shared/stores/serverNotification/server-notification.model';
 import { serverNotificationQuery } from '../../shared/stores/serverNotification/server-notification.query';
 import { serverNotificationService } from '../../shared/stores/serverNotification/server-notification.service';
-import { createUser, User } from '../../shared/stores/user/user.model';
-import { userQuery } from '../../shared/stores/user/user.query';
 import { userService } from '../../shared/stores/user/user.service';
 import NavbarLink from '../styles/NavbarLink';
 import Image from 'next/image';
-import ThemeHandler from '../../shared/handlers/theme.handler';
 import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
+import useThemeProvider from '../../shared/providers/theme.provider';
+import useUserProvider from '../../shared/providers/user.provider';
 
 const Navbar: FunctionComponent = () => {
     const router = useRouter();
 
-    const { theme } = ThemeHandler();
+    const { theme } = useThemeProvider();
 
-    const [user, setUser] = useState<User>(createUser({}));
+    const { user } = useUserProvider();
     const [inventory, setInventory] = useState<Inventory>(createInventory({}));
     const [lastSynced, setLastSynced] = useState({ old: false, lastSyncedString: '' });
     const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();
@@ -32,14 +31,11 @@ const Navbar: FunctionComponent = () => {
     const { show: showUserMenu, nodeRef: userMenuRef, toggleRef: userMenuToggleRef } = useDetectOutsideClick(false, true);
 
     useEffect(() => {
-        const userSub = userQuery.select().subscribe(setUser);
-
         const inventorySub = inventoryQuery.select().subscribe(setInventory);
 
         const notiSub = serverNotificationQuery.selectAll().subscribe(setNotifications);
 
         return (() => {
-            userSub.unsubscribe();
             inventorySub.unsubscribe();
             notiSub.unsubscribe();
         });

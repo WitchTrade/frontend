@@ -10,10 +10,11 @@ import PageHeader from '../../../components/styles/PageHeader';
 import CustomizationHandler from '../../../shared/handlers/customization.handler';
 import TextInput from '../../../components/styles/TextInput';
 import FileInput from '../../../components/styles/FileInput';
-import ThemeHandler from '../../../shared/handlers/theme.handler';
+import useThemeProvider from '../../../shared/providers/theme.provider';
+import LoginWrapper from '../../../components/core/LoginWrapper';
 
 const Customization: NextPage = () => {
-    const { theme } = ThemeHandler();
+    const { theme } = useThemeProvider();
 
     const {
         allThemes,
@@ -41,7 +42,7 @@ const Customization: NextPage = () => {
     } = CustomizationHandler();
 
     return (
-        <>
+        <LoginWrapper>
             <CustomHeader
                 title="WitchTrade | Customization"
                 description="Customize your WitchTrade expirience"
@@ -215,7 +216,7 @@ const Customization: NextPage = () => {
                     </>
                 }
             </div >
-        </>
+        </LoginWrapper>
     );
 };
 

@@ -8,7 +8,7 @@ import { createUser, User } from './user.model';
 export class UserStore extends Store<User> {
 
   constructor() {
-    super(createUser({ loggedIn: false }));
+    super({});
   }
 
 }

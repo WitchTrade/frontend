@@ -9,9 +9,10 @@ interface Props {
     required: boolean;
     svgPath?: string;
     handleKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+    autocompleteValue?: string;
 }
 
-const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValue, required, svgPath, handleKeyPress }) => {
+const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValue, required, svgPath, handleKeyPress, autocompleteValue }) => {
 
     return (
         <div className="relative" >
@@ -22,6 +23,7 @@ const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValu
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 onKeyPress={handleKeyPress}
+                autoComplete={autocompleteValue}
             />
             {svgPath &&
                 <div className="absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none top-0 bot-0">

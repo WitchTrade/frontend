@@ -9,7 +9,6 @@ export interface ServerNotificationState extends EntityState<ServerNotification>
 })
 export class ServerNotificationStore extends EntityStore<ServerNotificationState> {
 
-  // eslint-disable-next-line
   constructor() {
     super();
   }
