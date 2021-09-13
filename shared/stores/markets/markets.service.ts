@@ -364,7 +364,7 @@ export class MarketsService {
           next: async res => {
             if (res.ok) {
               const notification = createNotification({
-                content: 'Wishlist item created',
+                content: 'Wish list item created',
                 duration: 5000,
                 type: 'success'
               });
@@ -404,7 +404,7 @@ export class MarketsService {
           next: async res => {
             if (res.ok) {
               const notification = createNotification({
-                content: 'Wishlist item deleted',
+                content: 'Wish list item deleted',
                 duration: 5000,
                 type: 'success'
               });

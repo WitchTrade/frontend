@@ -23,12 +23,12 @@ const Dropdown: FunctionComponent<Props> = ({ selectedValue, setValue, values })
         <Listbox value={selectedValue} onChange={setValue}>
             {({ open }) => (
                 <div className="relative mt-1">
-                    <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-wt-surface-dark rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-wt-accent sm:text-sm">
+                    <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-wt-surface-dark rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-wt-accent sm:text-sm border border-wt-accent-light">
                         <div className="flex">
                             {selectedValue.imagePath &&
                                 <Image src={selectedValue.imagePath} height="20px" width="20px" alt="Dropdown Item Icon" />
                             }
-                            <span className="block truncate">{selectedValue.displayName}</span>
+                            <span className="block truncate ml-1">{selectedValue.displayName}</span>
                         </div>
                         <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                             <div className="w-5 h-5">
@@ -61,7 +61,7 @@ const Dropdown: FunctionComponent<Props> = ({ selectedValue, setValue, values })
                                                 }
                                                 <span
                                                     className={`${selected ? "font-medium" : "font-normal"
-                                                        } block truncate`}
+                                                        } block truncate ml-1`}
                                                 >
                                                     {value.displayName}
                                                 </span>

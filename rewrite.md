@@ -9,7 +9,7 @@ Visit https://preview.witchtrade.org/ where the current state is deployed. You c
 - [x] /login 
 - [x] notifications
 - [x] /register
-- [ ] /user/settings
+- [x] /user/settings
 - [ ] /gameservers
 - [ ] /items
 - [ ] /profiles

@@ -5,6 +5,7 @@ import SettingNav from '../../../components/navs/SettingNav';
 import ActionButton from '../../../components/styles/ActionButton';
 import BooleanDisplay from '../../../components/styles/BooleanDisplay';
 import CheckboxInput from '../../../components/styles/CheckboxInput';
+import PageHeader from '../../../components/styles/PageHeader';
 import TextInput from '../../../components/styles/TextInput';
 import ValueDisplay from '../../../components/styles/ValueDisplay';
 import AccountSettingsHandler from '../../../shared/handlers/account.handler';
@@ -31,6 +32,7 @@ const Account: NextPage = () => {
                 url="https://witchtrade.org/user/settings/account"
             />
             <SettingNav />
+            <PageHeader title="Account Settings" />
             {!editing &&
                 <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8 py-2">
                     <div className="m-1">

@@ -36,3 +36,8 @@ export function createInventory(params: Partial<Inventory>) {
         invSyncSetting: params.invSyncSetting ? params.invSyncSetting : null,
     } as Inventory;
 }
+
+export interface InventoryChangeDTO {
+    showInTrading: boolean;
+    automaticSync: boolean;
+}

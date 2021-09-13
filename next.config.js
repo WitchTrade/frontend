@@ -14,4 +14,7 @@ module.exports = {
       },
     ];
   },
+  images: {
+    domains: ['www.witchit.com']
+  }
 };

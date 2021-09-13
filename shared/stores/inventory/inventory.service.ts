@@ -5,7 +5,7 @@ import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
 import { User } from '../user/user.model';
 import { userQuery, UserQuery } from '../user/user.query';
-import { createInventory } from './inventory.model';
+import { createInventory, InventoryChangeDTO } from './inventory.model';
 import { InventoryStore, inventoryStore } from './inventory.store';
 
 export class InventoryService {
@@ -91,7 +91,7 @@ export class InventoryService {
       );
   }
 
-  public updateInventory(data: any) {
+  public updateInventory(data: InventoryChangeDTO) {
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/inventory`, {
       method: 'PUT',
       headers: {
