@@ -24,7 +24,7 @@ const NumberInput: FunctionComponent<Props> = ({ value, setValue, min, max }) =>
         <input
             className={`w-20 h-11 pl-3 pr-3 text-base placeholder-wt-text border border-wt-accent-light rounded-lg bg-wt-surface-dark focus:outline-none focus:ring-2 focus:ring-wt-accent`}
             value={value.toString()}
-            onChange={(e) => validateValue(parseInt(e.target.value))}
+            onChange={(e) => validateValue(parseInt(e.target.value, 10))}
             type="number"
         />
     );

@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
-import CustomHeader from '../../components/core/CustomHeader';
-import LoginNav from '../../components/navs/LoginNav';
-import NavbarLink from '../../components/styles/NavbarLink';
-import PageHeader from '../../components/styles/PageHeader';
-import TextInput from '../../components/styles/TextInput';
-import RegisterHandler from '../../shared/handlers/register.handler';
-import useThemeProvider from '../../shared/providers/theme.provider';
+import CustomHeader from '../components/core/CustomHeader';
+import LoginNav from '../components/navs/LoginNav';
+import NavbarLink from '../components/styles/NavbarLink';
+import PageHeader from '../components/styles/PageHeader';
+import TextInput from '../components/styles/TextInput';
+import RegisterHandler from '../shared/handlers/register.handler';
+import useThemeProvider from '../shared/providers/theme.provider';
 
 const Register: NextPage = () => {
   const { theme } = useThemeProvider();
