@@ -2,6 +2,7 @@
 
 [![Stars](https://img.shields.io/github/stars/GiyoMoon/WitchTrade-FE.svg?color=ff67e4)](https://github.com/GiyoMoon/WitchTrade-FE/stargazers)
 [![Commits](https://img.shields.io/github/commit-activity/m/GiyoMoon/WitchTrade-FE?color=ff67e4)](https://github.com/GiyoMoon/WitchTrade-FE/commits)
+[![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?color=ff67e4)](https://gitmoji.dev)
 [![License](https://img.shields.io/github/license/GiyoMoon/WitchTrade-FE.svg?color=ff67e4)](https://github.com/GiyoMoon/WitchTrade-FE/blob/master/LICENSE)
 [![CodeFactor](https://www.codefactor.io/repository/github/GiyoMoon/WitchTrade-FE/badge)](https://www.codefactor.io/repository/github/GiyoMoon/WitchTrade-FE)
 
