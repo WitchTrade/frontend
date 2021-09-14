@@ -3,7 +3,7 @@ import { FunctionComponent } from 'react';
 const Divider: FunctionComponent = () => {
     return (
         <div className="flex items-center flex-col">
-            <div className="border w-full">
+            <div className="w-full border border-wt-text">
             </div>
         </div>
     );
