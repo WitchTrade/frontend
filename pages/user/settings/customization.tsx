@@ -72,7 +72,7 @@ const Customization: NextPage = () => {
                     <div className="flex justify-center">
                         <div className="mt-2 bg-wt-surface-dark rounded-lg p-2 w-72">
                             <p className="text-center">Custom theme <span className="text-wt-accent font-bold">{selectedTheme?.displayName}</span></p>
-                            <div className="flex justify-center text-center">
+                            <div className="flex justify-center">
                                 <div className="mx-2">
                                     <ActionButton type="neutral" onClick={downloadTheme}>Export Theme</ActionButton>
                                 </div>
@@ -84,7 +84,7 @@ const Customization: NextPage = () => {
                     </div>
                 }
                 {!creatingCustomTheme &&
-                    <div className="flex justify-center text-center mt-2">
+                    <div className="flex justify-center mt-2">
                         <div className="mx-2">
                             <FileInput inputId="themeUpload" text="Import Theme" inputRef={themeUploadFile} inputChanged={checkThemeInputFile}></FileInput>
                         </div>

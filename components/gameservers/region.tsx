@@ -8,11 +8,14 @@ interface Props {
     regionShort: string;
     servers: Gameserver[];
     loading: boolean;
+    watchlist: string[];
+    ownPlayer: string;
+    addPlayer: (playerName: string) => void;
 };
 
-const Region: FunctionComponent<Props> = ({ regionShort, servers, loading }) => {
+const Region: FunctionComponent<Props> = ({ regionShort, servers, loading, watchlist, ownPlayer, addPlayer }) => {
     return (
-        <div className="w-72 bg-wt-surface-dark rounded-lg border-2 border-wt-accent p-4 m-2">
+        <div className="w-80 bg-wt-surface-dark rounded-lg border-2 border-wt-accent p-4 m-2">
             <div className="flex justify-center items-center">
                 <Image src={`/assets/svgs/flags/${regionShort}.svg`} height="50px" width="50" alt={`${regionShort} region flag`} />
                 <p className="ml-2 font-bold text-xl">{regionShort.toUpperCase()} Servers</p>
@@ -27,7 +30,7 @@ const Region: FunctionComponent<Props> = ({ regionShort, servers, loading }) => 
                     }
                     {servers.map((server, i) => (
                         <div key={i} className="my-1">
-                            <Server server={server} />
+                            <Server server={server} watchlist={watchlist} ownPlayer={ownPlayer} addPlayer={addPlayer} />
                         </div>
                     ))
                     }
