@@ -26,7 +26,7 @@ const Server: FunctionComponent<Props> = ({ server, watchlist, ownPlayer, addPla
                     {(server.players &&
                         <>
                             {ownPlayer && server.players.find(player => player.name === ownPlayer) &&
-                                <div className="rounded-full text-center flex justify-center items-center mx-1 px-1 bg-accent" style={{ minWidth: '20px', height: '20px' }}>
+                                <div className="rounded-full text-center flex justify-center items-center mx-1 px-1 bg-wt-accent-light" style={{ minWidth: '20px', height: '20px' }}>
                                     <p className="font-bold text-sm text-wt-light">!</p>
                                 </div>}
                             {server.players.find(player => watchlist.includes(player.name)) &&
@@ -55,12 +55,12 @@ const Server: FunctionComponent<Props> = ({ server, watchlist, ownPlayer, addPla
                             {server.players && server.players.map((player, i) => (
                                 <div key={i} className="flex justify-between items-center">
                                     <div className="flex items-center">
-                                        {!watchlist.includes(player.name) &&
+                                        {!watchlist.includes(player.name) && ownPlayer !== player.name &&
                                             <button className="hover:bg-wt-hover rounded-full flex items-center" onClick={() => addPlayer(player.name)}>
                                                 <Image src={`/assets/svgs/add/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" />
                                             </button>
                                         }
-                                        <p className={`text-sm ${watchlist.includes(player.name) ? 'text-wt-accent ml-5' : ''}`}>{player.name}</p>
+                                        <p className={`text-sm ${watchlist.includes(player.name) ? 'text-wt-accent ml-5' : ownPlayer === player.name ? 'text-wt-accent-light ml-5' : ''}`}>{player.name}</p>
                                     </div>
                                     <p className="text-sm">{Math.floor(dayjs.duration(player.playingFor, 's').asHours()) > 0 ? `${Math.floor(dayjs.duration(player.playingFor, 's').asHours())}h ` : ''}{dayjs.duration(player.playingFor, 's').minutes()} min</p>
                                 </div>
