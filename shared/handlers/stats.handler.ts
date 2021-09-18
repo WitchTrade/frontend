@@ -126,7 +126,7 @@ const useStatsHandler = () => {
 
         const last2Hour = new Date();
         last2Hour.setUTCHours(last2Hour.getUTCHours() - (last2Hour.getUTCHours() % 2), 0, 0, 0);
-        const last2HourWeekDay = sortedWeekDays[last2Hour.getDay()];
+        const last2HourWeekDay = sortedWeekDays[last2Hour.getUTCDay()];
 
         playerCountTotalStats.sort((a, b) => {
             const aNum = parseInt(a.label.substring(a.label.indexOf(' '), a.label.indexOf(':')), 10);
@@ -169,7 +169,7 @@ const useStatsHandler = () => {
             return aNum - bNum;
         });
 
-        const playerCountRegionSplitIndex = playerCountRegionStats.findIndex(cr => parseInt(cr.label.substring(0, cr.label.indexOf(':'))) === lastHour, 10) + 3;
+        const playerCountRegionSplitIndex = playerCountRegionStats.findIndex(cr => parseInt(cr.label.substring(0, cr.label.indexOf(':')), 10) === lastHour) + 3;
 
         playerCountRegionStats = [
             ...playerCountRegionStats.slice(playerCountRegionSplitIndex),
