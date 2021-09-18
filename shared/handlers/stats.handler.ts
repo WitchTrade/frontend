@@ -1,17 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-    Chart,
-    PieController,
-    LineController, ArcElement,
-    PointElement,
-    LineElement,
-    CategoryScale,
-    LinearScale,
-    Title,
-    Legend,
-    Tooltip
-} from 'chart.js';
+import { Chart } from 'chart.js';
 import useThemeProvider from '../providers/theme.provider';
+import themeService from '../services/theme.service';
 
 export interface Stat {
     statGroup: string;
@@ -28,11 +18,23 @@ const sortedGameModes = [
     'FaP',
 ];
 
+const sortedWeekDays = [
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wed',
+    'Thu',
+    'Fri',
+    'Sat'
+];
+
 const useStatsHandler = () => {
     const { theme } = useThemeProvider();
 
     const playerDistRegion = useRef<any>(null);
     const playerDistMode = useRef<any>(null);
+
+    const playerCountTotal = useRef<any>(null);
     const playerCountRegion = useRef<any>(null);
     const playerCountMode = useRef<any>(null);
 
@@ -41,7 +43,6 @@ const useStatsHandler = () => {
     const [ready, setReady] = useState(false);
 
     useEffect(() => {
-        Chart.register(PieController, LineController, ArcElement, PointElement, LineElement, CategoryScale, LinearScale, Title, Legend, Tooltip);
         getStats();
     }, []);
 
@@ -51,48 +52,61 @@ const useStatsHandler = () => {
             stats.length > 1 &&
             playerDistRegion &&
             playerDistMode &&
+            playerCountTotal &&
             playerCountRegion &&
             playerCountMode &&
             !ready
         ) {
             setReady(true);
         }
-    }, [theme, stats, playerDistRegion, playerDistMode]);
+    }, [
+        theme,
+        stats,
+        playerDistRegion,
+        playerDistMode,
+        playerCountTotal,
+        playerCountRegion,
+        playerCountMode
+    ]);
 
     useEffect(() => {
         if (!ready || !theme) return;
 
         Chart.defaults.color = theme.colors.chartText;
-        Chart.defaults.borderColor = hexToRgbA(theme.colors.chartText, 0.1);
+        Chart.defaults.borderColor = themeService.hexToRgbA(theme.colors.chartText, 0.1);
 
-        const regions = stats.filter((stat) => stat.statGroup === 'd_distribution_region');
+        // PIE CHART
+        // REGION
+        const playerDistRegionStats = stats.filter((stat) => stat.statGroup === 'w_distribution_region');
         const playerDistRegionChart = new Chart(playerDistRegion.current, {
             type: 'pie',
             data: {
-                labels: regions.map(d => d.label),
+                labels: playerDistRegionStats.map(d => d.label),
                 datasets: [{
-                    data: regions.map(d => d.value),
+                    data: playerDistRegionStats.map(d => d.value),
                     backgroundColor: [
                         theme.colors.chartColor1,
                         theme.colors.chartColor2,
                         theme.colors.chartColor3
                     ],
-                    borderWidth: [0]
+                    borderColor: theme.colors.chartText
                 }]
             },
-            options: createChartOptions('Distribution of players among regions in the last 24h')
+            options: createChartOptions(true, true)
         });
 
-        const distribution = stats.filter((stat) => stat.statGroup === 'd_distribution_mode');
-        distribution.sort((a, b) => {
+        // PIE CHART
+        // MODE
+        const playerDistModeStats = stats.filter((stat) => stat.statGroup === 'w_distribution_mode');
+        playerDistModeStats.sort((a, b) => {
             return sortedGameModes.indexOf(a.dataset) - sortedGameModes.indexOf(b.dataset);
         });
         const playerDistModeChart = new Chart(playerDistMode.current, {
             type: 'pie',
             data: {
-                labels: distribution.map(d => d.label),
+                labels: playerDistModeStats.map(d => d.label),
                 datasets: [{
-                    data: distribution.map(d => d.value),
+                    data: playerDistModeStats.map(d => d.value),
                     backgroundColor: [
                         theme.colors.chartColor1,
                         theme.colors.chartColor2,
@@ -100,103 +114,153 @@ const useStatsHandler = () => {
                         theme.colors.chartColor4,
                         theme.colors.chartColor5,
                     ],
-                    borderWidth: [0]
+                    borderColor: theme.colors.chartText
                 }]
             },
-            options: createChartOptions('Distribution of players among game modes in the last 24h')
+            options: createChartOptions(true, true)
         });
 
-        let countRegion = stats.filter((stat) => stat.statGroup === 'd_playercount_region');
+        // LINE CHART
+        // TOTAL
+        let playerCountTotalStats = stats.filter((stat) => stat.statGroup === 'w_playercount');
+
+        const last2Hour = new Date();
+        last2Hour.setUTCHours(last2Hour.getUTCHours() - (last2Hour.getUTCHours() % 2), 0, 0, 0);
+        const last2HourWeekDay = sortedWeekDays[last2Hour.getDay()];
+
+        playerCountTotalStats.sort((a, b) => {
+            const aNum = parseInt(a.label.substring(a.label.indexOf(' '), a.label.indexOf(':')), 10);
+            const bNum = parseInt(b.label.substring(a.label.indexOf(' '), b.label.indexOf(':')), 10);
+            return aNum - bNum;
+        });
+        playerCountTotalStats.sort((a, b) => {
+            return sortedWeekDays.indexOf(a.label.substring(0, a.label.indexOf(' '))) - sortedWeekDays.indexOf(b.label.substring(0, b.label.indexOf(' ')));
+        });
+
+        const playerCountTotalSplitIndex = playerCountTotalStats.findIndex(cr => cr.label.substring(0, cr.label.indexOf(' ')) === last2HourWeekDay && parseInt(cr.label.substring(cr.label.indexOf(' '), cr.label.indexOf(':')), 10) === last2Hour.getUTCHours()) + 1;
+
+        playerCountTotalStats = [
+            ...playerCountTotalStats.slice(playerCountTotalSplitIndex),
+            ...playerCountTotalStats.slice(0, playerCountTotalSplitIndex)
+        ];
+
+        const playerCountTotalChart = new Chart(playerCountTotal.current, {
+            type: 'line',
+            data: {
+                labels: playerCountTotalStats.map(cr => cr.label),
+                datasets: [{
+                    label: playerCountTotalStats[0].dataset,
+                    data: playerCountTotalStats.map(cr => cr.value),
+                    backgroundColor: theme.colors.chartColor1,
+                    borderColor: theme.colors.chartColor1
+                }]
+            },
+            options: createChartOptions(false, false)
+        });
+
+        // LINE CHART
+        // REGION
+        let playerCountRegionStats = stats.filter((stat) => stat.statGroup === 'd_playercount_region');
         const lastHour = new Date().getUTCHours();
-        countRegion.sort((a, b) => {
-            const aNum = parseInt(a.label.substring(0, a.label.indexOf(':')));
-            const bNum = parseInt(b.label.substring(0, b.label.indexOf(':')));
+
+        playerCountRegionStats.sort((a, b) => {
+            const aNum = parseInt(a.label.substring(0, a.label.indexOf(':')), 10);
+            const bNum = parseInt(b.label.substring(0, b.label.indexOf(':')), 10);
             return aNum - bNum;
         });
 
-        countRegion = [
-            ...countRegion.slice(countRegion.findIndex(cr => parseInt(cr.label.substring(0, cr.label.indexOf(':'))) === lastHour) + 3),
-            ...countRegion.slice(0, countRegion.findIndex(cr => parseInt(cr.label.substring(0, cr.label.indexOf(':'))) === lastHour) + 3)
+        const playerCountRegionSplitIndex = playerCountRegionStats.findIndex(cr => parseInt(cr.label.substring(0, cr.label.indexOf(':'))) === lastHour, 10) + 3;
+
+        playerCountRegionStats = [
+            ...playerCountRegionStats.slice(playerCountRegionSplitIndex),
+            ...playerCountRegionStats.slice(0, playerCountRegionSplitIndex)
         ];
 
         const playerCountRegionChart = new Chart(playerCountRegion.current, {
             type: 'line',
             data: {
-                labels: countRegion.filter(cr => cr.dataset === 'EU').map(cr => cr.label),
+                labels: playerCountRegionStats.filter(cr => cr.dataset === 'EU').map(cr => cr.label),
                 datasets: [{
                     label: 'EU',
-                    data: countRegion.filter(cr => cr.dataset === 'EU').map(cr => cr.value),
+                    data: playerCountRegionStats.filter(cr => cr.dataset === 'EU').map(cr => cr.value),
                     backgroundColor: theme.colors.chartColor1,
                     borderColor: theme.colors.chartColor1
                 }, {
                     label: 'HK',
-                    data: countRegion.filter(cr => cr.dataset === 'HK').map(cr => cr.value),
+                    data: playerCountRegionStats.filter(cr => cr.dataset === 'HK').map(cr => cr.value),
                     backgroundColor: theme.colors.chartColor2,
                     borderColor: theme.colors.chartColor2
                 }, {
                     label: 'US',
-                    data: countRegion.filter(cr => cr.dataset === 'US').map(cr => cr.value),
+                    data: playerCountRegionStats.filter(cr => cr.dataset === 'US').map(cr => cr.value),
                     backgroundColor: theme.colors.chartColor3,
                     borderColor: theme.colors.chartColor3
                 }]
             },
-            options: createChartOptions('Distribution of players among regions in the last 24h')
+            options: createChartOptions(true, false)
         });
 
-        let countMode = stats.filter((stat) => stat.statGroup === 'd_playercount_mode');
-        countMode.sort((a, b) => {
-            const aNum = parseInt(a.label.substring(0, a.label.indexOf(':')));
-            const bNum = parseInt(b.label.substring(0, b.label.indexOf(':')));
+        // LINE CHART
+        // MODE
+        let playerCountModeStats = stats.filter((stat) => stat.statGroup === 'd_playercount_mode');
+
+        playerCountModeStats.sort((a, b) => {
+            const aNum = parseInt(a.label.substring(0, a.label.indexOf(':')), 10);
+            const bNum = parseInt(b.label.substring(0, b.label.indexOf(':')), 10);
             return aNum - bNum;
         });
 
-        countMode = [
-            ...countMode.slice(countMode.findIndex(cr => parseInt(cr.label.substring(0, cr.label.indexOf(':'))) === lastHour) + 3),
-            ...countMode.slice(0, countMode.findIndex(cr => parseInt(cr.label.substring(0, cr.label.indexOf(':'))) === lastHour) + 3)
+        const playerCountModeIndex = playerCountModeStats.findIndex(cr => parseInt(cr.label.substring(0, cr.label.indexOf(':')), 10) === lastHour) + 3;
+
+        playerCountModeStats = [
+            ...playerCountModeStats.slice(playerCountModeIndex),
+            ...playerCountModeStats.slice(0, playerCountModeIndex)
         ];
 
         const playerCountModeChart = new Chart(playerCountMode.current, {
             type: 'line',
             data: {
-                labels: countMode.filter(cr => cr.dataset === 'Hide and Seek').map(cr => cr.label),
+                labels: playerCountModeStats.filter(cr => cr.dataset === 'Hide and Seek').map(cr => cr.label),
                 datasets: [
                     {
                         label: 'Hide and Seek',
-                        data: countMode.filter(cr => cr.dataset === 'Hide and Seek').map(cr => cr.value),
+                        data: playerCountModeStats.filter(cr => cr.dataset === 'Hide and Seek').map(cr => cr.value),
                         backgroundColor: theme.colors.chartColor1,
                         borderColor: theme.colors.chartColor1
                     },
                     {
                         label: 'Mobification',
-                        data: countMode.filter(cr => cr.dataset === 'Mobification').map(cr => cr.value),
+                        data: playerCountModeStats.filter(cr => cr.dataset === 'Mobification').map(cr => cr.value),
                         backgroundColor: theme.colors.chartColor2,
                         borderColor: theme.colors.chartColor2
                     },
                     {
                         label: 'Hunt a Hag',
-                        data: countMode.filter(cr => cr.dataset === 'Hunt a Hag').map(cr => cr.value),
+                        data: playerCountModeStats.filter(cr => cr.dataset === 'Hunt a Hag').map(cr => cr.value),
                         backgroundColor: theme.colors.chartColor3,
                         borderColor: theme.colors.chartColor3
                     },
                     {
                         label: 'Imposturous (WIP)',
-                        data: countMode.filter(cr => cr.dataset === 'Imposturous (WIP)').map(cr => cr.value),
+                        data: playerCountModeStats.filter(cr => cr.dataset === 'Imposturous (WIP)').map(cr => cr.value),
                         backgroundColor: theme.colors.chartColor4,
                         borderColor: theme.colors.chartColor4
                     },
                     {
                         label: 'Fill a Pot (WIP)',
-                        data: countMode.filter(cr => cr.dataset === 'Fill a Pot (WIP)').map(cr => cr.value),
+                        data: playerCountModeStats.filter(cr => cr.dataset === 'Fill a Pot (WIP)').map(cr => cr.value),
                         backgroundColor: theme.colors.chartColor5,
                         borderColor: theme.colors.chartColor5
                     }
                 ]
             },
-            options: createChartOptions('Distribution of players among game modes in the last 24h')
+            options: createChartOptions(true, false)
         });
+
         return (() => {
             playerDistRegionChart.destroy();
             playerDistModeChart.destroy();
+            playerCountTotalChart.destroy();
             playerCountRegionChart.destroy();
             playerCountModeChart.destroy();
         });
@@ -214,32 +278,14 @@ const useStatsHandler = () => {
         return data;
     };
 
-    const hexToRgbA = (hexCode: string, opacity: number) => {
-        var hex = hexCode.replace('#', '');
-
-        if (hex.length === 3) {
-            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-        }
-
-        var r = parseInt(hex.substring(0, 2), 16),
-            g = parseInt(hex.substring(2, 4), 16),
-            b = parseInt(hex.substring(4, 6), 16);
-
-        return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
-    };
-
-    const createChartOptions = (title: string): any => {
+    const createChartOptions = (showLegend: boolean, intersect: boolean): any => {
         return {
             plugins: {
                 legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: title
+                    display: showLegend
                 },
                 tooltip: {
-                    intersect: false
+                    intersect
                 }
             }
         };
@@ -248,6 +294,7 @@ const useStatsHandler = () => {
     return {
         playerDistRegion,
         playerDistMode,
+        playerCountTotal,
         playerCountRegion,
         playerCountMode
     };

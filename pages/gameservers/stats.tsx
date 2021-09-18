@@ -11,6 +11,7 @@ const Stats: NextPage = () => {
     const {
         playerDistRegion,
         playerDistMode,
+        playerCountTotal,
         playerCountRegion,
         playerCountMode
     } = useStatsHandler();
@@ -24,22 +25,31 @@ const Stats: NextPage = () => {
             />
             <GameServerNav />
             <PageHeader title="Game Server Stats" description="Statistics of Witch It servers" />
-            <p className="text-center mb-4">All times on this site are UTC. Current UTC time: <b>{now.getUTCHours()}:{now.getUTCMinutes() > 10 ? now.getUTCMinutes() : `0${now.getUTCMinutes()}`}</b></p>
-            <p className="text-2xl text-center font-bold">Regions</p>
-            <div className="flex flex-wrap justify-center align-middle m-2">
-                <div className="bg-wt-chartbg rounded-lg p-3 shadow-xl w-full m-2" style={{ maxWidth: '400px' }}>
-                    <canvas ref={playerDistRegion} height="1000" width="1000"></canvas>
+            <p className="text-center mb-4">All times on this site are UTC. Current UTC time: <b>{now.getUTCHours()}:{now.getUTCMinutes() >= 10 ? now.getUTCMinutes() : `0${now.getUTCMinutes()}`}</b></p>
+            <p className="text-2xl text-center font-bold">Players</p>
+            <p className="text-center">Average players in the last week</p>
+            <div className="flex flex-wrap justify-center align-middle mx-2">
+                <div className="bg-wt-chartbg rounded-lg p-3 shadow-xl w-full m-2" style={{ maxWidth: '625px', maxHeight: '424px' }}>
+                    <canvas ref={playerCountTotal} height="1000" width="1500"></canvas>
                 </div>
-                <div className="bg-wt-chartbg rounded-lg p-3 shadow-xl w-full m-2" style={{ maxWidth: '500px' }}>
+            </div>
+            <p className="text-2xl text-center font-bold">Regions</p>
+            <p className="text-center">Average distribution of players among regions in the last 24h</p>
+            <div className="flex flex-wrap justify-center align-middle mx-2">
+                <div className="bg-wt-chartbg rounded-lg p-3 shadow-xl w-full m-2" style={{ maxWidth: '424px', maxHeight: '424px' }}>
+                    <canvas ref={playerDistRegion} height="1000" width="1500"></canvas>
+                </div>
+                <div className="bg-wt-chartbg rounded-lg p-3 shadow-xl w-full m-2" style={{ maxWidth: '625px', maxHeight: '424px' }}>
                     <canvas ref={playerCountRegion} height="1000" width="1500"></canvas>
                 </div>
             </div>
             <p className="text-2xl text-center font-bold">Game modes</p>
-            <div className="flex flex-wrap justify-center align-middle m-2">
-                <div className="bg-wt-chartbg rounded-lg p-3 shadow-xl w-full m-2" style={{ maxWidth: '400px' }}>
-                    <canvas ref={playerDistMode} height="1000" width="1000"></canvas>
+            <p className="text-center">Average distribution of players among game modes in the last 24h</p>
+            <div className="flex flex-wrap justify-center align-middle mx-2">
+                <div className="bg-wt-chartbg rounded-lg p-3 shadow-xl w-full m-2" style={{ maxWidth: '424px', maxHeight: '424px' }}>
+                    <canvas ref={playerDistMode} height="1000" width="1500"></canvas>
                 </div>
-                <div className="bg-wt-chartbg rounded-lg p-3 shadow-xl w-full m-2" style={{ maxWidth: '500px' }}>
+                <div className="bg-wt-chartbg rounded-lg p-3 shadow-xl w-full m-2" style={{ maxWidth: '625px', maxHeight: '424px' }}>
                     <canvas ref={playerCountMode} height="1000" width="1500"></canvas>
                 </div>
             </div>

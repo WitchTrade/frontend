@@ -2,6 +2,18 @@ import '../styles/global.scss';
 
 import { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';
+import {
+  Chart,
+  PieController,
+  LineController, ArcElement,
+  PointElement,
+  LineElement,
+  CategoryScale,
+  LinearScale,
+  Title,
+  Legend,
+  Tooltip
+} from 'chart.js';
 import Layout from '../components/core/Layout';
 import appService from '../shared/services/app.service';
 import useThemeProvider from '../shared/providers/theme.provider';
@@ -46,13 +58,16 @@ function WitchTrade({ Component, pageProps }: AppProps) {
   }, [theme]);
 
   useEffect(() => {
+    Chart.register(PieController, LineController, ArcElement, PointElement, LineElement, CategoryScale, LinearScale, Title, Legend, Tooltip);
     appService.init();
   }, []);
 
   useEffect(() => {
     if (!themeStyles) return;
     for (const themeStyle in themeStyles) {
-      document.documentElement.style.setProperty(themeStyle, themeStyles[themeStyle]);
+      if (themeStyles.hasOwnProperty(themeStyle)) {
+        document.documentElement.style.setProperty(themeStyle, themeStyles[themeStyle]);
+      }
     }
   }, [themeStyles]);
 

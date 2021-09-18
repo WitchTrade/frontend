@@ -38,7 +38,8 @@ const Customization: NextPage = () => {
         notificationTypes,
         notificationType,
         setNotificationType,
-        createTestNotification
+        createTestNotification,
+        exampleChartRef
     } = CustomizationHandler();
 
     return (
@@ -187,6 +188,16 @@ const Customization: NextPage = () => {
                                     </div>
                                 </div>
                             </PickerArea>
+                            {liveTheme && customTheme &&
+                                <div>
+                                    <p className="text-center">Example chart</p>
+                                    <div className="flex flex-wrap justify-center align-middle mx-2">
+                                        <div className="bg-wt-chartbg rounded-lg p-3 shadow-xl w-full m-2" style={{ maxWidth: '450px', maxHeight: '300px' }}>
+                                            <canvas ref={exampleChartRef} height="1000" width="1500"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                             <PickerArea areaTitle="Status colors">
                                 <div className="flex flex-wrap justify-center">
                                     <div className="mx-1">

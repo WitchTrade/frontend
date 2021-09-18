@@ -1,4 +1,5 @@
-import { createRef, useEffect, useState } from 'react';
+import { createRef, useEffect, useRef, useState } from 'react';
+import { Chart } from 'chart.js';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import { createTheme, Theme } from '../models/theme.model';
 import { createThemeColors } from '../models/themeColor.model';
@@ -37,6 +38,8 @@ const CustomizationHandler = () => {
 
     const [notificationType, setNotificationType] = useState(notificationTypes[0]);
 
+    const exampleChartRef = useRef<any>(null);
+
     useEffect(() => {
         const themeSub = themeService.currentTheme$.subscribe(setSelectedTheme);
         const availableThemeSub = themeService.allThemes$.subscribe(setAllThemes);
@@ -48,9 +51,68 @@ const CustomizationHandler = () => {
     }, []);
 
     useEffect(() => {
+        let exampleChart: any;
+
         if (liveTheme && customTheme) {
             themeService.applyTheme(customTheme);
+
+            Chart.defaults.color = customTheme.colors.chartText;
+            Chart.defaults.borderColor = themeService.hexToRgbA(customTheme.colors.chartText, 0.1);
+
+            exampleChart = new Chart(exampleChartRef.current, {
+                type: 'line',
+                data: {
+                    labels: ['One', 'Two', 'Three', 'Four'],
+                    datasets: [
+                        {
+                            label: 'Data 1',
+                            data: [1, 3, 5, 4],
+                            backgroundColor: customTheme.colors.chartColor1,
+                            borderColor: customTheme.colors.chartColor1
+                        },
+                        {
+                            label: 'Data 2',
+                            data: [3, 3, 1, 3],
+                            backgroundColor: customTheme.colors.chartColor2,
+                            borderColor: customTheme.colors.chartColor2
+                        },
+                        {
+                            label: 'Data 3',
+                            data: [2, 1, 2, 1],
+                            backgroundColor: customTheme.colors.chartColor3,
+                            borderColor: customTheme.colors.chartColor3
+                        },
+                        {
+                            label: 'Data 4',
+                            data: [2, 5, 3, 2],
+                            backgroundColor: customTheme.colors.chartColor4,
+                            borderColor: customTheme.colors.chartColor4
+                        },
+                        {
+                            label: 'Data 5',
+                            data: [5, 2, 4, 1],
+                            backgroundColor: customTheme.colors.chartColor5,
+                            borderColor: customTheme.colors.chartColor5
+                        }
+                    ]
+                },
+                options: {
+                    plugins: {
+                        tooltip: {
+                            intersect: false
+                        }
+                    },
+                    animation: {
+                        duration: 0
+                    }
+                }
+            });
         }
+        return (() => {
+            if (exampleChart) {
+                exampleChart.destroy();
+            }
+        });
     }, [customTheme]);
 
     useEffect(() => {
@@ -83,10 +145,11 @@ const CustomizationHandler = () => {
     const switchLiveTheme = () => {
         if (liveTheme && originalTheme) {
             themeService.applyTheme(originalTheme);
-        } else if (!liveTheme && customTheme) {
-            themeService.applyTheme(customTheme);
         }
         setLiveTheme(!liveTheme);
+        if (customTheme) {
+            setCustomTheme({ ...customTheme });
+        }
     };
 
     const cancelCustomTheme = () => {
@@ -315,7 +378,8 @@ const CustomizationHandler = () => {
         notificationTypes,
         notificationType,
         setNotificationType,
-        createTestNotification
+        createTestNotification,
+        exampleChartRef
     };
 };
 
