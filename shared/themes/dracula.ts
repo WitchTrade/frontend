@@ -24,7 +24,14 @@ const draculaTheme: ThemeColors = {
     warningLight: '#FCD34D',
     error: '#EF4444',
     errorDark: '#DC2626',
-    errorLight: '#FCA5A5'
+    errorLight: '#FCA5A5',
+    chartColor1: '#C791FA',
+    chartColor2: '#7881E3',
+    chartColor3: '#E378CB',
+    chartColor4: '#89D7FF',
+    chartColor5: '#FB9085',
+    chartBackground: '#282A36',
+    chartText: '#FFF'
 };
 
 export { draculaTheme };

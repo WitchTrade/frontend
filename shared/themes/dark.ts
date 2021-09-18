@@ -24,7 +24,14 @@ const darkTheme: ThemeColors = {
     warningLight: '#FCD34D',
     error: '#EF4444',
     errorDark: '#DC2626',
-    errorLight: '#FCA5A5'
+    errorLight: '#FCA5A5',
+    chartColor1: '#3B82F6',
+    chartColor2: '#2AB1DE',
+    chartColor3: '#2A2DDE',
+    chartColor4: '#33FFE5',
+    chartColor5: '#813CF9',
+    chartBackground: '#1F2937',
+    chartText: '#FFF'
 };
 
 export { darkTheme };

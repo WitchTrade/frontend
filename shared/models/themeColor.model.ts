@@ -26,6 +26,15 @@ export interface ThemeColors {
     error: string;
     errorDark: string;
     errorLight: string;
+
+    chartColor1: string;
+    chartColor2: string;
+    chartColor3: string;
+    chartColor4: string;
+    chartColor5: string;
+
+    chartBackground: string;
+    chartText: string;
 }
 
 export function createThemeColors(params: Partial<ThemeColors>) {

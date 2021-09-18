@@ -1,17 +1,18 @@
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import CustomHeader from '../components/core/CustomHeader';
-import Region from '../components/gameservers/region';
-import ActionButton from '../components/styles/ActionButton';
-import Divider from '../components/styles/Divider';
-import Loading from '../components/styles/Loading';
-import PageHeader from '../components/styles/PageHeader';
-import TextInput from '../components/styles/TextInput';
-import WTDialog from '../components/styles/WTDialog';
-import useGameserverHandler from '../shared/handlers/gameserver.handler';
-import useDetectOutsideClick from '../shared/hooks/useDetectOutsideClick';
-import useThemeProvider from '../shared/providers/theme.provider';
-import useUserProvider from '../shared/providers/user.provider';
+import CustomHeader from '../../components/core/CustomHeader';
+import Region from '../../components/gameservers/region';
+import GameServerNav from '../../components/navs/GameServerNav';
+import ActionButton from '../../components/styles/ActionButton';
+import Divider from '../../components/styles/Divider';
+import Loading from '../../components/styles/Loading';
+import PageHeader from '../../components/styles/PageHeader';
+import TextInput from '../../components/styles/TextInput';
+import WTDialog from '../../components/styles/WTDialog';
+import useGameserverHandler from '../../shared/handlers/gameserver.handler';
+import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
+import useThemeProvider from '../../shared/providers/theme.provider';
+import useUserProvider from '../../shared/providers/user.provider';
 
 const Gameservers: NextPage = () => {
     const { theme } = useThemeProvider();
@@ -67,9 +68,10 @@ const Gameservers: NextPage = () => {
             </WTDialog>
             <CustomHeader
                 title="WitchTrade | Gameservers"
-                description="Witch It Servers on WitchTrade"
+                description="View the Witch It Servers live on WitchTrade"
                 url="https://witchtrade.org/gameservers"
             />
+            <GameServerNav />
             <PageHeader title="Witch It Game Servers" />
             <div className="flex justify-center">
                 <div className="flex flex-col bg-wt-surface-dark border-2 border-wt-accent rounded-lg p-2 m-2" style={{ width: '750px' }}>

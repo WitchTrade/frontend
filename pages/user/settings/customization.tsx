@@ -157,6 +157,33 @@ const Customization: NextPage = () => {
                                     <ColorPicker title="Accent Light" hexColor={customTheme.colors.accentLight} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, accentLight: color } })} />
                                 </div>
                             </PickerArea>
+                            <PickerArea areaTitle="Chart colors">
+                                <div className="flex flex-wrap justify-center">
+                                    <div className="mx-1">
+                                        <ColorPicker title="Chart Text" hexColor={customTheme.colors.chartText} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, chartText: color } })} />
+                                    </div>
+                                    <div className="mx-1">
+                                        <ColorPicker title="Chart Background" hexColor={customTheme.colors.chartBackground} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, chartBackground: color } })} />
+                                    </div>
+                                </div>
+                                <div className="flex flex-wrap justify-center">
+                                    <div className="mx-1">
+                                        <ColorPicker title="Chart Color 1" hexColor={customTheme.colors.chartColor1} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, chartColor1: color } })} />
+                                    </div>
+                                    <div className="mx-1">
+                                        <ColorPicker title="Chart Color 2" hexColor={customTheme.colors.chartColor2} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, chartColor2: color } })} />
+                                    </div>
+                                    <div className="mx-1">
+                                        <ColorPicker title="Chart Color 3" hexColor={customTheme.colors.chartColor3} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, chartColor3: color } })} />
+                                    </div>
+                                    <div className="mx-1">
+                                        <ColorPicker title="Chart Color 4" hexColor={customTheme.colors.chartColor4} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, chartColor4: color } })} />
+                                    </div>
+                                    <div className="mx-1">
+                                        <ColorPicker title="Chart Color 5" hexColor={customTheme.colors.chartColor5} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, chartColor5: color } })} />
+                                    </div>
+                                </div>
+                            </PickerArea>
                             <PickerArea areaTitle="Status colors">
                                 <div className="flex flex-wrap justify-center">
                                     <div className="mx-1">

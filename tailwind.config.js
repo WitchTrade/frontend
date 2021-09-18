@@ -28,6 +28,7 @@ module.exports = {
         "wt-error": "var(--wt-error)",
         "wt-error-dark": "var(--wt-error-dark)",
         "wt-error-light": "var(--wt-error-light)",
+        "wt-chartbg": "var(--wt-chartbg)",
       }
     },
   },

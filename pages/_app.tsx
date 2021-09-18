@@ -37,6 +37,7 @@ function WitchTrade({ Component, pageProps }: AppProps) {
         '--wt-error': theme.colors.error,
         '--wt-error-dark': theme.colors.errorDark,
         '--wt-error-light': theme.colors.errorLight,
+        '--wt-chartbg': theme.colors.chartBackground,
         'background-color': 'var(--wt-surface)',
         'color': 'var(--wt-text)'
       });
