@@ -7,6 +7,7 @@ const draculaTheme: ThemeColors = {
     selectedLight: '#C9A2FF',
     selected: '#C9A2FF',
     selectedDark: '#BD93F9',
+    disabled: '#9CA3AF',
     surface: '#536086',
     surfaceDark: '#282A36',
     hover: '#3A4657',

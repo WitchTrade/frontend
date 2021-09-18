@@ -7,6 +7,7 @@ const darkTheme: ThemeColors = {
     selectedLight: '#D1D5DB',
     selected: '#9CA3AF',
     selectedDark: '#111827',
+    disabled: '#9CA3AF',
     surface: '#4B5563',
     surfaceDark: '#1F2937',
     hover: '#374151',

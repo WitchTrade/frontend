@@ -10,7 +10,7 @@ interface Props {
     disabled?: boolean;
 }
 
-const defaultStyle = "px-3 py-1 focus:outline-none rounded-md text-sm cursor-pointer focus:ring-2 focus:ring-wt-accent font-medium flex leading-6 disabled:cursor-not-allowed disabled:bg-gray-400 ";
+const defaultStyle = "px-3 py-1 focus:outline-none rounded-md text-sm cursor-pointer focus:ring-2 focus:ring-wt-accent font-medium flex leading-6 disabled:cursor-not-allowed disabled:bg-wt-disabled ";
 
 const ActionButton: FunctionComponent<Props> = ({ onClick, children, type, disabled }) => {
     const types: Types = {

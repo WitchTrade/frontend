@@ -19,11 +19,11 @@ const Stats: NextPage = () => {
         <div>
             <CustomHeader
                 title="WitchTrade | Server Stats"
-                description="View statistics of Witch It servers on WitchTradee"
+                description="View statistics of Witch It servers on WitchTrade"
                 url="https://witchtrade.org/gameservers/stats"
             />
             <GameServerNav />
-            <PageHeader title="Game Server Stats" description="View current stats from the official witch it game servers!" />
+            <PageHeader title="Game Server Stats" description="Statistics of Witch It servers" />
             <p className="text-center mb-4">All times on this site are UTC. Current UTC time: <b>{now.getUTCHours()}:{now.getUTCMinutes() > 10 ? now.getUTCMinutes() : `0${now.getUTCMinutes()}`}</b></p>
             <p className="text-2xl text-center font-bold">Regions</p>
             <div className="flex flex-wrap justify-center align-middle m-2">

@@ -140,6 +140,9 @@ const Customization: NextPage = () => {
                                 <div className="mx-1">
                                     <ColorPicker title="Selected Dark" hexColor={customTheme.colors.selectedDark} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, selectedDark: color } })} />
                                 </div>
+                                <div className="mx-1">
+                                    <ColorPicker title="Disabled" hexColor={customTheme.colors.disabled} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, disabled: color } })} />
+                                </div>
                             </PickerArea>
                             <PickerArea areaTitle="Hover colors">
                                 <div className="mx-1">

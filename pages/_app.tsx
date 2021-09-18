@@ -19,6 +19,7 @@ function WitchTrade({ Component, pageProps }: AppProps) {
         '--wt-selected-light': theme.colors.selectedLight,
         '--wt-selected': theme.colors.selected,
         '--wt-selected-dark': theme.colors.selectedDark,
+        '--wt-disabled': theme.colors.disabled,
         '--wt-surface': theme.colors.surface,
         '--wt-surface-dark': theme.colors.surfaceDark,
         '--wt-hover': theme.colors.hover,

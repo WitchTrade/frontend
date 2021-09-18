@@ -6,6 +6,7 @@ export interface ThemeColors {
     selectedLight: string;
     selected: string;
     selectedDark: string;
+    disabled: string;
     surface: string;
     surfaceDark: string;
     hover: string;
@@ -45,6 +46,7 @@ export function createThemeColors(params: Partial<ThemeColors>) {
         selectedLight: params.selectedLight ? params.selectedLight : '',
         selected: params.selected ? params.selected : '',
         selectedDark: params.selected ? params.selected : '',
+        disabled: params.disabled ? params.disabled : '',
         surface: params.surface ? params.surface : '',
         surfaceDark: params.surfaceDark ? params.surfaceDark : '',
         hover: params.hover ? params.hover : '',
@@ -62,6 +64,14 @@ export function createThemeColors(params: Partial<ThemeColors>) {
         warningLight: params.warningLight ? params.warningLight : '',
         error: params.error ? params.error : '',
         errorDark: params.errorDark ? params.errorDark : '',
-        errorLight: params.errorLight ? params.errorLight : ''
+        errorLight: params.errorLight ? params.errorLight : '',
+        chartColor1: params.chartColor1 ? params.chartColor1 : '',
+        chartColor2: params.chartColor2 ? params.chartColor2 : '',
+        chartColor3: params.chartColor3 ? params.chartColor3 : '',
+        chartColor4: params.chartColor4 ? params.chartColor4 : '',
+        chartColor5: params.chartColor5 ? params.chartColor5 : '',
+
+        chartBackground: params.chartBackground ? params.chartBackground : '',
+        chartText: params.chartText ? params.chartText : ''
     } as ThemeColors;
 }

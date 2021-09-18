@@ -9,6 +9,7 @@ module.exports = {
         "wt-text": "var(--wt-text)",
         "wt-selected-light": "var(--wt-selected-light)",
         "wt-selected": "var(--wt-selected)",
+        "wt-disabled": "var(--wt-disabled)",
         "wt-surface": "var(--wt-surface)",
         "wt-hover": "var(--wt-hover)",
         "wt-hover-light": "var(--wt-hover-light)",
