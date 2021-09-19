@@ -15,7 +15,7 @@ const Footer: FunctionComponent = () => {
                         </div>
                     </a>
                 </div>
-                <p className="text-sm">Version <b>x.x.x</b> • xx.xx.xxx</p>
+                <p className="text-sm">Version <b>x.x.x</b> • xx.xx.xxxx</p>
                 <div className="flex justify-center">
                     <p className="text-sm">Made with </p>
                     <Image src="/assets/svgs/heart.svg" height={20} width={24} alt="Heart" />
