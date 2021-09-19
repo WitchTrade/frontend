@@ -26,6 +26,7 @@ const CustomizationHandler = () => {
     const [creatingCustomTheme, setCreatingCustomTheme] = useState(false);
     const [liveTheme, setLiveTheme] = useState(false);
     const [customTheme, setCustomTheme] = useState<Theme>();
+    const [editingTheme, setEditingTheme] = useState(false);
 
     const themeUploadFile = createRef<any>();
 
@@ -125,13 +126,14 @@ const CustomizationHandler = () => {
         themeService.applyTheme(theme);
     };
 
-    const initCustomTheme = () => {
+    const initCustomTheme = (editSelected: boolean) => {
+        setEditingTheme(editSelected);
         setOriginalTheme(selectedTheme);
         const theme = createTheme({
-            displayName: '',
+            displayName: editSelected ? selectedTheme?.displayName : '',
             type: selectedTheme?.type ? selectedTheme?.type : 'dark',
-            colors: selectedTheme?.colors ? selectedTheme?.colors : createThemeColors({}),
-            key: 'custom',
+            colors: selectedTheme?.colors ? createThemeColors(selectedTheme?.colors) : createThemeColors({}),
+            key: editSelected ? selectedTheme?.key : 'custom',
             official: false
         });
         const newType = themeTypes.find(type => type.key === theme.type);
@@ -189,7 +191,7 @@ const CustomizationHandler = () => {
             notificationService.addNotification(notification);
             return;
         }
-        if (allThemes?.find(theme => theme.key === customTheme.displayName.toLowerCase().replaceAll(' ', '-'))) {
+        if (!editingTheme && allThemes?.find(theme => theme.key === customTheme.displayName.toLowerCase().replaceAll(' ', '-'))) {
             const notification = createNotification({
                 content: 'There is already a theme with the same name',
                 duration: 5000,
@@ -213,15 +215,28 @@ const CustomizationHandler = () => {
             customThemes = JSON.parse(customThemesString);
         }
         if (customTheme) {
-            const tempCustomTheme = { ...customTheme, key: customTheme.displayName.toLowerCase().replaceAll(' ', '-') };
-            customThemes.push(tempCustomTheme);
-            themeService.applyTheme(tempCustomTheme);
+            if (editingTheme) {
+                const oldThemeIndex = customThemes.findIndex(ct => ct.key === customTheme.key);
+                customThemes[oldThemeIndex] = customTheme;
+                themeService.applyTheme(customTheme);
+            } else {
+                const tempCustomTheme = { ...customTheme, key: customTheme.displayName.toLowerCase().replaceAll(' ', '-') };
+                customThemes.push(tempCustomTheme);
+                themeService.applyTheme(tempCustomTheme);
+            }
         }
         localStorage.setItem('customThemes', JSON.stringify(customThemes));
 
         themeService.loadCustomThemes();
 
         setCreatingCustomTheme(false);
+
+        const notification = createNotification({
+            content: 'Theme saved!',
+            duration: 5000,
+            type: 'success'
+        });
+        notificationService.addNotification(notification);
     };
 
     const deleteTheme = () => {
@@ -369,6 +384,7 @@ const CustomizationHandler = () => {
         customTheme,
         setCustomTheme,
         initCustomTheme,
+        editingTheme,
         cancelCustomTheme,
         saveCustomTheme,
         downloadTheme,

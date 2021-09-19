@@ -29,6 +29,7 @@ const Customization: NextPage = () => {
         customTheme,
         setCustomTheme,
         initCustomTheme,
+        editingTheme,
         cancelCustomTheme,
         saveCustomTheme,
         downloadTheme,
@@ -71,13 +72,16 @@ const Customization: NextPage = () => {
                 </div>
                 {!creatingCustomTheme && !selectedTheme?.official &&
                     <div className="flex justify-center">
-                        <div className="mt-2 bg-wt-surface-dark rounded-lg p-2 w-72">
+                        <div className="mt-2 bg-wt-surface-dark rounded-lg p-2 w-96">
                             <p className="text-center">Custom theme <span className="text-wt-accent font-bold">{selectedTheme?.displayName}</span></p>
-                            <div className="flex justify-center">
-                                <div className="mx-2">
-                                    <ActionButton type="neutral" onClick={downloadTheme}>Export Theme</ActionButton>
+                            <div className="flex flex-wrap justify-center">
+                                <div className="m-2">
+                                    <ActionButton type="neutral-enabled" onClick={downloadTheme}>Export Theme</ActionButton>
                                 </div>
-                                <div className="mx-2">
+                                <div className="m-2">
+                                    <ActionButton type="warning" onClick={() => initCustomTheme(true)}>Edit theme</ActionButton>
+                                </div>
+                                <div className="m-2">
                                     <ActionButton type="cancel" onClick={deleteTheme}>Delete Theme</ActionButton>
                                 </div>
                             </div>
@@ -90,7 +94,7 @@ const Customization: NextPage = () => {
                             <FileInput inputId="themeUpload" text="Import Theme" inputRef={themeUploadFile} inputChanged={checkThemeInputFile}></FileInput>
                         </div>
                         <div className="mx-2">
-                            <ActionButton type="proceed" onClick={initCustomTheme}>Create new theme</ActionButton>
+                            <ActionButton type="proceed" onClick={() => initCustomTheme(false)}>Create new theme</ActionButton>
                         </div>
                     </div>
                 }
@@ -104,7 +108,12 @@ const Customization: NextPage = () => {
                         </div>
                         <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
                             <div className="my-2">
-                                <TextInput type="input" value={customTheme.displayName} setValue={(value) => setCustomTheme({ ...customTheme, displayName: value })} placeholder="Theme name" required={true} svgPath={`/assets/svgs/bookmark/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
+                                {!editingTheme &&
+                                    <TextInput type="input" value={customTheme.displayName} setValue={(value) => setCustomTheme({ ...customTheme, displayName: value })} placeholder="Theme name" required={true} svgPath={`/assets/svgs/bookmark/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
+                                }
+                                {editingTheme &&
+                                    <p>Editing theme <span className="text-wt-accent font-bold">{customTheme.displayName}</span></p>
+                                }
                             </div>
                             <div className="my-2">
                                 <p>Theme type</p>
