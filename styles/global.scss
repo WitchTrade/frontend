@@ -14,11 +14,11 @@ html {
 
 ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background   : var(--wt-surface-dark);
+    background   : var(--wt-accent);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--wt-hover);
+    background: var(--wt-accent-light);
 }
 
 .loadingAnim {
