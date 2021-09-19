@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
 import useUserProvider from '../providers/user.provider';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
@@ -6,6 +7,8 @@ import { discordTagRegex, steamTradeLinkRegex, steamUrlRegex } from '../stores/u
 import { userService } from '../stores/user/user.service';
 
 const AccountSettingsHandler = () => {
+    const router = useRouter();
+
     const { user } = useUserProvider();
 
     const [editing, setEditing] = useState(false);
@@ -19,6 +22,10 @@ const AccountSettingsHandler = () => {
         discordTag: '',
         hidden: false
     });
+
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [newRepeatPassword, setNewRepeatPassword] = useState('');
 
     const editAccountSettings = () => {
         setEditing(true);
@@ -116,6 +123,41 @@ const AccountSettingsHandler = () => {
         setEditing(false);
     };
 
+    const changePassword = () => {
+        if (!oldPassword) {
+            const notification = createNotification({
+                content: 'Please enter your old password',
+                duration: 5000,
+                type: 'warning'
+            });
+            notificationService.addNotification(notification);
+            return;
+        }
+        if (!newPassword) {
+            const notification = createNotification({
+                content: 'Please enter your new password',
+                duration: 5000,
+                type: 'warning'
+            });
+            notificationService.addNotification(notification);
+            return;
+        }
+        if (newPassword !== newRepeatPassword) {
+            const notification = createNotification({
+                content: 'New passwords do not match',
+                duration: 5000,
+                type: 'warning'
+            });
+            notificationService.addNotification(notification);
+            return;
+        }
+        userService.changePassword(oldPassword, newPassword).subscribe((res) => {
+            if (res.status === 200) {
+                router.push('/user/settings/account');
+            }
+        });
+    };
+
     return {
         user,
         formValue,
@@ -123,7 +165,14 @@ const AccountSettingsHandler = () => {
         editing,
         editAccountSettings,
         updateAccountSettings,
-        cancelEditAccountSettings
+        cancelEditAccountSettings,
+        oldPassword,
+        setOldPassword,
+        newPassword,
+        setNewPassword,
+        newRepeatPassword,
+        setNewRepeatPassword,
+        changePassword
     };
 };
 

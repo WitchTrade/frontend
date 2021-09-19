@@ -41,15 +41,17 @@ const Register: NextPage = () => {
       <PageHeader title="Register" description="Register an account on WitchTrade and start creating offers!" />
       <form>
         <div className="m-1 mt-4">
+          <p className="text-center text-sm">Username: <br />- <span className="text-wt-accent-light">5-20</span> characters long<br />- only <span className="text-wt-accent-light">a-z</span>, <span className="text-wt-accent-light">0-9</span>, <span className="text-wt-accent-light">_</span> and <span className="text-wt-accent-light">.</span> allowed</p>
           <TextInput type="text" placeholder="Username" value={username} setValue={setUsername} required={true} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} autocompleteValue="username" />
         </div>
-        <div className="m-1">
+        <div className="m-1 mt-4">
+          <p className="text-center text-sm">Password: <br />- Must be at least <span className="text-wt-accent-light">8</span> characters long<br />- Must at least contain <span className="text-wt-accent-light">1</span> letter and <span className="text-wt-accent-light">1</span> number</p>
           <TextInput type="password" placeholder="Password" value={password} setValue={setPassword} required={true} svgPath={`/assets/svgs/password/${theme?.type === 'light' ? 'black' : 'white'}.svg`} autocompleteValue="new-password" />
         </div>
         <div className="m-1">
           <TextInput type="password" placeholder="Repeat Password" value={repeatPassword} required={true} setValue={setRepeatPassword} svgPath={`/assets/svgs/password/${theme?.type === 'light' ? 'black' : 'white'}.svg`} autocompleteValue="new-password" />
         </div>
-        <div className="m-1">
+        <div className="m-1 mt-4">
           <TextInput type="text" placeholder="Display Name" value={displayName} required={true} setValue={setDisplayName} svgPath={`/assets/svgs/person/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
         </div>
         <div className="m-1">

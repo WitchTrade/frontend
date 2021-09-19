@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import Link from 'next/link';
 import CustomHeader from '../../../components/core/CustomHeader';
 import LoginWrapper from '../../../components/core/LoginWrapper';
 import SettingNav from '../../../components/navs/SettingNav';
@@ -61,6 +62,11 @@ const Account: NextPage = () => {
                     </div>
                     <div className="flex justify-center mt-2">
                         <ActionButton type="warning" onClick={editAccountSettings}>Edit</ActionButton>
+                    </div>
+                    <div className="flex justify-center mt-2">
+                        <Link href="/user/settings/changepw">
+                            <ActionButton type="accent" onClick={() => { }}>Change Password</ActionButton>
+                        </Link>
                     </div>
                 </div>
             }
