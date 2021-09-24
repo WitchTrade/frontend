@@ -8,9 +8,9 @@ interface Props {
 const PageHeader: FunctionComponent<Props> = ({ title, description }) => {
     return (
         <>
-            <p className="text-center text-3xl font-bold text-wt-accent mt-3">{title}</p>
+            <p className={`text-center text-3xl font-bold text-wt-accent pt-3${!description ? ' pb-3' : ''}`}>{title}</p>
             {description &&
-                <p className="text-center text-sm text-wt-accent-light mb-3">{description}</p>
+                <p className="text-center text-sm text-wt-accent-light pb-3">{description}</p>
             }
         </>
     );

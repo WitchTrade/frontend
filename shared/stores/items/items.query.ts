@@ -26,6 +26,19 @@ export class ItemsQuery extends QueryEntity<ItemsState> {
     return rarityToIngredientId[rarity];
   }
 
+  public getRarities(): string[] {
+    return [
+      'common',
+      'uncommon',
+      'unlock',
+      'eventrarity',
+      'rare',
+      'veryrare',
+      'whimsical',
+      'promo'
+    ];
+  }
+
 }
 
 export const itemsQuery = new ItemsQuery(itemsStore);

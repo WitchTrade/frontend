@@ -81,21 +81,21 @@ const Gameservers: NextPage = () => {
                             <div className="flex flex-wrap justify-center pt-2">
                                 <div className="m-1">
                                     <ActionButton type="proceed" onClick={() => setDialogOpen(true)}>
-                                        <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" />
+                                        <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
                                         Add player
                                     </ActionButton>
                                 </div>
                                 {user && user.steamUrl && !steamSyncLoading &&
                                     <div className="m-1">
                                         <ActionButton type="accent" onClick={syncSteamFriends}>
-                                            <Image src="/assets/svgs/sync.svg" height="24px" width="24px" />
+                                            <Image src="/assets/svgs/sync.svg" height="24px" width="24px" alt="Sync Steam Friends" />
                                             Sync Steam Friends
                                         </ActionButton>
                                     </div>
                                 }
                                 <div className="m-1">
                                     <ActionButton type="cancel" onClick={clearWatchlist}>
-                                        <Image src="/assets/svgs/bin/white.svg" height="24px" width="24px" />
+                                        <Image src="/assets/svgs/bin/white.svg" height="24px" width="24px" alt="Remove all" />
                                         Remove all
                                     </ActionButton>
                                 </div>
@@ -142,7 +142,7 @@ const Gameservers: NextPage = () => {
             </div>
             <div className="flex justify-center pt-2">
                 <ActionButton type="proceed" onClick={getGameServers} disabled={loading}>
-                    <Image src="/assets/svgs/refresh.svg" height="24px" width="24px" />
+                    <Image src="/assets/svgs/refresh.svg" height="24px" width="24px" alt="Refresh" />
                     Refresh
                 </ActionButton>
             </div>

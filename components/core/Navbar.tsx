@@ -73,7 +73,7 @@ const Navbar: FunctionComponent = () => {
                         <div className="flex items-center justify-between h-16">
                             <div className="flex items-center">
                                 <div className="flex-shrink-0">
-                                    <p className="font-bold text-3xl"><span className="text-wt-accent">Witch</span>Trade<span className="text-xl text-center text-wt-accent-light"> [Beta]</span></p>
+                                    <p className="font-bold text-3xl"><span className="text-wt-accent">Witch</span>Trade</p>
                                 </div>
                                 <div className="hidden md:block">
                                     <div className="ml-10 flex items-baseline space-x-4">
@@ -102,7 +102,7 @@ const Navbar: FunctionComponent = () => {
                                                         <p className="text-sm mr-2 hidden lg:block">Inventory synced: <span className={lastSynced.old ? 'text-wt-warning' : 'text-wt-success'}>{lastSynced.lastSyncedString}</span></p>
                                                     }
                                                     <button
-                                                        className="max-w-xs rounded-full flex items-center text-sm font-bold focus:outline-none"
+                                                        className="max-w-xs rounded-full flex items-center text-sm font-bold focus:outline-none p-1 focus:ring-2 focus:ring-wt-accent"
                                                         ref={notificationMenuToggleRef}
                                                     >
                                                         <span className="sr-only">Open Notifications</span>

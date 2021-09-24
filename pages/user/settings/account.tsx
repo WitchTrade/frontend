@@ -64,7 +64,7 @@ const Account: NextPage = () => {
                         <ActionButton type="warning" onClick={editAccountSettings}>Edit</ActionButton>
                     </div>
                     <div className="flex justify-center mt-2">
-                        <Link href="/user/settings/changepw">
+                        <Link href="/user/settings/changepw" passHref>
                             <ActionButton type="accent" onClick={() => { }}>Change Password</ActionButton>
                         </Link>
                     </div>

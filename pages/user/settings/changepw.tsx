@@ -42,7 +42,7 @@ const Changepw: NextPage = () => {
                 </div>
                 <div className="flex justify-center text-center mt-2">
                     <div className="mx-1">
-                        <Link href="/user/settings/account">
+                        <Link href="/user/settings/account" passHref>
                             <ActionButton type="cancel" onClick={() => { }}>Cancel</ActionButton>
                         </Link>
                     </div>

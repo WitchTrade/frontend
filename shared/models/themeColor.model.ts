@@ -45,7 +45,7 @@ export function createThemeColors(params: Partial<ThemeColors>) {
         text: params.text ? params.text : '',
         selectedLight: params.selectedLight ? params.selectedLight : '',
         selected: params.selected ? params.selected : '',
-        selectedDark: params.selected ? params.selected : '',
+        selectedDark: params.selectedDark ? params.selectedDark : '',
         disabled: params.disabled ? params.disabled : '',
         surface: params.surface ? params.surface : '',
         surfaceDark: params.surfaceDark ? params.surfaceDark : '',

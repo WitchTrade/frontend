@@ -57,7 +57,7 @@ const Server: FunctionComponent<Props> = ({ server, watchlist, ownPlayer, addPla
                                     <div className="flex items-center">
                                         {!watchlist.includes(player.name) && ownPlayer !== player.name &&
                                             <button className="hover:bg-wt-hover rounded-full flex items-center" onClick={() => addPlayer(player.name)}>
-                                                <Image src={`/assets/svgs/add/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" />
+                                                <Image src={`/assets/svgs/add/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Add player" />
                                             </button>
                                         }
                                         <p className={`text-sm ${watchlist.includes(player.name) ? 'text-wt-accent ml-5' : ownPlayer === player.name ? 'text-wt-accent-light ml-5' : ''}`}>{player.name}</p>

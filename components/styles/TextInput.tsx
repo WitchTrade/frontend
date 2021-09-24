@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { FunctionComponent } from 'react';
+import useThemeProvider from '../../shared/providers/theme.provider';
 
 interface Props {
     type: string;
@@ -10,9 +11,12 @@ interface Props {
     svgPath?: string;
     handleKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     autocompleteValue?: string;
+    clearOption?: boolean;
 }
 
-const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValue, required, svgPath, handleKeyPress, autocompleteValue }) => {
+const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValue, required, svgPath, handleKeyPress, autocompleteValue, clearOption }) => {
+
+    const { theme } = useThemeProvider();
 
     return (
         <div className="relative" >
@@ -29,6 +33,11 @@ const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValu
                 <div className="absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none top-0 bot-0">
                     <Image src={svgPath} height="24px" width="24px" alt="Input Icon" />
                 </div>
+            }
+            {clearOption && value &&
+                <button className="absolute inset-y-0 right-0 flex items-center px-2" onClick={() => setValue('')}>
+                    <Image src={`/assets/svgs/close/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="24px" width="24px" alt="Clear Input Icon" />
+                </button>
             }
         </div>
     );
