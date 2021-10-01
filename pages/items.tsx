@@ -24,20 +24,18 @@ const Items: NextPage = () => {
                 url="https://witchtrade.org/items"
             />
             <PageHeader title="Items" />
-            <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues}/>
-            <div className="flex flex-wrap justify-center mx-6">
-                <InfiniteScroll
-                    className="flex flex-row flex-wrap justify-center py-2 h-full"
-                    dataLength={loadedItems.length}
-                    next={loadMoreItems}
-                    hasMore={hasMoreItems()}
-                    loader={<p></p>}
-                >
-                    {loadedItems.map((item, i) => (
-                        <ItemView key={i} item={item} inventory={inventory} />
-                    ))}
-                </InfiniteScroll>
-            </div>
+            <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} />
+            <InfiniteScroll
+                className="flex flex-row flex-wrap justify-center py-2 h-full mx-6"
+                dataLength={loadedItems.length}
+                next={loadMoreItems}
+                hasMore={hasMoreItems()}
+                loader={<p></p>}
+            >
+                {loadedItems.map((item, i) => (
+                    <ItemView key={i} item={item} inventory={inventory} />
+                ))}
+            </InfiniteScroll>
         </div>
     );
 };

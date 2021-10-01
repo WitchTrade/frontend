@@ -23,6 +23,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-wt-surface-dark rounded-lg">
                 <div className="flex justify-between cursor-pointer p-2 hover:bg-wt-hover rounded-lg" onClick={() => setFilterOpen(!filterOpen)}>
+                    <Image src={`/assets/svgs/expand_${filterOpen ? 'less' : 'more'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
                     <p className="font-semibold">Filter</p>
                     <Image src={`/assets/svgs/expand_${filterOpen ? 'less' : 'more'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
                 </div>

@@ -185,7 +185,8 @@ const ItemsHandler = () => {
         if (!queryLoaded) {
             return;
         }
-        const query = {
+
+        const query: { [key: string]: string | boolean | undefined; } = {
             searchString: itemFilterValues.searchString !== '' ? itemFilterValues.searchString : undefined,
             tradeableOnly: itemFilterValues.tradeableOnly !== false ? itemFilterValues.tradeableOnly : undefined,
             newOnly: itemFilterValues.newOnly !== false ? itemFilterValues.newOnly : undefined,
@@ -198,11 +199,13 @@ const ItemsHandler = () => {
             inventory: itemFilterValues.inventory.key !== inventoryValues[0].key ? itemFilterValues.inventory.key : undefined,
             duplicatesOnly: itemFilterValues.duplicatesOnly !== false ? itemFilterValues.duplicatesOnly : undefined,
         };
-        // @ts-ignore
+
         Object.keys(query).forEach(key => query[key] === undefined ? delete query[key] : {});
-        router.replace({
-            query
-        });
+        router.replace(
+            { query },
+            undefined,
+            { scroll: false }
+        );
     }, [itemFilterValues]);
 
     const filterItems = () => {
