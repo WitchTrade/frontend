@@ -118,11 +118,14 @@ const ItemsHandler = () => {
         duplicatesOnly: false
     });
 
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<Item>();
+
     useEffect(() => {
         if (!queryLoaded && router.isReady) {
             const searchString = typeof router.query.searchString === 'string' ? router.query.searchString : '';
-            const tradeableOnly = typeof router.query.tradeableOnly === 'string' && router.query.tradeableOnly === '1' ? true : false;
-            const newOnly = typeof router.query.newOnly === 'string' && router.query.newOnly === '1' ? true : false;
+            const tradeableOnly = typeof router.query.tradeableOnly === 'string' && router.query.tradeableOnly === 'true' ? true : false;
+            const newOnly = typeof router.query.newOnly === 'string' && router.query.newOnly === 'true' ? true : false;
 
             let orderBy;
             if (typeof router.query.orderBy === 'string') {
@@ -153,7 +156,7 @@ const ItemsHandler = () => {
                 inventory = inventoryValues.find(i => i.key === router.query.inventory);
             }
 
-            const duplicatesOnly = typeof router.query.duplicatesOnly === 'string' && router.query.duplicatesOnly === '1' ? true : false;
+            const duplicatesOnly = typeof router.query.duplicatesOnly === 'string' && router.query.duplicatesOnly === 'true' ? true : false;
 
             setItemFilterValues({
                 searchString,
@@ -265,13 +268,22 @@ const ItemsHandler = () => {
         return items.length > loadedItems.length;
     };
 
+    const openItemDetails = (item: Item) => {
+        setSelectedItem(item);
+        setDialogOpen(true);
+    };
+
     return {
         inventory,
         loadedItems,
         loadMoreItems,
         hasMoreItems,
         itemFilterValues,
-        setItemFilterValues
+        setItemFilterValues,
+        dialogOpen,
+        setDialogOpen,
+        selectedItem,
+        openItemDetails
     };
 };
 
