@@ -10,27 +10,27 @@ import { inventoryService } from '../stores/inventory/inventory.service';
 import { serverNotificationService } from '../stores/serverNotification/server-notification.service';
 
 class AppService {
-    public init(): void {
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js');
-            });
-        }
-
-        dayjs.extend(relativeTime);
-        dayjs.extend(duration);
-
-        themeService.init();
-        userService.init();
-        itemsService.fetchAllItems().subscribe();
-
-        userQuery.select().subscribe(user => {
-            if (user.loggedIn) {
-                inventoryService.fetchInventory(user).subscribe();
-                serverNotificationService.fetchNotifications(user).subscribe();
-            }
-        });
+  public init(): void {
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
     }
+
+    dayjs.extend(relativeTime);
+    dayjs.extend(duration);
+
+    themeService.init();
+    userService.init();
+    itemsService.fetchAllItems().subscribe();
+
+    userQuery.select().subscribe(user => {
+      if (user.loggedIn) {
+        inventoryService.fetchInventory(user).subscribe();
+        serverNotificationService.fetchNotifications(user).subscribe();
+      }
+    });
+  }
 }
 
 const appService = new AppService();

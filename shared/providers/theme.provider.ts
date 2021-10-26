@@ -3,17 +3,17 @@ import { Theme } from '../models/theme.model';
 import themeService from '../services/theme.service';
 
 const useThemeProvider = () => {
-    const [theme, setTheme] = useState<Theme>();
+  const [theme, setTheme] = useState<Theme>();
 
-    useEffect(() => {
-        const themeSub = themeService.currentTheme$.subscribe(setTheme);
+  useEffect(() => {
+    const themeSub = themeService.currentTheme$.subscribe(setTheme);
 
-        return (() => {
-            themeSub.unsubscribe();
-        });
-    }, []);
+    return (() => {
+      themeSub.unsubscribe();
+    });
+  }, []);
 
-    return { theme };
+  return { theme };
 };
 
 export default useThemeProvider;

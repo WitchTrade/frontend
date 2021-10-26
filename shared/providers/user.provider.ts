@@ -3,17 +3,17 @@ import { createUser, User } from '../stores/user/user.model';
 import { userQuery } from '../stores/user/user.query';
 
 const useUserProvider = () => {
-    const [user, setUser] = useState<User>(createUser({}));
+  const [user, setUser] = useState<User>(createUser({}));
 
-    useEffect(() => {
-        const userSub = userQuery.select().subscribe(setUser);
+  useEffect(() => {
+    const userSub = userQuery.select().subscribe(setUser);
 
-        return (() => {
-            userSub.unsubscribe();
-        });
-    }, []);
+    return (() => {
+      userSub.unsubscribe();
+    });
+  }, []);
 
-    return { user };
+  return { user };
 };
 
 export default useUserProvider;

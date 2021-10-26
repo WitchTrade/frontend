@@ -5,72 +5,72 @@ import { draculaTheme } from '../themes/dracula';
 import { lightTheme } from '../themes/light';
 
 class ThemeService {
-    public officialThemes: Theme[] = [
-        { key: 'dark', type: 'dark', displayName: 'Dark', colors: darkTheme, official: true },
-        { key: 'dracula', type: 'dark', displayName: 'Dracula', colors: draculaTheme, official: true },
-        { key: 'light', type: 'light', displayName: 'Light', colors: lightTheme, official: true },
-    ];
+  public officialThemes: Theme[] = [
+    { key: 'dark', type: 'dark', displayName: 'Dark', colors: darkTheme, official: true },
+    { key: 'dracula', type: 'dark', displayName: 'Dracula', colors: draculaTheme, official: true },
+    { key: 'light', type: 'light', displayName: 'Light', colors: lightTheme, official: true },
+  ];
 
-    // current all themes. Official and custom themes
-    private _allThemesSubj: BehaviorSubject<Theme[]> = new BehaviorSubject<Theme[]>([...this.officialThemes]);
-    public allThemes$ = this._allThemesSubj.asObservable();
+  // current all themes. Official and custom themes
+  private _allThemesSubj: BehaviorSubject<Theme[]> = new BehaviorSubject<Theme[]>([...this.officialThemes]);
+  public allThemes$ = this._allThemesSubj.asObservable();
 
-    // current selected theme
-    private _currentThemeSubj: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(this._allThemesSubj.getValue()[0]);
-    public currentTheme$ = this._currentThemeSubj.asObservable();
+  // current selected theme
+  private _currentThemeSubj: BehaviorSubject<Theme> = new BehaviorSubject<Theme>(this._allThemesSubj.getValue()[0]);
+  public currentTheme$ = this._currentThemeSubj.asObservable();
 
-    public init(): void {
-        this.loadCustomThemes();
-        let storageTheme = localStorage.getItem('theme');
+  public init(): void {
+    this.loadCustomThemes();
+    let storageTheme = localStorage.getItem('theme');
 
-        if (!storageTheme) {
-            localStorage.setItem('theme', this._currentThemeSubj.value.key);
-            storageTheme = this._currentThemeSubj.value.key;
-        }
-
-        let theme = this._allThemesSubj.getValue().find(theme => theme.key === storageTheme);
-
-        if (!theme) {
-            return;
-        }
-
-        this._currentThemeSubj.next(theme);
+    if (!storageTheme) {
+      localStorage.setItem('theme', this._currentThemeSubj.value.key);
+      storageTheme = this._currentThemeSubj.value.key;
     }
 
-    /**
-     * Applies a new theme and saves it in the local storage.
-     * @param new theme to apply and save in local storage
-     */
-    public applyTheme(newTheme: Theme): void {
-        localStorage.setItem('theme', newTheme.key);
-        this._currentThemeSubj.next(newTheme);
-    };
+    let theme = this._allThemesSubj.getValue().find(theme => theme.key === storageTheme);
 
-    // loads the custom themes from the local storage and loads them
-    public loadCustomThemes() {
-        const customThemesString = localStorage.getItem('customThemes');
-        let customThemes: Theme[] = [];
-        if (customThemesString) {
-            customThemes = JSON.parse(customThemesString);
-        }
-        const allThemes = [...this.officialThemes];
-        allThemes.push(...customThemes);
-        this._allThemesSubj.next(allThemes);
+    if (!theme) {
+      return;
     }
 
-    public hexToRgbA(hexCode: string, opacity: number) {
-        var hex = hexCode.replace('#', '');
+    this._currentThemeSubj.next(theme);
+  }
 
-        if (hex.length === 3) {
-            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-        }
+  /**
+   * Applies a new theme and saves it in the local storage.
+   * @param new theme to apply and save in local storage
+   */
+  public applyTheme(newTheme: Theme): void {
+    localStorage.setItem('theme', newTheme.key);
+    this._currentThemeSubj.next(newTheme);
+  };
 
-        var r = parseInt(hex.substring(0, 2), 16),
-            g = parseInt(hex.substring(2, 4), 16),
-            b = parseInt(hex.substring(4, 6), 16);
+  // loads the custom themes from the local storage and loads them
+  public loadCustomThemes() {
+    const customThemesString = localStorage.getItem('customThemes');
+    let customThemes: Theme[] = [];
+    if (customThemesString) {
+      customThemes = JSON.parse(customThemesString);
+    }
+    const allThemes = [...this.officialThemes];
+    allThemes.push(...customThemes);
+    this._allThemesSubj.next(allThemes);
+  }
 
-        return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
-    };
+  public hexToRgbA(hexCode: string, opacity: number) {
+    var hex = hexCode.replace('#', '');
+
+    if (hex.length === 3) {
+      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+
+    var r = parseInt(hex.substring(0, 2), 16),
+      g = parseInt(hex.substring(2, 4), 16),
+      b = parseInt(hex.substring(4, 6), 16);
+
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
+  };
 }
 
 const themeService = new ThemeService();

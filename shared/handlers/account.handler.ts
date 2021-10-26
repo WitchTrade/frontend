@@ -7,173 +7,173 @@ import { discordTagRegex, steamTradeLinkRegex, steamProfileLinkRegex } from '../
 import { userService } from '../stores/user/user.service';
 
 const AccountSettingsHandler = () => {
-    const router = useRouter();
+  const router = useRouter();
 
-    const { user } = useUserProvider();
+  const { user } = useUserProvider();
 
-    const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState(false);
 
-    const [formValue, setFormValue] = useState({
-        displayName: '',
-        email: '',
-        steamProfileLink: '',
-        steamTradeLink: '',
-        usingSteamGuard: false,
-        discordTag: '',
-        hidden: false
+  const [formValue, setFormValue] = useState({
+    displayName: '',
+    email: '',
+    steamProfileLink: '',
+    steamTradeLink: '',
+    usingSteamGuard: false,
+    discordTag: '',
+    hidden: false
+  });
+
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newRepeatPassword, setNewRepeatPassword] = useState('');
+
+  const editAccountSettings = () => {
+    setEditing(true);
+    setFormValue({
+      displayName: user.displayName,
+      email: user.email,
+      steamProfileLink: user.steamProfileLink ? user.steamProfileLink : '',
+      steamTradeLink: user.steamTradeLink ? user.steamTradeLink : '',
+      usingSteamGuard: user.usingSteamGuard ? user.usingSteamGuard : false,
+      discordTag: user.discordTag ? user.discordTag : '',
+      hidden: user.hidden ? user.hidden : false
     });
+  };
 
-    const [oldPassword, setOldPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [newRepeatPassword, setNewRepeatPassword] = useState('');
+  const updateAccountSettings = () => {
+    if (
+      !formValue.displayName ||
+      !formValue.email) {
+      const notification = createNotification({
+        content: 'Please fill out every required field',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
 
-    const editAccountSettings = () => {
-        setEditing(true);
-        setFormValue({
-            displayName: user.displayName,
-            email: user.email,
-            steamProfileLink: user.steamProfileLink ? user.steamProfileLink : '',
-            steamTradeLink: user.steamTradeLink ? user.steamTradeLink : '',
-            usingSteamGuard: user.usingSteamGuard ? user.usingSteamGuard : false,
-            discordTag: user.discordTag ? user.discordTag : '',
-            hidden: user.hidden ? user.hidden : false
-        });
-    };
+    if (formValue.displayName.length > 20) {
+      const notification = createNotification({
+        content: 'Display name can\'t be longer than 20 characters',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
 
-    const updateAccountSettings = () => {
-        if (
-            !formValue.displayName ||
-            !formValue.email) {
-            const notification = createNotification({
-                content: 'Please fill out every required field',
-                duration: 5000,
-                type: 'warning'
-            });
-            notificationService.addNotification(notification);
-            return;
-        }
+    if (formValue.steamProfileLink.trim() &&
+      !steamProfileLinkRegex.test(formValue.steamProfileLink)) {
+      const notification = createNotification({
+        content: 'Invalid steam profile url',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
 
-        if (formValue.displayName.length > 20) {
-            const notification = createNotification({
-                content: 'Display name can\'t be longer than 20 characters',
-                duration: 5000,
-                type: 'warning'
-            });
-            notificationService.addNotification(notification);
-            return;
-        }
+    if (formValue.steamTradeLink.trim() &&
+      !steamTradeLinkRegex.test(formValue.steamTradeLink)) {
+      const notification = createNotification({
+        content: 'Invalid steam trade link',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
 
-        if (formValue.steamProfileLink.trim() &&
-            !steamProfileLinkRegex.test(formValue.steamProfileLink)) {
-            const notification = createNotification({
-                content: 'Invalid steam profile url',
-                duration: 5000,
-                type: 'warning'
-            });
-            notificationService.addNotification(notification);
-            return;
-        }
+    if (!formValue.steamProfileLink.trim() && !formValue.steamTradeLink.trim()) {
+      const notification = createNotification({
+        content: 'Please provide either a steam profile link or trade link.',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
 
-        if (formValue.steamTradeLink.trim() &&
-            !steamTradeLinkRegex.test(formValue.steamTradeLink)) {
-            const notification = createNotification({
-                content: 'Invalid steam trade link',
-                duration: 5000,
-                type: 'warning'
-            });
-            notificationService.addNotification(notification);
-            return;
-        }
+    if (formValue.discordTag.trim() &&
+      !discordTagRegex.test(formValue.discordTag)) {
+      const notification = createNotification({
+        content: 'Invalid Discord tag',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
 
-        if (!formValue.steamProfileLink.trim() && !formValue.steamTradeLink.trim()) {
-            const notification = createNotification({
-                content: 'Please provide either a steam profile link or trade link.',
-                duration: 5000,
-                type: 'warning'
-            });
-            notificationService.addNotification(notification);
-            return;
-        }
+    userService.updateAccountSettings({
+      displayName: formValue.displayName,
+      email: formValue.email,
+      steamProfileLink: formValue.steamProfileLink.trim() ? formValue.steamProfileLink : undefined,
+      steamTradeLink: formValue.steamTradeLink.trim() ? formValue.steamTradeLink : undefined,
+      usingSteamGuard: formValue.usingSteamGuard,
+      discordTag: formValue.discordTag.trim() ? formValue.discordTag : undefined,
+      hidden: formValue.hidden
+    }).subscribe((res) => {
+      setEditing(false);
+    });
+  };
 
-        if (formValue.discordTag.trim() &&
-            !discordTagRegex.test(formValue.discordTag)) {
-            const notification = createNotification({
-                content: 'Invalid Discord tag',
-                duration: 5000,
-                type: 'warning'
-            });
-            notificationService.addNotification(notification);
-            return;
-        }
+  const cancelEditAccountSettings = () => {
+    setEditing(false);
+  };
 
-        userService.updateAccountSettings({
-            displayName: formValue.displayName,
-            email: formValue.email,
-            steamProfileLink: formValue.steamProfileLink.trim() ? formValue.steamProfileLink : undefined,
-            steamTradeLink: formValue.steamTradeLink.trim() ? formValue.steamTradeLink : undefined,
-            usingSteamGuard: formValue.usingSteamGuard,
-            discordTag: formValue.discordTag.trim() ? formValue.discordTag : undefined,
-            hidden: formValue.hidden
-        }).subscribe((res) => {
-            setEditing(false);
-        });
-    };
+  const changePassword = () => {
+    if (!oldPassword) {
+      const notification = createNotification({
+        content: 'Please enter your old password',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
+    if (!newPassword) {
+      const notification = createNotification({
+        content: 'Please enter your new password',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
+    if (newPassword !== newRepeatPassword) {
+      const notification = createNotification({
+        content: 'New passwords do not match',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
+    userService.changePassword(oldPassword, newPassword).subscribe((res) => {
+      if (res.status === 200) {
+        router.push('/user/settings/account');
+      }
+    });
+  };
 
-    const cancelEditAccountSettings = () => {
-        setEditing(false);
-    };
-
-    const changePassword = () => {
-        if (!oldPassword) {
-            const notification = createNotification({
-                content: 'Please enter your old password',
-                duration: 5000,
-                type: 'warning'
-            });
-            notificationService.addNotification(notification);
-            return;
-        }
-        if (!newPassword) {
-            const notification = createNotification({
-                content: 'Please enter your new password',
-                duration: 5000,
-                type: 'warning'
-            });
-            notificationService.addNotification(notification);
-            return;
-        }
-        if (newPassword !== newRepeatPassword) {
-            const notification = createNotification({
-                content: 'New passwords do not match',
-                duration: 5000,
-                type: 'warning'
-            });
-            notificationService.addNotification(notification);
-            return;
-        }
-        userService.changePassword(oldPassword, newPassword).subscribe((res) => {
-            if (res.status === 200) {
-                router.push('/user/settings/account');
-            }
-        });
-    };
-
-    return {
-        user,
-        formValue,
-        setFormValue,
-        editing,
-        editAccountSettings,
-        updateAccountSettings,
-        cancelEditAccountSettings,
-        oldPassword,
-        setOldPassword,
-        newPassword,
-        setNewPassword,
-        newRepeatPassword,
-        setNewRepeatPassword,
-        changePassword
-    };
+  return {
+    user,
+    formValue,
+    setFormValue,
+    editing,
+    editAccountSettings,
+    updateAccountSettings,
+    cancelEditAccountSettings,
+    oldPassword,
+    setOldPassword,
+    newPassword,
+    setNewPassword,
+    newRepeatPassword,
+    setNewRepeatPassword,
+    changePassword
+  };
 };
 
 export default AccountSettingsHandler;
