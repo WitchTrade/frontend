@@ -3,7 +3,7 @@ import { useRouter } from 'next/dist/client/router';
 import useUserProvider from '../providers/user.provider';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
-import { discordTagRegex, steamTradeLinkRegex, steamUrlRegex } from '../stores/user/user.model';
+import { discordTagRegex, steamTradeLinkRegex, steamProfileLinkRegex } from '../stores/user/user.model';
 import { userService } from '../stores/user/user.service';
 
 const AccountSettingsHandler = () => {
@@ -16,9 +16,9 @@ const AccountSettingsHandler = () => {
     const [formValue, setFormValue] = useState({
         displayName: '',
         email: '',
-        steamUrl: '',
+        steamProfileLink: '',
         steamTradeLink: '',
-        steamAuth: false,
+        usingSteamGuard: false,
         discordTag: '',
         hidden: false
     });
@@ -32,9 +32,9 @@ const AccountSettingsHandler = () => {
         setFormValue({
             displayName: user.displayName,
             email: user.email,
-            steamUrl: user.steamUrl ? user.steamUrl : '',
+            steamProfileLink: user.steamProfileLink ? user.steamProfileLink : '',
             steamTradeLink: user.steamTradeLink ? user.steamTradeLink : '',
-            steamAuth: user.steamAuth ? user.steamAuth : false,
+            usingSteamGuard: user.usingSteamGuard ? user.usingSteamGuard : false,
             discordTag: user.discordTag ? user.discordTag : '',
             hidden: user.hidden ? user.hidden : false
         });
@@ -63,8 +63,8 @@ const AccountSettingsHandler = () => {
             return;
         }
 
-        if (formValue.steamUrl.trim() &&
-            !steamUrlRegex.test(formValue.steamUrl)) {
+        if (formValue.steamProfileLink.trim() &&
+            !steamProfileLinkRegex.test(formValue.steamProfileLink)) {
             const notification = createNotification({
                 content: 'Invalid steam profile url',
                 duration: 5000,
@@ -85,7 +85,7 @@ const AccountSettingsHandler = () => {
             return;
         }
 
-        if (!formValue.steamUrl.trim() && !formValue.steamTradeLink.trim()) {
+        if (!formValue.steamProfileLink.trim() && !formValue.steamTradeLink.trim()) {
             const notification = createNotification({
                 content: 'Please provide either a steam profile link or trade link.',
                 duration: 5000,
@@ -109,9 +109,9 @@ const AccountSettingsHandler = () => {
         userService.updateAccountSettings({
             displayName: formValue.displayName,
             email: formValue.email,
-            steamUrl: formValue.steamUrl.trim() ? formValue.steamUrl : undefined,
+            steamProfileLink: formValue.steamProfileLink.trim() ? formValue.steamProfileLink : undefined,
             steamTradeLink: formValue.steamTradeLink.trim() ? formValue.steamTradeLink : undefined,
-            steamAuth: formValue.steamAuth,
+            usingSteamGuard: formValue.usingSteamGuard,
             discordTag: formValue.discordTag.trim() ? formValue.discordTag : undefined,
             hidden: formValue.hidden
         }).subscribe((res) => {

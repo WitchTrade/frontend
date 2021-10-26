@@ -14,7 +14,7 @@ const defaultStyle = "px-3 py-2 focus:outline-none ";
 
 const NavbarLink: FunctionComponent<Props> = forwardRef(({ onClick, href, children, type }, ref?: React.LegacyRef<HTMLAnchorElement>) => {
     const types: Types = {
-        action: 'bg-wt-selected-dark hover:bg-wt-hover rounded-md text-sm font-medium cursor-pointer focus:ring-2 focus:ring-wt-accent',
+        accent: 'rounded-md text-sm font-medium cursor-pointer focus:ring-2 focus:ring-wt-accent text-wt-light bg-wt-accent hover:bg-wt-accent-light',
         nav: 'hover:bg-wt-hover rounded-md text-sm font-medium cursor-pointer focus:ring-2 focus:ring-wt-accent',
         navSelected: 'bg-wt-selected-dark rounded-md text-sm font-medium focus:ring-2 focus:ring-wt-accent',
         hamburger: 'hover:bg-wt-hover block rounded-md text-base font-medium cursor-pointer focus:ring-2 focus:ring-wt-accent',

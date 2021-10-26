@@ -84,7 +84,7 @@ const Gameservers: NextPage = () => {
                                         Add player
                                     </ActionButton>
                                 </div>
-                                {user && user.steamUrl && !steamSyncLoading &&
+                                {user && user.steamProfileLink && !steamSyncLoading &&
                                     <div className="m-1">
                                         <ActionButton type="accent" onClick={syncSteamFriends}>
                                             <Image src="/assets/svgs/sync.svg" height="24px" width="24px" alt="Sync Steam Friends" />

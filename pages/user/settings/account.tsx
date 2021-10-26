@@ -46,13 +46,13 @@ const Account: NextPage = () => {
                         <ValueDisplay name="Email" value={user.email} svgPath={`/assets/svgs/email/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
                     </div>
                     <div className="m-1 mt-4">
-                        <ValueDisplay name="Steam Profile Link" value={user.steamUrl} link={true} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
+                        <ValueDisplay name="Steam Profile Link" value={user.steamProfileLink} link={true} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
                     </div>
                     <div className="m-1">
                         <ValueDisplay name="Steam Trade Link" value={user.steamTradeLink} link={true} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
                     </div>
                     <div className="m-1">
-                        <BooleanDisplay name="Using Steam Guard" value={user.steamAuth} trueIconPath="/assets/svgs/booleanIcons/lock.svg" falseIconPath="/assets/svgs/booleanIcons/warning.svg" />
+                        <BooleanDisplay name="Using Steam Guard" value={user.usingSteamGuard} trueIconPath="/assets/svgs/booleanIcons/lock.svg" falseIconPath="/assets/svgs/booleanIcons/warning.svg" />
                     </div>
                     <div className="m-1 mt-4">
                         <ValueDisplay name="Discord Tag" value={user.discordTag} svgPath={`/assets/svgs/discord/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
@@ -64,8 +64,10 @@ const Account: NextPage = () => {
                         <ActionButton type="warning" onClick={editAccountSettings}>Edit</ActionButton>
                     </div>
                     <div className="flex justify-center mt-2">
-                        <Link href="/user/settings/changepw" passHref>
-                            <ActionButton type="accent" onClick={() => { }}>Change Password</ActionButton>
+                        <Link href="/user/settings/changepw">
+                            <a>
+                                <ActionButton type="accent">Change Password</ActionButton>
+                            </a>
                         </Link>
                     </div>
                 </div>
@@ -82,13 +84,13 @@ const Account: NextPage = () => {
                         <TextInput type="input" value={formValue.email} setValue={(value) => setFormValue({ ...formValue, email: value })} placeholder="Email" required={true} svgPath={`/assets/svgs/email/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
                     </div>
                     <div className="m-1 mt-4">
-                        <TextInput type="input" value={formValue.steamUrl} setValue={(value) => setFormValue({ ...formValue, steamUrl: value })} placeholder="Steam Profile Link" required={false} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
+                        <TextInput type="input" value={formValue.steamProfileLink} setValue={(value) => setFormValue({ ...formValue, steamProfileLink: value })} placeholder="Steam Profile Link" required={false} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
                     </div>
                     <div className="m-1">
                         <TextInput type="input" value={formValue.steamTradeLink} setValue={(value) => setFormValue({ ...formValue, steamTradeLink: value })} placeholder="Steam Trade Link" required={false} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
                     </div>
                     <div className="m-1">
-                        <CheckboxInput placeholder="Using Steam Guard" value={formValue.steamAuth} setValue={(value) => setFormValue({ ...formValue, steamAuth: value })} />
+                        <CheckboxInput placeholder="Using Steam Guard" value={formValue.usingSteamGuard} setValue={(value) => setFormValue({ ...formValue, usingSteamGuard: value })} />
                     </div>
                     <div className="m-1 mt-4">
                         <TextInput type="input" value={formValue.discordTag} setValue={(value) => setFormValue({ ...formValue, discordTag: value })} placeholder="Discord Tag" required={false} svgPath={`/assets/svgs/discord/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />

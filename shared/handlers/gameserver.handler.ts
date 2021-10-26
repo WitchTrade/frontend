@@ -56,7 +56,7 @@ const useGameserverHandler = () => {
         userService.getSteamFriends().subscribe(async (res) => {
             setSteamSyncLoading(false);
             const jsonRes = await res.json();
-            const friends = jsonRes.friendNames;
+            const friends = jsonRes.friends;
             const ownPlayer = jsonRes.ownPlayer;
             if (!res.ok) {
                 const notification = createNotification({

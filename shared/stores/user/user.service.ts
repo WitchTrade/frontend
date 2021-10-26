@@ -15,9 +15,9 @@ export class UserService {
   constructor(private userStore: UserStore, private _userQuery: UserQuery, private _inventoryService: InventoryService) { }
 
   public async init() {
-    const user = createUser({ loggedIn: false });
     const token = localStorage.getItem('jwt') ? localStorage.getItem('jwt') : sessionStorage.getItem('jwt');
     if (!token) {
+      const user = createUser({ loggedIn: false });
       this.userStore.update(user);
       return;
     };
@@ -31,14 +31,8 @@ export class UserService {
       return;
     }
 
-    // set user information from token
-    user.loggedIn = true;
-    user.token = token;
-    user.id = decodedToken.id;
-    user.username = decodedToken.username;
-
     // fetch additional information from the server and add it to the user object
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/me`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/current`,
       {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -46,13 +40,9 @@ export class UserService {
       });
     const json = await res.json();
 
-    user.email = json.email;
-    user.displayName = json.displayName;
-    user.steamUrl = json.steamUrl;
-    user.steamTradeLink = json.steamTradeLink;
-    user.discordTag = json.discordTag;
-    user.steamAuth = json.steamAuth;
-    user.hidden = json.hidden;
+    const user = createUser(json);
+    user.loggedIn = true;
+    user.token = token;
 
     // update the store with the new user information
     this.userStore.update(user);
@@ -157,7 +147,7 @@ export class UserService {
   }
 
   public updateAccountSettings(user: Partial<User>) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/`, {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -165,66 +155,15 @@ export class UserService {
       },
       body: JSON.stringify(user)
     }).pipe(
-      tap(async res => {
-        const json = await res.json();
-        if (res.ok) {
-          const user = createUser(json);
-          user.loggedIn = true;
-          this.userStore.update(user);
-          const notification = createNotification({
-            content: 'Saved',
-            duration: 5000,
-            type: 'success'
-          });
-          notificationService.addNotification(notification);
-        } else {
-          const notification = createNotification({
-            content: json.message,
-            duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-        }
-      },
-        err => {
-          const notification = createNotification({
-            content: err,
-            duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-          return of(err);
-        }
-      )
-    );
-  }
-
-  public changePassword(oldPassword: string, newPassword: string) {
-    const body = JSON.stringify({ oldPassword, newPassword });
-    // login user and save info to store
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/changepw`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this._userQuery.getValue().token}`
-        },
-        body
-      }).pipe(
-        tap(async res => {
+      tap({
+        next: async res => {
           const json = await res.json();
           if (res.ok) {
             const user = createUser(json);
             user.loggedIn = true;
             this.userStore.update(user);
-            if (localStorage.getItem('jwt')) {
-              localStorage.setItem('jwt', user.token);
-            } else {
-              sessionStorage.setItem('jwt', user.token);
-            }
-
             const notification = createNotification({
-              content: 'Password changed',
+              content: 'Saved',
               duration: 5000,
               type: 'success'
             });
@@ -238,7 +177,60 @@ export class UserService {
             notificationService.addNotification(notification);
           }
         },
-          err => {
+        error: err => {
+          const notification = createNotification({
+            content: err,
+            duration: 5000,
+            type: 'error'
+          });
+          notificationService.addNotification(notification);
+          return of(err);
+        }
+      })
+    );
+  }
+
+  public changePassword(oldPassword: string, password: string) {
+    const body = JSON.stringify({ oldPassword, password });
+    // login user and save info to store
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/password`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this._userQuery.getValue().token}`
+        },
+        body
+      }).pipe(
+        tap({
+          next: async res => {
+            const json = await res.json();
+            if (res.ok) {
+              const user = createUser(json);
+              user.loggedIn = true;
+              this.userStore.update(user);
+              if (localStorage.getItem('jwt')) {
+                localStorage.setItem('jwt', user.token);
+              } else {
+                sessionStorage.setItem('jwt', user.token);
+              }
+
+              const notification = createNotification({
+                content: 'Password changed',
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
+            } else {
+              const notification = createNotification({
+                content: json.message,
+                duration: 5000,
+                type: 'error'
+              });
+              notificationService.addNotification(notification);
+            }
+          },
+          error: err => {
             const notification = createNotification({
               content: err,
               duration: 5000,
@@ -247,7 +239,7 @@ export class UserService {
             notificationService.addNotification(notification);
             return of(err);
           }
-        )
+        })
       );
   }
 
@@ -265,68 +257,22 @@ export class UserService {
   }
 
   public fetchProfile(username: string) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/get/${username}`).pipe(
-      tap(async res => {
-        if (!res.ok) {
-          if (res.status !== 400) {
-            const notification = createNotification({
-              content: res.statusText,
-              duration: 5000,
-              type: 'error'
-            });
-            notificationService.addNotification(notification);
-          }
-        }
-      },
-        err => {
-          const notification = createNotification({
-            content: err,
-            duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-          return of(err);
-        }
-      )
-    );
-  }
-
-  public fetchProfileMarket(username: string) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/user/${username}`).pipe(
-      tap(async res => {
-        if (!res.ok && res.status !== 404) {
-          const notification = createNotification({
-            content: res.statusText,
-            duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-        }
-      },
-        err => {
-          const notification = createNotification({
-            content: err,
-            duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-          return of(err);
-        }
-      )
-    );
-  }
-
-  public getSteamFriends() {
-    // login user and save info to store
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/steamFriends`,
-      {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${this._userQuery.getValue().token}`
-        }
-      }).pipe(
-        tap(async () => { },
-          err => {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/get/${username}`)
+      .pipe(
+        tap({
+          next: async res => {
+            if (!res.ok) {
+              if (res.status !== 400) {
+                const notification = createNotification({
+                  content: res.statusText,
+                  duration: 5000,
+                  type: 'error'
+                });
+                notificationService.addNotification(notification);
+              }
+            }
+          },
+          error: err => {
             const notification = createNotification({
               content: err,
               duration: 5000,
@@ -335,7 +281,58 @@ export class UserService {
             notificationService.addNotification(notification);
             return of(err);
           }
-        )
+        })
+      );
+  }
+
+  public fetchProfileMarket(username: string) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/user/${username}`)
+      .pipe(
+        tap({
+          next: async res => {
+            if (!res.ok && res.status !== 404) {
+              const notification = createNotification({
+                content: res.statusText,
+                duration: 5000,
+                type: 'error'
+              });
+              notificationService.addNotification(notification);
+            }
+          },
+          error: err => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+            return of(err);
+          }
+        })
+      );
+  }
+
+  public getSteamFriends() {
+    // login user and save info to store
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/friends`,
+      {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${this._userQuery.getValue().token}`
+        }
+      }).pipe(
+        tap({
+          next: async () => { },
+          error: err => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+            return of(err);
+          }
+        })
       );
   }
 

@@ -273,7 +273,7 @@ const useStatsHandler = () => {
     };
 
     const fetchServerStats = async (): Promise<Stat[]> => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/stats/wiserver`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/stats/witchitserver`);
         const data = await res.json();
         return data;
     };

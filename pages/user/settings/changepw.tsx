@@ -40,10 +40,12 @@ const Changepw: NextPage = () => {
                 <div className="m-1">
                     <TextInput type="password" placeholder="Repeat New Password" value={newRepeatPassword} setValue={setNewRepeatPassword} required={true} svgPath={`/assets/svgs/password/${theme?.type === 'light' ? 'black' : 'white'}.svg`} autocompleteValue="new-password" />
                 </div>
-                <div className="flex justify-center text-center mt-2">
+                <div className="flex justify-center mt-2">
                     <div className="mx-1">
-                        <Link href="/user/settings/account" passHref>
-                            <ActionButton type="cancel" onClick={() => { }}>Cancel</ActionButton>
+                        <Link href="/user/settings/account">
+                            <a>
+                                <ActionButton type="cancel">Cancel</ActionButton>
+                            </a>
                         </Link>
                     </div>
                     <div className="mx-1">

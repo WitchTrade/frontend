@@ -5,12 +5,12 @@ interface Types {
 }
 
 interface Props {
-    onClick: () => void;
+    onClick?: () => void;
     type: string;
     disabled?: boolean;
 }
 
-const defaultStyle = "px-3 py-1 focus:outline-none rounded-md text-sm cursor-pointer focus:ring-2 focus:ring-wt-accent font-medium flex leading-6 disabled:cursor-not-allowed disabled:bg-wt-disabled ";
+const defaultStyle = "flex items-center px-3 py-2 focus:outline-none rounded-md text-sm cursor-pointer focus:ring-2 focus:ring-wt-accent font-medium disabled:cursor-not-allowed disabled:bg-wt-disabled ";
 
 const ActionButton: FunctionComponent<Props> = ({ onClick, children, type, disabled }) => {
     const types: Types = {
@@ -24,11 +24,9 @@ const ActionButton: FunctionComponent<Props> = ({ onClick, children, type, disab
     };
 
     return (
-        <div className="flex text-center items-center">
-            <button className={defaultStyle + types[type]} onClick={onClick} disabled={disabled}>
-                {children}
-            </button>
-        </div>
+        <button className={defaultStyle + types[type]} onClick={onClick} disabled={disabled}>
+            {children}
+        </button>
     );
 };
 

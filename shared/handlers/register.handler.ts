@@ -2,7 +2,7 @@ import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
-import { steamTradeLinkRegex, steamUrlRegex } from '../stores/user/user.model';
+import { steamTradeLinkRegex, steamProfileLinkRegex } from '../stores/user/user.model';
 import { userService } from '../stores/user/user.service';
 
 const RegisterHandler = () => {
@@ -13,7 +13,7 @@ const RegisterHandler = () => {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [displayName, setDisplayName] = useState('');
     const [email, setEmail] = useState('');
-    const [steamUrl, setSteamUrl] = useState('');
+    const [steamProfileLink, setSteamProfileLink] = useState('');
     const [steamTradeLink, setSteamTradeLink] = useState('');
     const [acceptedLegal, setAcceptedLegal] = useState(false);
 
@@ -53,8 +53,8 @@ const RegisterHandler = () => {
             return;
         }
 
-        if (steamUrl.trim() &&
-            !steamUrlRegex.test(steamUrl)) {
+        if (steamProfileLink.trim() &&
+            !steamProfileLinkRegex.test(steamProfileLink)) {
             const notification = createNotification({
                 content: 'Invalid steam profile url',
                 duration: 5000,
@@ -75,7 +75,7 @@ const RegisterHandler = () => {
             return;
         }
 
-        if (!steamUrl.trim() && !steamTradeLink.trim()) {
+        if (!steamProfileLink.trim() && !steamTradeLink.trim()) {
             const notification = createNotification({
                 content: 'Please provide either a steam profile link or trade link.',
                 duration: 5000,
@@ -100,7 +100,7 @@ const RegisterHandler = () => {
             displayName,
             password,
             email,
-            steamUrl: steamUrl.trim() ? steamUrl : undefined,
+            steamProfileLink: steamProfileLink.trim() ? steamProfileLink : undefined,
             steamTradeLink: steamTradeLink.trim() ? steamTradeLink : undefined
         }).subscribe(res => {
             if (res.ok) {
@@ -120,8 +120,8 @@ const RegisterHandler = () => {
         setRepeatPassword,
         email,
         setEmail,
-        steamUrl,
-        setSteamUrl,
+        steamProfileLink,
+        setSteamProfileLink,
         steamTradeLink,
         setSteamTradeLink,
         acceptedLegal,
