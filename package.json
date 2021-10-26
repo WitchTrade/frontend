@@ -1,6 +1,6 @@
 {
   "name": "witchtrade-fe",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "A Witch It trading website.",
   "license": "GPLv3",
@@ -12,9 +12,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@datorama/akita": "^6.2.3",
+    "@datorama/akita": "^6.2.4",
     "@headlessui/react": "^1.4.1",
-    "chart.js": "^3.5.1",
+    "chart.js": "^3.6.0",
     "dayjs": "^1.10.7",
     "jwt-decode": "^3.1.2",
     "next": "11.1.2",
@@ -22,18 +22,18 @@
     "react-colorful": "^5.5.0",
     "react-dom": "17.0.2",
     "react-infinite-scroll-component": "^6.1.0",
-    "rxjs": "^7.3.0",
-    "sass": "^1.42.1",
-    "sharp": "^0.29.1"
+    "rxjs": "^7.4.0",
+    "sass": "^1.43.3",
+    "sharp": "^0.29.2"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-decorators": "^7.15.4",
-    "@types/react": "17.0.26",
-    "autoprefixer": "^10.3.6",
-    "eslint": "7.32.0",
+    "@babel/plugin-proposal-decorators": "^7.15.8",
+    "@types/react": "17.0.33",
+    "autoprefixer": "^10.3.7",
+    "eslint": "7.23.0",
     "eslint-config-next": "11.1.2",
-    "postcss": "^8.3.8",
-    "tailwindcss": "^2.2.16",
-    "typescript": "4.4.3"
+    "postcss": "^8.3.11",
+    "tailwindcss": "^2.2.17",
+    "typescript": "4.4.4"
   }
 }
