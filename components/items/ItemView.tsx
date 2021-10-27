@@ -18,7 +18,7 @@ const ItemView: FunctionComponent<Props> = ({ item, inventory, openItemDetails }
   }
 
   return (
-    <div className="flex w-28 md:w-36 flex-col justify-between rounded-lg bg-wt-surface-dark text-center m-1 shadow-md cursor-pointer transition duration-75 transform hover:scale-105" style={{ borderColor: `#${item.nameColor}`, borderWidth: '6px' }} onClick={() => openItemDetails(item)}>
+    <div className="flex w-28 md:w-36 flex-col justify-between rounded-lg bg-wt-surface-dark text-center m-1 shadow-md cursor-pointer transition duration-75 transform hover:scale-105" style={{ borderColor: `#${item.rarityColor}`, borderWidth: '6px' }} onClick={() => openItemDetails(item)}>
       <Image className="rounded-t-lg" src={item.iconUrl} height={132} width={132} alt={item.name} />
       <p className="text-sm p-1 break-words font-semibold">{item.name}</p>
       <div>

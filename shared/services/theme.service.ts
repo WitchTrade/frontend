@@ -1,5 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { Theme } from '../models/theme.model';
+import { betaBlueTheme } from '../themes/betaBlue';
 import { darkTheme } from '../themes/dark';
 import { draculaTheme } from '../themes/dracula';
 import { lightTheme } from '../themes/light';
@@ -8,6 +9,7 @@ class ThemeService {
   public officialThemes: Theme[] = [
     { key: 'dark', type: 'dark', displayName: 'Dark', colors: darkTheme, official: true },
     { key: 'dracula', type: 'dark', displayName: 'Dracula', colors: draculaTheme, official: true },
+    { key: 'betaBlue', type: 'dark', displayName: 'Beta Blue', colors: betaBlueTheme, official: true },
     { key: 'light', type: 'light', displayName: 'Light', colors: lightTheme, official: true },
   ];
 

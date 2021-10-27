@@ -80,10 +80,13 @@ const Account: NextPage = () => {
           <div className="m-1">
             <TextInput type="input" value={formValue.displayName} setValue={(value) => setFormValue({ ...formValue, displayName: value })} placeholder="Display Name" required={true} svgPath={`/assets/svgs/person/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
           </div>
-          <div className="m-1">
+          <div className="m-1 mb-4">
             <TextInput type="input" value={formValue.email} setValue={(value) => setFormValue({ ...formValue, email: value })} placeholder="Email" required={true} svgPath={`/assets/svgs/email/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
           </div>
-          <div className="m-1 mt-4">
+          {user.verified &&
+            <p className="text-sm"><span className="text-wt-warning">Warning:</span> Changing the steam profile or trade link will remove your verified badge! You will have to apply again.</p>
+          }
+          <div className="m-1">
             <TextInput type="input" value={formValue.steamProfileLink} setValue={(value) => setFormValue({ ...formValue, steamProfileLink: value })} placeholder="Steam Profile Link" required={false} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
           </div>
           <div className="m-1">

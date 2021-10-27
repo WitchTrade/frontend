@@ -75,7 +75,7 @@ const Navbar: FunctionComponent = () => {
                 <div className="flex-shrink-0">
                   <Link href="/">
                     <a>
-                      <Image src="/assets/svgs/banner.svg" height={50} width={206} alt="WitchTrade Banner" />
+                      <p className="font-bold text-3xl"><span className="text-wt-accent">Witch</span>Trade</p>
                     </a>
                   </Link>
                 </div>
@@ -198,6 +198,11 @@ const Navbar: FunctionComponent = () => {
                                 <Image className="rounded-full" src="/assets/images/piggy.png" height={32} width={32} alt="Profile Image" />
                               </div>
                               <p className="text-wt-accent-light ml-1">{user.displayName}</p>
+                              {user.verified &&
+                                <div className="ml-1 h-5 w-5">
+                                  <Image src="/assets/svgs/verified.svg" height={20} width={20} alt="Verified" />
+                                </div>
+                              }
                             </button>
                           </div>
                         }
@@ -287,7 +292,14 @@ const Navbar: FunctionComponent = () => {
                       <Image className="rounded-full" src="/assets/images/piggy.png" height={40} width={40} alt="Profile Image" />
                     </div>
                     <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-wt-accent-light">{user.displayName}</div>
+                      <div className="text-base font-medium leading-none text-wt-accent-light flex">
+                        {user.displayName}
+                        {user.verified &&
+                          <div className="ml-1 h-5 w-5">
+                            <Image src="/assets/svgs/verified.svg" height={20} width={20} alt="Verified" />
+                          </div>
+                        }
+                      </div>
                       {inventory.id &&
                         <p className="text-sm mr-2">Inventory synced: <span className={lastSynced.old ? 'text-yellow-500' : 'text-green-500'}>{lastSynced.lastSyncedString}</span></p>
                       }

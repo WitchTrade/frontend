@@ -13,7 +13,7 @@ export class ServerNotificationService {
 
   public fetchNotifications(user: User) {
     // get all notifications and save them in the store
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notification`, {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notifications`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${user.token}`
@@ -47,7 +47,7 @@ export class ServerNotificationService {
   }
 
   public deleteNotification(notification: ServerNotification, user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notification/${notification.id}`, {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notifications/${notification.id}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${user.token}`
