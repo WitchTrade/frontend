@@ -46,7 +46,7 @@ const Account: NextPage = () => {
           </Tooltip>
         }
       </div>
-      {user.badges && user.badges.length > 1 &&
+      {user.badges && user.badges.length > 0 &&
         <div className="flex justify-center mb-2">
           <div className="flex flex-wrap justify-center items-center">
             {user.badges.map(badge => (
