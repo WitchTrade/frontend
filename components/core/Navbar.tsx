@@ -73,7 +73,11 @@ const Navbar: FunctionComponent = () => {
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
-                  <p className="font-bold text-3xl"><span className="text-wt-accent">Witch</span>Trade</p>
+                  <Link href="/">
+                    <a>
+                      <Image src="/assets/svgs/banner.svg" height={50} width={206} alt="WitchTrade Banner" />
+                    </a>
+                  </Link>
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
