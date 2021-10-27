@@ -4,11 +4,12 @@ import Image from 'next/image';
 interface Props {
   name: string;
   value: string;
+  boldValue?: boolean;
   link?: boolean;
   svgPath?: string;
 }
 
-const ValueDisplay: FunctionComponent<Props> = ({ name, value, link, svgPath }) => {
+const ValueDisplay: FunctionComponent<Props> = ({ name, value, boldValue, link, svgPath }) => {
 
   return (
     <div className="flex justify-between h-11 rounded-lg bg-wt-surface-dark items-center px-2">
@@ -21,7 +22,7 @@ const ValueDisplay: FunctionComponent<Props> = ({ name, value, link, svgPath }) 
       {link && value &&
         <a className="hover:underline text-wt-accent-light rounded-md focus:outline-none focus:ring-2 focus:ring-wt-accent" href={value} target="_blank" rel="noreferrer">click here</a>
         ||
-        <p className={value ? 'font-bold' : ''}>{value ? value : 'Not set'}</p>
+        <p className={value && boldValue ? 'font-bold' : ''}>{value ? value : 'Not set'}</p>
       }
     </div >
   );

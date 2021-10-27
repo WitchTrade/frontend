@@ -35,6 +35,7 @@ module.exports = {
   },
   variants: {
     extend: {
+      display: ['group-hover'],
       backgroundColor: ['disabled'],
       cursor: ['disabled']
     },

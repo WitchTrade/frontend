@@ -47,8 +47,8 @@ export function createUser(params: Partial<User>) {
     hidden: params.hidden || params.hidden === false ? params.hidden : null,
     banned: params.banned || params.banned === false ? params.banned : null,
     banMessage: params.banMessage ? params.banMessage : null,
-    roles: params.roles ? params.roles : null,
-    badges: params.badges ? params.badges : null
+    roles: params.roles ? params.roles : [],
+    badges: params.badges ? params.badges : []
   } as User;
 }
 
@@ -79,8 +79,8 @@ export function createUserInfo(userInfo: Partial<UserInfo>): UserInfo {
     usingSteamGuard: userInfo.usingSteamGuard ? userInfo.usingSteamGuard : false,
     hidden: userInfo.hidden ? userInfo.hidden : false,
     verified: userInfo.verified ? userInfo.verified : false,
-    badges: userInfo.badges ? userInfo.badges : null,
-    roles: userInfo.roles ? userInfo.roles : null,
+    badges: userInfo.badges ? userInfo.badges : [],
+    roles: userInfo.roles ? userInfo.roles : [],
   } as UserInfo;
 }
 

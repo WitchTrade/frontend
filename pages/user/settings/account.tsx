@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import CustomHeader from '../../../components/core/CustomHeader';
 import LoginWrapper from '../../../components/core/LoginWrapper';
 import SettingNav from '../../../components/navs/SettingNav';
@@ -11,6 +12,7 @@ import TextInput from '../../../components/styles/TextInput';
 import ValueDisplay from '../../../components/styles/ValueDisplay';
 import AccountSettingsHandler from '../../../shared/handlers/account.handler';
 import useThemeProvider from '../../../shared/providers/theme.provider';
+import Tooltip from '../../../components/styles/Tooltip';
 
 const Account: NextPage = () => {
   const { theme } = useThemeProvider();
@@ -34,10 +36,35 @@ const Account: NextPage = () => {
       />
       <SettingNav />
       <PageHeader title="Account Settings" />
+      <div className="flex justify-center items-center">
+        <p className="text-wt-accent-light text-2xl font-bold">{user.displayName}</p>
+        {user.verified &&
+          <Tooltip text="Verified">
+            <div className="ml-1 h-6 w-6">
+              <Image src="/assets/svgs/verified.svg" height={24} width={24} alt="Verified" />
+            </div>
+          </Tooltip>
+        }
+      </div>
+      {user.badges && user.badges.length > 1 &&
+        <div className="flex justify-center mb-2">
+          <div className="flex flex-wrap justify-center items-center">
+            {user.badges.map(badge => (
+              <div>
+                <Tooltip text={badge.description}>
+                  <div className="m-1 h-9 w-9">
+                    <Image src={`/assets/svgs/badges/${badge.id}.svg`} height={36} width={36} alt={badge.description} />
+                  </div>
+                </Tooltip>
+              </div>
+            ))}
+          </div>
+        </div>
+      }
       {!editing &&
         <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8 py-2">
           <div className="m-1">
-            <ValueDisplay name="Username" value={user.username} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
+            <ValueDisplay name="Username" value={user.username} boldValue={true} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
           </div>
           <div className="m-1">
             <ValueDisplay name="Display Name" value={user.displayName} svgPath={`/assets/svgs/person/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
@@ -75,7 +102,7 @@ const Account: NextPage = () => {
       {editing &&
         <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8 py-2">
           <div className="m-1">
-            <ValueDisplay name="Username" value={user.username} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
+            <ValueDisplay name="Username" value={user.username} boldValue={true} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
           </div>
           <div className="m-1">
             <TextInput type="input" value={formValue.displayName} setValue={(value) => setFormValue({ ...formValue, displayName: value })} placeholder="Display Name" required={true} svgPath={`/assets/svgs/person/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
