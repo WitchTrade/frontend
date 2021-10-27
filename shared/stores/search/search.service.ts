@@ -8,7 +8,7 @@ import { User } from '../user/user.model';
 export class SearchService {
 
   public search(searchParameters: string, user: User) {
-    let options;
+    let options: RequestInit = {};
     if (user.id) {
       options = {
         headers: {

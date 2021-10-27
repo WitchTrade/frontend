@@ -9,10 +9,12 @@ import { createUser, DecodedToken, RegisterUser, User } from './user.model';
 import { inventoryService, InventoryService } from '../inventory/inventory.service';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
+import { SyncSettingsStore, syncSettingsStore } from './syncSettings.store';
+import { createSyncSettings } from './syncSettings.model';
 
 export class UserService {
 
-  constructor(private userStore: UserStore, private _userQuery: UserQuery, private _inventoryService: InventoryService) { }
+  constructor(private syncSettingsStore: SyncSettingsStore, private userStore: UserStore, private _userQuery: UserQuery, private _inventoryService: InventoryService) { }
 
   public async init() {
     const token = localStorage.getItem('jwt') ? localStorage.getItem('jwt') : sessionStorage.getItem('jwt');
@@ -46,6 +48,40 @@ export class UserService {
 
     // update the store with the new user information
     this.userStore.update(user);
+  }
+
+  public fetchSyncSettings(user: User) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/syncSettings`,
+      {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        },
+      }).pipe(
+        tap({
+          next: async res => {
+            const json = await res.json();
+            if (res.ok) {
+              this.syncSettingsStore.update(json);
+            } else if (res.status !== 404) {
+              const notification = createNotification({
+                content: json.message,
+                duration: 5000,
+                type: 'error'
+              });
+              notificationService.addNotification(notification);
+            }
+          },
+          error: err => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+            return of(err);
+          }
+        })
+      );
   }
 
   public login(username: string, password: string, stayLoggedIn: boolean) {
@@ -162,6 +198,49 @@ export class UserService {
             const user = createUser(json);
             user.loggedIn = true;
             this.userStore.update(user);
+            const notification = createNotification({
+              content: 'Saved',
+              duration: 5000,
+              type: 'success'
+            });
+            notificationService.addNotification(notification);
+          } else {
+            const notification = createNotification({
+              content: json.message,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+          }
+        },
+        error: err => {
+          const notification = createNotification({
+            content: err,
+            duration: 5000,
+            type: 'error'
+          });
+          notificationService.addNotification(notification);
+          return of(err);
+        }
+      })
+    );
+  }
+
+  public updateSyncSettings(syncSettings: any) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/syncSettings`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this._userQuery.getValue().token}`
+      },
+      body: JSON.stringify(syncSettings)
+    }).pipe(
+      tap({
+        next: async res => {
+          const json = await res.json();
+          if (res.ok) {
+            const syncSettings = createSyncSettings(json);
+            this.syncSettingsStore.update(syncSettings);
             const notification = createNotification({
               content: 'Saved',
               duration: 5000,
@@ -338,4 +417,4 @@ export class UserService {
 
 }
 
-export const userService = new UserService(userStore, userQuery, inventoryService);
+export const userService = new UserService(syncSettingsStore, userStore, userQuery, inventoryService);

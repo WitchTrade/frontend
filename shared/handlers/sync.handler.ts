@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { DropdownValue } from '../../components/styles/Dropdown';
-import useInventoryProvider from '../providers/inventory.provider';
+import useSyncSettingsProvider from '../providers/syncSettings.provider';
 import useUserProvider from '../providers/user.provider';
 import { InventoryChangeDTO } from '../stores/inventory/inventory.model';
 import { inventoryService } from '../stores/inventory/inventory.service';
+import { userService } from '../stores/user/user.service';
 
 const modeValues: DropdownValue[] = [
   { key: 'both', displayName: 'Both' },
@@ -12,7 +13,6 @@ const modeValues: DropdownValue[] = [
 ];
 
 const itemRarityValues: DropdownValue[] = [
-  { key: 'all', displayName: 'All' },
   { key: 'common', displayName: 'Common', imagePath: '/assets/svgs/rarity_circles/common.svg' },
   { key: 'uncommon', displayName: 'Uncommon', imagePath: '/assets/svgs/rarity_circles/uncommon.svg' },
   { key: 'rare', displayName: 'Rare', imagePath: '/assets/svgs/rarity_circles/rare.svg' },
@@ -20,70 +20,82 @@ const itemRarityValues: DropdownValue[] = [
   { key: 'whimsical', displayName: 'Whimsical', imagePath: '/assets/svgs/rarity_circles/whimsical.svg' }
 ];
 
+enum RARITY {
+  WHIMSICAL = 'whimsical',
+  VERYRARE = 'veryrare',
+  RARE = 'rare',
+  UNCOMMON = 'uncommon',
+  COMMON = 'common'
+}
+
 const useSyncSettingsHandler = () => {
   const { user } = useUserProvider();
-  const { inventory } = useInventoryProvider();
+  const { syncSettings } = useSyncSettingsProvider();
 
   const [invLoading, setInvLoading] = useState(false);
 
-  const [syncSettings, setSyncSettings] = useState({
+  const [localSyncSettings, setLocalSyncSettings] = useState({
+    syncInventory: false,
     syncMarket: false,
-    mode: modeValues[0],
-    rarity: itemRarityValues[0],
-    defaultPrice: 4,
-    defaultRecipePrice: 1,
-    keep: 1,
-    keepRecipe: 0,
-    ignoreWishlistItems: true
+    ms_mode: modeValues[0],
+    ms_rarity: itemRarityValues,
+    ms_defaultPriceItem: 4,
+    ms_defaultPriceRecipe: 1,
+    ms_keepItem: 1,
+    ms_keepRecipe: 0,
+    ms_ignoreWishlistItems: true,
+    ms_removeNoneOnStock: false
   });
 
   const [unsavedSettings, setUnsavedSettings] = useState(false);
 
   // set syncsettings when user inventory changes
   useEffect(() => {
-    if (!inventory.invSyncSetting) {
+    if (Object.keys(syncSettings).length === 0) {
       return;
     }
-    let mode = modeValues.find(mo => mo.key === inventory.invSyncSetting.mode);
-    if (!mode) {
-      mode = modeValues[0];
+    let ms_mode = modeValues.find(mo => mo.key === syncSettings.ms_mode);
+    if (!ms_mode) {
+      ms_mode = modeValues[0];
     }
-    let rarity = itemRarityValues.find(ir => ir.key === inventory.invSyncSetting.rarity);
-    if (!rarity) {
-      rarity = itemRarityValues[0];
+    const rarityStrings = getRarityStrings(syncSettings.ms_rarity);
+    let ms_rarity = itemRarityValues.filter(ir => rarityStrings.includes(ir.key));
+    if (!ms_rarity) {
+      ms_rarity = itemRarityValues;
     }
-    setSyncSettings({
-      syncMarket: inventory.invSyncSetting.syncMarket,
-      mode,
-      rarity,
-      defaultPrice: inventory.invSyncSetting.defaultPrice,
-      defaultRecipePrice: inventory.invSyncSetting.defaultRecipePrice,
-      keep: inventory.invSyncSetting.keep,
-      keepRecipe: inventory.invSyncSetting.keepRecipe,
-      ignoreWishlistItems: inventory.invSyncSetting.ignoreWishlistItems,
+    setLocalSyncSettings({
+      syncInventory: syncSettings.syncInventory,
+      syncMarket: syncSettings.syncMarket,
+      ms_mode,
+      ms_rarity,
+      ms_defaultPriceItem: syncSettings.ms_defaultPriceItem,
+      ms_defaultPriceRecipe: syncSettings.ms_defaultPriceRecipe,
+      ms_keepItem: syncSettings.ms_keepItem,
+      ms_keepRecipe: syncSettings.ms_keepRecipe,
+      ms_ignoreWishlistItems: syncSettings.ms_ignoreWishlistItems,
+      ms_removeNoneOnStock: syncSettings.ms_removeNoneOnStock
     });
-  }, [inventory]);
+  }, [syncSettings]);
 
   useEffect(() => {
-    if (!inventory.invSyncSetting) {
-      return;
-    }
     if (
-      syncSettings.syncMarket !== inventory.invSyncSetting.syncMarket ||
-      syncSettings.mode.key !== inventory.invSyncSetting.mode ||
-      syncSettings.rarity.key !== inventory.invSyncSetting.rarity ||
-      syncSettings.defaultPrice !== inventory.invSyncSetting.defaultPrice ||
-      syncSettings.defaultRecipePrice !== inventory.invSyncSetting.defaultRecipePrice ||
-      syncSettings.keep !== inventory.invSyncSetting.keep ||
-      syncSettings.keepRecipe !== inventory.invSyncSetting.keepRecipe ||
-      syncSettings.ignoreWishlistItems !== inventory.invSyncSetting.ignoreWishlistItems
+      localSyncSettings.syncInventory !== syncSettings.syncInventory ||
+      localSyncSettings.syncMarket !== syncSettings.syncMarket ||
+      localSyncSettings.ms_mode.key !== syncSettings.ms_mode ||
+      getRarityNumber(localSyncSettings.ms_rarity.map(r => r.key)) !== syncSettings.ms_rarity ||
+      localSyncSettings.ms_defaultPriceItem !== syncSettings.ms_defaultPriceItem ||
+      localSyncSettings.ms_defaultPriceRecipe !== syncSettings.ms_defaultPriceRecipe ||
+      localSyncSettings.ms_keepItem !== syncSettings.ms_keepItem ||
+      localSyncSettings.ms_keepRecipe !== syncSettings.ms_keepRecipe ||
+      localSyncSettings.ms_ignoreWishlistItems !== syncSettings.ms_ignoreWishlistItems ||
+      localSyncSettings.ms_removeNoneOnStock !== syncSettings.ms_removeNoneOnStock
     ) {
       setUnsavedSettings(true);
     } else {
       setUnsavedSettings(false);
     }
 
-  }, [syncSettings]);
+  }, [localSyncSettings]);
 
   const syncInventory = async () => {
     setInvLoading(true);
@@ -97,23 +109,77 @@ const useSyncSettingsHandler = () => {
   };
 
   const updateSyncSettings = () => {
-    inventoryService.updateSyncSettings({ ...syncSettings, mode: syncSettings.mode.key, rarity: syncSettings.rarity.key }).subscribe((res) => {
+    userService.updateSyncSettings({ ...localSyncSettings, ms_mode: localSyncSettings.ms_mode.key, ms_rarity: getRarityNumber(localSyncSettings.ms_rarity.map(r => r.key)) }).subscribe((res) => {
       if (res.ok) {
         setUnsavedSettings(false);
       }
     });
   };
 
+  const updateSyncSettingsRarity = (rarity: DropdownValue) => {
+    if (localSyncSettings.ms_rarity.some(r => r.key === rarity.key)) {
+      if (localSyncSettings.ms_rarity.length === 1) {
+        return;
+      }
+      const newRarities = [...localSyncSettings.ms_rarity];
+      const index = newRarities.indexOf(rarity);
+      newRarities[index] = newRarities[newRarities.length - 1];
+      newRarities.pop();
+      newRarities.sort(function (a, b) {
+        return Object.keys(RARITY).indexOf(b.key.toUpperCase()) - Object.keys(RARITY).indexOf(a.key.toUpperCase());
+      });
+      setLocalSyncSettings({ ...localSyncSettings, ms_rarity: newRarities });
+    } else {
+      const newRarities = [...localSyncSettings.ms_rarity];
+      newRarities.push(rarity);
+      newRarities.sort(function (a, b) {
+        return Object.keys(RARITY).indexOf(b.key.toUpperCase()) - Object.keys(RARITY).indexOf(a.key.toUpperCase());
+      });
+      setLocalSyncSettings({ ...localSyncSettings, ms_rarity: newRarities });
+    }
+  };
+
+  const getRarityStrings = (rarityNumber: number): string[] => {
+    const rarityLength = Object.keys(RARITY).length;
+    const filler = new Array(rarityLength + 1).join('0');
+    const negativeRarityLength = -Math.abs(rarityLength);
+
+    const binaryRarityString = (filler + rarityNumber.toString(2)).slice(negativeRarityLength);
+
+    const rarities: any[] = [];
+
+    for (const rarityEntry in RARITY) {
+      if (binaryRarityString[Object.keys(RARITY).indexOf(rarityEntry)] === '1') {
+        rarities.push(RARITY[rarityEntry]);
+      }
+    }
+
+    return rarities;
+  };
+
+  const getRarityNumber = (rarityStrings: string[]): number => {
+    const rarityLength = Object.keys(RARITY).length;
+    let filler = new Array(rarityLength + 1).join('0');
+    const fillerArray = [...filler];
+    for (const rarity of rarityStrings) {
+      const index = Object.keys(RARITY).indexOf(rarity.toUpperCase());
+      fillerArray[index] = '1';
+    }
+
+    return parseInt(fillerArray.join(''), 2);
+  };
+
   return {
     invLoading,
     syncInventory,
     updateInventorySettings,
-    syncSettings,
     unsavedSettings,
-    setSyncSettings,
+    localSyncSettings,
+    setLocalSyncSettings,
     updateSyncSettings,
     modeValues,
-    itemRarityValues
+    itemRarityValues,
+    updateSyncSettingsRarity
   };
 };
 

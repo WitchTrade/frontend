@@ -51,7 +51,7 @@ export class InventoryService {
   }
 
   public syncInventory(user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/inventory`,
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/inventory`,
       {
         method: 'PATCH',
         headers: {
@@ -134,7 +134,7 @@ export class InventoryService {
   }
 
   public updateSyncSettings(data: any) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/inventory/syncsettings`, {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/syncsettings`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

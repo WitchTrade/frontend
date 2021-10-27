@@ -28,6 +28,7 @@ class AppService {
       if (user.loggedIn) {
         inventoryService.fetchInventory(user).subscribe();
         serverNotificationService.fetchNotifications(user).subscribe();
+        userService.fetchSyncSettings(user).subscribe();
       }
     });
   }

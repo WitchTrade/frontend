@@ -1,5 +1,4 @@
 import { NextPage } from 'next';
-import Image from 'next/image';
 import dayjs from 'dayjs';
 import CustomHeader from '../../../components/core/CustomHeader';
 import LoginWrapper from '../../../components/core/LoginWrapper';
@@ -11,9 +10,9 @@ import Dropdown from '../../../components/styles/Dropdown';
 import Loading from '../../../components/styles/Loading';
 import useSyncSettingsHandler from '../../../shared/handlers/sync.handler';
 import useInventoryProvider from '../../../shared/providers/inventory.provider';
-import { itemsQuery } from '../../../shared/stores/items/items.query';
 import NumberInput from '../../../components/styles/NumberInput';
 import PageHeader from '../../../components/styles/PageHeader';
+import MultiDropdown from '../../../components/styles/MultiDropdown';
 
 const Sync: NextPage = () => {
   const { inventory } = useInventoryProvider();
@@ -22,12 +21,13 @@ const Sync: NextPage = () => {
     invLoading,
     syncInventory,
     updateInventorySettings,
-    syncSettings,
+    localSyncSettings,
     unsavedSettings,
-    setSyncSettings,
+    setLocalSyncSettings,
     updateSyncSettings,
     modeValues,
-    itemRarityValues
+    itemRarityValues,
+    updateSyncSettingsRarity
   } = useSyncSettingsHandler();
 
   return (
@@ -44,7 +44,7 @@ const Sync: NextPage = () => {
           <p className="text-xl font-bold text-center">Steam Inventory Sync</p>
           {!invLoading &&
             <div className="flex justify-evenly my-2 items-center">
-              <ActionButton onClick={syncInventory} type="info" disabled={inventory.automaticSync}>Sync Inventory</ActionButton>
+              <ActionButton onClick={syncInventory} type="info" disabled={localSyncSettings.syncInventory}>Sync Inventory</ActionButton>
               {inventory.lastSynced &&
                 <p>Last synced: {dayjs().to(dayjs(inventory.lastSynced))}</p>
               }
@@ -58,36 +58,36 @@ const Sync: NextPage = () => {
           }
           {inventory.id && !invLoading &&
             <div className="m-3 flex justify-center" style={{ minWidth: '220px', height: '40px' }}>
-              <CheckboxInput placeholder="Show inventory in search and profiles" value={inventory.showInTrading} setValue={() => updateInventorySettings({ showInTrading: !inventory.showInTrading, automaticSync: inventory.automaticSync })} />
+              <CheckboxInput placeholder="Show inventory in search and profiles" value={inventory.showInTrading} setValue={() => updateInventorySettings({ showInTrading: !inventory.showInTrading, automaticSync: localSyncSettings.syncInventory })} />
             </div>
           }
         </div>
 
-        <div className={`bg-wt-surface-dark rounded-lg my-3 p-2 border-4 ${unsavedSettings ? 'border-wt-warning-light' : inventory.automaticSync ? 'border-wt-success-light' : 'border-wt-error-light'}`}>
-          <p className="text-xl font-bold text-center">Auto Sync ({unsavedSettings ? <span className="text-wt-warning-light">unsaved</span> : inventory.automaticSync ? <span className="text-wt-success-light">enabled</span> : <span className="text-wt-error-light">disabled</span>})</p>
+        <div className={`bg-wt-surface-dark rounded-lg my-3 p-2 border-4 ${unsavedSettings ? 'border-wt-warning-light' : localSyncSettings.syncInventory ? 'border-wt-success-light' : 'border-wt-error-light'}`}>
+          <p className="text-xl font-bold text-center">Auto Sync ({unsavedSettings ? <span className="text-wt-warning-light">unsaved</span> : localSyncSettings.syncInventory ? <span className="text-wt-success-light">enabled</span> : <span className="text-wt-error-light">disabled</span>})</p>
           <p className="mx-2">When enabled, this feature automatically synchronizes your inventory (and offers) every <b>hour</b>!</p>
           <div>
-            {!inventory.automaticSync &&
+            {!localSyncSettings.syncInventory &&
               <div className="flex justify-center my-2">
-                <ActionButton onClick={() => updateInventorySettings({ showInTrading: inventory.showInTrading, automaticSync: !inventory.automaticSync })} type="proceed">Enable Auto Sync</ActionButton>
+                <ActionButton onClick={() => setLocalSyncSettings({ ...localSyncSettings, syncInventory: !localSyncSettings.syncInventory })} type="proceed">Enable Auto Sync</ActionButton>
               </div>
             }
-            {inventory.automaticSync &&
+            {localSyncSettings.syncInventory &&
               <>
                 <div className="flex justify-center my-2">
-                  <ActionButton onClick={() => updateInventorySettings({ showInTrading: inventory.showInTrading, automaticSync: !inventory.automaticSync })} type="cancel">Disable Auto Sync</ActionButton>
+                  <ActionButton onClick={() => setLocalSyncSettings({ ...localSyncSettings, syncInventory: !localSyncSettings.syncInventory })} type="cancel">Disable Auto Sync</ActionButton>
                 </div>
                 <div className="mt-3 mb-2 mx-6">
                   <Divider />
                 </div>
               </>
             }
-            {inventory.automaticSync &&
+            {localSyncSettings.syncInventory &&
               <div className="mx-2">
-                <CheckboxInput placeholder="Also synchronize your offers" value={syncSettings.syncMarket} setValue={() => setSyncSettings({ ...syncSettings, syncMarket: !syncSettings.syncMarket })} />
+                <CheckboxInput placeholder="Also synchronize your offers" value={localSyncSettings.syncMarket} setValue={() => setLocalSyncSettings({ ...localSyncSettings, syncMarket: !localSyncSettings.syncMarket })} />
               </div>
             }
-            {inventory.automaticSync && syncSettings.syncMarket &&
+            {localSyncSettings.syncInventory && localSyncSettings.syncMarket &&
               <>
                 <div className="mt-3 mb-2 mx-12">
                   <Divider />
@@ -103,43 +103,40 @@ const Sync: NextPage = () => {
                   <div className="flex flex-wrap justify-center">
                     <div className="mb-5 mr-1" style={{ width: '180px' }}>
                       <p className="mb-1">Mode</p>
-                      <Dropdown selectedValue={syncSettings.mode} setValue={(newMode) => setSyncSettings({ ...syncSettings, mode: newMode })} values={modeValues} />
+                      <Dropdown selectedValue={localSyncSettings.ms_mode} setValue={(newMode) => setLocalSyncSettings({ ...localSyncSettings, ms_mode: newMode })} values={modeValues} />
                     </div>
                     <div className="mb-5 mr-1" style={{ width: '180px' }}>
                       <p className="mb-1">Rarity</p>
-                      <Dropdown selectedValue={syncSettings.rarity} setValue={(newRarity) => setSyncSettings({ ...syncSettings, rarity: newRarity })} values={itemRarityValues} />
+                      <MultiDropdown selectedValues={localSyncSettings.ms_rarity} updateValue={(newRarity) => updateSyncSettingsRarity(newRarity)} values={itemRarityValues} />
                     </div>
                   </div>
                   <div className="flex justify-between my-2">
                     <div className="flex flex-col justify-start">
-                      <p>Default price (Only for new offers)</p>
-                      {syncSettings.rarity.key === 'all' &&
-                        <div className="flex flex-row justify-start">
-                          <Image className="rounded-md mr-1" src={itemsQuery.getIconUrlOf(900)} alt={itemsQuery.getEntity(900)?.name} height="24px" width="24px" />
-                          <Image className="rounded-md mr-1" src={itemsQuery.getIconUrlOf(901)} alt={itemsQuery.getEntity(901)?.name} height="24px" width="24px" />
-                          <Image className="rounded-md mr-1" src={itemsQuery.getIconUrlOf(902)} alt={itemsQuery.getEntity(902)?.name} height="24px" width="24px" />
-                          <Image className="rounded-md mr-1" src={itemsQuery.getIconUrlOf(903)} alt={itemsQuery.getEntity(903)?.name} height="24px" width="24px" />
-                          <Image className="rounded-md mr-1" src={itemsQuery.getIconUrlOf(904)} alt={itemsQuery.getEntity(904)?.name} height="24px" width="24px" />
-                        </div>
-                      }
-                      {syncSettings.rarity.key !== 'all' &&
-                        <div className="flex flex-row justify-start">
-                          <Image className="rounded-md mr-1" src={itemsQuery.getIconUrlOf(itemsQuery.rarityToIngredientId(syncSettings.rarity.key))} alt={itemsQuery.getEntity(itemsQuery.rarityToIngredientId(syncSettings.rarity.key))?.name} height="24px" width="24px" />
-                        </div>
-                      }
+                      <p>Default price</p>
+                      <p>(Only for new offers,</p>
+                      <p>will be ingredients of the matching rarity)</p>
                     </div>
-                    <NumberInput value={syncSettings.defaultPrice} setValue={(defaultPrice) => setSyncSettings({ ...syncSettings, defaultPrice })} min={0} max={99} />
+                    <NumberInput value={localSyncSettings.ms_defaultPriceItem} setValue={(ms_defaultPriceItem) => setLocalSyncSettings({ ...localSyncSettings, ms_defaultPriceItem })} min={0} max={99} />
+                  </div>
+                  <div className="flex justify-between my-2">
+                    <div className="flex flex-col justify-start">
+                      <p>Default price for recipes</p>
+                    </div>
+                    <NumberInput value={localSyncSettings.ms_defaultPriceRecipe} setValue={(ms_defaultPriceRecipe) => setLocalSyncSettings({ ...localSyncSettings, ms_defaultPriceRecipe })} min={0} max={99} />
                   </div>
                   <div className="flex justify-between my-2 align-middle items-center">
                     <p>Amount of each item to keep</p>
-                    <NumberInput value={syncSettings.keep} setValue={(keep) => setSyncSettings({ ...syncSettings, keep })} min={0} max={99} />
+                    <NumberInput value={localSyncSettings.ms_keepItem} setValue={(ms_keepItem) => setLocalSyncSettings({ ...localSyncSettings, ms_keepItem })} min={0} max={99} />
                   </div>
                   <div className="flex justify-between my-2  items-center">
                     <p>Amount of each recipe to keep</p>
-                    <NumberInput value={syncSettings.keepRecipe} setValue={(keepRecipe) => setSyncSettings({ ...syncSettings, keepRecipe })} min={0} max={99} />
+                    <NumberInput value={localSyncSettings.ms_keepRecipe} setValue={(ms_keepRecipe) => setLocalSyncSettings({ ...localSyncSettings, ms_keepRecipe })} min={0} max={99} />
                   </div>
                   <div>
-                    <CheckboxInput placeholder="Ignore items in your wish list" value={syncSettings.ignoreWishlistItems} setValue={() => setSyncSettings({ ...syncSettings, ignoreWishlistItems: !syncSettings.ignoreWishlistItems })} />
+                    <CheckboxInput placeholder="Ignore items in your wish list" value={localSyncSettings.ms_ignoreWishlistItems} setValue={() => setLocalSyncSettings({ ...localSyncSettings, ms_ignoreWishlistItems: !localSyncSettings.ms_ignoreWishlistItems })} />
+                  </div>
+                  <div>
+                    <CheckboxInput placeholder="Delete offers that have 0 items on stock" value={localSyncSettings.ms_removeNoneOnStock} setValue={() => setLocalSyncSettings({ ...localSyncSettings, ms_removeNoneOnStock: !localSyncSettings.ms_removeNoneOnStock })} />
                   </div>
                 </div>
               </>
