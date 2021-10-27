@@ -8,7 +8,7 @@ type Props = {
   image?: string;
 };
 
-const CustomHeader: FunctionComponent<Props> = ({ title = 'WitchTrade', description = 'A Witch It trading website.', url = 'https://witchtrade.org', image = 'https://i.imgur.com/7xoVxLR.png' }) => {
+const CustomHeader: FunctionComponent<Props> = ({ title = 'WitchTrade', description = 'A Witch It trading website.', url = 'https://witchtrade.org', image = 'https://i.imgur.com/cDqQSBd.png' }) => {
   return (
     <Head>
       <title>{title}</title>
