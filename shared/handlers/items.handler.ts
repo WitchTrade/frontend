@@ -180,7 +180,7 @@ const ItemsHandler = () => {
   }, [items]);
 
   useEffect(() => {
-    setLoadedItems(filteredItems.slice(0, 75));
+    setLoadedItems(filteredItems.slice(0, 125));
   }, [filteredItems]);
 
   useEffect(() => {
@@ -261,7 +261,7 @@ const ItemsHandler = () => {
   };
 
   const loadMoreItems = () => {
-    setLoadedItems(filteredItems.slice(0, loadedItems.length + 75));
+    setLoadedItems(filteredItems.slice(0, loadedItems.length + 125));
   };
 
   const hasMoreItems = () => {
@@ -271,6 +271,10 @@ const ItemsHandler = () => {
   const openItemDetails = (item: Item) => {
     setSelectedItem(item);
     setDialogOpen(true);
+  };
+
+  const capitalizeFirstLetter = (string: string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   return {
@@ -283,7 +287,8 @@ const ItemsHandler = () => {
     dialogOpen,
     setDialogOpen,
     selectedItem,
-    openItemDetails
+    openItemDetails,
+    capitalizeFirstLetter
   };
 };
 
