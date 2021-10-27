@@ -16,6 +16,5 @@ module.exports = {
   },
   images: {
     domains: ['www.witchit.com']
-  },
-  future: { webpack5: true }
+  }
 };
