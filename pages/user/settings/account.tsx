@@ -50,13 +50,11 @@ const Account: NextPage = () => {
         <div className="flex justify-center mb-2">
           <div className="flex flex-wrap justify-center items-center">
             {user.badges.map(badge => (
-              <div>
-                <Tooltip text={badge.description}>
-                  <div className="m-1 h-9 w-9">
-                    <Image src={`/assets/svgs/badges/${badge.id}.svg`} height={36} width={36} alt={badge.description} />
-                  </div>
-                </Tooltip>
-              </div>
+              <Tooltip key={badge.id} text={badge.description}>
+                <div className="m-1 h-9 w-9">
+                  <Image src={`/assets/svgs/badges/${badge.id}.svg`} height={36} width={36} alt={badge.description} />
+                </div>
+              </Tooltip>
             ))}
           </div>
         </div>
