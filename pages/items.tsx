@@ -27,7 +27,7 @@ const Items: NextPage = () => {
     <div>
       <WTDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} closeOnOutsideClick={true}>
         {selectedItem &&
-          <div className="inline-block max-w-lg p-6 overflow-auto text-center align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4" style={{ borderColor: `#${selectedItem.nameColor}`, borderWidth: '6px' }}>
+          <div className="inline-block max-w-lg p-6 overflow-auto text-center align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4" style={{ borderColor: `#${selectedItem.rarityColor}`, borderWidth: '6px' }}>
             <div className="h-full flex flex-col justify-between">
               <p className="text-2xl font-bold mb-4">{selectedItem.name}</p>
               <div className="w-80 h-80 self-center">
