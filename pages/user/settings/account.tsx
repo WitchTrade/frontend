@@ -13,6 +13,7 @@ import ValueDisplay from '../../../components/styles/ValueDisplay';
 import AccountSettingsHandler from '../../../shared/handlers/account.handler';
 import useThemeProvider from '../../../shared/providers/theme.provider';
 import Tooltip from '../../../components/styles/Tooltip';
+import Divider from '../../../components/styles/Divider';
 
 const Account: NextPage = () => {
   const { theme } = useThemeProvider();
@@ -59,6 +60,11 @@ const Account: NextPage = () => {
           </div>
         </div>
       }
+      <div className="flex justify-center">
+        <div className="w-36 my-2">
+          <Divider />
+        </div>
+      </div>
       {!editing &&
         <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8 py-2">
           <div className="m-1">
