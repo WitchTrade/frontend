@@ -2,12 +2,16 @@ import { FunctionComponent } from 'react';
 import Image from 'next/image';
 import useUserProvider from '../../shared/providers/user.provider';
 
-const LoginWrapper: FunctionComponent = ({ children }) => {
+interface Props {
+  admin?: boolean;
+}
+
+const LoginWrapper: FunctionComponent<Props> = ({ admin, children }) => {
   const { user } = useUserProvider();
 
   return (
     <>
-      {!user || user.loggedIn === undefined || user.loggedIn === null || user.loggedIn &&
+      {(user.loggedIn === undefined || user.loggedIn === null || user.loggedIn) && (!admin || user.roles?.length > 0) &&
         <>
           {children}
         </>

@@ -11,7 +11,8 @@ Visit https://preview.witchtrade.org/ where the current state is deployed. You c
 - [x] /register
 - [x] /user/settings
 - [x] /gameservers
-- [ ] /items
+- [x] /items
+- [x] /admin
 - [ ] /profiles
 - [ ] offers and offer lists
 - [ ] wishes and wish lists

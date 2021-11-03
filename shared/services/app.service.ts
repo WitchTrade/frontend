@@ -27,7 +27,7 @@ class AppService {
     userQuery.select().subscribe(user => {
       if (user.loggedIn) {
         inventoryService.fetchInventory(user).subscribe();
-        serverNotificationService.fetchNotifications(user).subscribe();
+        serverNotificationService.fetchNotifications().subscribe();
         userService.fetchSyncSettings(user).subscribe();
       }
     });

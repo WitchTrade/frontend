@@ -6,17 +6,18 @@ import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
 import { of } from 'rxjs';
 import { User } from '../user/user.model';
+import { userQuery } from '../user/user.query';
 
 export class ServerNotificationService {
 
   constructor(private serverNotificationStore: ServerNotificationStore) { }
 
-  public fetchNotifications(user: User) {
+  public fetchNotifications() {
     // get all notifications and save them in the store
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notifications`, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${user.token}`
+        'Authorization': `Bearer ${userQuery.getValue().token}`
       }
     }).pipe(
       tap({

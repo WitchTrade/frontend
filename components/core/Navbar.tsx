@@ -93,6 +93,11 @@ const Navbar: FunctionComponent = () => {
                     <Link href="/gameservers" passHref>
                       <NavbarLink type={router.pathname.startsWith('/gameservers') ? 'navSelected' : 'nav'}>Game Servers</NavbarLink>
                     </Link>
+                    {user.roles?.length > 0 &&
+                      <Link href="/admin" passHref>
+                        <NavbarLink type={router.pathname.startsWith('/admin') ? 'navSelected' : 'nav'}>Admin</NavbarLink>
+                      </Link>
+                    }
                   </div>
                 </div>
               </div>
