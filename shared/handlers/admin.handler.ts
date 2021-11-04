@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import useUserProvider from '../providers/user.provider';
 import { adminService } from '../stores/admin/admin.service';
-import { AdminLog, AdminUser } from '../stores/admin/admin.model';
+import { AdminLog, AdminUser, BroadcastNotification } from '../stores/admin/admin.model';
 import { adminQuery } from '../stores/admin/admin.query';
 import { Badge } from '../stores/user/badge.model';
 import { Role } from '../stores/user/role.model';
@@ -21,6 +21,12 @@ const AdminHandler = () => {
   const [roles, setRoles] = useState<Role[]>([]);
 
   const [logs, setLogs] = useState<AdminLog[]>([]);
+
+  const [broadcastNotification, setBroadcastNotification] = useState<BroadcastNotification>({
+    text: '',
+    link: '',
+    iconLink: ''
+  });
 
   useEffect(() => {
     adminQuery.selectAll().subscribe((adminUsers) => {
@@ -97,6 +103,18 @@ const AdminHandler = () => {
     }
   };
 
+  const broadcast = () => {
+    adminService.broadcast(broadcastNotification).subscribe((res) => {
+      if (res.ok) {
+        setBroadcastNotification({
+          text: '',
+          link: '',
+          iconLink: ''
+        });
+      }
+    });
+  };
+
   return {
     adminUsers,
     playerSearchString,
@@ -108,7 +126,10 @@ const AdminHandler = () => {
     changeBadge,
     roles,
     changeRole,
-    logs
+    logs,
+    broadcastNotification,
+    setBroadcastNotification,
+    broadcast
   };
 };
 

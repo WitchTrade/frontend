@@ -62,6 +62,12 @@ export class AdminService {
             const json = await res.json();
             if (res.ok) {
               this.adminStore.update(json.id, json);
+              const notification = createNotification({
+                content: `Banned ${json.username}`,
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
             } else {
               const notification = createNotification({
                 content: json.message,
@@ -100,6 +106,12 @@ export class AdminService {
             const json = await res.json();
             if (res.ok) {
               this.adminStore.update(json.id, json);
+              const notification = createNotification({
+                content: `Unbanned ${json.username}`,
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
             } else {
               const notification = createNotification({
                 content: json.message,
@@ -170,6 +182,12 @@ export class AdminService {
             const json = await res.json();
             if (res.ok) {
               this.adminStore.update(json.id, json);
+              const notification = createNotification({
+                content: `Added badge to ${json.username}`,
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
             } else {
               const notification = createNotification({
                 content: json.message,
@@ -208,6 +226,12 @@ export class AdminService {
             const json = await res.json();
             if (res.ok) {
               this.adminStore.update(json.id, json);
+              const notification = createNotification({
+                content: `Removed badge from ${json.username}`,
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
             } else {
               const notification = createNotification({
                 content: json.message,
@@ -278,6 +302,12 @@ export class AdminService {
             const json = await res.json();
             if (res.ok) {
               this.adminStore.update(json.id, json);
+              const notification = createNotification({
+                content: `Added role to ${json.username}`,
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
             } else {
               const notification = createNotification({
                 content: json.message,
@@ -316,6 +346,12 @@ export class AdminService {
             const json = await res.json();
             if (res.ok) {
               this.adminStore.update(json.id, json);
+              const notification = createNotification({
+                content: `Removed role from ${json.username}`,
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
             } else {
               const notification = createNotification({
                 content: json.message,
@@ -355,7 +391,7 @@ export class AdminService {
             if (res.ok) {
               this.adminStore.update(json.id, json);
               const notification = createNotification({
-                content: `${json.username} verified`,
+                content: `Verified ${json.username}`,
                 duration: 5000,
                 type: 'success'
               });
@@ -399,7 +435,7 @@ export class AdminService {
             if (res.ok) {
               this.adminStore.update(json.id, json);
               const notification = createNotification({
-                content: `${json.username} unverified`,
+                content: `Unverified ${json.username}`,
                 duration: 5000,
                 type: 'success'
               });
@@ -471,12 +507,17 @@ export class AdminService {
       tap(
         {
           next: async (res) => {
-            const json = await res.json();
             if (res.ok) {
               serverNotificationService.fetchNotifications().subscribe();
+              const notification = createNotification({
+                content: 'Created broadcast notification',
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
             } else {
               const notification = createNotification({
-                content: json.message,
+                content: res.statusText,
                 duration: 5000,
                 type: 'error'
               });

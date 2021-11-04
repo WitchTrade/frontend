@@ -18,6 +18,11 @@ const AdminNav: FunctionComponent = () => {
           <NavbarLink type={router.pathname === '/admin/logs' ? 'navSelected' : 'nav'}>Logs</NavbarLink>
         </Link>
       </div>
+      <div className="mx-1">
+        <Link href="/admin/broadcast" passHref>
+          <NavbarLink type={router.pathname === '/admin/broadcast' ? 'navSelected' : 'nav'}>Broadcast</NavbarLink>
+        </Link>
+      </div>
     </div>
   );
 };

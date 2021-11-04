@@ -105,7 +105,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
           </div>
         </div>
       </WTDialog>
-      <div className={`flex justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md p-4 cursor-pointer h-16 w-full border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} onClick={() => setShow(!show)}>
+      <div className={`flex flex-wrap justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md p-4 cursor-pointer w-full border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} style={{ minHeight: '70px' }} onClick={() => setShow(!show)}>
         <div className="flex items-center">
           <p className="font-bold text-wt-accent">{adminUser.username}</p>
           {adminUser.verified &&
@@ -147,25 +147,35 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
             <Divider />
           </div>
           <p className="text-wt-accent-light mb-2 text-center">Actions</p>
-          <div className="flex justify-evenly">
-            <ActionButton type={adminUser.verified ? 'cancel' : 'proceed'} onClick={() => changeVerification(adminUser)}>
-              {adminUser.verified ? 'Unverify' : 'Verify'}
-            </ActionButton>
+          <div className="flex flex-wrap justify-evenly">
+            <div className="my-1">
+              <ActionButton type={adminUser.verified ? 'cancel' : 'proceed'} onClick={() => changeVerification(adminUser)}>
+                {adminUser.verified ? 'Unverify' : 'Verify'}
+              </ActionButton>
+            </div>
             {adminUser.banned &&
-              <ActionButton type="proceed" onClick={() => unban(adminUser)}>
-                Unban
-              </ActionButton>
+              <div className="my-1">
+                <ActionButton type="proceed" onClick={() => unban(adminUser)}>
+                  Unban
+                </ActionButton>
+              </div>
               ||
-              <ActionButton type="warning" onClick={() => setDialogOpen(true)}>
-                Ban
-              </ActionButton>
+              <div className="my-1">
+                <ActionButton type="warning" onClick={() => setDialogOpen(true)}>
+                  Ban
+                </ActionButton>
+              </div>
             }
-            <ActionButton type="proceed" onClick={() => setBadgeDialogOpen(true)}>
-              Manage Badges
-            </ActionButton>
-            <ActionButton type="proceed" onClick={() => setRoleDialogOpen(true)}>
-              Manage Roles
-            </ActionButton>
+            <div className="my-1">
+              <ActionButton type="proceed" onClick={() => setBadgeDialogOpen(true)}>
+                Manage Badges
+              </ActionButton>
+            </div>
+            <div className="my-1">
+              <ActionButton type="proceed" onClick={() => setRoleDialogOpen(true)}>
+                Manage Roles
+              </ActionButton>
+            </div>
           </div>
         </div>
       }

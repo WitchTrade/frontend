@@ -72,7 +72,7 @@ const Items: NextPage = () => {
       />
       <PageHeader title="Items" />
       <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} />
-      <p className="text-center mt-2"><span className="text-wt-accent font-bold">{filteredItems.length}</span> items filtered</p>
+      <p className="text-center mt-2"><span className="text-wt-accent font-bold">{filteredItems.length}</span> item{filteredItems.length === 1 ? '' : 's'} filtered</p>
       <InfiniteScroll
         className="flex flex-row flex-wrap justify-center py-2 h-full mx-6"
         dataLength={loadedItems.length}

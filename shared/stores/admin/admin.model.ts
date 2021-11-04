@@ -22,6 +22,12 @@ export interface AdminLog {
   targetUsername: string;
 }
 
+export interface BroadcastNotification {
+  text: string;
+  iconLink: string;
+  link: string;
+}
+
 export enum ACTIONGROUP {
   BAN = 'BAN',
   ROLES = 'ROLES',
