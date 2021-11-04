@@ -24,7 +24,7 @@ const Dropdown: FunctionComponent<Props> = ({ selectedValue, setValue, values })
       {({ open }) => (
         <div className="relative mt-1">
           <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-wt-surface-dark rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-wt-accent sm:text-sm border border-wt-accent-light">
-            <div className="flex">
+            <div className="flex items-center">
               {selectedValue.imagePath &&
                 <Image src={selectedValue.imagePath} height="20px" width="20px" alt="Dropdown Item Icon" />
               }
@@ -55,7 +55,7 @@ const Dropdown: FunctionComponent<Props> = ({ selectedValue, setValue, values })
                 >
                   {({ selected }) => (
                     <>
-                      <div className="flex">
+                      <div className="flex items-center">
                         {value.imagePath &&
                           <Image src={value.imagePath} height="20px" width="20px" alt="Dropdown Item Icon" />
                         }

@@ -20,6 +20,22 @@ export interface ItemFilterValues {
   duplicatesOnly: boolean;
 }
 
+export function createDefaultItemFilter(): ItemFilterValues {
+  return {
+    searchString: '',
+    tradeableOnly: false,
+    newOnly: false,
+    orderBy: orderByValues[0],
+    orderDirection: orderDirectionValues[0],
+    itemCharacter: itemCharacterValues[0],
+    itemSlot: itemSlotValues[0],
+    itemEvent: itemEventValues[0],
+    itemRarity: itemRarityValues[0],
+    inventory: inventoryValues[0],
+    duplicatesOnly: false
+  };
+}
+
 export const orderByValues: DropdownValue[] = [
   { key: 'tagRarity', displayName: 'Rarity' },
   { key: 'name', displayName: 'Name' },
@@ -105,19 +121,7 @@ const ItemsHandler = () => {
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [loadedItems, setLoadedItems] = useState<Item[]>([]);
 
-  const [itemFilterValues, setItemFilterValues] = useState<ItemFilterValues>({
-    searchString: '',
-    tradeableOnly: false,
-    newOnly: false,
-    orderBy: orderByValues[0],
-    orderDirection: orderDirectionValues[0],
-    itemCharacter: itemCharacterValues[0],
-    itemSlot: itemSlotValues[0],
-    itemEvent: itemEventValues[0],
-    itemRarity: itemRarityValues[0],
-    inventory: inventoryValues[0],
-    duplicatesOnly: false
-  });
+  const [itemFilterValues, setItemFilterValues] = useState<ItemFilterValues>(createDefaultItemFilter());
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Item>();
@@ -280,6 +284,7 @@ const ItemsHandler = () => {
 
   return {
     inventory,
+    filteredItems,
     loadedItems,
     loadMoreItems,
     hasMoreItems,

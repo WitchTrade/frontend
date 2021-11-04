@@ -46,7 +46,7 @@ const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, 
                 >
                   {({ selected }) => (
                     <>
-                      <div className="flex">
+                      <div className="flex items-center">
                         {value.imagePath &&
                           <Image src={value.imagePath} height="20px" width="20px" alt="Dropdown Item Icon" />
                         }

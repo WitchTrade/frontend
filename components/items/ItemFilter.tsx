@@ -1,11 +1,12 @@
 import { FunctionComponent, useState } from 'react';
 import Image from 'next/image';
 import useThemeProvider from '../../shared/providers/theme.provider';
-import { inventoryValues, itemCharacterValues, itemEventValues, ItemFilterValues, itemRarityValues, itemSlotValues, orderByValues, orderDirectionValues } from '../../shared/handlers/items.handler';
+import { createDefaultItemFilter, inventoryValues, itemCharacterValues, itemEventValues, ItemFilterValues, itemRarityValues, itemSlotValues, orderByValues, orderDirectionValues } from '../../shared/handlers/items.handler';
 import Dropdown from '../styles/Dropdown';
 import TextInput from '../styles/TextInput';
 import CheckboxInput from '../styles/CheckboxInput';
 import useInventoryProvider from '../../shared/providers/inventory.provider';
+import ActionButton from '../styles/ActionButton';
 
 interface Props {
   itemFilterValues: ItemFilterValues;
@@ -18,6 +19,10 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
   const { inventory } = useInventoryProvider();
 
   const [filterOpen, setFilterOpen] = useState(true);
+
+  const clearFilter = () => {
+    setItemFilterValues(createDefaultItemFilter());
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,6 +81,12 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                 <p className="mb-1">Show in</p>
                 <Dropdown selectedValue={itemFilterValues.orderDirection} setValue={(orderDirection) => setItemFilterValues({ ...itemFilterValues, orderDirection })} values={orderDirectionValues} />
               </div>
+            </div>
+            <div className="mt-2">
+              <ActionButton type="cancel" onClick={clearFilter}>
+                <Image src="/assets/svgs/bin/white.svg" height="24px" width="24px" alt="Clear filter" />
+                Clear Filter
+              </ActionButton>
             </div>
           </div>
         }
