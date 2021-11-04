@@ -289,6 +289,11 @@ const Navbar: FunctionComponent = () => {
                 <Link href="/gameservers" passHref>
                   <NavbarLink type={router.pathname.startsWith('/gameservers') ? 'hamburgerSelected' : 'hamburger'}>Game Servers</NavbarLink>
                 </Link>
+                {user.roles?.length > 0 &&
+                  <Link href="/admin" passHref>
+                    <NavbarLink type={router.pathname.startsWith('/admin') ? 'hamburgerSelected' : 'hamburger'}>Admin</NavbarLink>
+                  </Link>
+                }
               </div>
               {user.loggedIn &&
                 <div className="pt-4 pb-3 border-t border-gray-700">
