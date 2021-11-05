@@ -129,7 +129,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
         <div className="flex justify-center items-center">
           <div className="flex flex-wrap justify-center items-center">
             {adminUser.badges.map(badge => (
-              <div className="m-1 h-7 w-7">
+              <div key={badge.id} className="m-1 h-7 w-7">
                 <Image src={`/assets/svgs/badges/${badge.id}.svg`} height={28} width={28} alt={badge.description} />
               </div>
             ))}
