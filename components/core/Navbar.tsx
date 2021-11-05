@@ -15,6 +15,7 @@ import Image from 'next/image';
 import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
 import useThemeProvider from '../../shared/providers/theme.provider';
 import useUserProvider from '../../shared/providers/user.provider';
+import NotificationItem from '../styles/NotificationItem';
 
 const Navbar: FunctionComponent = () => {
   const router = useRouter();
@@ -153,34 +154,10 @@ const Navbar: FunctionComponent = () => {
                         leaveTo="transform opacity-0 scale-95"
                       >
                         <div
-                          className="origin-top-right absolute right-0 mt-2 w-60 rounded-md shadow-lg py-1 bg-wt-light ring-1 ring-black ring-opacity-5 focus:outline-none z-50 overflow-auto max-h-60"
+                          className="origin-top-right absolute right-0 mt-2 w-64 rounded-md bg-wt-surface shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none z-50 overflow-auto max-h-60"
                         >
                           {notifications.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()).map(notification => (
-                            <>
-                              {(notification.link &&
-                                <div key={notification.id} className="flex justify-between items-center my-1">
-                                  <a className="flex justify-between items-center hover:bg-wt-hover-light" href={notification.link} target="">
-                                    {notification.iconLink &&
-                                      <img className="rounded-md ml-1" width="40" src={notification.iconLink} alt={notification.text} />
-                                    }
-                                    <p className="block px-4 py-2 text-sm text-wt-dark">{notification.text}</p>
-                                  </a>
-                                  <button className="text-wt-dark bg-red-600 hover:bg-red-500 p-1 mr-1 rounded-md text-bg font-medium flex items-center" onClick={() => deleteNotification(notification)}>
-                                    <Image src="/assets/svgs/bin/white.svg" height={24} width={24} alt="Bin" />
-                                  </button>
-                                </div>
-                              ) ||
-                                <div key={notification.id} className="flex justify-between items-center">
-                                  {notification.iconLink &&
-                                    <img className="rounded-md m-1" width="40" src={notification.iconLink} alt={notification.text} />
-                                  }
-                                  <p className="block px-4 py-2 text-sm text-wt-dark">{notification.text}</p>
-                                  <button className="text-wt-dark bg-red-600 hover:bg-red-500 p-1 mr-1 rounded-md text-bg font-medium flex items-center" onClick={() => deleteNotification(notification)}>
-                                    <Image src="/assets/svgs/bin/white.svg" height={24} width={24} alt="Bin" />
-                                  </button>
-                                </div>
-                              }
-                            </>
+                            <NotificationItem key={notification.id} notification={notification} deleteNotification={deleteNotification} />
                           ))}
                           {notifications.length === 0 &&
                             <p className="block px-4 py-2 text-sm text-wt-dark">No notifications</p>

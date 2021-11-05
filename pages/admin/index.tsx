@@ -38,7 +38,7 @@ const Admin: NextPage = () => {
         <div className="mt-4 max-w-xl w-full self-center">
           <TextInput placeholder="Search by username" required={false} type="text" value={playerSearchString} setValue={(playerSearchString: string) => setPlayerSearchString(playerSearchString)} clearOption={true} />
         </div>
-        <p className="text-center"><span className="font-bold text-wt-accent">{adminUsers.length}</span> user{adminUsers.length === 1 ? '' : 's'}</p>
+        <p className="text-center mt-1"><span className="font-bold text-wt-accent">{adminUsers.length}</span> user{adminUsers.length === 1 ? '' : 's'}</p>
         <InfiniteScroll
           className="flex flex-col justify-center"
           dataLength={loadedAdminUsers.length}

@@ -115,7 +115,9 @@ const AccountSettingsHandler = () => {
       discordTag: formValue.discordTag.trim() ? formValue.discordTag : undefined,
       hidden: formValue.hidden
     }).subscribe((res) => {
-      setEditing(false);
+      if (res.ok) {
+        setEditing(false);
+      }
     });
   };
 
