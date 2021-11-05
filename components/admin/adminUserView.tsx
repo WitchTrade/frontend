@@ -33,7 +33,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
   const [banReason, setBanReason] = useState('');
 
   return (
-    <div>
+    <>
       <WTDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} closeOnOutsideClick={true}>
         <div className="inline-block max-w-md p-6 my-8 overflow-auto text-left align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4 border-wt-warning">
           <div className="h-full flex flex-col justify-between">
@@ -63,9 +63,9 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
         <div className="inline-block max-w-md p-6 my-8 overflow-auto text-left align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4 border-wt-success">
           <div className="h-full flex flex-col justify-between">
             <div>
-              <p className="text-2xl font-medium leading-6">Manage Badges of {adminUser.username}</p>
+              <p className="text-2xl font-medium leading-6">Manage badges of <span className="text-wt-accent">{adminUser.username}</span></p>
             </div>
-            <div className="flex justify-center items-center mt-3">
+            <div className="flex flex-wrap justify-center items-center mt-3">
               {badges.map(badge => (
                 <Tooltip key={badge.id} text={badge.description}>
                   <div className={`m-1 h-14 w-14 rounded-full p-1 cursor-pointer ${adminUser.badges.some(b => b.id === badge.id) ? 'border-2 border-wt-accent' : ''}`} onClick={() => changeBadge(adminUser, badge)}>
@@ -87,11 +87,11 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
         <div className="inline-block max-w-md p-6 my-8 overflow-auto text-left align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4 border-wt-success">
           <div className="h-full flex flex-col justify-between">
             <div>
-              <p className="text-2xl font-medium leading-6">Manage Roles of {adminUser.username}</p>
+              <p className="text-2xl font-medium leading-6">Manage roles of <span className="text-wt-accent">{adminUser.username}</span></p>
             </div>
             <div className="flex flex-col justify-center items-center mt-3">
               {roles.sort((a, b) => a.rank - b.rank).map(role => (
-                <div key={role.id} className={`m-1 rounded-full p-1 cursor-pointer ${adminUser.roles.some(r => r.id === role.id) ? 'border-2 border-wt-accent' : ''}`} onClick={() => changeRole(adminUser, role)}>
+                <div key={role.id} className={`m-1 rounded-full p-1 cursor-pointer hover:bg-wt-hover ${adminUser.roles.some(r => r.id === role.id) ? 'border-2 border-wt-accent' : ''}`} onClick={() => changeRole(adminUser, role)}>
                   <p>{role.description}</p>
                 </div>
               ))
@@ -105,7 +105,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
           </div>
         </div>
       </WTDialog>
-      <div className={`flex flex-wrap justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md p-4 cursor-pointer w-full border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} style={{ minHeight: '70px' }} onClick={() => setShow(!show)}>
+      <div className={`flex flex-wrap justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md p-4 cursor-pointer border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} style={{ minHeight: '70px' }} onClick={() => setShow(!show)}>
         <div className="flex items-center">
           <p className="font-bold text-wt-accent">{adminUser.username}</p>
           {adminUser.verified &&
@@ -129,11 +129,9 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
         <div className="flex justify-center items-center">
           <div className="flex flex-wrap justify-center items-center">
             {adminUser.badges.map(badge => (
-              <Tooltip key={badge.id} text={badge.description}>
-                <div className="m-1 h-7 w-7">
-                  <Image src={`/assets/svgs/badges/${badge.id}.svg`} height={28} width={28} alt={badge.description} />
-                </div>
-              </Tooltip>
+              <div className="m-1 h-7 w-7">
+                <Image src={`/assets/svgs/badges/${badge.id}.svg`} height={28} width={28} alt={badge.description} />
+              </div>
             ))}
           </div>
           <div className="w-6 h-6">
@@ -142,7 +140,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
         </div>
       </div>
       {show &&
-        <div className="bg-wt-surface-dark rounded-b-lg mx-1 pb-2 px-4 z-10 w-full border-wt-accent border-l-2 border-b-2 border-r-2">
+        <div className="bg-wt-surface-dark rounded-b-lg mx-1 pb-2 px-4 z-10 border-wt-accent border-l-2 border-b-2 border-r-2">
           <div className="px-1 py-1">
             <Divider />
           </div>
@@ -179,7 +177,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
           </div>
         </div>
       }
-    </div>
+    </>
   );
 };
 

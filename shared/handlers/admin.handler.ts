@@ -15,6 +15,7 @@ const AdminHandler = () => {
   const [unfilteredAdminUsers, setUnfilteredAdminUsers] = useState<AdminUser[]>([]);
 
   const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
+  const [loadedAdminUsers, setLoadedAdminUsers] = useState<AdminUser[]>([]);
 
   const [badges, setBadges] = useState<Badge[]>([]);
 
@@ -71,6 +72,10 @@ const AdminHandler = () => {
     setAdminUsers(unfilteredAdminUsers.filter((adminUser) => adminUser.username.includes(playerSearchString.toLowerCase())));
   }, [unfilteredAdminUsers, playerSearchString]);
 
+  useEffect(() => {
+    setLoadedAdminUsers(adminUsers.slice(0, 25));
+  }, [adminUsers]);
+
   const changeVerification = (adminUser: AdminUser) => {
     if (adminUser.verified) {
       adminService.unverify({ userId: adminUser.id }).subscribe();
@@ -115,8 +120,19 @@ const AdminHandler = () => {
     });
   };
 
+  const loadMoreAdminUsers = () => {
+    setLoadedAdminUsers(adminUsers.slice(0, loadedAdminUsers.length + 25));
+  };
+
+  const hasMoreAdminUsers = () => {
+    return adminUsers.length > loadedAdminUsers.length;
+  };
+
   return {
     adminUsers,
+    loadedAdminUsers,
+    loadMoreAdminUsers,
+    hasMoreAdminUsers,
     playerSearchString,
     setPlayerSearchString,
     changeVerification,
