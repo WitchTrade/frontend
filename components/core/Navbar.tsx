@@ -160,7 +160,7 @@ const Navbar: FunctionComponent = () => {
                             <NotificationItem key={notification.id} notification={notification} deleteNotification={deleteNotification} />
                           ))}
                           {notifications.length === 0 &&
-                            <p className="block px-4 py-2 text-sm text-wt-dark">No notifications</p>
+                            <p className="block px-4 py-2 text-sm">No notifications</p>
                           }
                         </div>
                       </Transition>
