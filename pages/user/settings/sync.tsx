@@ -43,15 +43,18 @@ const Sync: NextPage = () => {
         <div className="bg-wt-surface-dark rounded-lg my-3 p-1">
           <p className="text-xl font-bold text-center">Steam Inventory Sync</p>
           {!invLoading &&
-            <div className="flex justify-evenly my-2 items-center">
-              <ActionButton onClick={syncInventory} type="info" disabled={localSyncSettings.syncInventory}>Sync Inventory</ActionButton>
-              {inventory.lastSynced &&
-                <p>Last synced: {dayjs().to(dayjs(inventory.lastSynced))}</p>
-              }
-              {!inventory.id &&
-                <p>Last synced: Never</p>
-              }
-            </div>
+            <>
+              <div className="flex justify-evenly mt-2 items-center">
+                <ActionButton onClick={syncInventory} type="accent">Sync Inventory</ActionButton>
+                {inventory.lastSynced &&
+                  <p>Last synced: {dayjs().to(dayjs(inventory.lastSynced))}</p>
+                }
+                {!inventory.id &&
+                  <p>Last synced: Never</p>
+                }
+              </div>
+              <p className="text-center text-sm mt-1">You can sync your inventory every 10 minutes</p>
+            </>
           }
           {invLoading &&
             <Loading text="Syncing inventory..." />

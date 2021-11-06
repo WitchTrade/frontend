@@ -3,6 +3,7 @@ import { Fragment, FunctionComponent } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import useThemeProvider from '../../shared/providers/theme.provider';
 import { DropdownValue } from './Dropdown';
+import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
 
 interface Props {
   selectedValues: DropdownValue[];
@@ -13,22 +14,27 @@ interface Props {
 const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, values }) => {
   const { theme } = useThemeProvider();
 
+  const { show, nodeRef, toggleRef } = useDetectOutsideClick(false);
+
   return (
     <Listbox value={selectedValues} onChange={(value: any) => updateValue(value)}>
-      {({ open }) => (
-        <div className="relative mt-1">
-          <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-wt-surface-dark rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-wt-accent sm:text-sm border border-wt-accent-light">
-            <div className="flex">
-              <span className="block truncate ml-1">{selectedValues.map(sv => sv.displayName).join(', ')}</span>
+      <div className="relative mt-1">
+        <Listbox.Button
+          className="relative w-full py-2 pl-3 pr-10 text-left bg-wt-surface-dark rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-wt-accent sm:text-sm border border-wt-accent-light"
+          ref={toggleRef}
+        >
+          <div className="flex">
+            <span className="block truncate ml-1">{selectedValues.map(sv => sv.displayName).join(', ')}</span>
+          </div>
+          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <div className="w-5 h-5">
+              <Image src={`/assets/svgs/expand_${show ? 'less' : 'more'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
             </div>
-            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-              <div className="w-5 h-5">
-                <Image src={`/assets/svgs/expand_${open ? 'less' : 'more'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
-              </div>
-            </span>
-          </Listbox.Button>
+          </span>
+        </Listbox.Button>
+        <div ref={nodeRef}>
           <Transition
-            show={open}
+            show={show}
             as={Fragment}
             leave="transition ease-in duration-100"
             leaveFrom="opacity-100"
@@ -71,7 +77,7 @@ const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, 
             </Listbox.Options>
           </Transition>
         </div>
-      )}
+      </div>
     </Listbox>
   );
 };
