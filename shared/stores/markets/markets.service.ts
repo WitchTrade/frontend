@@ -5,12 +5,13 @@ import { tap } from 'rxjs/operators';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
 import { User } from '../user/user.model';
+import { userQuery } from '../user/user.query';
 
 export class MarketsService {
 
   public fetchAllMarkets() {
     // get all items and save them in the store
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market`).pipe(
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets`).pipe(
       tap({
         next: async res => {
           if (!res.ok) {
@@ -35,55 +36,16 @@ export class MarketsService {
     );
   }
 
-  public createMarket(user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.token}`
-      }
-    }).pipe(
-      tap({
-        next: async res => {
-          if (res.ok) {
-            const notification = createNotification({
-              content: 'Market created',
-              duration: 5000,
-              type: 'success'
-            });
-            notificationService.addNotification(notification);
-          } else {
-            const notification = createNotification({
-              content: res.statusText,
-              duration: 5000,
-              type: 'error'
-            });
-            notificationService.addNotification(notification);
-          }
-        },
-        error: err => {
-          const notification = createNotification({
-            content: err,
-            duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-          return of(err);
-        }
-      })
-    );
-  }
-
-  public fetchOwnMarket(user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/my`,
+  public fetchOwnMarket() {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/own`,
       {
         headers: {
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${userQuery.getValue().token}`
         }
       }).pipe(
         tap({
           next: async res => {
-            if (!res.ok && res.status !== 404) {
+            if (!res.ok) {
               const notification = createNotification({
                 content: res.statusText,
                 duration: 5000,
@@ -105,13 +67,13 @@ export class MarketsService {
       );
   }
 
-  public editMarket(user: User, body: { offerNote: string, wishNote: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market`,
+  public editMarket(body: { offerlistNote: string, wishlistNote: string; }) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets`,
       {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${userQuery.getValue().token}`
         },
         body: JSON.stringify(body)
       }).pipe(
@@ -146,8 +108,60 @@ export class MarketsService {
       );
   }
 
+  public fetchUserMarket(username: string) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/user/${username}`).pipe(
+      tap({
+        next: async res => {
+          if (!res.ok && res.status !== 404) {
+            const notification = createNotification({
+              content: res.statusText,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+          }
+        },
+        error: err => {
+          const notification = createNotification({
+            content: err,
+            duration: 5000,
+            type: 'error'
+          });
+          notificationService.addNotification(notification);
+          return of(err);
+        }
+      })
+    );
+  }
+
+  public fetchPrices() {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/prices`).pipe(
+      tap({
+        next: async res => {
+          if (!res.ok) {
+            const notification = createNotification({
+              content: res.statusText,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+          }
+        },
+        error: err => {
+          const notification = createNotification({
+            content: err,
+            duration: 5000,
+            type: 'error'
+          });
+          notificationService.addNotification(notification);
+          return of(err);
+        }
+      })
+    );
+  }
+
   public createOffer(offer: any, user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/offer/`,
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers`,
       {
         method: 'POST',
         headers: {

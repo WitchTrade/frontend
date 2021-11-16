@@ -1,58 +1,69 @@
 export interface Market {
   id: number;
-  offerNote: string;
-  wishNote: string;
-  user: { username: string; displayName: string; };
-  offerCount: number;
-  offers: Offer[];
-  wishCount: number;
-  wishes: Wish[];
   lastUpdated: Date;
+  offerlistNote: string;
+  wishlistNote: string;
+  offers: Offer[];
+  wishes: Wish[];
 }
 
 export interface Offer {
   id: number;
   item: { id: number; };
-  price: number;
+  mainPrice: Price;
+  mainPriceAmount?: number;
+  secondaryPrice: Price;
+  secondaryPriceAmount?: number;
   quantity: number;
 }
 
 export interface Wish {
   id: number;
   item: { id: number; };
-  user?: { username: string, displayName: string; };
+  mainPrice: Price;
+  mainPriceAmount?: number;
+  secondaryPrice: Price;
+  secondaryPriceAmount?: number;
+}
+
+export interface Price {
+  id: number;
+  priceKey: string;
+  displayName: string;
+  forOffers: boolean;
+  forWishes: boolean;
+  withAmount: number;
 }
 
 export function createMarket(params: Partial<Market>) {
   return {
     id: params.id ? params.id : null,
-    user: params.user ? params.user : null,
-    offerNote: params.offerNote ? params.offerNote : null,
-    wishNote: params.wishNote ? params.wishNote : null,
-    offerCount: params.offerCount ? params.offerCount : null,
-    offers: params.offers ? params.offers : []
+    lastUpdated: params.lastUpdated ? params.lastUpdated : null,
+    offerlistNote: params.offerlistNote ? params.offerlistNote : null,
+    wishlistNote: params.wishlistNote ? params.wishlistNote : null,
+    offers: params.offers ? params.offers : [],
+    wishes: params.wishes ? params.wishes : [],
   } as Market;
 }
 
-
-// Simple market which is used in the profile list
-export interface SimpleMarket {
+// Preview market which is used in the profile list
+export interface PreviewMarket {
   id: number;
   user: { username: string; displayName: string; };
   offerCount: number;
-  offers: SimpleOffer[];
+  offers: PreviewOffer[];
 }
 
-export interface SimpleOffer {
+export interface PreviewOffer {
   rarity: string;
   count: number;
 }
 
-export function createSimpleMarket(params: Partial<SimpleMarket>) {
+export function createPreviewMarket(params: Partial<PreviewMarket>) {
   return {
     id: params.id ? params.id : null,
     user: params.user ? params.user : null,
     offerCount: params.offerCount ? params.offerCount : null,
     offers: params.offers ? params.offers : []
-  } as SimpleMarket;
+  } as PreviewMarket;
 }

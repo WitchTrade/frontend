@@ -12,6 +12,11 @@ module.exports = {
         destination: '/user/settings/customization',
         permanent: true,
       },
+      {
+        source: '/user/market',
+        destination: '/user/market/offers',
+        permanent: true,
+      },
     ];
   },
   images: {
