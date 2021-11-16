@@ -9,9 +9,19 @@ import Chip from '../components/styles/Chip';
 import Divider from '../components/styles/Divider';
 import PageHeader from '../components/styles/PageHeader';
 import WTDialog from '../components/styles/WTDialog';
-import ItemsHandler, { itemCharacterValues, itemEventValues, itemSlotValues } from '../shared/handlers/items.handler';
+import ItemsHandler from '../shared/handlers/items.handler';
+import FilterHandler, { FILTER_TYPE, itemCharacterValues, itemEventValues, itemSlotValues } from '../shared/handlers/filter.handler';
 
 const Items: NextPage = () => {
+  const {
+
+    dialogOpen,
+    setDialogOpen,
+    selectedItem,
+    openItemDetails,
+    capitalizeFirstLetter
+  } = ItemsHandler();
+
   const {
     inventory,
     filteredItems,
@@ -20,12 +30,7 @@ const Items: NextPage = () => {
     hasMoreItems,
     itemFilterValues,
     setItemFilterValues,
-    dialogOpen,
-    setDialogOpen,
-    selectedItem,
-    openItemDetails,
-    capitalizeFirstLetter
-  } = ItemsHandler();
+  } = FilterHandler(FILTER_TYPE.ITEM, 125);
 
   return (
     <div>
@@ -71,7 +76,7 @@ const Items: NextPage = () => {
         url="https://witchtrade.org/items"
       />
       <PageHeader title="Items" />
-      <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} />
+      <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} initialOpen={true} type={FILTER_TYPE.ITEM} />
       <p className="text-center mt-2"><span className="text-wt-accent font-bold">{filteredItems.length}</span> item{filteredItems.length === 1 ? '' : 's'} filtered</p>
       <InfiniteScroll
         className="flex flex-row flex-wrap justify-center py-2 h-full mx-6"

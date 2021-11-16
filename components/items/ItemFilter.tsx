@@ -1,7 +1,7 @@
 import { FunctionComponent, useState } from 'react';
 import Image from 'next/image';
 import useThemeProvider from '../../shared/providers/theme.provider';
-import { createDefaultItemFilter, inventoryValues, itemCharacterValues, itemEventValues, ItemFilterValues, itemRarityValues, itemSlotValues, orderByValues, orderDirectionValues } from '../../shared/handlers/items.handler';
+import { createDefaultItemFilter, FILTER_TYPE, inventoryValues, itemCharacterValues, itemEventValues, ItemFilterValues, itemRarityValues, itemSlotValues, orderByValues, orderDirectionValues, tradeableItemRarityValues, tradeableOrderByValues } from '../../shared/handlers/filter.handler';
 import Dropdown from '../styles/Dropdown';
 import TextInput from '../styles/TextInput';
 import CheckboxInput from '../styles/CheckboxInput';
@@ -11,14 +11,16 @@ import ActionButton from '../styles/ActionButton';
 interface Props {
   itemFilterValues: ItemFilterValues;
   setItemFilterValues: (itemFilterValues: ItemFilterValues) => void;
+  initialOpen: boolean;
+  type: FILTER_TYPE;
 };
 
-const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterValues }) => {
+const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterValues, initialOpen, type }) => {
   const { theme } = useThemeProvider();
 
   const { inventory } = useInventoryProvider();
 
-  const [filterOpen, setFilterOpen] = useState(true);
+  const [filterOpen, setFilterOpen] = useState(initialOpen);
 
   const clearFilter = () => {
     setItemFilterValues(createDefaultItemFilter());
@@ -50,13 +52,15 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
               </div>
               <div className="m-1" style={{ width: '220px' }}>
                 <p className="mb-1">Rarity</p>
-                <Dropdown selectedValue={itemFilterValues.itemRarity} setValue={(itemRarity) => setItemFilterValues({ ...itemFilterValues, itemRarity })} values={itemRarityValues} />
+                <Dropdown selectedValue={itemFilterValues.itemRarity} setValue={(itemRarity) => setItemFilterValues({ ...itemFilterValues, itemRarity })} values={type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues} />
               </div>
             </div>
             <div className="flex flex-wrap justify-center">
-              <div className="m-2">
-                <CheckboxInput placeholder="Show tradeable items only" value={itemFilterValues.tradeableOnly} setValue={(tradeableOnly) => setItemFilterValues({ ...itemFilterValues, tradeableOnly })} />
-              </div>
+              {type === FILTER_TYPE.ITEM &&
+                <div className="m-2">
+                  <CheckboxInput placeholder="Show tradeable items only" value={itemFilterValues.tradeableOnly} setValue={(tradeableOnly) => setItemFilterValues({ ...itemFilterValues, tradeableOnly })} />
+                </div>
+              }
               <div className="my-2">
                 <CheckboxInput placeholder="Show new items only" value={itemFilterValues.newOnly} setValue={(newOnly) => setItemFilterValues({ ...itemFilterValues, newOnly })} />
               </div>
@@ -75,7 +79,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
             <div className="flex flex-wrap justify-center">
               <div className="m-1" style={{ width: '220px' }}>
                 <p className="mb-1">Order by</p>
-                <Dropdown selectedValue={itemFilterValues.orderBy} setValue={(orderBy) => setItemFilterValues({ ...itemFilterValues, orderBy })} values={orderByValues} />
+                <Dropdown selectedValue={itemFilterValues.orderBy} setValue={(orderBy) => setItemFilterValues({ ...itemFilterValues, orderBy })} values={type === FILTER_TYPE.ITEM ? orderByValues : tradeableOrderByValues} />
               </div>
               <div className="m-1" style={{ width: '220px' }}>
                 <p className="mb-1">Show in</p>

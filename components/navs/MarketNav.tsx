@@ -10,12 +10,16 @@ const MarketNav: FunctionComponent = () => {
     <div className="flex justify-center pt-3">
       <div className="mx-1">
         <Link href="/user/market/offers" passHref>
-          <NavbarLink type={router.pathname.startsWith('/user/market/offers') ? 'navSelected' : 'nav'}>Offers</NavbarLink>
+          <NavbarLink type={router.pathname.startsWith('/user/market/offers') ? 'navSelected' : 'nav'}>
+            Offers
+          </NavbarLink>
         </Link>
       </div>
       <div className="mx-1">
         <Link href="/user/market/wishlist" passHref>
-          <NavbarLink type={router.pathname.startsWith('/user/market/wishlist') ? 'navSelected' : 'nav'}>Wishlist</NavbarLink>
+          <NavbarLink type={router.pathname.startsWith('/user/market/wishlist') ? 'navSelected' : 'nav'}>
+            Wishlist
+          </NavbarLink>
         </Link>
       </div>
     </div>

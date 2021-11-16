@@ -12,7 +12,7 @@ export interface Offer {
   item: { id: number; };
   mainPrice: Price;
   mainPriceAmount?: number;
-  secondaryPrice: Price;
+  secondaryPrice?: Price;
   secondaryPriceAmount?: number;
   quantity: number;
 }
@@ -22,7 +22,7 @@ export interface Wish {
   item: { id: number; };
   mainPrice: Price;
   mainPriceAmount?: number;
-  secondaryPrice: Price;
+  secondaryPrice?: Price;
   secondaryPriceAmount?: number;
 }
 
