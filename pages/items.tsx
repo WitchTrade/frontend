@@ -24,6 +24,7 @@ const Items: NextPage = () => {
 
   const {
     inventory,
+    totalItemCount,
     filteredItems,
     loadedItems,
     loadMoreItems,
@@ -77,7 +78,16 @@ const Items: NextPage = () => {
       />
       <PageHeader title="Items" />
       <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} initialOpen={true} type={FILTER_TYPE.ITEM} />
-      <p className="text-center mt-2"><span className="text-wt-accent font-bold">{filteredItems.length}</span> item{filteredItems.length === 1 ? '' : 's'} filtered</p>
+      <p className="text-center mt-2">
+        <span className="text-wt-accent font-bold">
+          {totalItemCount}
+        </span> item
+        {totalItemCount === 1 ? '' : 's'}
+        {totalItemCount !== filteredItems.length ? (
+          <> in total, <span className="text-wt-accent font-bold">
+            {filteredItems.length}
+          </span> filtered</>) : ''}
+      </p>
       <InfiniteScroll
         className="flex flex-row flex-wrap justify-center py-2 h-full mx-6"
         dataLength={loadedItems.length}

@@ -333,6 +333,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
 
   return {
     inventory,
+    totalItemCount: type === FILTER_TYPE.MARKET && trades ? trades.length : items.length,
     filteredItems,
     loadedItems,
     loadMoreItems,
