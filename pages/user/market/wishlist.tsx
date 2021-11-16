@@ -88,8 +88,8 @@ const Market: NextPage = () => {
             hasMore={hasMoreItems()}
             loader={<p></p>}
           >
-            {loadedItems.map((item, i) => (
-              <WishView wish={item} inventory={inventory} />
+            {loadedItems.map((item) => (
+              <WishView key={item.id} wish={item} inventory={inventory} />
             ))}
           </InfiniteScroll>
         </>

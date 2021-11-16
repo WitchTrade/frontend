@@ -21,6 +21,8 @@ const OfferView: FunctionComponent<Props> = ({ offer, inventory }) => {
     amount = inventoryItem.amount;
   }
 
+  const items = itemsQuery.getAll();
+
   useEffect(() => {
     if (itemsQuery.getAll().length > 0) {
       let item = itemsQuery.getAll().find(i => i.id === offer.item.id);
@@ -28,7 +30,9 @@ const OfferView: FunctionComponent<Props> = ({ offer, inventory }) => {
         setItem(item);
       }
     }
-  }, [itemsQuery.getAll()]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
 
   return (
     <>
@@ -68,7 +72,7 @@ const OfferView: FunctionComponent<Props> = ({ offer, inventory }) => {
           }
           {inventory.showInTrading && !owned &&
             <div className="flex justify-center items-center bg-wt-error-dark h-5">
-              <p className="text-wt-text text-xs">You don't own this item</p>
+              <p className="text-wt-text text-xs">You don&apos;t own this item</p>
             </div>
           }
         </div>

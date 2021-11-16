@@ -21,6 +21,8 @@ const WishView: FunctionComponent<Props> = ({ wish, inventory }) => {
     amount = inventoryItem.amount;
   }
 
+  const items = itemsQuery.getAll();
+
   useEffect(() => {
     if (itemsQuery.getAll().length > 0) {
       let item = itemsQuery.getAll().find(i => i.id === wish.item.id);
@@ -28,7 +30,9 @@ const WishView: FunctionComponent<Props> = ({ wish, inventory }) => {
         setItem(item);
       }
     }
-  }, [itemsQuery.getAll()]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
 
   return (
     <>
@@ -37,7 +41,7 @@ const WishView: FunctionComponent<Props> = ({ wish, inventory }) => {
           <Image className="rounded-t-lg" src={item.iconUrl} height={160} width={160} alt={item.name} />
           <p className="text-sm p-1 break-words font-semibold">{item.name}</p>
           <div className="rounded-lg border border-wt-accent mx-2 mb-2">
-            <p className="text-sm p-1 font-bold">I'm offering</p>
+            <p className="text-sm p-1 font-bold">I&apos;m offering</p>
             <div className={`flex ${wish.secondaryPrice ? 'justify-between' : 'justify-center'} mx-4 items-center mb-2`}>
               <div className="flex items-center">
                 {wish.mainPrice.withAmount &&
@@ -64,7 +68,7 @@ const WishView: FunctionComponent<Props> = ({ wish, inventory }) => {
           }
           {inventory.showInTrading && !owned &&
             <div className="flex justify-center items-center bg-wt-error-dark h-5">
-              <p className="text-wt-text text-xs">You don't own this item</p>
+              <p className="text-wt-text text-xs">You don&apos;t own this item</p>
             </div>
           }
         </div>

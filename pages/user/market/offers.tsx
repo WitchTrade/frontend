@@ -88,8 +88,8 @@ const Market: NextPage = () => {
             hasMore={hasMoreItems()}
             loader={<p></p>}
           >
-            {loadedItems.map((item, i) => (
-              <OfferView offer={item} inventory={inventory} />
+            {loadedItems.map((item) => (
+              <OfferView key={item.id} offer={item} inventory={inventory} />
             ))}
           </InfiniteScroll>
         </>
