@@ -120,7 +120,7 @@ const Market: NextPage = () => {
             <div className="m-1">
               <ActionButton type="proceed" onClick={() => setCreatingNew(true)}>
                 <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
-                Add offer
+                New {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
               </ActionButton>
             </div>
             {type === MARKET_TYPE.OFFER &&
