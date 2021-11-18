@@ -142,6 +142,24 @@ const MarketHandler = (type: MARKET_TYPE) => {
     });
   };
 
+  const deleteTrade = (trade: Offer | Wish) => {
+    if (type === MARKET_TYPE.OFFER) {
+      marketsService.deleteOffer(trade.id).subscribe((res) => {
+        if (res.ok) {
+          const newOffers = market.offers.filter(o => o.id !== trade.id);
+          setMarket({ ...market, offers: newOffers });
+        }
+      });
+    } else {
+      marketsService.deleteWish(trade.id).subscribe((res) => {
+        if (res.ok) {
+          const newWishes = market.wishes.filter(w => w.id !== trade.id);
+          setMarket({ ...market, wishes: newWishes });
+        }
+      });
+    }
+  };
+
   return {
     market,
     editingNote,
@@ -155,7 +173,8 @@ const MarketHandler = (type: MARKET_TYPE) => {
     deleteAllTrades,
     localSyncSettings,
     setLocalSyncSettings,
-    syncOffers
+    syncOffers,
+    deleteTrade
   };
 };
 

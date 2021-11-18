@@ -5,20 +5,31 @@ import Image from 'next/image';
 import { itemsQuery } from '../../shared/stores/items/items.query';
 import { createItem, Item } from '../../shared/stores/items/item.model';
 import Tooltip from '../styles/Tooltip';
-import { MARKET_TYPE } from '../../shared/handlers/market.handler';
+import ActionButton from '../styles/ActionButton';
+import Loading from '../styles/Loading';
 
 interface TradeWish extends Wish {
   quantity: number;
 }
 
 interface Props {
-  type: MARKET_TYPE;
+  type: TRADE_TYPE;
   trade: Offer | TradeWish;
   inventory: Inventory;
+  deleteTrade: (trade: Offer | Wish) => void;
 };
 
-const TradeView: FunctionComponent<Props> = ({ type, trade, inventory }) => {
+export enum TRADE_TYPE {
+  MANAGE_OFFER,
+  MANAGE_WISH,
+  PROFILE_OFFER,
+  PROFILE_WISH
+}
+
+const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, deleteTrade }) => {
   const [item, setItem] = useState<Item>(createItem({}));
+
+  const [loading, setLoading] = useState(false);
 
   const owned = inventory.inventoryItems.some(ii => ii.item.id === item.id);
   const inventoryItem = inventory.inventoryItems.find(ii => ii.item.id === item.id);
@@ -47,14 +58,14 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory }) => {
           <Image className="rounded-t-lg" src={item.iconUrl} height={160} width={160} alt={item.name} />
           <p className="text-sm p-1 break-words font-semibold">{item.name}</p>
           <div>
-            {type === MARKET_TYPE.OFFER &&
+            {type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.PROFILE_OFFER &&
               <div className="flex justify-between mx-4">
                 <p className="text-sm p-1 break-words">In stock:</p>
                 <p className="text-sm p-1 break-words font-bold">{trade.quantity}</p>
               </div>
             }
             <div className="rounded-lg border border-wt-accent mx-2 mb-2">
-              <p className="text-sm p-1 font-bold">{type === MARKET_TYPE.OFFER ? 'Price per item' : 'I\'m offering'}</p>
+              <p className="text-sm p-1 font-bold">{type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.PROFILE_OFFER ? 'Price per item' : 'I\'m offering'}</p>
               <div className={`flex ${trade.secondaryPrice ? 'justify-between' : 'justify-center'} mx-4 items-center mb-2`}>
                 <div className="flex items-center">
                   {trade.mainPrice.withAmount &&
@@ -76,6 +87,21 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory }) => {
                 }
               </div>
             </div>
+            {type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.MANAGE_WISH &&
+              <>
+                <div className="flex justify-between py-1 px-2">
+                  <ActionButton type="warning" onClick={() => { }} small={true}>
+                    <Image src={`/assets/svgs/edit/white.svg`} height="24px" width="24px" alt="Delete Trade" />
+                  </ActionButton>
+                  <ActionButton type="cancel" onClick={() => { setLoading(true); deleteTrade(trade); }} small={true} disabled={loading}>
+                    <Image src={`/assets/svgs/bin/white.svg`} height="24px" width="24px" alt="Delete Trade" />
+                  </ActionButton>
+                </div>
+                {loading &&
+                  <Loading />
+                }
+              </>
+            }
             {inventory.showInTrading && owned &&
               <p className="text-wt-text text-sm bg-wt-success-dark">You own {amount > 1 ? amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : `${amount}x`}</p>
             }

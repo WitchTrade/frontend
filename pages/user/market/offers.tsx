@@ -12,7 +12,7 @@ import Loading from '../../../components/styles/Loading';
 import FilterHandler, { FILTER_TYPE } from '../../../shared/handlers/filter.handler';
 import ItemFilter from '../../../components/items/ItemFilter';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import TradeView from '../../../components/market/TradeView';
+import TradeView, { TRADE_TYPE } from '../../../components/market/TradeView';
 import CreateNewTrade from '../../../components/market/CreateNewTrade';
 import WTDialog from '../../../components/styles/WTDialog';
 import SyncOffersDialog from '../../../components/market/SyncOffersDialog';
@@ -31,7 +31,8 @@ const Market: NextPage = () => {
     deleteAllTrades,
     localSyncSettings,
     setLocalSyncSettings,
-    syncOffers
+    syncOffers,
+    deleteTrade
   } = MarketHandler(MARKET_TYPE.OFFER);
 
   const {
@@ -155,7 +156,7 @@ const Market: NextPage = () => {
             loader={<p></p>}
           >
             {loadedItems.map((item) => (
-              <TradeView key={item.id} type={MARKET_TYPE.OFFER} trade={item} inventory={inventory} />
+              <TradeView key={item.id} type={TRADE_TYPE.MANAGE_OFFER} trade={item} inventory={inventory} deleteTrade={deleteTrade} />
             ))}
           </InfiniteScroll>
         </>

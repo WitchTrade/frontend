@@ -11,7 +11,7 @@ import Loading from '../../../components/styles/Loading';
 import ItemFilter from '../../../components/items/ItemFilter';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import FilterHandler, { FILTER_TYPE } from '../../../shared/handlers/filter.handler';
-import TradeView from '../../../components/market/TradeView';
+import TradeView, { TRADE_TYPE } from '../../../components/market/TradeView';
 import CreateNewTrade from '../../../components/market/CreateNewTrade';
 import { useState } from 'react';
 import WTDialog from '../../../components/styles/WTDialog';
@@ -27,7 +27,8 @@ const Market: NextPage = () => {
     creatingNew,
     setCreatingNew,
     addNewTrade,
-    deleteAllTrades
+    deleteAllTrades,
+    deleteTrade
   } = MarketHandler(MARKET_TYPE.WISH);
 
   const {
@@ -147,7 +148,7 @@ const Market: NextPage = () => {
             loader={<p></p>}
           >
             {loadedItems.map((item) => (
-              <TradeView key={item.id} type={MARKET_TYPE.WISH} trade={item} inventory={inventory} />
+              <TradeView key={item.id} type={TRADE_TYPE.MANAGE_WISH} trade={item} inventory={inventory} deleteTrade={deleteTrade} />
             ))}
           </InfiniteScroll>
         </>

@@ -1,4 +1,3 @@
-import { ID } from '@datorama/akita';
 import { of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { tap } from 'rxjs/operators';
@@ -243,7 +242,7 @@ export class MarketsService {
       );
   }
 
-  public editOffer(id: ID, offer: any, user: User) {
+  public editOffer(id: number, offer: any, user: User) {
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/offer/${id}`,
       {
         method: 'PUT',
@@ -284,13 +283,13 @@ export class MarketsService {
       );
   }
 
-  public deleteOffer(id: ID, user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/offer/${id}`,
+  public deleteOffer(id: number) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers/${id}`,
       {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${userQuery.getValue().token}`
         }
       }).pipe(
         tap({
@@ -405,13 +404,13 @@ export class MarketsService {
       );
   }
 
-  public deleteWish(id: ID, user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/wish/${id}`,
+  public deleteWish(id: number) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes/${id}`,
       {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${userQuery.getValue().token}`
         }
       }).pipe(
         tap({

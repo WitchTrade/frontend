@@ -8,11 +8,12 @@ interface Props {
   onClick?: () => void;
   type: string;
   disabled?: boolean;
+  small?: boolean;
 }
 
-const defaultStyle = "flex items-center px-3 py-2 focus:outline-none rounded-md text-sm cursor-pointer focus:ring-2 focus:ring-wt-accent font-medium disabled:cursor-not-allowed disabled:bg-wt-disabled ";
+const defaultStyle = "flex items-center focus:outline-none rounded-md text-sm cursor-pointer focus:ring-2 focus:ring-wt-accent font-medium disabled:cursor-not-allowed disabled:bg-wt-disabled ";
 
-const ActionButton: FunctionComponent<Props> = ({ onClick, children, type, disabled }) => {
+const ActionButton: FunctionComponent<Props> = ({ onClick, children, type, disabled, small }) => {
   const types: Types = {
     neutral: 'hover:bg-wt-hover rounded-md',
     'neutral-enabled': 'bg-wt-selected-dark hover:bg-wt-hover rounded-md',
@@ -24,7 +25,7 @@ const ActionButton: FunctionComponent<Props> = ({ onClick, children, type, disab
   };
 
   return (
-    <button className={defaultStyle + types[type]} onClick={onClick} disabled={disabled}>
+    <button className={defaultStyle + types[type] + (small ? ' px-1 py-1' : ' px-3 py-2')} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

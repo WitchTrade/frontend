@@ -203,7 +203,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
   }, [items, trades]);
 
   useEffect(() => {
-    setLoadedItems(filteredItems.slice(0, itemsToLoad));
+    setLoadedItems(filteredItems.slice(0, loadedItems.length > itemsToLoad ? loadedItems.length : itemsToLoad));
   }, [filteredItems]);
 
   useEffect(() => {
