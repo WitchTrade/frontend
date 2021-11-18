@@ -9,7 +9,7 @@ const Layout: FunctionComponent = ({ children }) => {
     <div>
       <DefaultHeader />
       <Navbar />
-      <main className="mt-16" style={{ minHeight: 'calc(100vh - 64px - 184px)' }}>{children}</main>
+      <main className="mt-16" style={{ minHeight: 'calc(100vh - 64px - 236px)' }}>{children}</main>
       <Footer />
       <Notification />
     </div>
