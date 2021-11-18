@@ -50,7 +50,7 @@ const Market: NextPage = () => {
           <div className="h-full flex flex-col justify-between">
             <div>
               <p className="text-2xl font-medium leading-6">Delete all wishlist items</p>
-              <p className="text-sm my-2">Are you sure that you want to delete ALL your wishlist items?<br />This can't be undone.</p>
+              <p className="text-sm my-2">Are you sure that you want to delete ALL your wishlist items?<br />This can&apos;t be undone.</p>
             </div>
             <div className="mt-4 flex justify-evenly pb-2">
               <ActionButton type="neutral-enabled" onClick={() => setDeleteAllDialogOpen(false)}>
