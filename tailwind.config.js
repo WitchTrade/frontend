@@ -30,6 +30,10 @@ module.exports = {
         "wt-error-dark": "var(--wt-error-dark)",
         "wt-error-light": "var(--wt-error-light)",
         "wt-chartbg": "var(--wt-chartbg)",
+      },
+      height: {
+        "wideNewTrade": "500px",
+        "smallNewTrade": "884px"
       }
     },
   },

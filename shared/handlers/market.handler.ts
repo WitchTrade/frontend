@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Subscription } from 'rxjs';
 import useUserProvider from '../providers/user.provider';
-import { createMarket, Market } from '../stores/markets/market.model';
+import { createMarket, Market, Offer, Wish } from '../stores/markets/market.model';
 import { marketsService } from '../stores/markets/markets.service';
 
 export enum MARKET_TYPE {
@@ -60,6 +60,16 @@ const MarketHandler = (type: MARKET_TYPE) => {
     }
   };
 
+  const addNewTrade = (trade: Offer | Wish) => {
+    if (type === MARKET_TYPE.OFFER) {
+      const newOffers = [...market.offers, trade] as Offer[];
+      setMarket({ ...market, offers: newOffers });
+    } else {
+      const newWishes = [...market.wishes, trade];
+      setMarket({ ...market, wishes: newWishes });
+    }
+  };
+
   return {
     market,
     editingNote,
@@ -68,7 +78,8 @@ const MarketHandler = (type: MARKET_TYPE) => {
     setLocalNote,
     updateNote,
     creatingNew,
-    setCreatingNew
+    setCreatingNew,
+    addNewTrade
   };
 };
 

@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import Image from 'next/image';
 import LoginWrapper from '../../../components/core/LoginWrapper';
 import CustomHeader from '../../../components/core/CustomHeader';
 import PageHeader from '../../../components/styles/PageHeader';
@@ -9,8 +10,9 @@ import ActionButton from '../../../components/styles/ActionButton';
 import Loading from '../../../components/styles/Loading';
 import ItemFilter from '../../../components/items/ItemFilter';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import WishView from '../../../components/market/WishView';
 import FilterHandler, { FILTER_TYPE } from '../../../shared/handlers/filter.handler';
+import TradeView from '../../../components/market/TradeView';
+import CreateNewTrade from '../../../components/market/CreateNewTrade';
 
 const Market: NextPage = () => {
   const {
@@ -21,7 +23,8 @@ const Market: NextPage = () => {
     setLocalNote,
     updateNote,
     creatingNew,
-    setCreatingNew
+    setCreatingNew,
+    addNewTrade
   } = MarketHandler(MARKET_TYPE.WISH);
 
   const {
@@ -78,7 +81,25 @@ const Market: NextPage = () => {
               </div>
             }
           </div>
-          <div className="w-full mt-10">
+          <div className="flex flex-wrap justify-center mt-10">
+            <div className="m-1">
+              <ActionButton type="proceed" onClick={() => setCreatingNew(true)}>
+                <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
+                Add item
+              </ActionButton>
+            </div>
+            <div className="m-1">
+              <ActionButton type="cancel" onClick={() => { }}>
+                <Image src="/assets/svgs/bin/white.svg" height="24px" width="24px" alt="Remove all" />
+                Delete all
+              </ActionButton>
+            </div>
+          </div>
+
+          <div className="flex flex-col justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <CreateNewTrade type={MARKET_TYPE.WISH} dialogOpen={creatingNew} setDialogOpen={setCreatingNew} addNewTrade={addNewTrade} existingTrades={market.offers} />
+          </div>
+          <div className="w-full">
             <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} initialOpen={false} type={FILTER_TYPE.MARKET} />
           </div>
           <p className="text-center mt-2">
@@ -98,7 +119,7 @@ const Market: NextPage = () => {
             loader={<p></p>}
           >
             {loadedItems.map((item) => (
-              <WishView key={item.id} wish={item} inventory={inventory} />
+              <TradeView key={item.id} type={MARKET_TYPE.WISH} trade={item} inventory={inventory} />
             ))}
           </InfiniteScroll>
         </>

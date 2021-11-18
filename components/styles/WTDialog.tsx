@@ -5,9 +5,11 @@ interface Props {
   dialogOpen: boolean;
   setDialogOpen: (dialogOpen: boolean) => void;
   closeOnOutsideClick: boolean;
+  transition?: boolean;
+  opacity?: number;
 };
 
-const WTDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, closeOnOutsideClick, children }) => {
+const WTDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, closeOnOutsideClick, transition = true, opacity = 30, children }) => {
 
   const closeModal = () => {
     setDialogOpen(false);
@@ -26,19 +28,25 @@ const WTDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, closeOn
           }}
           open={true}
         >
-          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+          <Dialog.Overlay className={`fixed inset-0 bg-black opacity-${opacity}`} />
           <div className="flex justify-center items-center min-h-screen px-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-100"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-100"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              {children}
-            </Transition.Child>
+            {transition &&
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-100"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-100"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                {children}
+              </Transition.Child>
+              ||
+              <>
+                {children}
+              </>
+            }
           </div>
         </Dialog>
       </Transition>

@@ -160,13 +160,13 @@ export class MarketsService {
     );
   }
 
-  public createOffer(offer: any, user: User) {
+  public createOffer(offer: any) {
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${userQuery.getValue().token}`
         },
         body: JSON.stringify(offer)
       }).pipe(
@@ -364,13 +364,13 @@ export class MarketsService {
       );
   }
 
-  public createWish(wish: any, user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/wish/`,
+  public createWish(wish: any) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${userQuery.getValue().token}`
         },
         body: JSON.stringify(wish)
       }).pipe(

@@ -29,10 +29,14 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="bg-wt-surface-dark rounded-lg">
-        <div className="flex justify-between cursor-pointer p-2 hover:bg-wt-hover rounded-lg" onClick={() => setFilterOpen(!filterOpen)}>
-          <Image src={`/assets/svgs/expand_${filterOpen ? 'less' : 'more'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
+        <div className={`flex p-2 rounded-lg ${type !== FILTER_TYPE.NEWTRADE ? 'justify-between cursor-pointer hover:bg-wt-hover' : 'justify-center'}`} onClick={() => type !== FILTER_TYPE.NEWTRADE ? setFilterOpen(!filterOpen) : undefined}>
+          {type !== FILTER_TYPE.NEWTRADE &&
+            <Image src={`/assets/svgs/expand_${filterOpen ? 'less' : 'more'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
+          }
           <p className="font-semibold">Filter</p>
-          <Image src={`/assets/svgs/expand_${filterOpen ? 'less' : 'more'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
+          {type !== FILTER_TYPE.NEWTRADE &&
+            <Image src={`/assets/svgs/expand_${filterOpen ? 'less' : 'more'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
+          }
         </div>
         {filterOpen &&
           <div className="flex flex-col items-center p-2">

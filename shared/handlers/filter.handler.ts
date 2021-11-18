@@ -79,22 +79,22 @@ export const itemSlotValues: DropdownValue[] = [
 export const itemEventValues: DropdownValue[] = [
   { key: 'any', displayName: 'Any' },
   { key: 'none', displayName: 'No Event' },
-  { key: 'theater', displayName: 'Theater' },
+  { key: 'theater', displayName: 'Theater', imagePath: '/assets/images/eventIcons/theater.png' },
   { key: 'chinese newyear', displayName: 'Chinese New Year', imagePath: '/assets/images/eventIcons/chineseNewYear.png' },
-  { key: 'halloween', displayName: 'Halloween', imagePath: '/assets/images/eventIcons/halloween.png' },
-  { key: 'halloween2018', displayName: 'Halloween 2018', imagePath: '/assets/images/eventIcons/halloween2018.png' },
-  { key: 'halloween2019', displayName: 'Halloween 2019', imagePath: '/assets/images/eventIcons/halloween2019.png' },
-  { key: 'halloween2020', displayName: 'Halloween 2020' },
   { key: 'plunderparty', displayName: 'Plunder Party', imagePath: '/assets/images/eventIcons/plunderparty.png' },
   { key: 'springfever', displayName: 'Spring Fever', imagePath: '/assets/images/eventIcons/springfever.png' },
-  { key: 'summerevent', displayName: 'Summer Event', imagePath: '/assets/images/eventIcons/summer.png' },
-  { key: 'winterdream', displayName: 'Winterdream', imagePath: '/assets/images/eventIcons/winterdream.png' },
+  { key: 'summerevent', displayName: 'Summer', imagePath: '/assets/images/eventIcons/summer.png' },
+  { key: 'witchforest', displayName: 'Witch Forest', imagePath: '/assets/images/eventIcons/witchforest.png' },
+  { key: 'mystic sands', displayName: 'Mystic Sands', imagePath: '/assets/images/eventIcons/mysticSands.png' },
+  { key: 'halloween', displayName: 'Halloween 2017', imagePath: '/assets/images/eventIcons/halloween.png' },
+  { key: 'halloween2018', displayName: 'Halloween 2018', imagePath: '/assets/images/eventIcons/halloween2018.png' },
+  { key: 'halloween2019', displayName: 'Halloween 2019', imagePath: '/assets/images/eventIcons/halloween2019.png' },
+  { key: 'halloween2020', displayName: 'Halloween 2020', imagePath: '/assets/images/eventIcons/halloween2020.png' },
   { key: 'winterdream witch', displayName: 'Winterdream Witch', imagePath: '/assets/images/eventIcons/winterdreamwitch.png' },
+  { key: 'winterdream', displayName: 'Winterdream 2017', imagePath: '/assets/images/eventIcons/winterdream.png' },
   { key: 'winterdream2018', displayName: 'Winterdream 2018', imagePath: '/assets/images/eventIcons/winterdream2018.png' },
   { key: 'winterdream2019', displayName: 'Winterdream 2019', imagePath: '/assets/images/eventIcons/winterdream2019.png' },
-  { key: 'winterdream2020', displayName: 'Winterdream 2020', imagePath: '/assets/images/eventIcons/winterdream2020.png' },
-  { key: 'witchforest', displayName: 'Witch Forest', imagePath: '/assets/images/eventIcons/witchforest.png' },
-  { key: 'mystic sands', displayName: 'Mystic Sands', imagePath: '/assets/images/eventIcons/mysticSands.png' }
+  { key: 'winterdream2020', displayName: 'Winterdream 2020', imagePath: '/assets/images/eventIcons/winterdream2020.png' }
 ];
 
 export const itemRarityValues: DropdownValue[] = [
@@ -126,7 +126,8 @@ export const inventoryValues: DropdownValue[] = [
 
 export enum FILTER_TYPE {
   ITEM,
-  MARKET
+  MARKET,
+  NEWTRADE
 }
 
 const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] | Wish[]) => {
@@ -144,7 +145,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
   const [itemFilterValues, setItemFilterValues] = useState<ItemFilterValues>(createDefaultItemFilter());
 
   useEffect(() => {
-    if (!queryLoaded && router.isReady) {
+    if (!queryLoaded && router.isReady && type !== FILTER_TYPE.NEWTRADE) {
       const searchString = typeof router.query.searchString === 'string' ? router.query.searchString : '';
       const tradeableOnly = typeof router.query.tradeableOnly === 'string' && router.query.tradeableOnly === 'true' ? true : false;
       const newOnly = typeof router.query.newOnly === 'string' && router.query.newOnly === 'true' ? true : false;
@@ -207,7 +208,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
 
   useEffect(() => {
     filterItems();
-    if (!queryLoaded) {
+    if (!queryLoaded || type === FILTER_TYPE.NEWTRADE) {
       return;
     }
 
@@ -234,7 +235,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
   }, [itemFilterValues]);
 
   const filterItems = () => {
-    const filteredItems = items.filter((item) => {
+    let filteredItems = items.filter((item) => {
       const searchString = item.name.toLowerCase().includes(itemFilterValues.searchString.toLowerCase());
       const tradeableOnly = itemFilterValues.tradeableOnly ? item.tradeable : true;
       const newOnly = itemFilterValues.newOnly ? item.new : true;
@@ -296,6 +297,9 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
         setFilteredItems(filteredTrades);
       }
     } else {
+      if (type === FILTER_TYPE.NEWTRADE) {
+        filteredItems = filteredItems.filter(i => i.tradeable && !trades?.some(t => t.item.id === i.id));
+      }
       filteredItems.sort((a, b) => {
         const key = itemFilterValues.orderBy.key as keyof Item;
         let one = a[key];
@@ -331,6 +335,10 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
     return items.length > loadedItems.length;
   };
 
+  const resetLoadedItems = () => {
+    setLoadedItems(filteredItems.slice(0, itemsToLoad));
+  };
+
   return {
     inventory,
     totalItemCount: type === FILTER_TYPE.MARKET && trades ? trades.length : items.length,
@@ -339,7 +347,8 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
     loadMoreItems,
     hasMoreItems,
     itemFilterValues,
-    setItemFilterValues
+    setItemFilterValues,
+    resetLoadedItems
   };
 };
 

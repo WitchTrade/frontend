@@ -3,8 +3,8 @@ import { FunctionComponent } from 'react';
 interface Props {
   value: number;
   setValue: (value: number) => void;
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
 }
 
 const NumberInput: FunctionComponent<Props> = ({ value, setValue, min, max }) => {
@@ -15,7 +15,7 @@ const NumberInput: FunctionComponent<Props> = ({ value, setValue, min, max }) =>
       return;
     }
 
-    if (value >= min && value <= max) {
+    if ((!min || value >= min) && (!max || value <= max)) {
       setValue(value);
     }
   };
