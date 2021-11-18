@@ -16,6 +16,17 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
     secondaryPriceAmount: 0
   });
 
+  useEffect(() => {
+    setTrade({
+      selectedItem: null,
+      quantity: 0,
+      mainPrice: null,
+      mainPriceAmount: 0,
+      secondaryPrice: null,
+      secondaryPriceAmount: 0
+    });
+  }, [type]);
+
   const createTrade = (finished: () => void) => {
     const tradeDTO: any = {};
     tradeDTO.itemId = trade.selectedItem.id;
