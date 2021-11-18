@@ -9,6 +9,7 @@ import { Item } from '../../shared/stores/items/item.model';
 import NumberInput from '../styles/NumberInput';
 import PriceSelector from './PriceSelector';
 import usePricesProvider from '../../shared/providers/prices.provider';
+import { MARKET_TYPE } from '../../shared/handlers/market.handler';
 
 interface Props {
   type: TRADE_TYPE;
@@ -59,7 +60,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                       <Image className="rounded-lg" src={`/assets/images/prices/${localTrade.mainPrice.priceKey}.png`} height={56} width={56} alt={localTrade.mainPrice.displayName} />
                     </div>
                   }
-                  <PriceSelector prices={prices} price={localTrade.mainPrice} setPrice={(mainPrice) => setLocalTrade({ ...localTrade, mainPrice })} buttonText="Select price #1" excludeIds={localTrade.secondaryPrice ? [localTrade.secondaryPrice.id] : []} />
+                  <PriceSelector type={type === TRADE_TYPE.MANAGE_OFFER ? MARKET_TYPE.OFFER : MARKET_TYPE.WISH} prices={prices} price={localTrade.mainPrice} setPrice={(mainPrice) => setLocalTrade({ ...localTrade, mainPrice })} buttonText="Select price #1" excludeIds={localTrade.secondaryPrice ? [localTrade.secondaryPrice.id] : []} />
                   {localTrade.mainPrice?.withAmount &&
                     <div className="flex justify-between items-center m-2 w-60">
                       <div className="flex flex-col justify-start">
@@ -83,7 +84,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                         </div>
                       </>
                     }
-                    <PriceSelector prices={prices} price={localTrade.secondaryPrice} setPrice={(secondaryPrice) => setLocalTrade({ ...localTrade, secondaryPrice })} buttonText="Select price #2" excludeIds={[localTrade.mainPrice.id]} />
+                    <PriceSelector type={type === TRADE_TYPE.MANAGE_OFFER ? MARKET_TYPE.OFFER : MARKET_TYPE.WISH} prices={prices} price={localTrade.secondaryPrice} setPrice={(secondaryPrice) => setLocalTrade({ ...localTrade, secondaryPrice })} buttonText="Select price #2" excludeIds={[localTrade.mainPrice.id]} />
                     {localTrade.secondaryPrice?.withAmount &&
                       <div className="flex justify-between items-center m-2 w-60">
                         <div className="flex flex-col justify-start">
