@@ -6,10 +6,9 @@ interface Props {
   setDialogOpen: (dialogOpen: boolean) => void;
   closeOnOutsideClick: boolean;
   transition?: boolean;
-  opacity?: number;
 };
 
-const WTDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, closeOnOutsideClick, transition = true, opacity = 30, children }) => {
+const WTDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, closeOnOutsideClick, transition = true, children }) => {
 
   const closeModal = () => {
     setDialogOpen(false);
@@ -28,7 +27,7 @@ const WTDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, closeOn
           }}
           open={true}
         >
-          <Dialog.Overlay className={`fixed inset-0 bg-black opacity-${opacity}`} />
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
           <div className="flex justify-center items-center min-h-screen px-4 text-center">
             {transition &&
               <Transition.Child
