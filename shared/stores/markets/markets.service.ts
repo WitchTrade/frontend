@@ -201,13 +201,13 @@ export class MarketsService {
       );
   }
 
-  public syncOffers(data: any, user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/offer/`,
+  public syncOffers(data: any) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers/`,
       {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${userQuery.getValue().token}`
         },
         body: JSON.stringify(data)
       }).pipe(
@@ -216,7 +216,7 @@ export class MarketsService {
             if (res.ok) {
               const json = await res.json();
               const notification = createNotification({
-                content: `${json.newOffers} offer${json.newOffers === 1 ? '' : 's'} created and ${json.updatedOffers} updated`,
+                content: `${json.newOffers} offer${json.newOffers === 1 ? '' : 's'} created, ${json.updatedOffers} updated and ${json.deletedOffers} deleted`,
                 duration: 5000,
                 type: 'success'
               });

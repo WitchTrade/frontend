@@ -100,7 +100,7 @@ const Sync: NextPage = () => {
                   <p className="text-sm mt-1">This feature synchronises the offers in your market with the items in your Steam inventory.</p>
                   <p className="text-sm mt-1"><span className="font-bold text-wt-accent-light">Mode:</span> Choose if you only want to create new offers, update already existing ones or both</p>
                   <p className="text-sm"><span className="font-bold text-wt-accent-light">Rarity:</span> Choose which rarities of items you want to sync</p>
-                  <p className="text-sm"><span className="font-bold text-wt-accent-light">Default price:</span> Default price for every new offer. (Existing offers won&aposl;t be affected)</p>
+                  <p className="text-sm"><span className="font-bold text-wt-accent-light">Default price:</span> Default price for every new offer. (Existing offers won&apos;t be affected)</p>
                   <p className="text-sm mb-2"><span className="font-bold text-wt-accent-light">Amount to keep:</span> Amount of each item that you want to keep in your inventory</p>
 
                   <div className="flex flex-wrap justify-center">
@@ -110,20 +110,22 @@ const Sync: NextPage = () => {
                     </div>
                     <div className="mb-5 mr-1" style={{ width: '180px' }}>
                       <p className="mb-1">Rarity</p>
-                      <MultiDropdown selectedValues={localSyncSettings.ms_rarity} updateValue={(newRarity) => updateSyncSettingsRarity(newRarity)} values={itemRarityValues} />
+                      <MultiDropdown selectedValues={localSyncSettings.ms_rarity} updateValue={(newRarity) => updateSyncSettingsRarity(localSyncSettings, setLocalSyncSettings, newRarity)} values={itemRarityValues} />
                     </div>
                   </div>
                   <div className="flex justify-between my-2">
                     <div className="flex flex-col justify-start">
                       <p>Default price</p>
-                      <p>(Only for new offers,</p>
-                      <p>will be ingredients of the matching rarity)</p>
+                      <p className="text-sm italic">(Only for new offers,</p>
+                      <p className="text-sm italic">will be ingredients of the matching rarity)</p>
                     </div>
                     <NumberInput value={localSyncSettings.ms_defaultPriceItem} setValue={(ms_defaultPriceItem) => setLocalSyncSettings({ ...localSyncSettings, ms_defaultPriceItem })} min={0} max={99} />
                   </div>
                   <div className="flex justify-between my-2">
                     <div className="flex flex-col justify-start">
                       <p>Default price for recipes</p>
+                      <p className="text-sm italic">(Only for new offers,</p>
+                      <p className="text-sm italic">will be ingredients of the matching rarity)</p>
                     </div>
                     <NumberInput value={localSyncSettings.ms_defaultPriceRecipe} setValue={(ms_defaultPriceRecipe) => setLocalSyncSettings({ ...localSyncSettings, ms_defaultPriceRecipe })} min={0} max={99} />
                   </div>

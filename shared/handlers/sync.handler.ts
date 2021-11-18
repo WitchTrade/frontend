@@ -6,13 +6,13 @@ import { InventoryChangeDTO } from '../stores/inventory/inventory.model';
 import { inventoryService } from '../stores/inventory/inventory.service';
 import { userService } from '../stores/user/user.service';
 
-const modeValues: DropdownValue[] = [
+export const modeValues: DropdownValue[] = [
   { key: 'both', displayName: 'Both' },
   { key: 'new', displayName: 'Only new' },
   { key: 'existing', displayName: 'Only existing' }
 ];
 
-const itemRarityValues: DropdownValue[] = [
+export const itemRarityValues: DropdownValue[] = [
   { key: 'common', displayName: 'Common', imagePath: '/assets/svgs/rarity_circles/common.svg' },
   { key: 'uncommon', displayName: 'Uncommon', imagePath: '/assets/svgs/rarity_circles/uncommon.svg' },
   { key: 'rare', displayName: 'Rare', imagePath: '/assets/svgs/rarity_circles/rare.svg' },
@@ -27,6 +27,59 @@ enum RARITY {
   UNCOMMON = 'uncommon',
   COMMON = 'common'
 }
+
+export const getRarityStrings = (rarityNumber: number): string[] => {
+  const rarityLength = Object.keys(RARITY).length;
+  const filler = new Array(rarityLength + 1).join('0');
+  const negativeRarityLength = -Math.abs(rarityLength);
+
+  const binaryRarityString = (filler + rarityNumber.toString(2)).slice(negativeRarityLength);
+
+  const rarities: any[] = [];
+
+  for (const rarityEntry in RARITY) {
+    if (binaryRarityString[Object.keys(RARITY).indexOf(rarityEntry)] === '1') {
+      rarities.push(RARITY[rarityEntry]);
+    }
+  }
+
+  return rarities;
+};
+
+export const updateSyncSettingsRarity = (localSyncSettings: any, setLocalSyncSettings: any, rarity: DropdownValue) => {
+  if (localSyncSettings.ms_rarity.some(r => r.key === rarity.key)) {
+    if (localSyncSettings.ms_rarity.length === 1) {
+      return;
+    }
+    const newRarities = [...localSyncSettings.ms_rarity];
+    const index = newRarities.indexOf(rarity);
+    newRarities[index] = newRarities[newRarities.length - 1];
+    newRarities.pop();
+    newRarities.sort(function (a, b) {
+      return Object.keys(RARITY).indexOf(b.key.toUpperCase()) - Object.keys(RARITY).indexOf(a.key.toUpperCase());
+    });
+    setLocalSyncSettings({ ...localSyncSettings, ms_rarity: newRarities });
+  } else {
+    const newRarities = [...localSyncSettings.ms_rarity];
+    newRarities.push(rarity);
+    newRarities.sort(function (a, b) {
+      return Object.keys(RARITY).indexOf(b.key.toUpperCase()) - Object.keys(RARITY).indexOf(a.key.toUpperCase());
+    });
+    setLocalSyncSettings({ ...localSyncSettings, ms_rarity: newRarities });
+  }
+};
+
+export const getRarityNumber = (rarityStrings: string[]): number => {
+  const rarityLength = Object.keys(RARITY).length;
+  let filler = new Array(rarityLength + 1).join('0');
+  const fillerArray = [...filler];
+  for (const rarity of rarityStrings) {
+    const index = Object.keys(RARITY).indexOf(rarity.toUpperCase());
+    fillerArray[index] = '1';
+  }
+
+  return parseInt(fillerArray.join(''), 2);
+};
 
 const useSyncSettingsHandler = () => {
   const { user } = useUserProvider();
@@ -114,59 +167,6 @@ const useSyncSettingsHandler = () => {
         setUnsavedSettings(false);
       }
     });
-  };
-
-  const updateSyncSettingsRarity = (rarity: DropdownValue) => {
-    if (localSyncSettings.ms_rarity.some(r => r.key === rarity.key)) {
-      if (localSyncSettings.ms_rarity.length === 1) {
-        return;
-      }
-      const newRarities = [...localSyncSettings.ms_rarity];
-      const index = newRarities.indexOf(rarity);
-      newRarities[index] = newRarities[newRarities.length - 1];
-      newRarities.pop();
-      newRarities.sort(function (a, b) {
-        return Object.keys(RARITY).indexOf(b.key.toUpperCase()) - Object.keys(RARITY).indexOf(a.key.toUpperCase());
-      });
-      setLocalSyncSettings({ ...localSyncSettings, ms_rarity: newRarities });
-    } else {
-      const newRarities = [...localSyncSettings.ms_rarity];
-      newRarities.push(rarity);
-      newRarities.sort(function (a, b) {
-        return Object.keys(RARITY).indexOf(b.key.toUpperCase()) - Object.keys(RARITY).indexOf(a.key.toUpperCase());
-      });
-      setLocalSyncSettings({ ...localSyncSettings, ms_rarity: newRarities });
-    }
-  };
-
-  const getRarityStrings = (rarityNumber: number): string[] => {
-    const rarityLength = Object.keys(RARITY).length;
-    const filler = new Array(rarityLength + 1).join('0');
-    const negativeRarityLength = -Math.abs(rarityLength);
-
-    const binaryRarityString = (filler + rarityNumber.toString(2)).slice(negativeRarityLength);
-
-    const rarities: any[] = [];
-
-    for (const rarityEntry in RARITY) {
-      if (binaryRarityString[Object.keys(RARITY).indexOf(rarityEntry)] === '1') {
-        rarities.push(RARITY[rarityEntry]);
-      }
-    }
-
-    return rarities;
-  };
-
-  const getRarityNumber = (rarityStrings: string[]): number => {
-    const rarityLength = Object.keys(RARITY).length;
-    let filler = new Array(rarityLength + 1).join('0');
-    const fillerArray = [...filler];
-    for (const rarity of rarityStrings) {
-      const index = Object.keys(RARITY).indexOf(rarity.toUpperCase());
-      fillerArray[index] = '1';
-    }
-
-    return parseInt(fillerArray.join(''), 2);
   };
 
   return {

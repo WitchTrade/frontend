@@ -15,6 +15,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import TradeView from '../../../components/market/TradeView';
 import CreateNewTrade from '../../../components/market/CreateNewTrade';
 import WTDialog from '../../../components/styles/WTDialog';
+import SyncOffersDialog from '../../../components/market/SyncOffersDialog';
 
 const Market: NextPage = () => {
   const {
@@ -27,7 +28,10 @@ const Market: NextPage = () => {
     creatingNew,
     setCreatingNew,
     addNewTrade,
-    deleteAllTrades
+    deleteAllTrades,
+    localSyncSettings,
+    setLocalSyncSettings,
+    syncOffers
   } = MarketHandler(MARKET_TYPE.OFFER);
 
   const {
@@ -115,10 +119,7 @@ const Market: NextPage = () => {
               </ActionButton>
             </div>
             <div className="m-1">
-              <ActionButton type="accent" onClick={() => { }}>
-                <Image src="/assets/svgs/sync.svg" height="24px" width="24px" alt="Sync Steam Friends" />
-                Sync offers
-              </ActionButton>
+              <SyncOffersDialog localSyncSettings={localSyncSettings} setLocalSyncSettings={setLocalSyncSettings} syncOffers={syncOffers} />
             </div>
             {market.offers.length > 3 &&
               <div className="m-1">
