@@ -57,7 +57,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                 <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${localTrade.mainPrice ? 'rounded-lg bg-wt-surface' : ''}`}>
                   {localTrade.mainPrice &&
                     <div className="h-14 w-14 mb-2">
-                      <Image className="rounded-lg" src={`/assets/images/prices/${localTrade.mainPrice.priceKey}.png`} height={56} width={56} alt={localTrade.mainPrice.displayName} />
+                      <Image className="rounded-lg" src={`/assets/images/prices/${localTrade.mainPrice.priceKey}.png`} height={56} width={56} quality={100} alt={localTrade.mainPrice.displayName} />
                     </div>
                   }
                   <PriceSelector type={type === TRADE_TYPE.MANAGE_OFFER ? MARKET_TYPE.OFFER : MARKET_TYPE.WISH} prices={prices} price={localTrade.mainPrice} setPrice={(mainPrice) => setLocalTrade({ ...localTrade, mainPrice })} buttonText="Select price #1" excludeIds={localTrade.secondaryPrice ? [localTrade.secondaryPrice.id] : []} />
@@ -75,7 +75,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                     {localTrade.secondaryPrice &&
                       <>
                         <div className="h-14 w-14 mb-2">
-                          <Image className="rounded-lg" src={`/assets/images/prices/${localTrade.secondaryPrice.priceKey}.png`} height={56} width={56} alt={localTrade.secondaryPrice.displayName} />
+                          <Image className="rounded-lg" src={`/assets/images/prices/${localTrade.secondaryPrice.priceKey}.png`} height={56} width={56} quality={100} alt={localTrade.secondaryPrice.displayName} />
                         </div>
                         <div className="mt-1 mb-2">
                           <ActionButton type="cancel" onClick={() => setLocalTrade({ ...localTrade, secondaryPrice: null })}>

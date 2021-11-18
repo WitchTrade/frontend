@@ -105,7 +105,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                       <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${trade.mainPrice ? 'rounded-lg bg-wt-surface' : ''}`}>
                         {trade.mainPrice &&
                           <div className="h-14 w-14 mb-2">
-                            <Image className="rounded-lg" src={`/assets/images/prices/${trade.mainPrice.priceKey}.png`} height={56} width={56} alt={trade.mainPrice.displayName} />
+                            <Image className="rounded-lg" src={`/assets/images/prices/${trade.mainPrice.priceKey}.png`} height={56} width={56} quality={100} alt={trade.mainPrice.displayName} />
                           </div>
                         }
                         <PriceSelector type={type} prices={prices} price={trade.mainPrice} setPrice={(mainPrice) => setTrade({ ...trade, mainPrice })} buttonText="Select price #1" excludeIds={trade.secondaryPrice ? [trade.secondaryPrice.id] : []} />
@@ -123,7 +123,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                           {trade.secondaryPrice &&
                             <>
                               <div className="h-14 w-14 mb-2">
-                                <Image className="rounded-lg" src={`/assets/images/prices/${trade.secondaryPrice.priceKey}.png`} height={56} width={56} alt={trade.secondaryPrice.displayName} />
+                                <Image className="rounded-lg" src={`/assets/images/prices/${trade.secondaryPrice.priceKey}.png`} height={56} width={56} quality={100} alt={trade.secondaryPrice.displayName} />
                               </div>
                               <div className="mt-1 mb-2">
                                 <ActionButton type="cancel" onClick={() => setTrade({ ...trade, secondaryPrice: null })}>
