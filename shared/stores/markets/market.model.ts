@@ -17,6 +17,18 @@ export interface Offer {
   quantity: number;
 }
 
+export function createOffer(params: Partial<Offer>) {
+  return {
+    id: params.id ? params.id : null,
+    item: params.item ? params.item : {},
+    mainPrice: params.mainPrice ? params.mainPrice : null,
+    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : null,
+    secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
+    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : null,
+    quantity: params.quantity ? params.quantity : null,
+  } as Offer;
+}
+
 export interface Wish {
   id: number;
   item: { id: number; };
@@ -24,6 +36,17 @@ export interface Wish {
   mainPriceAmount?: number;
   secondaryPrice?: Price;
   secondaryPriceAmount?: number;
+}
+
+export function createWish(params: Partial<Wish>) {
+  return {
+    id: params.id ? params.id : null,
+    item: params.item ? params.item : {},
+    mainPrice: params.mainPrice ? params.mainPrice : null,
+    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : null,
+    secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
+    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : null
+  } as Wish;
 }
 
 export interface Price {

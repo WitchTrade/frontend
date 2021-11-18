@@ -12,6 +12,7 @@ import SmallItemView from './SmallItemView';
 import NumberInput from '../styles/NumberInput';
 import PriceSelector from './PriceSelector';
 import Loading from '../styles/Loading';
+import usePricesProvider from '../../shared/providers/prices.provider';
 
 interface Props {
   dialogOpen: boolean;
@@ -22,6 +23,8 @@ interface Props {
 };
 
 const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, type, addNewTrade, existingTrades }) => {
+
+  const { prices } = usePricesProvider();
 
   const {
     inventory,
@@ -38,8 +41,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
     setProgress,
     trade,
     setTrade,
-    createTrade,
-    prices
+    createTrade
   } = CreateNewTradeHandler(type, addNewTrade);
 
   const [loading, setLoading] = useState(false);

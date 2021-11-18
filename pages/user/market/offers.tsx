@@ -32,7 +32,8 @@ const Market: NextPage = () => {
     localSyncSettings,
     setLocalSyncSettings,
     syncOffers,
-    deleteTrade
+    deleteTrade,
+    updateTrade
   } = MarketHandler(MARKET_TYPE.OFFER);
 
   const {
@@ -156,7 +157,7 @@ const Market: NextPage = () => {
             loader={<p></p>}
           >
             {loadedItems.map((item) => (
-              <TradeView key={item.id} type={TRADE_TYPE.MANAGE_OFFER} trade={item} inventory={inventory} deleteTrade={deleteTrade} />
+              <TradeView key={item.id} type={TRADE_TYPE.MANAGE_OFFER} trade={item} inventory={inventory} deleteTrade={deleteTrade} updateTrade={updateTrade} />
             ))}
           </InfiniteScroll>
         </>

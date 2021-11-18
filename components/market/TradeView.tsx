@@ -7,17 +7,11 @@ import { createItem, Item } from '../../shared/stores/items/item.model';
 import Tooltip from '../styles/Tooltip';
 import ActionButton from '../styles/ActionButton';
 import Loading from '../styles/Loading';
+import EditTradeDialog from './EditTradeDialog';
 
 interface TradeWish extends Wish {
   quantity: number;
 }
-
-interface Props {
-  type: TRADE_TYPE;
-  trade: Offer | TradeWish;
-  inventory: Inventory;
-  deleteTrade: (trade: Offer | Wish) => void;
-};
 
 export enum TRADE_TYPE {
   MANAGE_OFFER,
@@ -26,7 +20,15 @@ export enum TRADE_TYPE {
   PROFILE_WISH
 }
 
-const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, deleteTrade }) => {
+interface Props {
+  type: TRADE_TYPE;
+  trade: Offer | TradeWish;
+  inventory: Inventory;
+  deleteTrade?: (trade: Offer | Wish) => void;
+  updateTrade?: (trade: any, finished: () => void) => void;
+};
+
+const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, deleteTrade, updateTrade }) => {
   const [item, setItem] = useState<Item>(createItem({}));
 
   const [loading, setLoading] = useState(false);
@@ -58,7 +60,7 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, deleteTra
           <Image className="rounded-t-lg" src={item.iconUrl} height={160} width={160} alt={item.name} />
           <p className="text-sm p-1 break-words font-semibold">{item.name}</p>
           <div>
-            {type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.PROFILE_OFFER &&
+            {(type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.PROFILE_OFFER) &&
               <div className="flex justify-between mx-4">
                 <p className="text-sm p-1 break-words">In stock:</p>
                 <p className="text-sm p-1 break-words font-bold">{trade.quantity}</p>
@@ -87,12 +89,10 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, deleteTra
                 }
               </div>
             </div>
-            {type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.MANAGE_WISH &&
+            {(type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.MANAGE_WISH) && updateTrade && deleteTrade &&
               <>
                 <div className="flex justify-between py-1 px-2">
-                  <ActionButton type="warning" onClick={() => { }} small={true}>
-                    <Image src={`/assets/svgs/edit/white.svg`} height="24px" width="24px" alt="Delete Trade" />
-                  </ActionButton>
+                  <EditTradeDialog type={type} selectedTrade={trade} selectedItem={item} updateTrade={updateTrade} />
                   <ActionButton type="cancel" onClick={() => { setLoading(true); deleteTrade(trade); }} small={true} disabled={loading}>
                     <Image src={`/assets/svgs/bin/white.svg`} height="24px" width="24px" alt="Delete Trade" />
                   </ActionButton>

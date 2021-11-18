@@ -28,7 +28,8 @@ const Market: NextPage = () => {
     setCreatingNew,
     addNewTrade,
     deleteAllTrades,
-    deleteTrade
+    deleteTrade,
+    updateTrade
   } = MarketHandler(MARKET_TYPE.WISH);
 
   const {
@@ -148,7 +149,7 @@ const Market: NextPage = () => {
             loader={<p></p>}
           >
             {loadedItems.map((item) => (
-              <TradeView key={item.id} type={TRADE_TYPE.MANAGE_WISH} trade={item} inventory={inventory} deleteTrade={deleteTrade} />
+              <TradeView key={item.id} type={TRADE_TYPE.MANAGE_WISH} trade={item} inventory={inventory} deleteTrade={deleteTrade} updateTrade={updateTrade} />
             ))}
           </InfiniteScroll>
         </>

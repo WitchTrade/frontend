@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Subscription } from 'rxjs';
 import useSyncSettingsProvider from '../providers/syncSettings.provider';
 import useUserProvider from '../providers/user.provider';
-import { createMarket, Market, Offer, Wish } from '../stores/markets/market.model';
+import { createMarket, createOffer, createWish, Market, Offer, Wish } from '../stores/markets/market.model';
 import { marketsService } from '../stores/markets/markets.service';
 import { getRarityNumber, getRarityStrings, itemRarityValues, modeValues } from './sync.handler';
 
@@ -160,6 +160,45 @@ const MarketHandler = (type: MARKET_TYPE) => {
     }
   };
 
+  const updateTrade = (trade: any, finished: () => void) => {
+    const tradeDTO: any = {};
+    tradeDTO.mainPriceId = trade.mainPrice.id;
+    if (trade.mainPrice.withAmount) {
+      tradeDTO.mainPriceAmount = trade.mainPriceAmount ? trade.mainPriceAmount : 0;
+    }
+    if (trade.secondaryPrice) {
+      tradeDTO.secondaryPriceId = trade.secondaryPrice.id;
+      if (trade.secondaryPrice.withAmount) {
+        tradeDTO.secondaryPriceAmount = trade.secondaryPriceAmount ? trade.secondaryPriceAmount : 0;
+      }
+    }
+
+    if (type === MARKET_TYPE.OFFER) {
+      tradeDTO.quantity = trade.quantity;
+      marketsService.updateOffer(trade.id, tradeDTO).subscribe(async (res) => {
+        if (res.ok) {
+          const updatedOffer = createOffer(await res.json());
+          const newOffers = [...market.offers];
+          const updatedIndex = newOffers.findIndex(o => o.id === trade.id);
+          newOffers[updatedIndex] = updatedOffer;
+          setMarket({ ...market, offers: [...newOffers] });
+          finished();
+        }
+      });
+    } else {
+      marketsService.updateWish(trade.id, tradeDTO).subscribe(async (res) => {
+        if (res.ok) {
+          const updatedWish = createWish(await res.json());
+          const newWishes = [...market.wishes];
+          const updatedIndex = newWishes.findIndex(o => o.id === trade.id);
+          newWishes[updatedIndex] = updatedWish;
+          setMarket({ ...market, wishes: newWishes });
+          finished();
+        }
+      });
+    }
+  };
+
   return {
     market,
     editingNote,
@@ -174,7 +213,8 @@ const MarketHandler = (type: MARKET_TYPE) => {
     localSyncSettings,
     setLocalSyncSettings,
     syncOffers,
-    deleteTrade
+    deleteTrade,
+    updateTrade
   };
 };
 

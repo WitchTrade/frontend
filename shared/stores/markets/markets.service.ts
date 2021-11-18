@@ -242,13 +242,13 @@ export class MarketsService {
       );
   }
 
-  public editOffer(id: number, offer: any, user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/offer/${id}`,
+  public updateOffer(id: number, offer: any) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers/${id}`,
       {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${userQuery.getValue().token}`
         },
         body: JSON.stringify(offer)
       }).pipe(
@@ -378,6 +378,47 @@ export class MarketsService {
             if (res.ok) {
               const notification = createNotification({
                 content: 'Wish list item created',
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
+            } else {
+              const notification = createNotification({
+                content: res.statusText,
+                duration: 5000,
+                type: 'error'
+              });
+              notificationService.addNotification(notification);
+            }
+          },
+          error: err => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+            return of(err);
+          }
+        })
+      );
+  }
+
+  public updateWish(id: number, wish: any) {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes/${id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userQuery.getValue().token}`
+        },
+        body: JSON.stringify(wish)
+      }).pipe(
+        tap({
+          next: async res => {
+            if (res.ok) {
+              const notification = createNotification({
+                content: 'Wishlist item edited',
                 duration: 5000,
                 type: 'success'
               });

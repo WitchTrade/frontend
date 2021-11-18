@@ -16,17 +16,6 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
     secondaryPriceAmount: 0
   });
 
-  const [prices, setPrices] = useState<Price[]>([]);
-
-  useEffect(() => {
-    marketsService.fetchPrices().subscribe(async (res) => {
-      if (res.ok) {
-        const prices = await res.json();
-        setPrices(prices);
-      }
-    });
-  }, []);
-
   const createTrade = (finished: () => void) => {
     const tradeDTO: any = {};
     tradeDTO.itemId = trade.selectedItem.id;
@@ -62,8 +51,7 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
     setProgress,
     trade,
     setTrade,
-    createTrade,
-    prices
+    createTrade
   };
 };
 
