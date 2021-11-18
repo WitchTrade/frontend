@@ -49,7 +49,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
   return (
     <>
       {dialogOpen &&
-        <div className="m-2 p-2 text-left align-middle transition-all transform bg-wt-surface rounded-2xl border-2 border-wt-success">
+        <div className="m-2 p-2 text-left align-middle transition-all transform rounded-2xl bg-wt-surface-dark border-2 border-wt-success">
           <div className="flex flex-col h-smallNewTrade sm:h-wideNewTrade overflow-y-auto overflow-x-hidden">
             <p className="text-2xl font-bold leading-6 text-center text-wt-accent">New {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}</p>
             <div className="flex justify-center mt-4 mb-2">
@@ -61,7 +61,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
               <>
                 <p className="text-center">Select an item</p>
                 <div className="flex flex-wrap">
-                  <div className="w-full sm:w-1/2 overflow-auto my-1" style={{ maxHeight: '384px' }}>
+                  <div className="w-full sm:w-1/2 overflow-auto my-1 border border-wt-accent rounded-lg" style={{ maxHeight: '384px' }}>
                     <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} initialOpen={true} type={FILTER_TYPE.NEWTRADE} />
                   </div>
                   <div id="itemScroll" className="w-full sm:w-1/2 overflow-auto" style={{ maxHeight: '384px' }}>
@@ -86,7 +86,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                 <div className="my-1 flex flex-wrap items-center justify-center">
                   <div className="my-1 flex flex-col items-center justify-center">
                     <p>Selected item</p>
-                    <div className="flex w-28 flex-col justify-between rounded-lg bg-wt-surface-dark text-center m-1 shadow-md" style={{ borderColor: `#${trade.selectedItem.rarityColor}`, borderWidth: '6px' }}>
+                    <div className="flex w-28 flex-col justify-between rounded-lg bg-wt-surface text-center m-1 shadow-md" style={{ borderColor: `#${trade.selectedItem.rarityColor}`, borderWidth: '6px' }}>
                       <Image className="rounded-t-lg" src={trade.selectedItem.iconUrl} height={112} width={112} alt={trade.selectedItem.name} />
                       <p className="text-sm p-1 break-words font-semibold">{trade.selectedItem.name}</p>
                     </div>
@@ -102,7 +102,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                       </div>
                     }
                     <div className="flex flex-wrap justify-center">
-                      <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${trade.mainPrice ? 'rounded-lg bg-wt-surface-dark' : ''}`}>
+                      <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${trade.mainPrice ? 'rounded-lg bg-wt-surface' : ''}`}>
                         {trade.mainPrice &&
                           <div className="h-14 w-14 mb-2">
                             <Image className="rounded-lg" src={`/assets/images/prices/${trade.mainPrice.priceKey}.png`} height={56} width={56} alt={trade.mainPrice.displayName} />
@@ -119,7 +119,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                         }
                       </div>
                       {trade.mainPrice &&
-                        <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${trade.secondaryPrice ? 'rounded-lg bg-wt-surface-dark' : ''}`}>
+                        <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${trade.secondaryPrice ? 'rounded-lg bg-wt-surface' : ''}`}>
                           {trade.secondaryPrice &&
                             <>
                               <div className="h-14 w-14 mb-2">
