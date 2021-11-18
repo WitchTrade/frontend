@@ -85,10 +85,12 @@ const MarketHandler = () => {
   }, [syncSettings]);
 
   useEffect(() => {
-    if (type == MARKET_TYPE.OFFER && market.offerlistNote) {
+    if (type === MARKET_TYPE.OFFER && market.offerlistNote) {
       setLocalNote(market.offerlistNote);
-    } else if (market.wishlistNote) {
+    } else if (type === MARKET_TYPE.WISH && market.wishlistNote) {
       setLocalNote(market.wishlistNote);
+    } else {
+      setLocalNote('');
     }
   }, [type]);
 

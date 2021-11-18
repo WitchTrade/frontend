@@ -112,7 +112,7 @@ const Market: NextPage = () => {
               </>
               ||
               <div className="w-full px-3 py-1 text-base placeholder-wt-text rounded-lg bg-wt-surface-dark" style={{ minHeight: '34px' }}>
-                <p className={`whitespace-pre-line break-words ${localNote ? '' : 'italic'}`}>{localNote ? localNote : 'No offerlist note set.'} </p>
+                <p className={`whitespace-pre-line break-words ${localNote ? '' : 'italic'}`}>{localNote ? localNote : `No ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note set.`} </p>
               </div>
             }
           </div>
