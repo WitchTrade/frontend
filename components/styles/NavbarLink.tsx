@@ -10,7 +10,7 @@ interface Props {
   type: string;
 }
 
-const defaultStyle = "px-3 py-2 focus:outline-none ";
+const defaultStyle = "px-3 py-2 focus:outline-none flex items-center ";
 
 const NavbarLink: FunctionComponent<Props> = forwardRef(({ onClick, href, children, type }, ref?: React.LegacyRef<HTMLAnchorElement>) => {
   const types: Types = {

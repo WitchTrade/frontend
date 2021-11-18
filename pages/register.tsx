@@ -71,7 +71,7 @@ const Register: NextPage = () => {
             </label>
           </div>
         </div>
-        <div className="text-center mb-4">
+        <div className="flex justify-center text-center mb-4">
           <NavbarLink type="accent" onClick={register}>Register</NavbarLink>
         </div>
       </form>

@@ -64,8 +64,8 @@ export function createMarket(params: Partial<Market>) {
     lastUpdated: params.lastUpdated ? params.lastUpdated : null,
     offerlistNote: params.offerlistNote ? params.offerlistNote : null,
     wishlistNote: params.wishlistNote ? params.wishlistNote : null,
-    offers: params.offers ? params.offers : [],
-    wishes: params.wishes ? params.wishes : [],
+    offers: params.offers ? params.offers : null,
+    wishes: params.wishes ? params.wishes : null,
   } as Market;
 }
 

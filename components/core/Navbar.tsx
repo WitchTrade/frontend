@@ -211,7 +211,7 @@ const Navbar: FunctionComponent = () => {
                             <Link href={`/profile/${user.username}`} passHref>
                               <NavbarLink type={router.pathname.startsWith(`/profile/${user.username}`) ? 'menuSelected' : 'menu'}>Profile</NavbarLink>
                             </Link>
-                            <Link href="/user/market/offers" passHref>
+                            <Link href="/user/market" passHref>
                               <NavbarLink type={router.pathname.startsWith('/user/market') ? 'menuSelected' : 'menu'}>Manage Market</NavbarLink>
                             </Link>
                             <Link href="/user/settings/customization" passHref>
@@ -296,7 +296,7 @@ const Navbar: FunctionComponent = () => {
                     <Link href={`/profile/${user.username}`} passHref>
                       <NavbarLink type={router.pathname.startsWith(`/profile/${user.username}`) ? 'hamburgerSelected' : 'hamburger'}>Profile</NavbarLink>
                     </Link>
-                    <Link href="/user/market/offers" passHref>
+                    <Link href="/user/market" passHref>
                       <NavbarLink type={router.pathname.startsWith('/user/market') ? 'hamburgerSelected' : 'hamburger'}>Manage Market</NavbarLink>
                     </Link>
                     <Link href="/user/settings/customization" passHref>

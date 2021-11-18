@@ -11,10 +11,11 @@ export enum MARKET_TYPE {
   WISH
 }
 
-const MarketHandler = (type: MARKET_TYPE) => {
+const MarketHandler = () => {
   const { user } = useUserProvider();
   const { syncSettings } = useSyncSettingsProvider();
   const [market, setMarket] = useState<Market>(createMarket({}));
+  const [type, setType] = useState(MARKET_TYPE.OFFER);
 
   const [editingNote, setEditingNote] = useState(false);
   const [localNote, setLocalNote] = useState('');
@@ -82,6 +83,14 @@ const MarketHandler = (type: MARKET_TYPE) => {
       ms_removeNoneOnStock: syncSettings.ms_removeNoneOnStock
     });
   }, [syncSettings]);
+
+  useEffect(() => {
+    if (type == MARKET_TYPE.OFFER && market.offerlistNote) {
+      setLocalNote(market.offerlistNote);
+    } else if (market.wishlistNote) {
+      setLocalNote(market.wishlistNote);
+    }
+  }, [type]);
 
   const updateNote = () => {
     if (type == MARKET_TYPE.OFFER) {
@@ -205,6 +214,8 @@ const MarketHandler = (type: MARKET_TYPE) => {
     setEditingNote,
     localNote,
     setLocalNote,
+    type,
+    setType,
     updateNote,
     creatingNew,
     setCreatingNew,
