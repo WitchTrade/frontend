@@ -42,7 +42,7 @@ const Gameservers: NextPage = () => {
   return (
     <div>
       <WTDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} closeOnOutsideClick={true}>
-        <div className="inline-block max-w-md p-6 my-8 overflow-auto text-left align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4 border-green-400">
+        <div className="inline-block max-w-md p-6 my-8 overflow-auto text-left align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4 border-wt-success">
           <div className="h-full flex flex-col justify-between">
             <div>
               <p className="text-2xl font-medium leading-6">Add player</p>

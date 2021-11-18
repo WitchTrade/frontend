@@ -324,13 +324,13 @@ export class MarketsService {
       );
   }
 
-  public deleteAllOffers(user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/market/offer`,
+  public deleteAllOffers() {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers`,
       {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${userQuery.getValue().token}`
         }
       }).pipe(
         tap({
@@ -419,6 +419,46 @@ export class MarketsService {
             if (res.ok) {
               const notification = createNotification({
                 content: 'Wish list item deleted',
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
+            } else {
+              const notification = createNotification({
+                content: res.statusText,
+                duration: 5000,
+                type: 'error'
+              });
+              notificationService.addNotification(notification);
+            }
+          },
+          error: err => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+            return of(err);
+          }
+        })
+      );
+  }
+
+  public deleteAllWishes() {
+    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userQuery.getValue().token}`
+        }
+      }).pipe(
+        tap({
+          next: async res => {
+            if (res.ok) {
+              const notification = createNotification({
+                content: 'All wishlist items deleted',
                 duration: 5000,
                 type: 'success'
               });

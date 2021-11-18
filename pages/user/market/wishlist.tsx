@@ -13,6 +13,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import FilterHandler, { FILTER_TYPE } from '../../../shared/handlers/filter.handler';
 import TradeView from '../../../components/market/TradeView';
 import CreateNewTrade from '../../../components/market/CreateNewTrade';
+import { useState } from 'react';
+import WTDialog from '../../../components/styles/WTDialog';
 
 const Market: NextPage = () => {
   const {
@@ -24,7 +26,8 @@ const Market: NextPage = () => {
     updateNote,
     creatingNew,
     setCreatingNew,
-    addNewTrade
+    addNewTrade,
+    deleteAllTrades
   } = MarketHandler(MARKET_TYPE.WISH);
 
   const {
@@ -38,8 +41,31 @@ const Market: NextPage = () => {
     setItemFilterValues,
   } = FilterHandler(FILTER_TYPE.MARKET, 50, market.wishes);
 
+  const [deleteAllDialogOpen, setDeleteAllDialogOpen] = useState(false);
+
   return (
     <LoginWrapper>
+      <WTDialog dialogOpen={deleteAllDialogOpen} setDialogOpen={setDeleteAllDialogOpen} closeOnOutsideClick={true}>
+        <div className="inline-block max-w-md p-6 my-8 overflow-auto text-left align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4 border-wt-error">
+          <div className="h-full flex flex-col justify-between">
+            <div>
+              <p className="text-2xl font-medium leading-6">Delete all wishlist items</p>
+              <p className="text-sm my-2">Are you sure that you want to delete ALL your wishlist items?<br />This can't be undone.</p>
+            </div>
+            <div className="mt-4 flex justify-evenly pb-2">
+              <ActionButton type="neutral-enabled" onClick={() => setDeleteAllDialogOpen(false)}>
+                Cancel
+              </ActionButton>
+              <ActionButton type="cancel" onClick={() => {
+                setDeleteAllDialogOpen(false);
+                deleteAllTrades();
+              }}>
+                Yes, delete them
+              </ActionButton>
+            </div>
+          </div>
+        </div>
+      </WTDialog>
       <CustomHeader
         title="WitchTrade | Manage Market"
         description="Manage your WitchTrade market"
@@ -88,16 +114,18 @@ const Market: NextPage = () => {
                 Add item
               </ActionButton>
             </div>
-            <div className="m-1">
-              <ActionButton type="cancel" onClick={() => { }}>
-                <Image src="/assets/svgs/bin/white.svg" height="24px" width="24px" alt="Remove all" />
-                Delete all
-              </ActionButton>
-            </div>
+            {market.wishes.length > 3 &&
+              <div className="m-1">
+                <ActionButton type="cancel" onClick={() => setDeleteAllDialogOpen(true)}>
+                  <Image src="/assets/svgs/bin/white.svg" height="24px" width="24px" alt="Remove all" />
+                  Delete all
+                </ActionButton>
+              </div>
+            }
           </div>
 
           <div className="flex flex-col justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <CreateNewTrade type={MARKET_TYPE.WISH} dialogOpen={creatingNew} setDialogOpen={setCreatingNew} addNewTrade={addNewTrade} existingTrades={market.offers} />
+            <CreateNewTrade type={MARKET_TYPE.WISH} dialogOpen={creatingNew} setDialogOpen={setCreatingNew} addNewTrade={addNewTrade} existingTrades={market.wishes} />
           </div>
           <div className="w-full">
             <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} initialOpen={false} type={FILTER_TYPE.MARKET} />

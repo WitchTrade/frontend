@@ -70,6 +70,18 @@ const MarketHandler = (type: MARKET_TYPE) => {
     }
   };
 
+  const deleteAllTrades = () => {
+    if (type === MARKET_TYPE.OFFER) {
+      marketsService.deleteAllOffers().subscribe(() => {
+        setMarket({ ...market, offers: [] });
+      });
+    } else {
+      marketsService.deleteAllWishes().subscribe(() => {
+        setMarket({ ...market, wishes: [] });
+      });
+    }
+  };
+
   return {
     market,
     editingNote,
@@ -79,7 +91,8 @@ const MarketHandler = (type: MARKET_TYPE) => {
     updateNote,
     creatingNew,
     setCreatingNew,
-    addNewTrade
+    addNewTrade,
+    deleteAllTrades
   };
 };
 
