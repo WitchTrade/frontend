@@ -7,6 +7,7 @@ import MultiDropdown from '../styles/MultiDropdown';
 import NumberInput from '../styles/NumberInput';
 import CheckboxInput from '../styles/CheckboxInput';
 import { itemRarityValues, modeValues, updateSyncSettingsRarity } from '../../shared/handlers/sync.handler';
+import Loading from '../styles/Loading';
 
 interface Props {
   localSyncSettings: any;
@@ -18,7 +19,10 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const finished = () => {
+    setLoading(false);
     setDialogOpen(false);
   };
 
@@ -75,14 +79,21 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
               <CheckboxInput placeholder="Delete offers that have 0 items on stock" value={localSyncSettings.ms_removeNoneOnStock} setValue={() => setLocalSyncSettings({ ...localSyncSettings, ms_removeNoneOnStock: !localSyncSettings.ms_removeNoneOnStock })} />
             </div>
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="neutral-enabled" onClick={() => setDialogOpen(false)}>
-                Cancel
-              </ActionButton>
-              <ActionButton type="accent" onClick={() => {
-                syncOffers(finished);
-              }}>
-                Sync
-              </ActionButton>
+              {!loading &&
+                <>
+                  <ActionButton type="neutral-enabled" onClick={() => setDialogOpen(false)}>
+                    Cancel
+                  </ActionButton>
+                  <ActionButton type="accent" onClick={() => {
+                    setLoading(true);
+                    syncOffers(finished);
+                  }}>
+                    Sync
+                  </ActionButton>
+                </>
+                ||
+                <Loading />
+              }
             </div>
           </div>
         </div>
