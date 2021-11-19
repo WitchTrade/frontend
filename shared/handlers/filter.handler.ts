@@ -224,6 +224,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       itemRarity: itemFilterValues.itemRarity.key !== itemRarityValues[0].key ? itemFilterValues.itemRarity.key : undefined,
       inventory: itemFilterValues.inventory.key !== inventoryValues[0].key ? itemFilterValues.inventory.key : undefined,
       duplicatesOnly: itemFilterValues.duplicatesOnly !== false ? itemFilterValues.duplicatesOnly : undefined,
+      username: router.query.username ? router.query.username as string : undefined
     };
 
     Object.keys(query).forEach(key => query[key] === undefined ? delete query[key] : {});
