@@ -3,9 +3,11 @@ import Image from 'next/image';
 import useThemeProvider from '../../shared/providers/theme.provider';
 import KofiButton from '../styles/KofiButton';
 import Tooltip from '../styles/Tooltip';
+import useWTStatsProvider from '../../shared/providers/wtStats.provider';
 
 const Footer: FunctionComponent = () => {
   const { theme } = useThemeProvider();
+  const { wtStats } = useWTStatsProvider();
 
   return (
     <div className="bg-wt-surface-dark text-wt-text py-4">
@@ -20,7 +22,8 @@ const Footer: FunctionComponent = () => {
           </a>
         </div>
         <p className="text-sm">Version <b>1.0.0</b> • xx.xx.xxxx</p>
-        <div className="flex justify-center my-1">
+        <p className="text-sm"><span className="font-bold text-wt-accent">{wtStats.users}</span> registered users | <span className="font-bold text-wt-accent">{wtStats.offers}</span> offers</p>
+        <div className="flex justify-center mt-2 mb-1">
           <p className="text-sm">Made with </p>
           <Image src="/assets/svgs/heart.svg" height={20} width={24} alt="Heart" />
           <p className="text-sm"> by GiyoMoon</p>
