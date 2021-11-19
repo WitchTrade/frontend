@@ -17,6 +17,7 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
   });
 
   useEffect(() => {
+    setProgress(0);
     setTrade({
       selectedItem: null,
       quantity: 0,

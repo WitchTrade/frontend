@@ -128,7 +128,7 @@ const Market: NextPage = () => {
                 <SyncOffersDialog localSyncSettings={localSyncSettings} setLocalSyncSettings={setLocalSyncSettings} syncOffers={syncOffers} />
               </div>
             }
-            {market.offers.length > 3 &&
+            {(type === MARKET_TYPE.OFFER && market.offers.length > 3 || type === MARKET_TYPE.WISH && market.wishes.length > 3) &&
               <div className="m-1">
                 <ActionButton type="cancel" onClick={() => setDeleteAllDialogOpen(true)}>
                   <Image src="/assets/svgs/bin/white.svg" height="24px" width="24px" alt="Remove all" />
