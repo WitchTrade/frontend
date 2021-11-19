@@ -43,9 +43,6 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
             </div>
             <TextInput type="text" placeholder="Ban reason" required={false} value={banReason} setValue={setBanReason} />
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="cancel" onClick={() => setDialogOpen(false)}>
-                Cancel
-              </ActionButton>
               <ActionButton type="proceed" onClick={() => {
                 if (banReason) {
                   ban(adminUser, banReason);
@@ -54,6 +51,9 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
                 }
               }}>
                 Ban user
+              </ActionButton>
+              <ActionButton type="cancel" onClick={() => setDialogOpen(false)}>
+                Cancel
               </ActionButton>
             </div>
           </div>

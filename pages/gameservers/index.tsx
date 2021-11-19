@@ -50,9 +50,6 @@ const Gameservers: NextPage = () => {
             </div>
             <TextInput type="text" placeholder="Player name" required={false} value={dialogName} setValue={setDialogName} />
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="cancel" onClick={() => setDialogOpen(false)}>
-                Cancel
-              </ActionButton>
               <ActionButton type="proceed" onClick={() => {
                 if (dialogName) {
                   addPlayer(dialogName);
@@ -60,6 +57,9 @@ const Gameservers: NextPage = () => {
                 }
               }}>
                 Add player
+              </ActionButton>
+              <ActionButton type="cancel" onClick={() => setDialogOpen(false)}>
+                Cancel
               </ActionButton>
             </div>
           </div>

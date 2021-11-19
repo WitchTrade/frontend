@@ -134,10 +134,10 @@ const Account: NextPage = () => {
           </div>
           <div className="flex justify-center text-center mt-2">
             <div className="mx-1">
-              <ActionButton type="cancel" onClick={cancelEditAccountSettings}>Cancel</ActionButton>
+              <ActionButton type="proceed" onClick={updateAccountSettings}>Save</ActionButton>
             </div>
             <div className="mx-1">
-              <ActionButton type="proceed" onClick={updateAccountSettings}>Save</ActionButton>
+              <ActionButton type="cancel" onClick={cancelEditAccountSettings}>Cancel</ActionButton>
             </div>
           </div>
         </div>
