@@ -106,7 +106,7 @@ const Market: NextPage = () => {
             </div>
             {editingNote &&
               <>
-                <Textarea placeholder="Enter your wishlist note" value={localNote} setValue={setLocalNote} rows={6} />
+                <Textarea placeholder={`Enter your ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note`} value={localNote} setValue={setLocalNote} rows={6} />
                 <p className={`text-sm ${localNote.length > 200 ? 'text-wt-error' : ''}`}>{localNote.length}/200 characters</p>
                 <p className={`text-sm ${(localNote.match(/\n/g) || []).length + 1 > 10 ? 'text-wt-error' : ''}`}>{(localNote.match(/\n/g) || []).length + 1}/10 lines</p>
               </>
