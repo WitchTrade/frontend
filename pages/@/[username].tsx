@@ -1,6 +1,7 @@
 import { NextPage, NextPageContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import dayjs from 'dayjs';
 import { useRouter } from 'next/dist/client/router';
 import { firstValueFrom } from 'rxjs';
 import CustomHeader from '../../components/core/CustomHeader';
@@ -28,6 +29,8 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
 
   const { theme } = useThemeProvider();
 
+  const oneMonthAgo = new Date().setDate(new Date().getDate() - 30);
+
   const {
     copyDiscordTag,
     type,
@@ -44,6 +47,14 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
     itemFilterValues,
     setItemFilterValues
   } = FilterHandler(FILTER_TYPE.MARKET, 50, type === MARKET_TYPE.OFFER ? market.offers : market.wishes);
+
+  const getLastUpdated = () => {
+    // don't execute this before the app service has loaded
+    if (typeof dayjs().to !== 'function') {
+      return '';
+    }
+    return dayjs().to(dayjs(market.lastUpdated));
+  };
 
   return (
     <>
@@ -130,8 +141,27 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                 </div>
               }
             </div>
+            {profile.hidden &&
+              <div className="rounded-lg bg-wt-error mt-2 p-1">
+                <p className="text-2xl font-bold text-center">Hidden profile</p>
+                <p className="text-xl text-center">{profile.displayName} has hidden their profile and is probably not trading at the moment.</p>
+              </div>
+            }
+            {new Date(market.lastUpdated).getTime() < oneMonthAgo &&
+              <div className="rounded-lg bg-wt-warning mt-2 p-1">
+                <p className="text-2xl font-bold text-center">Outdated offers</p>
+                <p className="text-xl text-center">{profile.displayName} has not updated their market for over 30 days.</p>
+              </div>
+            }
+            <p className="text-center mt-4 mb-1">Market updated: <span className="text-wt-accent">{getLastUpdated()}</span></p>
+            <MarketNav market={market} type={type} setType={setType} />
+            {((type === MARKET_TYPE.OFFER && market.offerlistNote) || (type === MARKET_TYPE.WISH && market.wishlistNote)) &&
+              <div className="rounded-lg bg-wt-surface-dark mt-2 border-2 border-wt-accent p-1">
+                <p className="text-2xl font-bold text-center">{type === MARKET_TYPE.OFFER ? 'Offerlist note' : 'Wishlist note'}</p>
+                <p className="text-center whitespace-pre-line break-words">{type === MARKET_TYPE.OFFER ? market.offerlistNote : market.wishlistNote}</p>
+              </div>
+            }
           </div>
-          <MarketNav market={market} type={type} setType={setType} />
           <div className="w-full my-2">
             <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} initialOpen={false} type={FILTER_TYPE.MARKET} />
           </div>

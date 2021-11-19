@@ -80,7 +80,9 @@ const Market: NextPage = () => {
         description="Manage your WitchTrade market"
         url="https://witchtrade.org/user/market"
       />
-      <MarketNav market={market} type={type} setType={setType} />
+      <div className="pt-3">
+        <MarketNav market={market} type={type} setType={setType} />
+      </div>
       <PageHeader title="Manage Market" description={type === MARKET_TYPE.OFFER ? 'Offers' : 'Wishlist'} />
       {market.id &&
         <>

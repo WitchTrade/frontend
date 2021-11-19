@@ -11,7 +11,7 @@ interface Props {
 
 const MarketNav: FunctionComponent<Props> = ({ market, type, setType }) => {
   return (
-    <div className="flex justify-center pt-3">
+    <div className="flex justify-center">
       <div className="mx-1">
         <NavbarLink type={type === MARKET_TYPE.OFFER ? 'navSelected' : 'nav'} onClick={() => setType(MARKET_TYPE.OFFER)}>
           Offers
