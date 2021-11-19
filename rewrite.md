@@ -13,12 +13,12 @@ Visit https://preview.witchtrade.org/ where the current state is deployed. You c
 - [x] /gameservers
 - [x] /items
 - [x] /admin
+- [x] offers and offer lists
+- [x] wishes and wish lists
+- [x] /user/market
+- [ ] /@/{username}
 - [ ] /profiles
-- [ ] offers and offer lists
-- [ ] wishes and wish lists
 - [ ] /search
-- [ ] /profile/{username}
-- [ ] /user/market
 - [ ] /privacy
 - [ ] /legal
 - [ ] /home

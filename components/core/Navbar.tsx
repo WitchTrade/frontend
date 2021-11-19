@@ -208,8 +208,8 @@ const Navbar: FunctionComponent = () => {
                           <div
                             className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-wt-light ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
                           >
-                            <Link href={`/profile/${user.username}`} passHref>
-                              <NavbarLink type={router.pathname.startsWith(`/profile/${user.username}`) ? 'menuSelected' : 'menu'}>Profile</NavbarLink>
+                            <Link href={`/@/${user.username}`} passHref>
+                              <NavbarLink type={router.pathname.startsWith(`/@/`) && router.query.username === user.username ? 'menuSelected' : 'menu'}>Profile</NavbarLink>
                             </Link>
                             <Link href="/user/market" passHref>
                               <NavbarLink type={router.pathname.startsWith('/user/market') ? 'menuSelected' : 'menu'}>Manage Market</NavbarLink>
@@ -293,8 +293,8 @@ const Navbar: FunctionComponent = () => {
                     </div>
                   </div>
                   <div className="mt-3 px-2 space-y-1">
-                    <Link href={`/profile/${user.username}`} passHref>
-                      <NavbarLink type={router.pathname.startsWith(`/profile/${user.username}`) ? 'hamburgerSelected' : 'hamburger'}>Profile</NavbarLink>
+                    <Link href={`/@/${user.username}`} passHref>
+                      <NavbarLink type={router.pathname.startsWith(`/@/`) && router.query.username === user.username ? 'hamburgerSelected' : 'hamburger'}>Profile</NavbarLink>
                     </Link>
                     <Link href="/user/market" passHref>
                       <NavbarLink type={router.pathname.startsWith('/user/market') ? 'hamburgerSelected' : 'hamburger'}>Manage Market</NavbarLink>
