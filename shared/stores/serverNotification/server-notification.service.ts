@@ -1,12 +1,10 @@
 import { ServerNotificationStore, serverNotificationStore } from './server-notification.store';
 import { ServerNotification } from './server-notification.model';
 import { of } from 'rxjs';
-import { fromFetch } from 'rxjs/fetch';
-import { tap, skipUntil, last, catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
-import { userQuery } from '../user/user.query';
-import { userService } from '../user/user.service';
+import authService from '../../services/auth.service';
 
 export class ServerNotificationService {
 
@@ -14,12 +12,7 @@ export class ServerNotificationService {
 
   public fetchNotifications() {
     // get all notifications and save them in the store
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notifications`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${userQuery.getValue().token}`
-      }
-    }).pipe(
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notifications`).pipe(
       tap({
         next: async res => {
           const json = await res.json();
@@ -44,15 +37,12 @@ export class ServerNotificationService {
           return of(err);
         }
       })
-    ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+    );
   }
 
   public deleteNotification(notification: ServerNotification) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notifications/${notification.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${userQuery.getValue().token}`
-      }
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notifications/${notification.id}`, {
+      method: 'DELETE'
     }).pipe(
       tap({
         next: async res => {
@@ -77,7 +67,7 @@ export class ServerNotificationService {
           return of(err);
         }
       })
-    ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+    );
   }
 
 }

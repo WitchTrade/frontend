@@ -152,7 +152,7 @@ const useSyncSettingsHandler = () => {
 
   const syncInventory = async () => {
     setInvLoading(true);
-    inventoryService.syncInventory(user).subscribe((res) => {
+    inventoryService.syncInventory().subscribe(() => {
       setInvLoading(false);
     });
   };

@@ -1,10 +1,9 @@
 import { of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { tap, skipUntil, last, catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+import authService from '../../services/auth.service';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
-import { userQuery } from '../user/user.query';
-import { userService } from '../user/user.service';
 
 export class MarketsService {
 
@@ -36,43 +35,37 @@ export class MarketsService {
   }
 
   public fetchOwnMarket() {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/own`,
-      {
-        headers: {
-          'Authorization': `Bearer ${userQuery.getValue().token}`
-        }
-      }).pipe(
-        tap({
-          next: async res => {
-            if (!res.ok) {
-              const notification = createNotification({
-                content: res.statusText,
-                duration: 5000,
-                type: 'error'
-              });
-              notificationService.addNotification(notification);
-            }
-          },
-          error: err => {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/own`).pipe(
+      tap({
+        next: async res => {
+          if (!res.ok) {
             const notification = createNotification({
-              content: err,
+              content: res.statusText,
               duration: 5000,
               type: 'error'
             });
             notificationService.addNotification(notification);
-            return of(err);
           }
-        })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+        },
+        error: err => {
+          const notification = createNotification({
+            content: err,
+            duration: 5000,
+            type: 'error'
+          });
+          notificationService.addNotification(notification);
+          return of(err);
+        }
+      })
+    );
   }
 
   public editMarket(body: { offerlistNote: string, wishlistNote: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets`,
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets`,
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userQuery.getValue().token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
       }).pipe(
@@ -104,7 +97,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
   public fetchUserMarket(username: string) {
@@ -160,12 +153,11 @@ export class MarketsService {
   }
 
   public createOffer(offer: any) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers`,
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers`,
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userQuery.getValue().token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(offer)
       }).pipe(
@@ -197,16 +189,15 @@ export class MarketsService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
   public syncOffers(data: any) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers/`,
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers/`,
       {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userQuery.getValue().token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
       }).pipe(
@@ -239,16 +230,15 @@ export class MarketsService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
   public updateOffer(id: number, offer: any) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers/${id}`,
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers/${id}`,
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userQuery.getValue().token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(offer)
       }).pipe(
@@ -280,16 +270,15 @@ export class MarketsService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
   public deleteOffer(id: number) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers/${id}`,
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers/${id}`,
       {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userQuery.getValue().token}`
+          'Content-Type': 'application/json'
         }
       }).pipe(
         tap({
@@ -320,16 +309,15 @@ export class MarketsService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
   public deleteAllOffers() {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers`,
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers`,
       {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userQuery.getValue().token}`
+          'Content-Type': 'application/json'
         }
       }).pipe(
         tap({
@@ -360,16 +348,15 @@ export class MarketsService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
   public createWish(wish: any) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes`,
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes`,
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userQuery.getValue().token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(wish)
       }).pipe(
@@ -401,16 +388,15 @@ export class MarketsService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
   public updateWish(id: number, wish: any) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes/${id}`,
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes/${id}`,
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userQuery.getValue().token}`
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(wish)
       }).pipe(
@@ -442,16 +428,15 @@ export class MarketsService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
   public deleteWish(id: number) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes/${id}`,
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes/${id}`,
       {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userQuery.getValue().token}`
+          'Content-Type': 'application/json'
         }
       }).pipe(
         tap({
@@ -482,16 +467,15 @@ export class MarketsService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
   public deleteAllWishes() {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes`,
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes`,
       {
         method: 'DELETE',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${userQuery.getValue().token}`
+          'Content-Type': 'application/json'
         }
       }).pipe(
         tap({
@@ -522,7 +506,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
 }

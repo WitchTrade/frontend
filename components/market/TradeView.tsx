@@ -69,17 +69,17 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, d
             }
             <div className="rounded-lg border border-wt-accent mx-2 mb-2">
               <p className="text-sm p-1 font-bold">{type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.PROFILE_OFFER ? 'Price per item' : 'I\'m offering'}</p>
-              <div className={`flex ${trade.secondaryPrice ? 'justify-between' : 'justify-center'} mx-4 items-center mb-2`}>
-                <div className="flex items-center">
-                  {trade.mainPrice.withAmount &&
-                    <p className="mr-1">{trade.mainPriceAmount}</p>
-                  }
+              <div className={`flex ${trade.secondaryPrice ? 'justify-between' : 'justify-center'} mx-4 mb-2`}>
+                <div className="flex flex-col">
                   <Tooltip text={trade.mainPrice.displayName}>
                     <Image className="rounded-lg" src={`/assets/images/prices/${trade.mainPrice.priceKey}.png`} height={40} width={40} quality={100} alt={trade.mainPrice.displayName} />
                   </Tooltip>
+                  {trade.mainPrice.withAmount &&
+                    <p className="mr-1">{trade.mainPriceAmount}</p>
+                  }
                 </div>
                 {trade.secondaryPrice &&
-                  <div className="flex items-center">
+                  <div className="flex flex-col">
                     <Tooltip text={trade.secondaryPrice.displayName}>
                       <Image className="rounded-lg" src={`/assets/images/prices/${trade.secondaryPrice.priceKey}.png`} height={40} width={40} quality={100} alt={trade.secondaryPrice.displayName} />
                     </Tooltip>

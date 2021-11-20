@@ -1,11 +1,10 @@
 import { of } from 'rxjs';
-import { fromFetch } from 'rxjs/fetch';
-import { tap, skipUntil, last, catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+import authService from '../../services/auth.service';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
 import { User } from '../user/user.model';
 import { userQuery, UserQuery } from '../user/user.query';
-import { userService } from '../user/user.service';
 import { createInventory, InventoryChangeDTO } from './inventory.model';
 import { InventoryStore, inventoryStore } from './inventory.store';
 
@@ -18,46 +17,38 @@ export class InventoryService {
   }
 
   public fetchInventory() {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/inventory`,
-      {
-        headers: {
-          'Authorization': `Bearer ${userQuery.getValue().token}`
-        },
-      }).pipe(
-        tap({
-          next: async res => {
-            const json = await res.json();
-            if (res.ok) {
-              this.inventoryStore.update(json);
-            } else if (res.status !== 404) {
-              const notification = createNotification({
-                content: json.message,
-                duration: 5000,
-                type: 'error'
-              });
-              notificationService.addNotification(notification);
-            }
-          },
-          error: err => {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/inventory`).pipe(
+      tap({
+        next: async res => {
+          const json = await res.json();
+          if (res.ok) {
+            this.inventoryStore.update(json);
+          } else if (res.status !== 404) {
             const notification = createNotification({
-              content: err,
+              content: json.message,
               duration: 5000,
               type: 'error'
             });
             notificationService.addNotification(notification);
-            return of(err);
           }
-        })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+        },
+        error: err => {
+          const notification = createNotification({
+            content: err,
+            duration: 5000,
+            type: 'error'
+          });
+          notificationService.addNotification(notification);
+          return of(err);
+        }
+      })
+    );
   }
 
-  public syncInventory(user: User) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/inventory`,
+  public syncInventory() {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/inventory`,
       {
-        method: 'PATCH',
-        headers: {
-          'Authorization': `Bearer ${user.token}`
-        },
+        method: 'PATCH'
       }).pipe(
         tap({
           next: async res => {
@@ -89,15 +80,14 @@ export class InventoryService {
             return of(err);
           }
         })
-      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+      );
   }
 
   public updateInventory(data: InventoryChangeDTO) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/inventory`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/inventory`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this._userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -131,15 +121,14 @@ export class InventoryService {
           return of(err);
         }
       })
-    ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+    );
   }
 
   public updateSyncSettings(data: any) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/syncsettings`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/syncsettings`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this._userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -173,7 +162,7 @@ export class InventoryService {
           return of(err);
         }
       })
-    ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+    );
   }
 
 }

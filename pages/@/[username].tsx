@@ -77,9 +77,9 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
               }
             </div>
             <p className="text-center text-sm -mt-1">@{profile.username}</p>
-            <div className="flex flex-wrap justify-center items-stretch rounded-lg bg-wt-surface-dark mt-2">
+            <div className="flex flex-wrap justify-center items-stretch mt-2">
               {profile.badges && profile.badges.length > 0 &&
-                <div className="flex flex-col justify-evenly rounded-lg border border-wt-accent p-2 m-1">
+                <div className="flex flex-col justify-evenly rounded-lg border border-wt-accent p-2 m-1 bg-wt-surface-dark">
                   <p className="text-center font-bold">Badges</p>
                   <div className="flex flex-wrap justify-center items-center">
                     {profile.badges.map(badge => (
@@ -92,11 +92,11 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                   </div>
                 </div>
               }
-              <div className="flex flex-col justify-evenly rounded-lg border border-wt-accent p-2 m-1">
+              <div className="flex flex-col justify-evenly rounded-lg border border-wt-accent p-2 m-1 bg-wt-surface-dark">
                 <p className="text-center font-bold">Steam</p>
                 <div className="flex flex-wrap justify-center items-center">
                   {profile.steamProfileLink &&
-                    <div className="flex flex-col items-center m-1">
+                    <div className="flex flex-col items-center my-1 mx-2">
                       <Tooltip text="Click to open">
                         <Link href={profile.steamProfileLink}>
                           <a target="_blank" rel="noreferrer">
@@ -106,11 +106,11 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                           </a>
                         </Link>
                       </Tooltip>
-                      <p className="text-sm mt-1">Steam Profile</p>
+                      <p className="text-sm mt-1">Profile</p>
                     </div>
                   }
                   {profile.steamTradeLink &&
-                    <div className="flex flex-col items-center m-1">
+                    <div className="flex flex-col items-center my-1 mx-2">
                       <Tooltip text="Click to open">
                         <Link href={profile.steamTradeLink}>
                           <a target="_blank" rel="noreferrer">
@@ -120,7 +120,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                           </a>
                         </Link>
                       </Tooltip>
-                      <p className="text-sm mt-1">Steam Trade link</p>
+                      <p className="text-sm mt-1">Trade link</p>
                     </div>
                   }
                 </div>
@@ -134,7 +134,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                 </div>
               </div>
               {profile.discordTag &&
-                <div className="flex flex-col justify-evenly rounded-lg border border-wt-accent p-2 m-1">
+                <div className="flex flex-col justify-evenly rounded-lg border border-wt-accent p-2 m-1 bg-wt-surface-dark">
                   <p className="text-center font-bold">Discord Tag</p>
                   <div className="flex flex-wrap justify-center items-center">
                     <div className="flex flex-col items-center m-1">

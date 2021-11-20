@@ -1,24 +1,16 @@
 import { of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { tap, skipUntil, last, catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
+import authService from '../../services/auth.service';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
 import { User } from '../user/user.model';
-import { userService } from '../user/user.service';
 
 export class SearchService {
 
-  public search(searchParameters: string, user: User) {
-    let options: RequestInit = {};
-    if (user.id) {
-      options = {
-        headers: {
-          'Authorization': `Bearer ${user.token}`
-        }
-      };
-    }
+  public search(searchParameters: string) {
     // get all items and save them in the store
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/search${searchParameters}`, options).pipe(
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/search${searchParameters}`).pipe(
       tap({
         next: async res => {
           if (res.ok) {
@@ -47,7 +39,7 @@ export class SearchService {
           return of(err);
         }
       })
-    ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
+    );
   }
 
   public stats() {

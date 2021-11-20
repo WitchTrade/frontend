@@ -1,10 +1,9 @@
 import { of } from 'rxjs';
-import { fromFetch } from 'rxjs/fetch';
 import { tap } from 'rxjs/operators';
+import authService from '../../services/auth.service';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
 import { serverNotificationService } from '../serverNotification/server-notification.service';
-import { userQuery } from '../user/user.query';
 import { AdminStore, adminStore } from './admin.store';
 
 export class AdminService {
@@ -12,10 +11,9 @@ export class AdminService {
   constructor(private adminStore: AdminStore) { }
 
   public fetchUsers() {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/users`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/users`, {
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       }
     }).pipe(
       tap(
@@ -48,11 +46,10 @@ export class AdminService {
   }
 
   public ban(data: { userId: string, reason: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/ban`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/ban`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -92,11 +89,10 @@ export class AdminService {
   }
 
   public unban(data: { userId: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/ban`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/ban`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -136,11 +132,7 @@ export class AdminService {
   }
 
   public fetchBadges() {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/badges`, {
-      headers: {
-        authorization: `Bearer ${userQuery.getValue().token}`
-      }
-    }).pipe(
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/badges`).pipe(
       tap(
         {
           next: async (res) => {
@@ -168,11 +160,10 @@ export class AdminService {
   }
 
   public addBadge(data: { userId: string; badgeId: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/badge`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/badge`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -212,11 +203,10 @@ export class AdminService {
   }
 
   public removeBadge(data: { userId: string; badgeId: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/badge`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/badge`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -256,11 +246,7 @@ export class AdminService {
   }
 
   public fetchRoles() {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/roles`, {
-      headers: {
-        authorization: `Bearer ${userQuery.getValue().token}`
-      }
-    }).pipe(
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/roles`).pipe(
       tap(
         {
           next: async (res) => {
@@ -288,11 +274,10 @@ export class AdminService {
   }
 
   public addRole(data: { userId: string; roleId: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/role`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/role`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -332,11 +317,10 @@ export class AdminService {
   }
 
   public removeRole(data: { userId: string; roleId: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/role`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/role`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -376,11 +360,10 @@ export class AdminService {
   }
 
   public verify(data: { userId: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/verify`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/verify`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -420,11 +403,10 @@ export class AdminService {
   }
 
   public unverify(data: { userId: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/verify`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/verify`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -464,11 +446,7 @@ export class AdminService {
   }
 
   public fetchLog() {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/log`, {
-      headers: {
-        authorization: `Bearer ${userQuery.getValue().token}`
-      }
-    }).pipe(
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/log`).pipe(
       tap(
         {
           next: async (res) => {
@@ -496,11 +474,10 @@ export class AdminService {
   }
 
   public broadcast(data: { text: string, iconLink: string, link: string; }) {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/broadcast`, {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/broadcast`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        authorization: `Bearer ${userQuery.getValue().token}`
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
