@@ -5,6 +5,7 @@ export interface User {
   id: string;
   loggedIn: boolean;
   token: string;
+  refreshToken: string;
   username: string;
   created: Date;
   email: string;
@@ -35,6 +36,7 @@ export function createUser(params: Partial<User>) {
     loggedIn: params.loggedIn || params.loggedIn === false ? params.loggedIn : null,
     username: params.username ? params.username : null,
     token: params.token ? params.token : null,
+    refreshToken: params.refreshToken ? params.refreshToken : null,
     created: params.created ? params.created : null,
     email: params.email ? params.email : null,
     lastOnline: params.lastOnline ? params.lastOnline : null,

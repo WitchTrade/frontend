@@ -21,6 +21,7 @@ const Market: NextPage = () => {
 
   const {
     market,
+    prices,
     editingNote,
     setEditingNote,
     localNote,
@@ -164,7 +165,14 @@ const Market: NextPage = () => {
             loader={<p></p>}
           >
             {loadedItems.map((item) => (
-              <TradeView key={item.id} type={type === MARKET_TYPE.OFFER ? TRADE_TYPE.MANAGE_OFFER : TRADE_TYPE.MANAGE_WISH} trade={item} inventory={inventory} deleteTrade={deleteTrade} updateTrade={updateTrade} />
+              <TradeView
+                key={item.id}
+                type={type === MARKET_TYPE.OFFER ? TRADE_TYPE.MANAGE_OFFER : TRADE_TYPE.MANAGE_WISH}
+                trade={item}
+                inventory={inventory}
+                deleteTrade={deleteTrade}
+                updateTrade={updateTrade}
+                prices={prices} />
             ))}
           </InfiniteScroll>
         </>

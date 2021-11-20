@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Inventory } from '../../shared/stores/inventory/inventory.model';
-import { Offer, Wish } from '../../shared/stores/markets/market.model';
+import { Offer, Price, Wish } from '../../shared/stores/markets/market.model';
 import Image from 'next/image';
 import { itemsQuery } from '../../shared/stores/items/items.query';
 import { createItem, Item } from '../../shared/stores/items/item.model';
@@ -24,11 +24,12 @@ interface Props {
   type: TRADE_TYPE;
   trade: Offer | TradeWish;
   inventory: Inventory;
+  prices?: Price[];
   deleteTrade?: (trade: Offer | Wish) => void;
   updateTrade?: (trade: any, finished: () => void) => void;
 };
 
-const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, deleteTrade, updateTrade }) => {
+const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, deleteTrade, updateTrade }) => {
   const [item, setItem] = useState<Item>(createItem({}));
 
   const [loading, setLoading] = useState(false);
@@ -89,10 +90,10 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, deleteTra
                 }
               </div>
             </div>
-            {(type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.MANAGE_WISH) && updateTrade && deleteTrade &&
+            {(type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.MANAGE_WISH) && updateTrade && deleteTrade && prices &&
               <>
                 <div className="flex justify-between py-1 px-2">
-                  <EditTradeDialog type={type} selectedTrade={trade} selectedItem={item} updateTrade={updateTrade} />
+                  <EditTradeDialog type={type} selectedTrade={trade} selectedItem={item} updateTrade={updateTrade} prices={prices} />
                   <ActionButton type="cancel" onClick={() => { setLoading(true); deleteTrade(trade); }} small={true} disabled={loading}>
                     <Image src={`/assets/svgs/bin/white.svg`} height="24px" width="24px" alt="Delete Trade" />
                   </ActionButton>

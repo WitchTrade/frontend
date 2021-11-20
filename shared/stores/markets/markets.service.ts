@@ -1,10 +1,10 @@
 import { of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { tap } from 'rxjs/operators';
+import { tap, skipUntil, last, catchError } from 'rxjs/operators';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
-import { User } from '../user/user.model';
 import { userQuery } from '../user/user.query';
+import { userService } from '../user/user.service';
 
 export class MarketsService {
 
@@ -63,7 +63,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public editMarket(body: { offerlistNote: string, wishlistNote: string; }) {
@@ -104,7 +104,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public fetchUserMarket(username: string) {
@@ -197,7 +197,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public syncOffers(data: any) {
@@ -239,7 +239,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public updateOffer(id: number, offer: any) {
@@ -280,7 +280,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public deleteOffer(id: number) {
@@ -320,7 +320,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public deleteAllOffers() {
@@ -360,7 +360,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public createWish(wish: any) {
@@ -401,7 +401,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public updateWish(id: number, wish: any) {
@@ -442,7 +442,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public deleteWish(id: number) {
@@ -482,7 +482,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public deleteAllWishes() {
@@ -522,7 +522,7 @@ export class MarketsService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
 }

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import WTDialog from '../styles/WTDialog';
 import ActionButton from '../styles/ActionButton';
 import Loading from '../styles/Loading';
-import { Offer, Wish } from '../../shared/stores/markets/market.model';
+import { Offer, Price, Wish } from '../../shared/stores/markets/market.model';
 import { TRADE_TYPE } from './TradeView';
 import { Item } from '../../shared/stores/items/item.model';
 import NumberInput from '../styles/NumberInput';
@@ -15,11 +15,11 @@ interface Props {
   type: TRADE_TYPE;
   selectedTrade: Offer | Wish;
   selectedItem: Item;
+  prices: Price[];
   updateTrade: (trade: any, finished: () => void) => void;
 };
 
-const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, selectedItem, updateTrade }) => {
-  const { prices } = usePricesProvider();
+const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, selectedItem, prices, updateTrade }) => {
 
   const [localTrade, setLocalTrade] = useState<any>(selectedTrade);
 

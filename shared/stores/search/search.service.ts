@@ -1,9 +1,10 @@
 import { of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { tap } from 'rxjs/operators';
+import { tap, skipUntil, last, catchError } from 'rxjs/operators';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
 import { User } from '../user/user.model';
+import { userService } from '../user/user.service';
 
 export class SearchService {
 
@@ -46,7 +47,7 @@ export class SearchService {
           return of(err);
         }
       })
-    );
+    ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public stats() {

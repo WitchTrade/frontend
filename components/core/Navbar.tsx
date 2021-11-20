@@ -63,7 +63,7 @@ const Navbar: FunctionComponent = () => {
   };
 
   const deleteNotification = (notification: ServerNotification): void => {
-    serverNotificationService.deleteNotification(notification, user).subscribe();
+    serverNotificationService.deleteNotification(notification).subscribe();
   };
 
   return (

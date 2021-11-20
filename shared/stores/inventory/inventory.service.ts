@@ -1,10 +1,11 @@
 import { of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { tap } from 'rxjs/operators';
+import { tap, skipUntil, last, catchError } from 'rxjs/operators';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
 import { User } from '../user/user.model';
 import { userQuery, UserQuery } from '../user/user.query';
+import { userService } from '../user/user.service';
 import { createInventory, InventoryChangeDTO } from './inventory.model';
 import { InventoryStore, inventoryStore } from './inventory.store';
 
@@ -16,11 +17,11 @@ export class InventoryService {
     this.inventoryStore.update(createInventory({}));
   }
 
-  public fetchInventory(user: User) {
+  public fetchInventory() {
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/inventory`,
       {
         headers: {
-          'Authorization': `Bearer ${user.token}`
+          'Authorization': `Bearer ${userQuery.getValue().token}`
         },
       }).pipe(
         tap({
@@ -47,7 +48,7 @@ export class InventoryService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public syncInventory(user: User) {
@@ -88,7 +89,7 @@ export class InventoryService {
             return of(err);
           }
         })
-      );
+      ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public updateInventory(data: InventoryChangeDTO) {
@@ -130,7 +131,7 @@ export class InventoryService {
           return of(err);
         }
       })
-    );
+    ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
   public updateSyncSettings(data: any) {
@@ -172,7 +173,7 @@ export class InventoryService {
           return of(err);
         }
       })
-    );
+    ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
 }

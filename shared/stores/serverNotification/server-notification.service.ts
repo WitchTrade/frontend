@@ -1,12 +1,12 @@
 import { ServerNotificationStore, serverNotificationStore } from './server-notification.store';
 import { ServerNotification } from './server-notification.model';
+import { of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
-import { tap } from 'rxjs/operators';
+import { tap, skipUntil, last, catchError } from 'rxjs/operators';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
-import { of } from 'rxjs';
-import { User } from '../user/user.model';
 import { userQuery } from '../user/user.query';
+import { userService } from '../user/user.service';
 
 export class ServerNotificationService {
 
@@ -44,14 +44,14 @@ export class ServerNotificationService {
           return of(err);
         }
       })
-    );
+    ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
-  public deleteNotification(notification: ServerNotification, user: User) {
+  public deleteNotification(notification: ServerNotification) {
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notifications/${notification.id}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${user.token}`
+        'Authorization': `Bearer ${userQuery.getValue().token}`
       }
     }).pipe(
       tap({
@@ -77,7 +77,7 @@ export class ServerNotificationService {
           return of(err);
         }
       })
-    );
+    ).pipe(skipUntil(userService.lazyTokenRefresh().pipe(last(), catchError(() => of(null)))));
   }
 
 }
