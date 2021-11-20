@@ -16,8 +16,8 @@ Visit https://preview.witchtrade.org/ where the current state is deployed. You c
 - [x] offers and offer lists
 - [x] wishes and wish lists
 - [x] /user/market
-- [ ] /@/{username}
-- [ ] /profiles
+- [x] /@/[username]
+- [x] /profiles
 - [ ] /search
 - [ ] /privacy
 - [ ] /legal

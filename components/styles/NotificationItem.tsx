@@ -12,7 +12,7 @@ const NotificationItem: FunctionComponent<Props> = ({ notification, deleteNotifi
 
   let notificationContent = (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex items-center">
         {notification.iconLink &&
           <div className="h-10 w-10 ml-1" style={{ minHeight: '40px', minWidth: '40px' }}>
             <Image className="rounded-md" height={40} width={40} src={notification.iconLink} alt={notification.text} />

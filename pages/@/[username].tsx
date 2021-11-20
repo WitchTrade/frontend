@@ -100,13 +100,13 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                       <Tooltip text="Click to open">
                         <Link href={profile.steamProfileLink}>
                           <a target="_blank" rel="noreferrer">
-                            <div className="m-1 h-9 w-9 rounded-full bg-wt-surface p-1 hover:bg-wt-accent transition duration-100 transform hover:scale-110 cursor-pointer">
-                              <Image src={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height={36} width={36} alt="Steam Profile" />
+                            <div className="h-9 w-9 rounded-full bg-wt-surface p-1 hover:bg-wt-accent transition duration-100 transform hover:scale-110 cursor-pointer">
+                              <Image src={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height={36} width={36} alt="Steam Profile Link" />
                             </div>
                           </a>
                         </Link>
                       </Tooltip>
-                      <p className="text-sm">Steam Profile</p>
+                      <p className="text-sm mt-1">Steam Profile</p>
                     </div>
                   }
                   {profile.steamTradeLink &&
@@ -114,15 +114,23 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                       <Tooltip text="Click to open">
                         <Link href={profile.steamTradeLink}>
                           <a target="_blank" rel="noreferrer">
-                            <div className="m-1 h-9 w-9 rounded-full bg-wt-surface p-1 hover:bg-wt-accent transition duration-100 transform hover:scale-110 cursor-pointer">
+                            <div className="h-9 w-9 rounded-full bg-wt-surface p-1 hover:bg-wt-accent transition duration-100 transform hover:scale-110 cursor-pointer">
                               <Image src={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height={36} width={36} alt="Steam Trade link" />
                             </div>
                           </a>
                         </Link>
                       </Tooltip>
-                      <p className="text-sm">Steam Trade link</p>
+                      <p className="text-sm mt-1">Steam Trade link</p>
                     </div>
                   }
+                </div>
+                <div className="flex justify-center items-center">
+                  {profile.usingSteamGuard &&
+                    <Image src="/assets/svgs/booleanIcons/lock.svg" height={14} width={14} alt="Lock" />
+                    ||
+                    <Image src="/assets/svgs/booleanIcons/warning.svg" height={14} width={14} alt="Warning" />
+                  }
+                  <p className="text-center text-sm ml-1">{profile.usingSteamGuard ? 'Uses Steam Guard' : 'Doesn\'t use Steam Guard'}</p>
                 </div>
               </div>
               {profile.discordTag &&
@@ -131,11 +139,11 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                   <div className="flex flex-wrap justify-center items-center">
                     <div className="flex flex-col items-center m-1">
                       <Tooltip text="Click to copy">
-                        <div className="m-1 h-9 w-9 rounded-full bg-wt-surface p-1 hover:bg-wt-accent transition duration-100 transform hover:scale-110 cursor-pointer" onClick={() => copyDiscordTag(profile.discordTag)}>
+                        <div className="h-9 w-9 rounded-full bg-wt-surface p-1 hover:bg-wt-accent transition duration-100 transform hover:scale-110 cursor-pointer" onClick={() => copyDiscordTag(profile.discordTag)}>
                           <Image src={`/assets/svgs/discord/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height={36} width={36} alt="Steam Profile" />
                         </div>
                       </Tooltip>
-                      <p className="text-sm">{profile.discordTag}</p>
+                      <p className="text-sm mt-1">{profile.discordTag}</p>
                     </div>
                   </div>
                 </div>

@@ -71,8 +71,9 @@ export function createMarket(params: Partial<Market>) {
 
 // Preview market which is used in the profile list
 export interface PreviewMarket {
-  id: number;
-  user: { username: string; displayName: string; };
+  username: string;
+  displayName: string;
+  verified: boolean;
   offerCount: number;
   offers: PreviewOffer[];
 }
@@ -84,8 +85,9 @@ export interface PreviewOffer {
 
 export function createPreviewMarket(params: Partial<PreviewMarket>) {
   return {
-    id: params.id ? params.id : null,
-    user: params.user ? params.user : null,
+    username: params.username ? params.username : null,
+    displayName: params.displayName ? params.displayName : null,
+    verified: params.verified ? params.verified : false,
     offerCount: params.offerCount ? params.offerCount : null,
     offers: params.offers ? params.offers : []
   } as PreviewMarket;

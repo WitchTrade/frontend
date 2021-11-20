@@ -19,6 +19,29 @@ export class ItemsQuery extends QueryEntity<ItemsState> {
     return rarityToIngredientId[rarity];
   }
 
+  public rarityToColor(rarity: string) {
+    switch (rarity) {
+      case 'common':
+        return '#7C7C7C';
+      case 'uncommon':
+        return '#ECECEC';
+      case 'unlock':
+        return '#C08051';
+      case 'eventrarity':
+        return '#FFE400';
+      case 'rare':
+        return '#45E53D';
+      case 'veryrare':
+        return '#1472FF';
+      case 'whimsical':
+        return '#FF00EA';
+      case 'promo':
+        return '#00E4FF';
+      default:
+        return '';
+    }
+  }
+
   public getRarities(): string[] {
     return [
       'common',
