@@ -37,7 +37,7 @@ const Profiles: NextPage<Props> = ({ profiles }) => {
       />
       <PageHeader title="Profiles" />
       <InfiniteScroll
-        className="flex flex-wrap justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        className="flex flex-wrap justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10"
         dataLength={loadedProfiles.length}
         next={loadMoreProfiles}
         hasMore={hasMoreProfiles()}
@@ -46,7 +46,7 @@ const Profiles: NextPage<Props> = ({ profiles }) => {
         {loadedProfiles.map((profile, i) => (
           <Link key={i} href={`/@/${profile.username}`}>
             <a>
-              <div className="flex flex-col justify-between text-center bg-wt-surface-dark border border-wt-accent m-2 pt-1 pb-2 px-2 rounded-lg w-56 transition duration-100 transform hover:scale-105 cursor-pointer">
+              <div className="flex flex-col justify-between text-center bg-wt-surface-dark border border-wt-accent m-2 pt-1 pb-2 px-2 rounded-lg w-56 transition duration-100 transform hover:scale-105 cursor-pointer shadow-lg">
                 <div className="flex justify-center items-center">
                   <p className="text-center text-lg font-bold text-wt-accent">{profile.displayName}</p>
                   {profile.verified &&
