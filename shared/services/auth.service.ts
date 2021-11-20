@@ -77,7 +77,7 @@ class AuthService {
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/refresh`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(
         {

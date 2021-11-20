@@ -87,7 +87,7 @@ export class InventoryService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/inventory`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -128,7 +128,7 @@ export class InventoryService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/syncsettings`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(

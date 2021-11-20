@@ -65,7 +65,7 @@ export class MarketsService {
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'content-type': 'application/json'
         },
         body: JSON.stringify(body)
       }).pipe(
@@ -157,7 +157,7 @@ export class MarketsService {
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'content-type': 'application/json'
         },
         body: JSON.stringify(offer)
       }).pipe(
@@ -197,7 +197,7 @@ export class MarketsService {
       {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json'
+          'content-type': 'application/json'
         },
         body: JSON.stringify(data)
       }).pipe(
@@ -238,7 +238,7 @@ export class MarketsService {
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'content-type': 'application/json'
         },
         body: JSON.stringify(offer)
       }).pipe(
@@ -276,10 +276,7 @@ export class MarketsService {
   public deleteOffer(id: number) {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers/${id}`,
       {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        method: 'DELETE'
       }).pipe(
         tap({
           next: async res => {
@@ -315,10 +312,7 @@ export class MarketsService {
   public deleteAllOffers() {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers`,
       {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        method: 'DELETE'
       }).pipe(
         tap({
           next: async res => {
@@ -356,7 +350,7 @@ export class MarketsService {
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'content-type': 'application/json'
         },
         body: JSON.stringify(wish)
       }).pipe(
@@ -396,7 +390,7 @@ export class MarketsService {
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'content-type': 'application/json'
         },
         body: JSON.stringify(wish)
       }).pipe(
@@ -434,10 +428,7 @@ export class MarketsService {
   public deleteWish(id: number) {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes/${id}`,
       {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        method: 'DELETE'
       }).pipe(
         tap({
           next: async res => {
@@ -473,10 +464,7 @@ export class MarketsService {
   public deleteAllWishes() {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/wishes`,
       {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        method: 'DELETE'
       }).pipe(
         tap({
           next: async res => {

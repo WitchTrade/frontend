@@ -79,7 +79,7 @@ export class UserService {
       {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'content-type': 'application/json'
         },
         body
       }).pipe(
@@ -125,7 +125,7 @@ export class UserService {
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/register`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(user)
     }).pipe(
@@ -169,6 +169,9 @@ export class UserService {
   public updateAccountSettings(user: Partial<User>) {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users`, {
       method: 'PUT',
+      headers: {
+        'content-type': 'application/json'
+      },
       body: JSON.stringify(user)
     }).pipe(
       tap({
@@ -210,7 +213,7 @@ export class UserService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/syncSettings`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(syncSettings)
     }).pipe(
@@ -255,7 +258,7 @@ export class UserService {
       {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          'content-type': 'application/json'
         },
         body
       }).pipe(

@@ -79,22 +79,22 @@ export const itemSlotValues: DropdownValue[] = [
 export const itemEventValues: DropdownValue[] = [
   { key: 'any', displayName: 'Any' },
   { key: 'none', displayName: 'No Event' },
-  { key: 'theater', displayName: 'Theater', imagePath: '/assets/images/eventIcons/theater.png' },
   { key: 'chinese newyear', displayName: 'Chinese New Year', imagePath: '/assets/images/eventIcons/chineseNewYear.png' },
-  { key: 'plunderparty', displayName: 'Plunder Party', imagePath: '/assets/images/eventIcons/plunderparty.png' },
-  { key: 'springfever', displayName: 'Spring Fever', imagePath: '/assets/images/eventIcons/springfever.png' },
-  { key: 'summerevent', displayName: 'Summer', imagePath: '/assets/images/eventIcons/summer.png' },
-  { key: 'witchforest', displayName: 'Witch Forest', imagePath: '/assets/images/eventIcons/witchforest.png' },
-  { key: 'mystic sands', displayName: 'Mystic Sands', imagePath: '/assets/images/eventIcons/mysticSands.png' },
   { key: 'halloween', displayName: 'Halloween 2017', imagePath: '/assets/images/eventIcons/halloween.png' },
   { key: 'halloween2018', displayName: 'Halloween 2018', imagePath: '/assets/images/eventIcons/halloween2018.png' },
   { key: 'halloween2019', displayName: 'Halloween 2019', imagePath: '/assets/images/eventIcons/halloween2019.png' },
   { key: 'halloween2020', displayName: 'Halloween 2020', imagePath: '/assets/images/eventIcons/halloween2020.png' },
-  { key: 'winterdream witch', displayName: 'Winterdream Witch', imagePath: '/assets/images/eventIcons/winterdreamwitch.png' },
+  { key: 'mystic sands', displayName: 'Mystic Sands', imagePath: '/assets/images/eventIcons/mysticSands.png' },
+  { key: 'plunderparty', displayName: 'Plunder Party', imagePath: '/assets/images/eventIcons/plunderparty.png' },
+  { key: 'springfever', displayName: 'Spring Fever', imagePath: '/assets/images/eventIcons/springfever.png' },
+  { key: 'summerevent', displayName: 'Summer', imagePath: '/assets/images/eventIcons/summer.png' },
+  { key: 'theater', displayName: 'Theater', imagePath: '/assets/images/eventIcons/theater.png' },
   { key: 'winterdream', displayName: 'Winterdream 2017', imagePath: '/assets/images/eventIcons/winterdream.png' },
   { key: 'winterdream2018', displayName: 'Winterdream 2018', imagePath: '/assets/images/eventIcons/winterdream2018.png' },
   { key: 'winterdream2019', displayName: 'Winterdream 2019', imagePath: '/assets/images/eventIcons/winterdream2019.png' },
-  { key: 'winterdream2020', displayName: 'Winterdream 2020', imagePath: '/assets/images/eventIcons/winterdream2020.png' }
+  { key: 'winterdream2020', displayName: 'Winterdream 2020', imagePath: '/assets/images/eventIcons/winterdream2020.png' },
+  { key: 'winterdream witch', displayName: 'Winterdream Witch', imagePath: '/assets/images/eventIcons/winterdreamwitch.png' },
+  { key: 'witchforest', displayName: 'Witch Forest', imagePath: '/assets/images/eventIcons/witchforest.png' }
 ];
 
 export const itemRarityValues: DropdownValue[] = [

@@ -13,7 +13,7 @@ export class AdminService {
   public fetchUsers() {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/users`, {
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       }
     }).pipe(
       tap(
@@ -49,7 +49,7 @@ export class AdminService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/ban`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -92,7 +92,7 @@ export class AdminService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/ban`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -163,7 +163,7 @@ export class AdminService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/badge`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -206,7 +206,7 @@ export class AdminService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/badge`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -277,7 +277,7 @@ export class AdminService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/role`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -320,7 +320,7 @@ export class AdminService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/role`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -363,7 +363,7 @@ export class AdminService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/verify`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -406,7 +406,7 @@ export class AdminService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/verify`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
@@ -477,7 +477,7 @@ export class AdminService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/broadcast`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(data)
     }).pipe(
