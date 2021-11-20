@@ -31,7 +31,7 @@ const AdminHandler = () => {
 
   useEffect(() => {
     adminQuery.selectAll().subscribe((adminUsers) => {
-      setUnfilteredAdminUsers(adminUsers);
+      setUnfilteredAdminUsers(adminUsers.sort((a, b) => a.username.localeCompare(b.username)));
     });
   }, []);
 

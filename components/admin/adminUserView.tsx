@@ -1,5 +1,6 @@
 import { FunctionComponent, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { AdminUser } from '../../shared/stores/admin/admin.model';
 import Tooltip from '../styles/Tooltip';
 import useThemeProvider from '../../shared/providers/theme.provider';
@@ -107,7 +108,13 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
       </WTDialog>
       <div className={`flex flex-wrap justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md p-4 cursor-pointer border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} style={{ minHeight: '70px' }} onClick={() => setShow(!show)}>
         <div className="flex items-center">
-          <p className="font-bold text-wt-accent">{adminUser.username}</p>
+          <Link href={`/@/${adminUser.username}`}>
+            <a target="_blank" rel="noreferrer">
+              <div className="bg-wt-selected-dark py-1 px-2 rounded-lg border border-wt-selected-dark hover:border-wt-accent">
+                <p className="font-bold text-wt-accent">{adminUser.username}</p>
+              </div>
+            </a>
+          </Link>
           {adminUser.verified &&
             <div className="ml-1 h-5 w-5">
               <Image src="/assets/svgs/verified.svg" height={20} width={20} alt="Verified" />
