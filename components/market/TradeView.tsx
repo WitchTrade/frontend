@@ -76,6 +76,8 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, d
                   </Tooltip>
                   {trade.mainPrice.withAmount &&
                     <p className="mr-1">{trade.mainPriceAmount}</p>
+                    ||
+                    <div className="h-6"></div>
                   }
                 </div>
                 {trade.secondaryPrice &&
