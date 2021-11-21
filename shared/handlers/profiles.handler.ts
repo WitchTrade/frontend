@@ -3,14 +3,25 @@ import { PreviewMarket } from '../stores/markets/market.model';
 
 const ProfilesHandler = (profiles: PreviewMarket[]) => {
 
+  const [filteredProfiles, setFilteredProfiles] = useState<PreviewMarket[]>([]);
   const [loadedProfiles, setLoadedProfiles] = useState<PreviewMarket[]>([]);
 
+  const [searchValue, setSearchValue] = useState('');
+
   useEffect(() => {
-    setLoadedProfiles(profiles.slice(0, 50));
+    setFilteredProfiles(profiles);
   }, [profiles]);
 
+  useEffect(() => {
+    setFilteredProfiles(profiles.filter(p => p.displayName.toLowerCase().includes(searchValue.toLowerCase())));
+  }, [searchValue]);
+
+  useEffect(() => {
+    setLoadedProfiles(filteredProfiles.slice(0, 50));
+  }, [filteredProfiles]);
+
   const loadMoreProfiles = () => {
-    setLoadedProfiles(profiles.slice(0, loadedProfiles.length + 50));
+    setLoadedProfiles(filteredProfiles.slice(0, loadedProfiles.length + 50));
   };
 
   const hasMoreProfiles = () => {
@@ -20,7 +31,9 @@ const ProfilesHandler = (profiles: PreviewMarket[]) => {
   return {
     loadedProfiles,
     loadMoreProfiles,
-    hasMoreProfiles
+    hasMoreProfiles,
+    searchValue,
+    setSearchValue
   };
 };
 

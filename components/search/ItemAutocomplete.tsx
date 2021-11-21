@@ -58,7 +58,7 @@ const ItemAutocomplete: FunctionComponent<Props> = ({ item, setItem }) => {
         ||
         <div className="relative mt-1">
           <div ref={toggleRef}>
-            <TextInput type="text" placeholder="Select item" required={false} value={searchValue} setValue={setSearchValue} onKeyDown={handleKeyDown} />
+            <TextInput type="text" placeholder="Select item" required={false} value={searchValue} setValue={setSearchValue} onKeyDown={handleKeyDown} clearOption={true} />
           </div>
           <div ref={nodeRef}>
             <Transition

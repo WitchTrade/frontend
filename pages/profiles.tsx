@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import CustomHeader from '../components/core/CustomHeader';
 import Divider from '../components/styles/Divider';
 import PageHeader from '../components/styles/PageHeader';
+import TextInput from '../components/styles/TextInput';
 import Tooltip from '../components/styles/Tooltip';
 import ProfilesHandler from '../shared/handlers/profiles.handler';
 import { itemsQuery } from '../shared/stores/items/items.query';
@@ -21,7 +22,9 @@ const Profiles: NextPage<Props> = ({ profiles }) => {
   const {
     loadedProfiles,
     loadMoreProfiles,
-    hasMoreProfiles
+    hasMoreProfiles,
+    searchValue,
+    setSearchValue
   } = ProfilesHandler(profiles.sort((a, b) => {
     let sortValue = b.offerCount - a.offerCount;
     sortValue = (a.verified === b.verified) ? sortValue : a.verified ? -1 : 1;
@@ -36,6 +39,9 @@ const Profiles: NextPage<Props> = ({ profiles }) => {
         url="https://witchtrade.org/profiles"
       />
       <PageHeader title="Profiles" />
+      <div className="flex justify-center mb-2">
+        <TextInput type="text" placeholder="Search for user" required={false} value={searchValue} setValue={setSearchValue} clearOption={true} />
+      </div>
       <InfiniteScroll
         className="flex flex-wrap justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10"
         dataLength={loadedProfiles.length}
