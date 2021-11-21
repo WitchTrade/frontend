@@ -8,7 +8,6 @@ import { notificationService } from '../notification/notification.service';
 export class MarketsService {
 
   public fetchAllMarkets() {
-    // get all items and save them in the store
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets`).pipe(
       tap({
         next: async res => {

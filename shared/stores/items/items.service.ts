@@ -10,7 +10,6 @@ export class ItemsService {
   constructor(private itemsStore: ItemsStore) { }
 
   public fetchAllItems() {
-    // get all items and save them in the store
     return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/items`).pipe(
       tap(
         {

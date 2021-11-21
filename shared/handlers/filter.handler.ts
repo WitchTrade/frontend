@@ -6,6 +6,7 @@ import useItemsProvider from '../providers/items.provider';
 import { Item } from '../stores/items/item.model';
 import { itemsQuery } from '../stores/items/items.query';
 import { Offer, Wish } from '../stores/markets/market.model';
+import { MARKET_TYPE } from './market.handler';
 
 export interface ItemFilterValues {
   searchString: string;
@@ -130,7 +131,7 @@ export enum FILTER_TYPE {
   NEWTRADE
 }
 
-const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] | Wish[]) => {
+const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] | Wish[], marketType?: MARKET_TYPE, setMarketType?: (marketType: MARKET_TYPE) => void) => {
   const router = useRouter();
 
   const { inventory } = useInventoryProvider();
@@ -149,6 +150,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       const searchString = typeof router.query.searchString === 'string' ? router.query.searchString : '';
       const tradeableOnly = typeof router.query.tradeableOnly === 'string' && router.query.tradeableOnly === 'true' ? true : false;
       const newOnly = typeof router.query.newOnly === 'string' && router.query.newOnly === 'true' ? true : false;
+      const newMarketType = typeof router.query.marketType === 'string' && router.query.marketType === '1' ? MARKET_TYPE.WISH : MARKET_TYPE.OFFER;
 
       let orderBy;
       if (typeof router.query.orderBy === 'string') {
@@ -194,6 +196,9 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
         inventory: inventory ? inventory : inventoryValues[0],
         duplicatesOnly
       });
+      if (newMarketType && setMarketType) {
+        setMarketType(newMarketType);
+      }
       setQueryLoaded(true);
     }
   }, [router.query]);
@@ -224,7 +229,8 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       itemRarity: itemFilterValues.itemRarity.key !== itemRarityValues[0].key ? itemFilterValues.itemRarity.key : undefined,
       inventory: itemFilterValues.inventory.key !== inventoryValues[0].key ? itemFilterValues.inventory.key : undefined,
       duplicatesOnly: itemFilterValues.duplicatesOnly !== false ? itemFilterValues.duplicatesOnly : undefined,
-      username: router.query.username ? router.query.username as string : undefined
+      username: router.query.username ? router.query.username as string : undefined,
+      marketType: marketType ? marketType.toString() : undefined
     };
 
     Object.keys(query).forEach(key => query[key] === undefined ? delete query[key] : {});
@@ -233,7 +239,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       undefined,
       { scroll: false }
     );
-  }, [itemFilterValues]);
+  }, [itemFilterValues, marketType]);
 
   const filterItems = () => {
     let filteredItems = items.filter((item) => {
@@ -333,7 +339,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
   };
 
   const hasMoreItems = () => {
-    return items.length > loadedItems.length;
+    return filteredItems.length > loadedItems.length;
   };
 
   const resetLoadedItems = () => {

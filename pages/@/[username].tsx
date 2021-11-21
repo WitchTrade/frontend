@@ -46,7 +46,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
     hasMoreItems,
     itemFilterValues,
     setItemFilterValues
-  } = FilterHandler(FILTER_TYPE.MARKET, 50, type === MARKET_TYPE.OFFER ? market.offers : market.wishes);
+  } = FilterHandler(FILTER_TYPE.MARKET, 50, type === MARKET_TYPE.OFFER ? market.offers : market.wishes, type, setType);
 
   const getLastUpdated = () => {
     // don't execute this before the app service has loaded
