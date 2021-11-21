@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-const useDetectOutsideClick = (initState: boolean, closeWhenUsed: boolean = false) => {
+const useDetectOutsideClick = (initState: boolean, closeWhenUsed: boolean = false, closeWhenToggled: boolean = true) => {
   const toggleRef = useRef<any>(null); // optional
   const nodeRef = useRef<any>(null); // required
   const secondNodeRef = useRef<any>(null); // optional
@@ -20,7 +20,7 @@ const useDetectOutsideClick = (initState: boolean, closeWhenUsed: boolean = fals
 
   const handleClickToggle = (event: any) => {
     //if click is on trigger element, toggle modal
-    if (toggleRef.current && toggleRef.current.contains(event.target) || nodeRef.current && nodeRef.current.contains(event.target) && closeWhenUsed) {
+    if (toggleRef.current && toggleRef.current.contains(event.target) && (!show || closeWhenToggled) || nodeRef.current && nodeRef.current.contains(event.target) && closeWhenUsed) {
       return setShow(!show);
     }
   };

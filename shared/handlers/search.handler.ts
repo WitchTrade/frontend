@@ -112,7 +112,7 @@ const SearchHandler = () => {
   // load query into filter values
   useEffect(() => {
     if (!queryLoaded && router.isReady && items.length > 0) {
-      const itemId = typeof router.query.itemId === 'string' ? router.query.itemId : '';
+      const itemId = typeof router.query.itemId === 'string' ? parseInt(router.query.itemId, 10) : undefined;
       const wishlistOnly = typeof router.query.wishlistOnly === 'string' && router.query.wishlistOnly === 'true' ? true : false;
 
       let orderBy;
@@ -147,6 +147,7 @@ const SearchHandler = () => {
       const duplicatesOnly = typeof router.query.duplicatesOnly === 'string' && router.query.duplicatesOnly === 'true' ? true : false;
 
       setSearchFilterValues({
+        item: itemId ? items.find(i => i.id === itemId) : undefined,
         itemCharacter: itemCharacter ? itemCharacter : itemCharacterValues[0],
         itemSlot: itemSlot ? itemSlot : itemSlotValues[0],
         itemEvent: itemEvent ? itemEvent : itemEventValues[0],
@@ -160,6 +161,27 @@ const SearchHandler = () => {
         orderDirection: orderDirection ? orderDirection : orderDirectionValues[0]
       });
       setQueryLoaded(true);
+      if (
+        itemId ||
+        itemCharacter ||
+        itemSlot ||
+        itemEvent ||
+        itemRarity ||
+        inventory ||
+        duplicatesOnly ||
+        wishlistOnly
+      ) {
+        search({
+          item: itemId ? items.find(i => i.id === itemId) : undefined,
+          itemCharacter: itemCharacter ? itemCharacter : itemCharacterValues[0],
+          itemSlot: itemSlot ? itemSlot : itemSlotValues[0],
+          itemEvent: itemEvent ? itemEvent : itemEventValues[0],
+          itemRarity: itemRarity ? itemRarity : tradeableItemRarityValues[0],
+          inventory: inventory ? inventory : inventoryValues[0],
+          duplicatesOnly,
+          wishlistOnly
+        });
+      }
     }
   }, [router.query, items]);
 
@@ -204,18 +226,36 @@ const SearchHandler = () => {
     );
   }, [searchFilterValues, searchOrderValues]);
 
-  const search = () => {
+  useEffect(() => {
+    setLoadedTrades(trades.slice(0, 20));
+  }, [searchView]);
+
+  const search = (localSearchFilterValues?: any) => {
+    if (!localSearchFilterValues) {
+      localSearchFilterValues = searchFilterValues;
+    }
     setSearchInProgress(true);
     setSearchResult(undefined);
-    searchService.search({
-      itemId: searchFilterValues.item ? searchFilterValues.item.id : undefined,
-      character: searchFilterValues.itemCharacter.key,
-      slot: searchFilterValues.itemSlot.key,
-      event: searchFilterValues.itemEvent.key,
-      rarity: searchFilterValues.itemRarity.key,
-      inventoryType: searchFilterValues.inventory.key,
-      onlyWishlistItems: searchFilterValues.wishlistOnly,
-    }).subscribe(async (res) => {
+    searchService.search(
+      localSearchFilterValues.item ?
+        {
+          itemId: localSearchFilterValues.item.id,
+          character: 'any',
+          slot: 'any',
+          event: 'any',
+          rarity: 'any',
+          inventoryType: 'any',
+          onlyWishlistItems: false
+        } :
+        {
+          character: localSearchFilterValues.itemCharacter.key,
+          slot: localSearchFilterValues.itemSlot.key,
+          event: localSearchFilterValues.itemEvent.key,
+          rarity: localSearchFilterValues.itemRarity.key,
+          inventoryType: localSearchFilterValues.inventory.key,
+          onlyWishlistItems: localSearchFilterValues.wishlistOnly,
+        }
+    ).subscribe(async (res) => {
       if (res.ok) {
         const json = await res.json();
         setSearchResult(json);

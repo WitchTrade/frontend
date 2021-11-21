@@ -134,7 +134,7 @@ const SearchTradeView: FunctionComponent<Props> = ({ trade, items, prices, type,
             }
           </div>
           <div className="flex flex-col w-2/3">
-            <p className="text-center">{trade.markets.length} Market{trade.markets.length === 1 ? '' : 's'}{type === SEARCH_VIEW.OFFERS ? (<span className="text-wt-accent"> ({(trade.markets as any).reduce((a, b) => a + b.quantity, 0)}x)</span>) : ''}</p>
+            <p className="text-center">{trade.markets.length} {type === SEARCH_VIEW.OFFERS ? 'market' : 'user'}{trade.markets.length === 1 ? '' : 's'}{type === SEARCH_VIEW.OFFERS ? (<span className="text-wt-accent"> ({(trade.markets as any).reduce((a, b) => a + b.quantity, 0)}x)</span>) : ` want${trade.markets.length === 1 ? 's' : ''} this item`}</p>
             <div className="flex flex-col overflow-y-auto max-w-full" style={{ maxHeight: '180px' }}>
               {trade.markets.sort(sortMarkets).sort((a, b) => (a.user.verified === b.user.verified) ? 0 : a.user.verified ? -1 : 1).map((m, i) => (
                 <Link key={i} href={`/@/${m.user.username}?searchString=${item.name}&itemSlot=${item.tagSlot}${type === SEARCH_VIEW.WISHES ? '&marketType=1' : ''}`}>

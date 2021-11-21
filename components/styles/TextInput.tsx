@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, KeyboardEvent } from 'react';
 import useThemeProvider from '../../shared/providers/theme.provider';
 
 interface Props {
@@ -12,9 +12,10 @@ interface Props {
   handleKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   autocompleteValue?: string;
   clearOption?: boolean;
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
 }
 
-const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValue, required, svgPath, handleKeyPress, autocompleteValue, clearOption }) => {
+const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValue, required, svgPath, handleKeyPress, autocompleteValue, clearOption, onKeyDown }) => {
 
   const { theme } = useThemeProvider();
 
@@ -28,6 +29,7 @@ const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValu
         onChange={(e) => setValue(e.target.value)}
         onKeyPress={handleKeyPress}
         autoComplete={autocompleteValue}
+        onKeyDown={onKeyDown}
       />
       {svgPath &&
         <div className="absolute inset-y-0 left-0 flex items-center px-2 pointer-events-none top-0 bot-0">

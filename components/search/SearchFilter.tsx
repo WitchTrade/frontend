@@ -9,6 +9,7 @@ import ActionButton from '../styles/ActionButton';
 import Loading from '../styles/Loading';
 import { createDefaultSearchFilter, SearchFilterValues, SearchOrderValues } from '../../shared/handlers/search.handler';
 import useUserProvider from '../../shared/providers/user.provider';
+import ItemAutocomplete from './ItemAutocomplete';
 
 interface Props {
   searchFilterValues: SearchFilterValues;
@@ -42,59 +43,65 @@ const SearchFilter: FunctionComponent<Props> = ({ searchFilterValues, setSearchF
         </div>
         {filterOpen &&
           <div className="flex flex-col items-center p-2">
-            <div className="flex flex-wrap justify-center">
-              <div className="m-1" style={{ width: '220px' }}>
-                <p className="mb-1">Character</p>
-                <Dropdown selectedValue={searchFilterValues.itemCharacter} setValue={(itemCharacter) => setSearchFilterValues({ ...searchFilterValues, itemCharacter })} values={itemCharacterValues} />
-              </div>
-              <div className="m-1" style={{ width: '220px' }}>
-                <p className="mb-1">Slot</p>
-                <Dropdown selectedValue={searchFilterValues.itemSlot} setValue={(itemSlot) => setSearchFilterValues({ ...searchFilterValues, itemSlot })} values={itemSlotValues} />
-              </div>
-              <div className="m-1" style={{ width: '220px' }}>
-                <p className="mb-1">Event</p>
-                <Dropdown selectedValue={searchFilterValues.itemEvent} setValue={(itemEvent) => setSearchFilterValues({ ...searchFilterValues, itemEvent })} values={itemEventValues} />
-              </div>
-              <div className="m-1" style={{ width: '220px' }}>
-                <p className="mb-1">Rarity</p>
-                <Dropdown selectedValue={searchFilterValues.itemRarity} setValue={(itemRarity) => setSearchFilterValues({ ...searchFilterValues, itemRarity })} values={tradeableItemRarityValues} />
-              </div>
-            </div>
-            {inventory.id &&
+            <ItemAutocomplete item={searchFilterValues.item} setItem={(item) => setSearchFilterValues({ ...searchFilterValues, item })} />
+            {!searchFilterValues.item &&
+
               <>
-                <div className="m-1" style={{ width: '220px' }}>
-                  <p className="mb-1">Inventory</p>
-                  <Dropdown selectedValue={searchFilterValues.inventory} setValue={(inventory) => setSearchFilterValues({ ...searchFilterValues, inventory })} values={inventoryValues} />
+                <div className="flex flex-wrap justify-center">
+                  <div className="m-1" style={{ width: '220px' }}>
+                    <p className="mb-1">Character</p>
+                    <Dropdown selectedValue={searchFilterValues.itemCharacter} setValue={(itemCharacter) => setSearchFilterValues({ ...searchFilterValues, itemCharacter })} values={itemCharacterValues} />
+                  </div>
+                  <div className="m-1" style={{ width: '220px' }}>
+                    <p className="mb-1">Slot</p>
+                    <Dropdown selectedValue={searchFilterValues.itemSlot} setValue={(itemSlot) => setSearchFilterValues({ ...searchFilterValues, itemSlot })} values={itemSlotValues} />
+                  </div>
+                  <div className="m-1" style={{ width: '220px' }}>
+                    <p className="mb-1">Event</p>
+                    <Dropdown selectedValue={searchFilterValues.itemEvent} setValue={(itemEvent) => setSearchFilterValues({ ...searchFilterValues, itemEvent })} values={itemEventValues} />
+                  </div>
+                  <div className="m-1" style={{ width: '220px' }}>
+                    <p className="mb-1">Rarity</p>
+                    <Dropdown selectedValue={searchFilterValues.itemRarity} setValue={(itemRarity) => setSearchFilterValues({ ...searchFilterValues, itemRarity })} values={tradeableItemRarityValues} />
+                  </div>
                 </div>
-                <div className="m-2">
-                  <CheckboxInput placeholder="Show duplicates only" value={searchFilterValues.duplicatesOnly} setValue={(duplicatesOnly) => setSearchFilterValues({ ...searchFilterValues, duplicatesOnly })} />
+                {inventory.id &&
+                  <>
+                    <div className="m-1" style={{ width: '220px' }}>
+                      <p className="mb-1">Inventory</p>
+                      <Dropdown selectedValue={searchFilterValues.inventory} setValue={(inventory) => setSearchFilterValues({ ...searchFilterValues, inventory })} values={inventoryValues} />
+                    </div>
+                    <div className="m-2">
+                      <CheckboxInput placeholder="Show duplicates only" value={searchFilterValues.duplicatesOnly} setValue={(duplicatesOnly) => setSearchFilterValues({ ...searchFilterValues, duplicatesOnly })} />
+                    </div>
+                  </>
+                }
+                {user.id &&
+                  <div className="m-2">
+                    <CheckboxInput placeholder="Only Items on my wishlist" value={searchFilterValues.wishlistOnly} setValue={(wishlistOnly) => setSearchFilterValues({ ...searchFilterValues, wishlistOnly })} />
+                  </div>
+                }
+                <div className="flex flex-wrap justify-center">
+                  <div className="m-1" style={{ width: '220px' }}>
+                    <p className="mb-1">Order by</p>
+                    <Dropdown selectedValue={searchOrderValues.orderBy} setValue={(orderBy) => setSearchOrderValues({ ...searchOrderValues, orderBy })} values={tradeableOrderByValues} />
+                  </div>
+                  <div className="m-1" style={{ width: '220px' }}>
+                    <p className="mb-1">Show in</p>
+                    <Dropdown selectedValue={searchOrderValues.orderDirection} setValue={(orderDirection) => setSearchOrderValues({ ...searchOrderValues, orderDirection })} values={orderDirectionValues} />
+                  </div>
+                </div>
+                <div className="mt-2">
+                  <ActionButton type="cancel" onClick={clearFilter}>
+                    <Image src="/assets/svgs/bin/white.svg" height="24px" width="24px" alt="Clear filter" />
+                    Clear Filter
+                  </ActionButton>
                 </div>
               </>
             }
-            {user.id &&
-              <div className="m-2">
-                <CheckboxInput placeholder="Only Items on my wishlist" value={searchFilterValues.wishlistOnly} setValue={(wishlistOnly) => setSearchFilterValues({ ...searchFilterValues, wishlistOnly })} />
-              </div>
-            }
-            <div className="flex flex-wrap justify-center">
-              <div className="m-1" style={{ width: '220px' }}>
-                <p className="mb-1">Order by</p>
-                <Dropdown selectedValue={searchOrderValues.orderBy} setValue={(orderBy) => setSearchOrderValues({ ...searchOrderValues, orderBy })} values={tradeableOrderByValues} />
-              </div>
-              <div className="m-1" style={{ width: '220px' }}>
-                <p className="mb-1">Show in</p>
-                <Dropdown selectedValue={searchOrderValues.orderDirection} setValue={(orderDirection) => setSearchOrderValues({ ...searchOrderValues, orderDirection })} values={orderDirectionValues} />
-              </div>
-            </div>
-            <div className="mt-2">
-              <ActionButton type="cancel" onClick={clearFilter}>
-                <Image src="/assets/svgs/bin/white.svg" height="24px" width="24px" alt="Clear filter" />
-                Clear Filter
-              </ActionButton>
-            </div>
             <div className="mt-2">
               {!searchInProgress &&
-                <ActionButton type="proceed" onClick={search}>
+                <ActionButton type="proceed" onClick={() => search()}>
                   <Image src="/assets/svgs/search.svg" height="24px" width="24px" alt="Search" />
                   Search
                 </ActionButton>
