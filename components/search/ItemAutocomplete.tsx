@@ -35,6 +35,7 @@ const ItemAutocomplete: FunctionComponent<Props> = ({ item, setItem }) => {
     if (show) {
       resetLoadedItems();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show]);
 
   return (

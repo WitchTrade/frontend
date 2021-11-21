@@ -26,6 +26,8 @@ const NumberInput: FunctionComponent<Props> = ({ value, setValue, min, max }) =>
       value={value.toString()}
       onChange={(e) => validateValue(parseInt(e.target.value, 10))}
       type="number"
+      min={min}
+      max={max}
     />
   );
 };

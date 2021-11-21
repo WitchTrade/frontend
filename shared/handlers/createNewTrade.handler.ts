@@ -9,22 +9,22 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
 
   const [trade, setTrade] = useState<any>({
     selectedItem: null,
-    quantity: 0,
+    quantity: 1,
     mainPrice: null,
-    mainPriceAmount: 0,
+    mainPriceAmount: 4,
     secondaryPrice: null,
-    secondaryPriceAmount: 0
+    secondaryPriceAmount: 4
   });
 
   useEffect(() => {
     setProgress(0);
     setTrade({
       selectedItem: null,
-      quantity: 0,
+      quantity: 1,
       mainPrice: null,
-      mainPriceAmount: 0,
+      mainPriceAmount: 4,
       secondaryPrice: null,
-      secondaryPriceAmount: 0
+      secondaryPriceAmount: 4
     });
   }, [type]);
 
