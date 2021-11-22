@@ -22,10 +22,10 @@ export function createOffer(params: Partial<Offer>) {
     id: params.id ? params.id : null,
     item: params.item ? params.item : {},
     mainPrice: params.mainPrice ? params.mainPrice : null,
-    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : null,
+    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 0,
     secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
-    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : null,
-    quantity: params.quantity ? params.quantity : null,
+    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 0,
+    quantity: params.quantity ? params.quantity : 0,
   } as Offer;
 }
 
@@ -43,9 +43,9 @@ export function createWish(params: Partial<Wish>) {
     id: params.id ? params.id : null,
     item: params.item ? params.item : {},
     mainPrice: params.mainPrice ? params.mainPrice : null,
-    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : null,
+    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 0,
     secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
-    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : null
+    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 0
   } as Wish;
 }
 
