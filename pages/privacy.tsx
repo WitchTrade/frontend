@@ -12,7 +12,7 @@ const Pricacy: NextPage = () => {
       <Note>Last updated November 22, 2021</Note>
 
       <Section>
-        Thank you for choosing to be part of our community at WitchTrade ("<b>Company</b>" "<b>we</b>," "<b>us</b>," or "<b>our</b>"). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy policy or our practices with regard to your personal information, please contact us at witchtrade.org@gmail.com.
+        Thank you for choosing to be part of our community at WitchTrade (&quot;<b>Company</b>&quot; &quot;<b>we</b>,&quot; &quot;<b>us</b>,&quot; or &quot;<b>our</b>&quot;). We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this privacy policy or our practices with regard to your personal information, please contact us at witchtrade.org@gmail.com.
       </Section>
 
       This privacy policy describes how we might use your information if you:
@@ -27,8 +27,8 @@ const Pricacy: NextPage = () => {
 
       In this privacy policy, if we refer to:
       <ul className="list-disc pl-8">
-        <li>"<b>Website</b>," we are referring to any website of ours that references or links to this policy</li>
-        <li>"<b>Services</b>," we are referring to our Website, and other related services, including any sales, marketing, or events</li>
+        <li>&quot;<b>Website</b>,&quot; we are referring to any website of ours that references or links to this policy</li>
+        <li>&quot;<b>Services</b>,&quot; we are referring to our Website, and other related services, including any sales, marketing, or events</li>
       </ul>
 
       <Section>
@@ -44,81 +44,81 @@ const Pricacy: NextPage = () => {
       <Title level={2}>Table of contents</Title>
 
       <Link href="#1">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             1. What information do we collect?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
       <Link href="#2">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             2. How do we use your information?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
       <Link href="#3">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             3. Will your information be shared with anyone?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
       <Link href="#4">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             4. Is your information transferred internationally?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
       <Link href="#5">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             5. How long do we keep your information?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
       <Link href="#6">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             6. How do we keep your information safe?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
       <Link href="#7">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             7. What are your privacy rights?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
       <Link href="#8">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             8. Do California residends have specific privacy rights?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
       <Link href="#9">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             9. Do we make updates to this notice?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
       <Link href="#10">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             10. How can you contact us about this notice?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
       <Link href="#11">
-        <p>
-          <a className="hover:underline text-wt-accent cursor-pointer">
+        <a className="hover:underline text-wt-accent cursor-pointer">
+          <p>
             11. How can you review, update or delete the data we collect from you?
-          </a>
-        </p>
+          </p>
+        </a>
       </Link>
 
       <Title level={2} id="1">1. What information do we collect?</Title>
@@ -172,7 +172,7 @@ const Pricacy: NextPage = () => {
           Request feedback.We may use your information to request feedback and to contact you about your use of our Website.
         </li>
         <li>
-          To enable user - to - user communications.We may use your information in order to enable user - to - user communications with each user's consent.
+          To enable user - to - user communications.We may use your information in order to enable user - to - user communications with each user&apos;s consent.
         </li>
         <li>
           To manage user accounts.We may use your information for the purposes of managing our account and keeping it in working order.
@@ -236,11 +236,11 @@ const Pricacy: NextPage = () => {
       </Section>
 
       <Section>
-        Our servers are located in Germany.If you are accessing our Website from outside Germany, please be aware that your information may be transferred to, stored, and processed by us in our facilities and by those third parties with whom we may share your personal information(see "<Link href="#3">
+        Our servers are located in Germany.If you are accessing our Website from outside Germany, please be aware that your information may be transferred to, stored, and processed by us in our facilities and by those third parties with whom we may share your personal information(see &quot;<Link href="#3">
           <a className="hover:underline text-wt-accent cursor-pointer">
             3. Will your information be shared with anyone?
           </a>
-        </Link>" above), in and other countries.
+        </Link>&quot; above), in and other countries.
       </Section>
 
       <Section>
@@ -335,7 +335,7 @@ const Pricacy: NextPage = () => {
       </Section>
 
       <Section>
-        California Civil Code Section 1798.83, also known as the "Shine The Light" law, permits our users who are California residents to request and obtain from us, once a year and free of charge, information about categories of personal information(if any) we disclosed to third parties for direct marketing purposes and the names and addresses of all third parties with which we shared personal information in the immediately preceding calendar year.If you are a California resident and would like to make such a request, please submit your request in writing to us using the contact information provided below.
+        California Civil Code Section 1798.83, also known as the &quot;Shine The Light&quot; law, permits our users who are California residents to request and obtain from us, once a year and free of charge, information about categories of personal information(if any) we disclosed to third parties for direct marketing purposes and the names and addresses of all third parties with which we shared personal information in the immediately preceding calendar year.If you are a California resident and would like to make such a request, please submit your request in writing to us using the contact information provided below.
       </Section>
 
       <Section>
@@ -352,7 +352,7 @@ const Pricacy: NextPage = () => {
       </Section>
 
       <Section>
-        We may update this privacy policy from time to time.The updated version will be indicated by an updated "Revised" date and the updated version will be effective as soon as it is accessible.If we make material changes to this privacy policy, we may notify you either by prominently posting a notice of such changes or by directly sending you a notification.We encourage you to review this privacy policy frequently to be informed of how we are protecting your information.
+        We may update this privacy policy from time to time.The updated version will be indicated by an updated &quot;Revised&quot; date and the updated version will be effective as soon as it is accessible.If we make material changes to this privacy policy, we may notify you either by prominently posting a notice of such changes or by directly sending you a notification.We encourage you to review this privacy policy frequently to be informed of how we are protecting your information.
       </Section>
 
       <Title level={2} id="10">10. How can you contact us about this notice?</Title>
@@ -365,7 +365,7 @@ const Pricacy: NextPage = () => {
 
       <Section>
         Based on the applicable laws of your country, you may have the right to request access to the personal information we collect from you, change that information, or delete it in some circumstances.To request to review, update, or delete your personal information, please email us at witchtrade.org@gmail.com.
-        This privacy policy was created using <Link href="https://termly.io/products/privacy-policy-generator/"><a className="hover:underline text-wt-accent cursor-pointer" target="_blank" rel="noreferrer">Termly's Privacy Policy Generator.</a></Link>
+        This privacy policy was created using <Link href="https://termly.io/products/privacy-policy-generator/"><a className="hover:underline text-wt-accent cursor-pointer" target="_blank" rel="noreferrer">Termly&apos;s Privacy Policy Generator.</a></Link>
       </Section>
     </div >
   );

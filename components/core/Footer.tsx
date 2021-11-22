@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import useThemeProvider from '../../shared/providers/theme.provider';
 import KofiButton from '../styles/KofiButton';
 import Tooltip from '../styles/Tooltip';
@@ -30,11 +31,13 @@ const Footer: FunctionComponent = () => {
         </div>
         <KofiButton />
         <div className="text-sm my-1">
-          <a className="hover:underline text-wt-accent cursor-pointer" href="/privacy">
-            Privacy Policy
-          </a> • <a className="hover:underline text-wt-accent cursor-pointer" href="/legal">
-            Legal Disclosure
-          </a>
+          <Link href="/privacy">
+            <a className="hover:underline text-wt-accent cursor-pointer">
+              Privacy Policy
+            </a></Link> • <Link href="/legal"><a className="hover:underline text-wt-accent cursor-pointer">
+              Legal Disclosure
+            </a>
+          </Link>
         </div>
         <p className="font-bold mt-1">Disclaimer</p>
         <p className="text-sm">All material about Witch It belongs to Barrel Roll Games</p>
