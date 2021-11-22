@@ -29,6 +29,13 @@ const Footer: FunctionComponent = () => {
           <p className="text-sm"> by GiyoMoon</p>
         </div>
         <KofiButton />
+        <div className="text-sm my-1">
+          <a className="hover:underline text-wt-accent cursor-pointer" href="/privacy">
+            Privacy Policy
+          </a> • <a className="hover:underline text-wt-accent cursor-pointer" href="/legal">
+            Legal Disclosure
+          </a>
+        </div>
         <p className="font-bold mt-1">Disclaimer</p>
         <p className="text-sm">All material about Witch It belongs to Barrel Roll Games</p>
         <p className="text-sm">This content is not affiliated with, endorsed, sponsored, or specifically approved by Barrel Roll Games and Barrel Roll Games is not responsible for it.</p>
