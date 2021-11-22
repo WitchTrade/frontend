@@ -47,7 +47,7 @@ const Changelog: NextPage = () => {
           Multiple rarities can now be selected in the sync offers dialog/auto sync configuration
         </li>
         <li>
-          "Remove offers that have 0 on stock" option added to offer sync options
+          &quot;Remove offers that have 0 on stock&quot; option added to offer sync options
         </li>
         <li>
           Item filters can now be cleared with one button press
