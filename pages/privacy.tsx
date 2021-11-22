@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
-import Note from '../components/legal/Note';
-import Section from '../components/legal/Section';
-import Title from '../components/legal/Title';
+import Note from '../components/text/Note';
+import Section from '../components/text/Section';
+import Title from '../components/text/Title';
 
 const Privacy: NextPage = () => {
   return (

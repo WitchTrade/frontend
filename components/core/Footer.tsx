@@ -31,15 +31,18 @@ const Footer: FunctionComponent = () => {
         </div>
         <KofiButton />
         <div className="text-sm my-1">
-          <Link href="/privacy">
+          <Link href="/faq">
             <a className="hover:underline text-wt-accent cursor-pointer">
-              Privacy Policy
-            </a></Link> • <Link href="/legal"><a className="hover:underline text-wt-accent cursor-pointer">
-              Legal Disclosure
-            </a>
-          </Link> • <Link href="/changelog"><a className="hover:underline text-wt-accent cursor-pointer">
+              FAQ
+            </a></Link> • <Link href="/changelog"><a className="hover:underline text-wt-accent cursor-pointer">
               Changelog
             </a>
+          </Link> • <Link href="/privacy"><a className="hover:underline text-wt-accent cursor-pointer">
+            Privacy Policy
+          </a>
+          </Link> • <Link href="/legal"><a className="hover:underline text-wt-accent cursor-pointer">
+            Legal Disclosure
+          </a>
           </Link>
         </div>
         <p className="font-bold mt-1">Disclaimer</p>

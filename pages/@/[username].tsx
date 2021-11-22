@@ -80,11 +80,15 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
             <div className="flex justify-center items-center pt-3">
               <p className="text-center text-3xl font-bold text-wt-accent">{profile.displayName}</p>
               {profile.verified &&
-                <Tooltip text="Verified">
-                  <div className="ml-1 h-6 w-6 flex items-center">
-                    <Image src="/assets/svgs/verified.svg" height={24} width={24} alt="Verified" />
-                  </div>
-                </Tooltip>
+                <Link href="/faq">
+                  <a className="flex items-center">
+                    <Tooltip text="Verified">
+                      <div className="ml-1 h-6 w-6 flex items-center">
+                        <Image src="/assets/svgs/verified.svg" height={24} width={24} alt="Verified" />
+                      </div>
+                    </Tooltip>
+                  </a>
+                </Link>
               }
             </div>
             <p className="text-center text-sm -mt-1">@{profile.username}</p>

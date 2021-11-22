@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import Title from '../components/legal/Title';
+import Title from '../components/text/Title';
 
 const Changelog: NextPage = () => {
   return (
@@ -54,6 +54,9 @@ const Changelog: NextPage = () => {
         </li>
         <li>
           Item detail dialog can be opened by pressing on any offer or wishlist item on the profile or manage market view
+        </li>
+        <li>
+          New changelog and FAQ pages
         </li>
       </ul>
       <p><b>Revised:</b></p>
