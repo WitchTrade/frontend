@@ -66,6 +66,10 @@ const Navbar: FunctionComponent = () => {
     serverNotificationService.deleteNotification(notification).subscribe();
   };
 
+  const deleteAllNotifications = () => {
+    serverNotificationService.deleteAllNotifications().subscribe();
+  };
+
   return (
     <div>
       <nav className="bg-wt-surface-dark text-wt-text fixed top-0 w-full z-40">
@@ -156,6 +160,13 @@ const Navbar: FunctionComponent = () => {
                         <div
                           className="origin-top-right absolute right-0 mt-2 w-64 rounded-md bg-wt-surface shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none z-50 overflow-auto max-h-60"
                         >
+                          {notifications.length > 3 &&
+                            <div className="flex justify-center mb-1">
+                              <button className="flex items-center p-1 focus:outline-none rounded-md text-sm cursor-pointer text-wt-light bg-wt-error-dark hover:bg-wt-error" onClick={deleteAllNotifications}>
+                                Delete all
+                              </button>
+                            </div>
+                          }
                           {notifications.sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()).map(notification => (
                             <NotificationItem key={notification.id} notification={notification} deleteNotification={deleteNotification} />
                           ))}

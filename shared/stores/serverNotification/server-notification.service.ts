@@ -70,6 +70,36 @@ export class ServerNotificationService {
     );
   }
 
+  public deleteAllNotifications() {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/notifications`, {
+      method: 'DELETE'
+    }).pipe(
+      tap({
+        next: async res => {
+          if (res.ok) {
+            this.serverNotificationStore.reset();
+          } else {
+            const notification = createNotification({
+              content: res.statusText,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+          }
+        },
+        error: err => {
+          const notification = createNotification({
+            content: err,
+            duration: 5000,
+            type: 'error'
+          });
+          notificationService.addNotification(notification);
+          return of(err);
+        }
+      })
+    );
+  }
+
 }
 
 export const serverNotificationService = new ServerNotificationService(serverNotificationStore);
