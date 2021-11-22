@@ -133,6 +133,7 @@ export enum FILTER_TYPE {
 
 const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] | Wish[], marketType?: MARKET_TYPE, setMarketType?: (marketType: MARKET_TYPE) => void) => {
   const router = useRouter();
+  const username = router.query.username;
 
   const { inventory } = useInventoryProvider();
 
@@ -201,7 +202,13 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       }
       setQueryLoaded(true);
     }
-  }, [router.query]);
+  }, [router.query, queryLoaded]);
+
+  useEffect(() => {
+    if (username) {
+      setQueryLoaded(false);
+    }
+  }, [username]);
 
   useEffect(() => {
     filterItems();

@@ -84,7 +84,7 @@ const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen,
               }
             </div>
             {searchOffer &&
-              <div className="flex justify-center mt-2">
+              <div className="flex justify-center mt-2" onClick={() => setDialogOpen(false)}>
                 <SearchTradeView trade={searchOffer} items={items} prices={prices} type={SEARCH_VIEW.OFFERS} inventory={inventory} />
               </div>
               || !loading &&
