@@ -16,6 +16,8 @@ import { searchService } from '../stores/search/search.service';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import { Item } from '../stores/items/item.model';
 import { itemsQuery } from '../stores/items/items.query';
+import { createNotification } from '../stores/notification/notification.model';
+import { notificationService } from '../stores/notification/notification.service';
 
 export interface SearchTrade {
   offers: SearchOffer[];
@@ -257,6 +259,12 @@ const SearchHandler = () => {
         }
     ).subscribe(async (res) => {
       if (res.ok) {
+        const notification = createNotification({
+          content: 'Search complete',
+          duration: 2500,
+          type: 'success'
+        });
+        notificationService.addNotification(notification);
         const json = await res.json();
         setSearchResult(json);
         setSearchInProgress(false);

@@ -17,6 +17,8 @@ import { MARKET_TYPE } from '../../shared/handlers/market.handler';
 import ItemFilter from '../../components/items/ItemFilter';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import TradeView, { TRADE_TYPE } from '../../components/market/TradeView';
+import ItemDetailDialog from '../../components/items/ItemDetailDialog';
+import ItemsHandler from '../../shared/handlers/items.handler';
 
 interface Props {
   profile: UserInfo;
@@ -48,6 +50,14 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
     setItemFilterValues
   } = FilterHandler(FILTER_TYPE.MARKET, 50, type === MARKET_TYPE.OFFER ? market.offers : market.wishes, type, setType);
 
+  const {
+    dialogOpen,
+    setDialogOpen,
+    selectedItem,
+    openItemDetails,
+    capitalizeFirstLetter
+  } = ItemsHandler();
+
   const getLastUpdated = () => {
     // don't execute this before the app service has loaded
     if (typeof dayjs().to !== 'function') {
@@ -65,6 +75,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
       />
       {profile.username &&
         <>
+          <ItemDetailDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} item={selectedItem} inventory={inventory} capitalizeFirstLetter={capitalizeFirstLetter} />
           <div className="flex flex-col justify-center max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
             <div className="flex justify-center items-center pt-3">
               <p className="text-center text-3xl font-bold text-wt-accent">{profile.displayName}</p>
@@ -191,7 +202,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
             loader={<p></p>}
           >
             {loadedItems.map((item) => (
-              <TradeView key={item.id} type={type === MARKET_TYPE.OFFER ? TRADE_TYPE.PROFILE_OFFER : TRADE_TYPE.PROFILE_WISH} trade={item} inventory={inventory} />
+              <TradeView key={item.id} type={type === MARKET_TYPE.OFFER ? TRADE_TYPE.PROFILE_OFFER : TRADE_TYPE.PROFILE_WISH} trade={item} inventory={inventory} openItemDetails={openItemDetails} />
             ))}
           </InfiniteScroll>
         </>

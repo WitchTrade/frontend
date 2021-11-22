@@ -27,9 +27,10 @@ interface Props {
   prices?: Price[];
   deleteTrade?: (trade: Offer | Wish) => void;
   updateTrade?: (trade: any, finished: () => void) => void;
+  openItemDetails: (item: Item) => void;
 };
 
-const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, deleteTrade, updateTrade }) => {
+const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, deleteTrade, updateTrade, openItemDetails }) => {
   const [item, setItem] = useState<Item>(createItem({}));
 
   const [loading, setLoading] = useState(false);
@@ -58,7 +59,9 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, d
     <>
       {item.id &&
         <div className="flex w-40 flex-col justify-between rounded-lg bg-wt-surface-dark text-center m-1 shadow-md" style={{ borderColor: `#${item.rarityColor}`, borderWidth: '6px' }}>
-          <Image className="rounded-t-lg" src={item.iconUrl} height={160} width={160} alt={item.name} />
+          <div className="cursor-pointer" onClick={() => openItemDetails(item)}>
+            <Image className="rounded-t-lg" src={item.iconUrl} height={160} width={160} alt={item.name} />
+          </div>
           <p className="text-sm p-1 break-words font-semibold">{item.name}</p>
           <div>
             {(type === TRADE_TYPE.MANAGE_OFFER || type === TRADE_TYPE.PROFILE_OFFER) &&

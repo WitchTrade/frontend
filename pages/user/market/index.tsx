@@ -16,6 +16,8 @@ import TradeView, { TRADE_TYPE } from '../../../components/market/TradeView';
 import CreateNewTrade from '../../../components/market/CreateNewTrade';
 import WTDialog from '../../../components/styles/WTDialog';
 import SyncOffersDialog from '../../../components/market/SyncOffersDialog';
+import ItemDetailDialog from '../../../components/items/ItemDetailDialog';
+import ItemsHandler from '../../../shared/handlers/items.handler';
 
 const Market: NextPage = () => {
 
@@ -50,6 +52,14 @@ const Market: NextPage = () => {
     itemFilterValues,
     setItemFilterValues
   } = FilterHandler(FILTER_TYPE.MARKET, 50, type === MARKET_TYPE.OFFER ? market.offers : market.wishes);
+
+  const {
+    dialogOpen,
+    setDialogOpen,
+    selectedItem,
+    openItemDetails,
+    capitalizeFirstLetter
+  } = ItemsHandler();
 
   const [deleteAllDialogOpen, setDeleteAllDialogOpen] = useState(false);
 
@@ -87,6 +97,7 @@ const Market: NextPage = () => {
       <PageHeader title="Manage Market" description={type === MARKET_TYPE.OFFER ? 'Offers' : 'Wishlist'} />
       {market.id &&
         <>
+          <ItemDetailDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} item={selectedItem} inventory={inventory} capitalizeFirstLetter={capitalizeFirstLetter} />
           <div className="flex flex-col justify-center max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-wrap justify-between mb-2 items-end">
               <p className="mx-1">{type === MARKET_TYPE.OFFER ? 'Offerlist' : 'Wishlist'} note</p>
@@ -172,7 +183,8 @@ const Market: NextPage = () => {
                 inventory={inventory}
                 deleteTrade={deleteTrade}
                 updateTrade={updateTrade}
-                prices={prices} />
+                prices={prices}
+                openItemDetails={openItemDetails} />
             ))}
           </InfiniteScroll>
         </>

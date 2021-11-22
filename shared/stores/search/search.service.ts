@@ -17,14 +17,7 @@ export class SearchService {
       }).pipe(
         tap({
           next: async res => {
-            if (res.ok) {
-              const notification = createNotification({
-                content: 'Search complete',
-                duration: 2500,
-                type: 'success'
-              });
-              notificationService.addNotification(notification);
-            } else {
+            if (!res.ok) {
               const notification = createNotification({
                 content: res.statusText,
                 duration: 5000,
