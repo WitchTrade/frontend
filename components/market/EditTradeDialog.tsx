@@ -50,7 +50,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                   <div className="flex flex-col justify-start">
                     <p>Quantity</p>
                   </div>
-                  <NumberInput value={localTrade.quantity} setValue={(quantity) => setLocalTrade({ ...localTrade, quantity })} min={0} />
+                  <NumberInput value={localTrade.quantity} setValue={(quantity) => setLocalTrade({ ...localTrade, quantity })} min={0} max={10000} />
                 </div>
               }
               <div className="flex flex-wrap justify-center">

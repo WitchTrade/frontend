@@ -98,7 +98,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                         <div className="flex flex-col justify-start">
                           <p>Quantity</p>
                         </div>
-                        <NumberInput value={trade.quantity} setValue={(quantity) => setTrade({ ...trade, quantity })} min={0} />
+                        <NumberInput value={trade.quantity} setValue={(quantity) => setTrade({ ...trade, quantity })} min={0} max={10000} />
                       </div>
                     }
                     <div className="flex flex-wrap justify-center">
