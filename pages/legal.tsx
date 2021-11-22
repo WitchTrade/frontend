@@ -4,7 +4,7 @@ import Note from '../components/legal/Note';
 import Section from '../components/legal/Section';
 import Title from '../components/legal/Title';
 
-const Pricacy: NextPage = () => {
+const Legal: NextPage = () => {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <Title level={1}>Legal Disclosure</Title>
@@ -49,4 +49,4 @@ const Pricacy: NextPage = () => {
   );
 };
 
-export default Pricacy;
+export default Legal;
