@@ -41,7 +41,7 @@ const Register: NextPage = () => {
       <PageHeader title="Register" description="Register an account on WitchTrade and start creating offers!" />
       <form>
         <div className="m-1 mt-4">
-          <p className="text-center text-sm">Username: <br />- <span className="text-wt-accent-light">5-20</span> characters long<br />- only <span className="text-wt-accent-light">a-z</span>, <span className="text-wt-accent-light">0-9</span>, <span className="text-wt-accent-light">_</span> and <span className="text-wt-accent-light">.</span> allowed</p>
+          <p className="text-center text-sm">Username: <br />- <span className="text-wt-accent-light">4-20</span> characters long<br />- only <span className="text-wt-accent-light">a-z</span>, <span className="text-wt-accent-light">0-9</span>, <span className="text-wt-accent-light">_</span> and <span className="text-wt-accent-light">.</span> allowed</p>
           <TextInput type="text" placeholder="Username" value={username} setValue={setUsername} required={true} svgPath={`/assets/svgs/userbadge/${theme?.type === 'light' ? 'black' : 'white'}.svg`} autocompleteValue="username" />
         </div>
         <div className="m-1 mt-4">
