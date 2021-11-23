@@ -8,7 +8,7 @@ const Changelog: NextPage = () => {
       <div className="mb-2">
         <Title level={1}>Changelog</Title>
       </div>
-      <Title level={2}>Version 1.0.0 (xx.xx.2021)</Title>
+      <Title level={2}>Version 1.0.0 (24.11.2021)</Title>
       <p><b>New Features:</b></p>
       <ul className="list-disc pl-8">
         <li>
