@@ -11,6 +11,10 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
+      - name: Get branch
+        id: get_branch
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       -
         name: Docker meta
         id: meta
@@ -18,7 +22,7 @@ jobs:
         with:
           images: ghcr.io/witchtrade/frontend
           tags: |
-            latest=${{ branch == 'main' }}
+            latest=${{ steps.get_branch.outputs.branch == 'main' }}
             type=raw,value={{branch}}-{{sha}}
       -
         name: Login to GitHub Container Registry
