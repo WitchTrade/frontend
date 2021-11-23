@@ -22,7 +22,7 @@ jobs:
         with:
           images: ghcr.io/witchtrade/frontend
           tags: |
-            latest=${{ steps.get_branch.outputs.branch == 'main' }}
+            latest=steps.get_branch.outputs.branch == 'main'
             type=raw,value={{branch}}-{{sha}}
       -
         name: Login to GitHub Container Registry
