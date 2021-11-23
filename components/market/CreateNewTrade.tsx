@@ -96,7 +96,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                     {type === MARKET_TYPE.OFFER &&
                       <div className="flex justify-between items-center m-2 w-60">
                         <div className="flex flex-col justify-start">
-                          <p>Quantity</p>
+                          <p>In stock</p>
                         </div>
                         <NumberInput value={trade.quantity} setValue={(quantity) => setTrade({ ...trade, quantity })} min={0} max={10000} />
                       </div>

@@ -52,7 +52,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
               {type === TRADE_TYPE.MANAGE_OFFER &&
                 <div className="flex justify-between items-center m-2 w-60">
                   <div className="flex flex-col justify-start">
-                    <p>Quantity</p>
+                    <p>In stock</p>
                   </div>
                   <NumberInput value={localTrade.quantity} setValue={(quantity) => setLocalTrade({ ...localTrade, quantity })} min={0} max={10000} />
                 </div>
