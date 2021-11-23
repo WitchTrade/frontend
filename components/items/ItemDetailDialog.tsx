@@ -30,9 +30,7 @@ const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen,
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!dialogOpen) {
-      setSearchOffer(undefined);
-    }
+    setSearchOffer(undefined);
     if (dialogOpen && item && item.tradeable) {
       setLoading(true);
       searchService.search({
@@ -83,15 +81,15 @@ const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen,
                 <Chip title="Event" text={itemEventValues.find(iev => iev.key === item.tagEvent)?.displayName} />
               }
             </div>
-            {searchOffer &&
+            {searchOffer && item.tradeable &&
               <div className="flex justify-center mt-2" onClick={() => setDialogOpen(false)}>
                 <SearchTradeView trade={searchOffer} items={items} prices={prices} type={SEARCH_VIEW.OFFERS} inventory={inventory} />
               </div>
-              || !loading &&
+              || !loading && item.tradeable &&
               <div className="flex justify-center mt-2">
                 <p>No offers for <span className="text-wt-accent">{item.name}</span> found.</p>
               </div>
-              ||
+              || item.tradeable &&
               <Loading text="Loading offers" />
             }
             <div className="self-center mt-4">
