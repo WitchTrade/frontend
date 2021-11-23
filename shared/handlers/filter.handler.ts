@@ -22,13 +22,13 @@ export interface ItemFilterValues {
   duplicatesOnly: boolean;
 }
 
-export function createDefaultItemFilter(): ItemFilterValues {
+export function createDefaultItemFilter(type: FILTER_TYPE): ItemFilterValues {
   return {
     searchString: '',
     tradeableOnly: false,
     newOnly: false,
     orderBy: orderByValues[0],
-    orderDirection: orderDirectionValues[0],
+    orderDirection: type === FILTER_TYPE.MARKET ? orderDirectionValues[1] : orderDirectionValues[0],
     itemCharacter: itemCharacterValues[0],
     itemSlot: itemSlotValues[0],
     itemEvent: itemEventValues[0],
@@ -145,7 +145,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
   const [filteredItems, setFilteredItems] = useState<Item[] | Offer[] | Wish[]>([]);
   const [loadedItems, setLoadedItems] = useState<Item[] | Offer[] | Wish[]>([]);
 
-  const [itemFilterValues, setItemFilterValues] = useState<ItemFilterValues>(createDefaultItemFilter());
+  const [itemFilterValues, setItemFilterValues] = useState<ItemFilterValues>(createDefaultItemFilter(type));
 
   useEffect(() => {
     if ((!queryLoaded || usernameChanged) && router.isReady && type !== FILTER_TYPE.NEWTRADE) {
@@ -190,7 +190,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
         tradeableOnly,
         newOnly,
         orderBy: orderBy ? orderBy : orderByValues[0],
-        orderDirection: orderDirection ? orderDirection : orderDirectionValues[0],
+        orderDirection: orderDirection ? orderDirection : type === FILTER_TYPE.MARKET ? orderDirectionValues[1] : orderDirectionValues[0],
         itemCharacter: itemCharacter ? itemCharacter : itemCharacterValues[0],
         itemSlot: itemSlot ? itemSlot : itemSlotValues[0],
         itemEvent: itemEvent ? itemEvent : itemEventValues[0],
@@ -231,7 +231,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       tradeableOnly: itemFilterValues.tradeableOnly !== false ? itemFilterValues.tradeableOnly : undefined,
       newOnly: itemFilterValues.newOnly !== false ? itemFilterValues.newOnly : undefined,
       orderBy: itemFilterValues.orderBy.key !== orderByValues[0].key ? itemFilterValues.orderBy.key : undefined,
-      orderDirection: itemFilterValues.orderDirection.key !== orderDirectionValues[0].key ? itemFilterValues.orderDirection.key : undefined,
+      orderDirection: (type === FILTER_TYPE.MARKET && itemFilterValues.orderDirection.key === orderDirectionValues[0].key) || (type !== FILTER_TYPE.MARKET && itemFilterValues.orderDirection.key === orderDirectionValues[1].key) ? itemFilterValues.orderDirection.key : undefined,
       itemCharacter: itemFilterValues.itemCharacter.key !== itemCharacterValues[0].key ? itemFilterValues.itemCharacter.key : undefined,
       itemSlot: itemFilterValues.itemSlot.key !== itemSlotValues[0].key ? itemFilterValues.itemSlot.key : undefined,
       itemEvent: itemFilterValues.itemEvent.key !== itemEventValues[0].key ? itemFilterValues.itemEvent.key : undefined,
@@ -302,11 +302,11 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
           if (two > one) {
             returnValue = -1;
           }
-          if (one === two) {
-            returnValue = a.id - b.id;
-          }
           if (itemFilterValues.orderDirection.key === 'desc') {
             returnValue *= -1;
+          }
+          if (one === two) {
+            returnValue = a.id - b.id;
           }
           return returnValue;
         });

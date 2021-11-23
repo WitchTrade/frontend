@@ -23,7 +23,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
   const [filterOpen, setFilterOpen] = useState(initialOpen);
 
   const clearFilter = () => {
-    setItemFilterValues(createDefaultItemFilter());
+    setItemFilterValues(createDefaultItemFilter(type));
   };
 
   return (
