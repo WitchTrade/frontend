@@ -12,9 +12,6 @@ WitchTrade (https://witchtrade.org) is a trading website for the hide and seek g
 
 This is the frontend code of WitchTrade. If you want to see the backend, visit [this](https://github.com/WitchTrade/backend) repository.
 
-## Rewrite Roadmap
-I'm in the process of rewriting the WitchTrade frontend. View the current progress [here](rewrite.md).
-
 ## Features
 **Search**
 
