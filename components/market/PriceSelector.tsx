@@ -26,7 +26,7 @@ const PriceSelector: FunctionComponent<Props> = ({ type, prices, price, setPrice
           <div className="h-full flex flex-col justify-between">
             <p className="text-2xl font-medium leading-6 text-center">Select a price</p>
             <div className="flex flex-wrap justify-center items-center mt-3">
-              {prices.filter(p => !excludeIds.includes(p.id) && (type === MARKET_TYPE.OFFER && p.forOffers) || (type === MARKET_TYPE.WISH && p.forWishes)).map(p => (
+              {prices.filter(p => !excludeIds.includes(p.id) && ((type === MARKET_TYPE.OFFER && p.forOffers) || (type === MARKET_TYPE.WISH && p.forWishes))).map(p => (
                 <Tooltip key={p.id} text={p.displayName}>
                   <div className={`m-1 h-14 w-14 rounded-lg p-1 cursor-pointer ${price?.id === p.id ? 'bg-wt-accent' : ''}`} onClick={() => { setPrice(p); setDialogOpen(false); }}>
                     <Image className="rounded-lg" src={`/assets/images/prices/${p.priceKey}.png`} height={56} width={56} quality={100} alt={p.displayName} />

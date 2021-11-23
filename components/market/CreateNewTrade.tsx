@@ -114,7 +114,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                             <div className="flex flex-col justify-start">
                               <p>Amount of {trade.mainPrice.displayName}</p>
                             </div>
-                            <NumberInput value={trade.mainPriceAmount} setValue={(mainPriceAmount) => setTrade({ ...trade, mainPriceAmount })} min={0} max={99} />
+                            <NumberInput value={trade.mainPriceAmount} setValue={(mainPriceAmount) => setTrade({ ...trade, mainPriceAmount })} min={1} max={99} />
                           </div>
                         }
                       </div>
@@ -138,7 +138,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                               <div className="flex flex-col justify-start">
                                 <p>Amount of {trade.secondaryPrice.displayName}</p>
                               </div>
-                              <NumberInput value={trade.secondaryPriceAmount} setValue={(secondaryPriceAmount) => setTrade({ ...trade, secondaryPriceAmount })} min={0} max={99} />
+                              <NumberInput value={trade.secondaryPriceAmount} setValue={(secondaryPriceAmount) => setTrade({ ...trade, secondaryPriceAmount })} min={1} max={99} />
                             </div>
                           }
                         </div>

@@ -1,4 +1,4 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import WTDialog from '../styles/WTDialog';
 import ActionButton from '../styles/ActionButton';
@@ -26,6 +26,10 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLocalTrade(selectedTrade);
+  }, [dialogOpen]);
 
   const finished = () => {
     setDialogOpen(false);
@@ -66,7 +70,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                       <div className="flex flex-col justify-start">
                         <p>Amount of {localTrade.mainPrice.displayName}</p>
                       </div>
-                      <NumberInput value={localTrade.mainPriceAmount ? localTrade.mainPriceAmount : 0} setValue={(mainPriceAmount) => setLocalTrade({ ...localTrade, mainPriceAmount })} min={0} max={99} />
+                      <NumberInput value={localTrade.mainPriceAmount ? localTrade.mainPriceAmount : 4} setValue={(mainPriceAmount) => setLocalTrade({ ...localTrade, mainPriceAmount })} min={1} max={99} />
                     </div>
                   }
                 </div>
@@ -90,7 +94,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                         <div className="flex flex-col justify-start">
                           <p>Amount of {localTrade.secondaryPrice.displayName}</p>
                         </div>
-                        <NumberInput value={localTrade.secondaryPriceAmount ? localTrade.secondaryPriceAmount : 0} setValue={(secondaryPriceAmount) => setLocalTrade({ ...localTrade, secondaryPriceAmount })} min={0} max={99} />
+                        <NumberInput value={localTrade.secondaryPriceAmount ? localTrade.secondaryPriceAmount : 1} setValue={(secondaryPriceAmount) => setLocalTrade({ ...localTrade, secondaryPriceAmount })} min={1} max={99} />
                       </div>
                     }
                   </div>
