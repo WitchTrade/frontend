@@ -51,16 +51,16 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
             <div className="flex justify-between my-2">
               <div className="flex flex-col justify-start">
                 <p>Default price</p>
-                <p className="text-sm italic">(Only for new offers,</p>
-                <p className="text-sm italic">will be ingredients of the matching rarity)</p>
+                <p className="text-xs sm:text-sm italic">(Only for new offers,</p>
+                <p className="text-xs sm:text-sm italic">will be ingredients of the matching rarity)</p>
               </div>
               <NumberInput value={localSyncSettings.ms_defaultPriceItem} setValue={(ms_defaultPriceItem) => setLocalSyncSettings({ ...localSyncSettings, ms_defaultPriceItem })} min={0} max={99} />
             </div>
             <div className="flex justify-between my-2">
               <div className="flex flex-col justify-start">
                 <p>Default price for recipes</p>
-                <p className="text-sm italic">(Only for new offers,</p>
-                <p className="text-sm italic">will be ingredients of the matching rarity)</p>
+                <p className="text-xs sm:text-sm italic">(Only for new offers,</p>
+                <p className="text-xs sm:text-sm italic">will be ingredients of the matching rarity)</p>
               </div>
               <NumberInput value={localSyncSettings.ms_defaultPriceRecipe} setValue={(ms_defaultPriceRecipe) => setLocalSyncSettings({ ...localSyncSettings, ms_defaultPriceRecipe })} min={0} max={99} />
             </div>

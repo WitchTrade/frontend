@@ -140,6 +140,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
   const { items } = useItemsProvider();
 
   const [queryLoaded, setQueryLoaded] = useState(false);
+  const [profileChanged, setProfileChanged] = useState(true);
 
   const [filteredItems, setFilteredItems] = useState<Item[] | Offer[] | Wish[]>([]);
   const [loadedItems, setLoadedItems] = useState<Item[] | Offer[] | Wish[]>([]);
@@ -147,7 +148,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
   const [itemFilterValues, setItemFilterValues] = useState<ItemFilterValues>(createDefaultItemFilter());
 
   useEffect(() => {
-    if (!queryLoaded && router.isReady && type !== FILTER_TYPE.NEWTRADE) {
+    if (!queryLoaded && profileChanged && router.isReady && type !== FILTER_TYPE.NEWTRADE) {
       const searchString = typeof router.query.searchString === 'string' ? router.query.searchString : '';
       const tradeableOnly = typeof router.query.tradeableOnly === 'string' && router.query.tradeableOnly === 'true' ? true : false;
       const newOnly = typeof router.query.newOnly === 'string' && router.query.newOnly === 'true' ? true : false;
@@ -201,12 +202,13 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
         setMarketType(newMarketType);
       }
       setQueryLoaded(true);
+      setProfileChanged(true);
     }
   }, [router.query, queryLoaded]);
 
   useEffect(() => {
     if (username) {
-      setQueryLoaded(false);
+      setProfileChanged(true);
     }
   }, [username]);
 

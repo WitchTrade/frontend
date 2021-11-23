@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import Link from 'next/link';
 import Title from '../components/text/Title';
 
 const Changelog: NextPage = () => {
@@ -14,7 +15,7 @@ const Changelog: NextPage = () => {
           Different ingredients can now be demanded for offers and wishlist items
         </li>
         <li>
-          Verified Profiles. Profiles can now get a verification badge. For more information, visit the FAQ
+          Verified Profiles. Profiles can now get a verification badge. For more information, visit the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link>
         </li>
         <li>
           Custom website themes! Registered users can create their own themes

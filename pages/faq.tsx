@@ -65,7 +65,7 @@ const FAQ: NextPage = () => {
         </li>
       </ul>
       <Section>
-        After you made sure that you fulfil all these requirements, you have to send your WitchTrade profile link into the verification channel on the  <Link href="https://discord.gg/wm7sTW8MJq"><a className="hover:underline text-wt-accent cursor-pointer" target="_blank" rel="noreferrer">WitchTrade Discord</a></Link>.
+        After you made sure that you fulfil all these requirements, you have to send your WitchTrade profile link into the verification channel on the <Link href="https://discord.gg/wm7sTW8MJq"><a className="hover:underline text-wt-accent cursor-pointer" target="_blank" rel="noreferrer">WitchTrade Discord</a></Link>.
       </Section>
     </div>
   );
