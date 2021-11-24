@@ -22,10 +22,10 @@ export function createOffer(params: Partial<Offer>) {
     id: params.id ? params.id : null,
     item: params.item ? params.item : {},
     mainPrice: params.mainPrice ? params.mainPrice : null,
-    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 0,
+    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 1,
     secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
-    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 0,
-    quantity: params.quantity ? params.quantity : 0,
+    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 1,
+    quantity: params.quantity ? params.quantity : 0
   } as Offer;
 }
 
@@ -43,10 +43,22 @@ export function createWish(params: Partial<Wish>) {
     id: params.id ? params.id : null,
     item: params.item ? params.item : {},
     mainPrice: params.mainPrice ? params.mainPrice : null,
-    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 0,
+    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 1,
     secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
-    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 0
+    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 1
   } as Wish;
+}
+
+export function createTrade(params: Partial<any>) {
+  return {
+    id: params.id ? params.id : null,
+    item: params.item ? params.item : {},
+    mainPrice: params.mainPrice ? params.mainPrice : null,
+    mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 1,
+    secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
+    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 1,
+    quantity: params.quantity ? params.quantity : 0
+  };
 }
 
 export interface Price {
