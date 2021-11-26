@@ -115,7 +115,7 @@ const Gameservers: NextPage = () => {
                       <Divider />
                     </div>
                     <div className="flex flex-wrap justify-center">
-                      {watchlist.sort().map((player, i) => (
+                      {watchlist.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())).map((player, i) => (
                         <div key={i} className="w-52 flex justify-between align-middle border border-wt-accent-light rounded-md p-1 m-1">
                           <div className="flex items-center">
                             <p className="text-sm ml-1">{player}</p>

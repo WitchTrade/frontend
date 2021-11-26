@@ -21,16 +21,16 @@ const Server: FunctionComponent<Props> = ({ server, watchlist, ownPlayer, addPla
   return (
     <div className="relative w-full">
       <div className={`flex justify-between p-1 px-2 cursor-pointer border-wt-accent-light ${show ? 'rounded-t-md border-l-2 border-t-2 border-r-2' : 'rounded-md border'}`} ref={toggleRef}>
-        <p><span className="font-bold">{server.name}</span> | {server.gameMode}</p>
+        <p><span className="font-bold">{server.name}</span> | <span className="text-sm">{server.gameMode}</span></p>
         <div className="flex items-center">
           {(server.players &&
             <>
               {ownPlayer && server.players.find(player => player.name === ownPlayer) &&
-                <div className="rounded-full text-center flex justify-center items-center mx-1 px-1 bg-wt-accent-light" style={{ minWidth: '20px', height: '20px' }}>
+                <div className="rounded-full text-center flex justify-center items-center px-1 bg-wt-accent-light" style={{ minWidth: '20px', height: '20px' }}>
                   <p className="font-bold text-sm text-wt-light">!</p>
                 </div>}
               {server.players.find(player => watchlist.includes(player.name)) &&
-                <div className="rounded-full text-center flex justify-center items-center mx-1 px-1 -ml-2 bg-wt-accent" style={{ minWidth: '20px', height: '20px' }}>
+                <div className="rounded-full text-center flex justify-center items-center mx-1 px-1 bg-wt-accent" style={{ minWidth: '20px', height: '20px' }}>
                   <p className="font-bold text-sm text-wt-light">{server.players.filter(player => watchlist.includes(player.name)).length}</p>
                 </div>}
             </>) ||
