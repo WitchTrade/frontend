@@ -75,9 +75,6 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                   <p className="mb-1">Inventory</p>
                   <Dropdown selectedValue={itemFilterValues.inventory} setValue={(inventory) => setItemFilterValues({ ...itemFilterValues, inventory })} values={inventoryValues} />
                 </div>
-                <div className="m-2">
-                  <CheckboxInput placeholder="Show duplicates only" value={itemFilterValues.duplicatesOnly} setValue={(duplicatesOnly) => setItemFilterValues({ ...itemFilterValues, duplicatesOnly })} />
-                </div>
               </>
             }
             <div className="flex flex-wrap justify-center">

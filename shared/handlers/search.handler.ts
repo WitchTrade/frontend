@@ -58,7 +58,6 @@ export interface SearchFilterValues {
   itemEvent: DropdownValue;
   itemRarity: DropdownValue;
   inventory: DropdownValue;
-  duplicatesOnly: boolean;
   wishlistOnly: boolean;
 }
 
@@ -74,7 +73,6 @@ export function createDefaultSearchFilter(): SearchFilterValues {
     itemEvent: itemEventValues[0],
     itemRarity: tradeableItemRarityValues[0],
     inventory: inventoryValues[0],
-    duplicatesOnly: false,
     wishlistOnly: false
   };
 }
@@ -146,8 +144,6 @@ const SearchHandler = () => {
         inventory = inventoryValues.find(i => i.key === router.query.inventory);
       }
 
-      const duplicatesOnly = typeof router.query.duplicatesOnly === 'string' && router.query.duplicatesOnly === 'true' ? true : false;
-
       setSearchFilterValues({
         item: itemId ? items.find(i => i.id === itemId) : undefined,
         itemCharacter: itemCharacter ? itemCharacter : itemCharacterValues[0],
@@ -155,7 +151,6 @@ const SearchHandler = () => {
         itemEvent: itemEvent ? itemEvent : itemEventValues[0],
         itemRarity: itemRarity ? itemRarity : tradeableItemRarityValues[0],
         inventory: inventory ? inventory : inventoryValues[0],
-        duplicatesOnly,
         wishlistOnly
       });
       setSearchOrderValues({
@@ -170,7 +165,6 @@ const SearchHandler = () => {
         itemEvent ||
         itemRarity ||
         inventory ||
-        duplicatesOnly ||
         wishlistOnly
       ) {
         search({
@@ -180,7 +174,6 @@ const SearchHandler = () => {
           itemEvent: itemEvent ? itemEvent : itemEventValues[0],
           itemRarity: itemRarity ? itemRarity : tradeableItemRarityValues[0],
           inventory: inventory ? inventory : inventoryValues[0],
-          duplicatesOnly,
           wishlistOnly
         });
       }
@@ -216,7 +209,6 @@ const SearchHandler = () => {
       itemEvent: searchFilterValues.itemEvent.key !== itemEventValues[0].key ? searchFilterValues.itemEvent.key : undefined,
       itemRarity: searchFilterValues.itemRarity.key !== tradeableItemRarityValues[0].key ? searchFilterValues.itemRarity.key : undefined,
       inventory: searchFilterValues.inventory.key !== inventoryValues[0].key ? searchFilterValues.inventory.key : undefined,
-      duplicatesOnly: searchFilterValues.duplicatesOnly !== false ? searchFilterValues.duplicatesOnly : undefined,
       wishlistOnly: searchFilterValues.wishlistOnly !== false ? searchFilterValues.wishlistOnly : undefined
     };
 

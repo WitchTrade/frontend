@@ -19,7 +19,6 @@ export interface ItemFilterValues {
   itemEvent: DropdownValue;
   itemRarity: DropdownValue;
   inventory: DropdownValue;
-  duplicatesOnly: boolean;
 }
 
 export function createDefaultItemFilter(type: FILTER_TYPE): ItemFilterValues {
@@ -33,8 +32,7 @@ export function createDefaultItemFilter(type: FILTER_TYPE): ItemFilterValues {
     itemSlot: itemSlotValues[0],
     itemEvent: itemEventValues[0],
     itemRarity: itemRarityValues[0],
-    inventory: inventoryValues[0],
-    duplicatesOnly: false
+    inventory: inventoryValues[0]
   };
 }
 
@@ -122,6 +120,7 @@ export const tradeableItemRarityValues: DropdownValue[] = [
 export const inventoryValues: DropdownValue[] = [
   { key: 'any', displayName: 'Any' },
   { key: 'owned', displayName: 'Owned' },
+  { key: 'duplicateown', displayName: 'Duplicates only' },
   { key: 'notowned', displayName: 'Not owned' }
 ];
 
@@ -183,8 +182,6 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
         inventory = inventoryValues.find(i => i.key === router.query.inventory);
       }
 
-      const duplicatesOnly = typeof router.query.duplicatesOnly === 'string' && router.query.duplicatesOnly === 'true' ? true : false;
-
       setItemFilterValues({
         searchString,
         tradeableOnly,
@@ -195,8 +192,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
         itemSlot: itemSlot ? itemSlot : itemSlotValues[0],
         itemEvent: itemEvent ? itemEvent : itemEventValues[0],
         itemRarity: itemRarity ? itemRarity : itemRarityValues[0],
-        inventory: inventory ? inventory : inventoryValues[0],
-        duplicatesOnly
+        inventory: inventory ? inventory : inventoryValues[0]
       });
       if (setMarketType) {
         setMarketType(newMarketType);
@@ -214,7 +210,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
 
   useEffect(() => {
     filterItems();
-  }, [items, trades]);
+  }, [items, trades, inventory]);
 
   useEffect(() => {
     setLoadedItems(filteredItems.slice(0, loadedItems.length > itemsToLoad ? loadedItems.length : itemsToLoad));
@@ -237,7 +233,6 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       itemEvent: itemFilterValues.itemEvent.key !== itemEventValues[0].key ? itemFilterValues.itemEvent.key : undefined,
       itemRarity: itemFilterValues.itemRarity.key !== itemRarityValues[0].key ? itemFilterValues.itemRarity.key : undefined,
       inventory: itemFilterValues.inventory.key !== inventoryValues[0].key ? itemFilterValues.inventory.key : undefined,
-      duplicatesOnly: itemFilterValues.duplicatesOnly !== false ? itemFilterValues.duplicatesOnly : undefined,
       username: router.query.username ? router.query.username as string : undefined,
       marketType: marketType ? marketType.toString() : undefined
     };
@@ -260,8 +255,14 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       const itemEvent = itemFilterValues.itemEvent.key !== 'any' ? itemFilterValues.itemEvent.key === 'none' ? item.tagEvent === null : item.tagEvent === itemFilterValues.itemEvent.key : true;
       const itemRarity = itemFilterValues.itemRarity.key !== 'any' ? item.tagRarity === itemFilterValues.itemRarity.key : true;
 
-      const inventoryFilter = inventory.id && itemFilterValues.inventory.key !== 'any' ? itemFilterValues.inventory.key === 'owned' ? inventory.inventoryItems.find(ii => ii.item.id === item.id) : !inventory.inventoryItems.find(ii => ii.item.id === item.id) && item.tagSlot !== 'ingredient' && item.tagSlot !== 'recipe' : true;
-      const duplicatesOnly = itemFilterValues.duplicatesOnly ? inventory.inventoryItems.find(ii => ii.item.id === item.id && ii.amount > 1) && item.tagSlot !== 'ingredient' : true;
+      let inventoryFilter = true;
+      if (inventory.id && itemFilterValues.inventory.key == 'owned') {
+        inventoryFilter = inventory.inventoryItems.some(ii => ii.item.id === item.id);
+      } else if (inventory.id && itemFilterValues.inventory.key == 'duplicateown') {
+        inventoryFilter = inventory.inventoryItems.some(ii => ii.item.id === item.id && ii.amount > 1);
+      } else if (inventory.id && itemFilterValues.inventory.key == 'notowned') {
+        inventoryFilter = !inventory.inventoryItems.some(ii => ii.item.id === item.id) && item.tagSlot !== 'ingredient' && item.tagSlot !== 'recipe';
+      }
 
       return searchString &&
         tradeableOnly &&
@@ -270,8 +271,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
         itemSlot &&
         itemEvent &&
         itemRarity &&
-        inventoryFilter &&
-        duplicatesOnly;
+        inventoryFilter;
     });
     if (type === FILTER_TYPE.MARKET) {
       if (trades) {

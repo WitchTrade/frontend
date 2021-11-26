@@ -71,9 +71,6 @@ const SearchFilter: FunctionComponent<Props> = ({ searchFilterValues, setSearchF
                       <p className="mb-1">Inventory</p>
                       <Dropdown selectedValue={searchFilterValues.inventory} setValue={(inventory) => setSearchFilterValues({ ...searchFilterValues, inventory })} values={inventoryValues} />
                     </div>
-                    <div className="m-2">
-                      <CheckboxInput placeholder="Show duplicates only" value={searchFilterValues.duplicatesOnly} setValue={(duplicatesOnly) => setSearchFilterValues({ ...searchFilterValues, duplicatesOnly })} />
-                    </div>
                   </>
                 }
                 {user.id &&
