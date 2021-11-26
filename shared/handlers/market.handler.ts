@@ -44,10 +44,10 @@ const MarketHandler = () => {
       marketSub = marketsService.fetchOwnMarket().subscribe(async (res) => {
         if (res.ok) {
           const market = await res.json();
-          if (type == MARKET_TYPE.OFFER && market.offerlistNote) {
-            setLocalNote(market.offerlistNote);
-          } else if (market.wishlistNote) {
-            setLocalNote(market.wishlistNote);
+          if (type == MARKET_TYPE.OFFER) {
+            setLocalNote(market.offerlistNote ? market.offerlistNote : '');
+          } else {
+            setLocalNote(market.marketlistNote ? market.marketlistNote : '');
           }
           setMarket(market);
         }
