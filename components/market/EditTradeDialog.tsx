@@ -29,6 +29,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
 
   useEffect(() => {
     setLocalTrade(createTrade(selectedTrade));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dialogOpen]);
 
   const finished = () => {
