@@ -29,7 +29,7 @@ const ItemView: FunctionComponent<Props> = ({ item, inventory, openItemDetails }
           <p className="text-wt-light text-sm bg-wt-error">Not tradeable</p>
         }
         {owned &&
-          <p className="text-wt-text text-sm bg-wt-accent">Owned {amount > 1 ? amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : ''}</p>
+          <p className="text-wt-text text-sm bg-wt-accent">Owned <span className="whitespace-nowrap">{amount > 1 ? amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : ''}</span></p>
         }
       </div>
     </div>

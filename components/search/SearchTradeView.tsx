@@ -125,7 +125,7 @@ const SearchTradeView: FunctionComponent<Props> = ({ trade, items, prices, type,
               <Image className="rounded-lg" src={item.iconUrl} height={120} width={120} alt={item.name} />
             </div>
             {inventory.showInTrading && owned &&
-              <p className="text-wt-text text-sm bg-wt-success-dark p-1 rounded-md">You own {amount > 1 ? amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : `${amount}x`}</p>
+              <p className="text-wt-text text-sm bg-wt-success-dark p-1 rounded-md">You own <span className="whitespace-nowrap">{amount > 1 ? amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : `${amount}x`}</span></p>
             }
             {inventory.showInTrading && !owned &&
               <div className="flex justify-center items-center bg-wt-error-dark p-1 rounded-md">
