@@ -15,6 +15,37 @@ const Changelog: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={2}>Version 1.0.1 (27.11.2021)</Title>
+        <p><b>Changes:</b></p>
+        <ul className="list-disc pl-8">
+          <li>
+            Moved the "Duplicates only" checkbox into the inventory dropdown in the filter
+          </li>
+          <li>
+            Added missing metadata for /faq, /changelog, /privacy and /legal
+          </li>
+        </ul>
+        <p><b>Bug fixes:</b></p>
+        <ul className="list-disc pl-8">
+          <li>
+            Fixed "wishlist only" search not working when there are no items in your wishlist
+          </li>
+          <li>
+            Fixed "duplicates only" search not working
+          </li>
+          <li>
+            Fixed sorting of game server watchlist being case sensitive
+          </li>
+          <li>
+            Fixed manage market bug that caused the wishlist note to appear in the offerlist when there is only a wishlist note set
+          </li>
+          <li>
+            Fixed some inventory item count's wrapping to a next line in different item views
+          </li>
+          <li>
+            Fixed some icons overlapping in the game servers view
+          </li>
+        </ul>
         <Title level={2}>Version 1.0.0 (24.11.2021)</Title>
         <p><b>New Features:</b></p>
         <ul className="list-disc pl-8">
