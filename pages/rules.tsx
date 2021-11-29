@@ -51,13 +51,13 @@ const Legal: NextPage = () => {
             <b>Botting/Scripting</b> - Using bots/scripts to automate actions
           </li>
           <li>
-            <b>Non Witch It Trades</b> - Offering or looking for other items/things which are not Witch It items, like CSGO skins.
+            <b>Non Witch It Trades</b> - Offering or looking for other items/things which are not Witch It items, like CSGO skins
           </li>
           <li>
             <b>Code trades</b> – Offering Witch It codes for items or offering items for codes. You are only allowed to trade items that you have in your inventory, and you are not allowed to ask for anything else except Witch It items
           </li>
           <li>
-            <b>Ignored Warnings</b> - Failure to comply with Formal Warnings from staff.
+            <b>Ignored Warnings</b> - Failure to comply with formal warnings from staff
           </li>
         </ul>
       </div>
