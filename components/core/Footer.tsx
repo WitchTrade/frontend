@@ -37,6 +37,9 @@ const Footer: FunctionComponent = () => {
             </a></Link> • <Link href="/changelog"><a className="hover:underline text-wt-accent cursor-pointer">
               Changelog
             </a>
+          </Link> • <Link href="/rules"><a className="hover:underline text-wt-accent cursor-pointer">
+            Rules
+          </a>
           </Link> • <Link href="/privacy"><a className="hover:underline text-wt-accent cursor-pointer">
             Privacy Policy
           </a>

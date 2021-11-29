@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import Link from 'next/link';
 import CustomHeader from '../components/core/CustomHeader';
 import LoginNav from '../components/navs/LoginNav';
 import NavbarLink from '../components/styles/NavbarLink';
@@ -27,6 +28,8 @@ const Register: NextPage = () => {
     setSteamTradeLink,
     acceptedLegal,
     setAcceptedLegal,
+    acceptedRules,
+    setAcceptedRules,
     register
   } = RegisterHandler();
 
@@ -63,11 +66,19 @@ const Register: NextPage = () => {
         <div className="m-1">
           <TextInput type="text" placeholder="Steam Trade Link" value={steamTradeLink} required={false} setValue={setSteamTradeLink} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
         </div>
-        <div className="my-4">
+        <div className="my-6">
+          <div className="flex justify-center items-center h-10">
+            <input id="acceptedRulesCheckbox" className="h-7 w-7 mr-2 text-wt-accent-light bg-wt-accent-light focus:outline-none focus:ring-2 focus:ring-wt-accent" type="checkbox" checked={acceptedRules} onChange={() => setAcceptedRules(!acceptedRules)} />
+            <label className="w-11/12" htmlFor="acceptedRulesCheckbox">
+              I accept WitchTrade&apos;s trading rules and will comply with them. (To learn more, please read our <Link href="/rules"><a className="hover:underline text-wt-accent cursor-pointer" target="_blank" rel="noreferrer">Trading Rules</a></Link>)
+            </label>
+          </div>
+        </div>
+        <div className="my-6">
           <div className="flex justify-center items-center h-10">
             <input id="acceptedLegalCheckbox" className="h-7 w-7 mr-2 text-wt-accent-light bg-wt-accent-light focus:outline-none focus:ring-2 focus:ring-wt-accent" type="checkbox" checked={acceptedLegal} onChange={() => setAcceptedLegal(!acceptedLegal)} />
             <label className="w-11/12" htmlFor="acceptedLegalCheckbox">
-              I accept how we collect, use, and share your data. (To learn more, please read our <a className="hover:underline text-wt-accent-light rounded-md focus:outline-none focus:ring-2 focus:ring-wt-accent" href="https://witchtrade.org/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>)
+              I accept how we collect, use, and share your data. (To learn more, please read our <Link href="/privacy"><a className="hover:underline text-wt-accent cursor-pointer" target="_blank" rel="noreferrer">Privacy Policy</a></Link>)
             </label>
           </div>
         </div>

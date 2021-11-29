@@ -16,6 +16,7 @@ const RegisterHandler = () => {
   const [steamProfileLink, setSteamProfileLink] = useState('');
   const [steamTradeLink, setSteamTradeLink] = useState('');
   const [acceptedLegal, setAcceptedLegal] = useState(false);
+  const [acceptedRules, setAcceptedRules] = useState(false);
 
   const register = () => {
     if (
@@ -85,6 +86,16 @@ const RegisterHandler = () => {
       return;
     }
 
+    if (!acceptedRules) {
+      const notification = createNotification({
+        content: 'Please agree to our Trading Rules',
+        duration: 5000,
+        type: 'info'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
+
     if (!acceptedLegal) {
       const notification = createNotification({
         content: 'Please agree to our Privacy Policy',
@@ -126,6 +137,8 @@ const RegisterHandler = () => {
     setSteamTradeLink,
     acceptedLegal,
     setAcceptedLegal,
+    acceptedRules,
+    setAcceptedRules,
     register
   };
 };
