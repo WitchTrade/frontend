@@ -1,4 +1,5 @@
 import { FunctionComponent, useEffect, useState } from 'react';
+import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
 import { Inventory } from '../../shared/stores/inventory/inventory.model';
 import { Item } from '../../shared/stores/items/item.model';
@@ -23,6 +24,7 @@ interface Props {
 };
 
 const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, item, inventory, capitalizeFirstLetter }) => {
+  const router = useRouter();
   const { items } = useItemsProvider();
   const { prices } = usePricesProvider();
 
@@ -53,6 +55,12 @@ const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen,
     }
   }, [dialogOpen, item]);
 
+  useEffect(() => {
+    if (dialogOpen) {
+      setDialogOpen(false);
+    }
+  }, [router]);
+
   return (
     <WTDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} closeOnOutsideClick={true}>
       {item &&
@@ -82,7 +90,7 @@ const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen,
               }
             </div>
             {searchOffer && item.tradeable &&
-              <div className="flex justify-center mt-2" onClick={() => setDialogOpen(false)}>
+              <div className="flex justify-center mt-2">
                 <SearchTradeView trade={searchOffer} items={items} prices={prices} type={SEARCH_VIEW.OFFERS} inventory={inventory} />
               </div>
               || !loading && item.tradeable &&
