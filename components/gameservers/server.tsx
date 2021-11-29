@@ -11,9 +11,10 @@ interface Props {
   watchlist: string[];
   ownPlayer: string;
   addPlayer: (playerName: string) => void;
+  removePlayer: (playerName: string) => void;
 };
 
-const Server: FunctionComponent<Props> = ({ server, watchlist, ownPlayer, addPlayer }) => {
+const Server: FunctionComponent<Props> = ({ server, watchlist, ownPlayer, addPlayer, removePlayer }) => {
   const { theme } = useThemeProvider();
 
   const { show, nodeRef, toggleRef } = useDetectOutsideClick(false);
@@ -60,7 +61,12 @@ const Server: FunctionComponent<Props> = ({ server, watchlist, ownPlayer, addPla
                         <Image src={`/assets/svgs/add/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Add player" />
                       </button>
                     }
-                    <p className={`text-sm ${watchlist.includes(player.name) ? 'text-wt-accent ml-5' : ownPlayer === player.name ? 'text-wt-accent-light ml-5' : ''}`}>{player.name}</p>
+                    {watchlist.includes(player.name) && ownPlayer !== player.name &&
+                      <button className="hover:bg-wt-hover rounded-full flex items-center" onClick={() => removePlayer(player.name)}>
+                        <Image src={`/assets/svgs/remove/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Add player" />
+                      </button>
+                    }
+                    <p className={`text-sm ${watchlist.includes(player.name) ? 'text-wt-accent' : ownPlayer === player.name ? 'text-wt-accent-light ml-5' : ''}`}>{player.name}</p>
                   </div>
                   <p className="text-sm">{Math.floor(dayjs.duration(player.playingFor, 's').asHours()) > 0 ? `${Math.floor(dayjs.duration(player.playingFor, 's').asHours())}h ` : ''}{dayjs.duration(player.playingFor, 's').minutes()} min</p>
                 </div>
