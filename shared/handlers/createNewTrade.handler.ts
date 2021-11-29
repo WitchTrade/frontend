@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Offer, Price, Wish } from '../stores/markets/market.model';
+import useInventoryProvider from '../providers/inventory.provider';
+import { Offer, Wish } from '../stores/markets/market.model';
 import { marketsService } from '../stores/markets/markets.service';
 import { MARKET_TYPE } from './market.handler';
 
 const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | Wish) => void) => {
+  const { inventory } = useInventoryProvider();
 
   const [progress, setProgress] = useState(0);
 
@@ -16,6 +18,9 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
     secondaryPriceAmount: 4
   });
 
+  const [selectedItemOwned, setSelectedItemOwned] = useState(false);
+  const [selectedItemAmount, setSelectedItemAmount] = useState(0);
+
   useEffect(() => {
     setProgress(0);
     setTrade({
@@ -27,6 +32,18 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
       secondaryPriceAmount: 4
     });
   }, [type]);
+
+  useEffect(() => {
+    if (trade.selectedItem) {
+      setSelectedItemOwned(inventory.inventoryItems.some(ii => ii.item.id === trade.selectedItem.id));
+      const inventoryItem = inventory.inventoryItems.find(ii => ii.item.id === trade.selectedItem.id);
+      let amount = 0;
+      if (inventoryItem) {
+        amount = inventoryItem.amount;
+      }
+      setSelectedItemAmount(amount);
+    }
+  }, [trade.selectedItem]);
 
   const createTrade = (finished: () => void) => {
     const tradeDTO: any = {};
@@ -63,7 +80,9 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
     setProgress,
     trade,
     setTrade,
-    createTrade
+    createTrade,
+    selectedItemOwned,
+    selectedItemAmount
   };
 };
 
