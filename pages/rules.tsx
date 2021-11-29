@@ -21,7 +21,7 @@ const Legal: NextPage = () => {
         <Title level={4}>General rules</Title>
         <ul className="list-disc pl-8">
           <li>
-            WitchTrade assumes no responsibility and cannot be held liable for any problems arising from a user&apos;s participation in trading or interaction with other users on the site. Only the user is responsible for ensuring that the content of a trade is as expected before completing it. All features of this website are provided &quotas is&quot and without warranty of any kind.
+            WitchTrade assumes no responsibility and cannot be held liable for any problems arising from a user&apos;s participation in trading or interaction with other users on the site. Only the user is responsible for ensuring that the content of a trade is as expected before completing it. All features of this website are provided &quot;as is&quot; and without warranty of any kind.
           </li>
           <li>
             WitchTrade reserves the right to terminate any account or remove any offer at their discretion.
