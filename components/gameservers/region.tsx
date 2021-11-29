@@ -11,9 +11,10 @@ interface Props {
   watchlist: string[];
   ownPlayer: string;
   addPlayer: (playerName: string) => void;
+  removePlayer: (playerName: string) => void;
 };
 
-const Region: FunctionComponent<Props> = ({ regionShort, servers, loading, watchlist, ownPlayer, addPlayer }) => {
+const Region: FunctionComponent<Props> = ({ regionShort, servers, loading, watchlist, ownPlayer, addPlayer, removePlayer }) => {
   return (
     <div className="w-80 bg-wt-surface-dark rounded-lg border-2 border-wt-accent p-4 m-2">
       <div className="flex justify-center items-center">
@@ -30,7 +31,7 @@ const Region: FunctionComponent<Props> = ({ regionShort, servers, loading, watch
           }
           {servers.map((server, i) => (
             <div key={i} className="my-1">
-              <Server server={server} watchlist={watchlist} ownPlayer={ownPlayer} addPlayer={addPlayer} />
+              <Server server={server} watchlist={watchlist} ownPlayer={ownPlayer} addPlayer={addPlayer} removePlayer={removePlayer} />
             </div>
           ))
           }

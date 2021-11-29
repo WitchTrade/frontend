@@ -8,6 +8,10 @@ html {
   font-family: "Inter", sans-serif;
 }
 
+.pixelImage {
+  image-rendering: pixelated;
+}
+
 img.kofi-img {
   display: initial!important;
   vertical-align: middle;

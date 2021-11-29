@@ -20,9 +20,10 @@ interface Props {
   type: MARKET_TYPE;
   addNewTrade: (trade: Offer | Wish) => void;
   existingTrades: Offer[] | Wish[];
+  openItemDetails: (item: Item) => void;
 };
 
-const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, type, addNewTrade, existingTrades }) => {
+const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, type, addNewTrade, existingTrades, openItemDetails }) => {
 
   const { prices } = usePricesProvider();
 
@@ -41,7 +42,9 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
     setProgress,
     trade,
     setTrade,
-    createTrade
+    createTrade,
+    selectedItemOwned,
+    selectedItemAmount
   } = CreateNewTradeHandler(type, addNewTrade);
 
   const [loading, setLoading] = useState(false);
@@ -86,9 +89,21 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                 <div className="my-1 flex flex-wrap items-center justify-center">
                   <div className="my-1 flex flex-col items-center justify-center">
                     <p>Selected item</p>
-                    <div className="flex w-28 flex-col justify-between rounded-lg bg-wt-surface text-center m-1 shadow-md" style={{ borderColor: `#${trade.selectedItem.rarityColor}`, borderWidth: '6px' }}>
-                      <Image className="rounded-t-lg" src={trade.selectedItem.iconUrl} height={112} width={112} alt={trade.selectedItem.name} />
+                    <div className="flex w-28 flex-col justify-between rounded-lg bg-wt-surface text-center m-1 shadow-md" style={{ borderColor: `#${trade.selectedItem.rarityColor}`, borderWidth: '4px' }}>
+                      <div className="cursor-pointer" onClick={() => openItemDetails(trade.selectedItem)}>
+                        <Image className="rounded-t-lg" src={trade.selectedItem.iconUrl} height={112} width={112} alt={trade.selectedItem.name} />
+                      </div>
                       <p className="text-sm p-1 break-words font-semibold">{trade.selectedItem.name}</p>
+                      <div>
+                        {inventory.showInTrading && selectedItemOwned &&
+                          <p className="text-wt-text text-sm bg-wt-success-dark">You own <span className="whitespace-nowrap">{selectedItemAmount > 1 ? selectedItemAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : `${selectedItemAmount}x`}</span></p>
+                        }
+                        {inventory.showInTrading && !selectedItemOwned &&
+                          <div className="flex justify-center items-center bg-wt-error-dark">
+                            <p className="text-wt-text text-xs">You don&apos;t own this item</p>
+                          </div>
+                        }
+                      </div>
                     </div>
                   </div>
                   <div className="my-1 flex flex-col items-center justify-center">

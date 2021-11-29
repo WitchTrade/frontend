@@ -153,7 +153,14 @@ const Market: NextPage = () => {
           </div>
 
           <div className="flex flex-col justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <CreateNewTrade type={type} dialogOpen={creatingNew} setDialogOpen={setCreatingNew} addNewTrade={addNewTrade} existingTrades={type === MARKET_TYPE.OFFER ? market.offers : market.wishes} />
+            <CreateNewTrade
+            type={type}
+            dialogOpen={creatingNew}
+            setDialogOpen={setCreatingNew}
+            addNewTrade={addNewTrade}
+            existingTrades={type === MARKET_TYPE.OFFER ? market.offers : market.wishes}
+            openItemDetails={openItemDetails}
+            />
           </div>
           <div className="w-full">
             <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} initialOpen={false} type={FILTER_TYPE.MARKET} />

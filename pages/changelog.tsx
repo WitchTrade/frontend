@@ -11,27 +11,52 @@ const Changelog: NextPage = () => {
         description="Changelog"
         url="https://witchtrade.org/changelog"
       />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-4">
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
-        <Title level={2}>Version 1.0.1 (27.11.2021)</Title>
+        <Title level={2}>Version 1.0.2 (29.11.2021)</Title>
+        <p><b>Added:</b></p>
+        <ul className="list-disc pl-8">
+          <li>
+            <Link href="/rules"><a className="hover:underline text-wt-accent cursor-pointer">Trading Rules</a></Link> to ensure a safe and fair environment for all
+          </li>
+          <li>
+            Button to remove single player from the watchlist over the server playerlist
+          </li>
+          <li>
+            Clicking on the selected item in the create trade window now also opens the item detail view
+          </li>
+        </ul>
         <p><b>Changes:</b></p>
         <ul className="list-disc pl-8">
           <li>
-            Moved the &quot;Duplicates only&quot; checkbox into the inventory dropdown in the filter
+            Enabled Christmas themed navbar🎄
+          </li>
+        </ul>
+        <p><b>Bug fixes: </b></p>
+        <ul className="list-disc pl-8">
+          <li>
+            Fixed item dialog closing when clicking near the listed trades
+          </li>
+        </ul>
+        <Title level={2}>Version 1.0.1 (27.11.2021)</Title>
+        <p><b>Changes: </b></p>
+        <ul className="list-disc pl-8">
+          <li>
+            Moved the &quot; Duplicates only&quot; checkbox into the inventory dropdown in the filter
           </li>
           <li>
             Added missing metadata for /faq, /changelog, /privacy and /legal
           </li>
         </ul>
-        <p><b>Bug fixes:</b></p>
+        <p><b>Bug fixes: </b></p>
         <ul className="list-disc pl-8">
           <li>
-            Fixed &quot;wishlist only&quot; search not working when there are no items in your wishlist
+            Fixed &quot; wishlist only&quot; search not working when there are no items in your wishlist
           </li>
           <li>
-            Fixed &quot;duplicates only&quot; search not working
+            Fixed &quot; duplicates only&quot; search not working
           </li>
           <li>
             Fixed sorting of game server watchlist being case sensitive
@@ -40,23 +65,23 @@ const Changelog: NextPage = () => {
             Fixed manage market bug that caused the wishlist note to appear in the offerlist when there is only a wishlist note set
           </li>
           <li>
-            Fixed some inventory item count&apos;s wrapping to a next line in different item views
+            Fixed some inventory item count&apos; s wrapping to a next line in different item views
           </li>
           <li>
             Fixed some icons overlapping in the game servers view
           </li>
         </ul>
         <Title level={2}>Version 1.0.0 (24.11.2021)</Title>
-        <p><b>New Features:</b></p>
+        <p><b>New Features: </b></p>
         <ul className="list-disc pl-8">
           <li>
             Different ingredients can now be demanded for offers and wishlist items
           </li>
           <li>
-            Verified Profiles. Profiles can now get a verification badge. For more information, visit the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link>
+            Verified Profiles.Profiles can now get a verification badge.For more information, visit the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link>
           </li>
           <li>
-            Custom website themes! Registered users can create their own themes
+            Custom website themes!Registered users can create their own themes
           </li>
           <li>
             Stats for Witch It gameservers
@@ -86,7 +111,7 @@ const Changelog: NextPage = () => {
             Multiple rarities can now be selected in the sync offers dialog/auto sync configuration
           </li>
           <li>
-            &quot;Remove offers that have 0 on stock&quot; option added to offer sync options
+            &quot; Remove offers that have 0 on stock&quot; option added to offer sync options
           </li>
           <li>
             Item filters can now be cleared with one button press
@@ -98,7 +123,7 @@ const Changelog: NextPage = () => {
             New changelog and FAQ pages
           </li>
         </ul>
-        <p><b>Revised:</b></p>
+        <p><b>Revised: </b></p>
         <ul className="list-disc pl-8">
           <li>
             Look and feel of every view has being revised
@@ -107,7 +132,7 @@ const Changelog: NextPage = () => {
             Newly designed game serverbrowser
           </li>
           <li>
-            Steam inventory can now be synced every 10 minutes. Autosync is still at 1 hour
+            Steam inventory can now be synced every 10 minutes.Autosync is still at 1 hour
           </li>
         </ul>
       </div>

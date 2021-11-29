@@ -22,7 +22,7 @@ const Footer: FunctionComponent = () => {
             </Tooltip>
           </a>
         </div>
-        <p className="text-sm">Version <b>1.0.1</b> • 27.11.2021</p>
+        <p className="text-sm">Version <b>1.0.2</b> • 29.11.2021</p>
         <p className="text-sm"><span className="font-bold text-wt-accent">{wtStats.users}</span> registered users | <span className="font-bold text-wt-accent">{wtStats.offers}</span> offers</p>
         <div className="flex justify-center mt-2 mb-1">
           <p className="text-sm">Made with </p>
@@ -37,6 +37,9 @@ const Footer: FunctionComponent = () => {
             </a></Link> • <Link href="/changelog"><a className="hover:underline text-wt-accent cursor-pointer">
               Changelog
             </a>
+          </Link> • <Link href="/rules"><a className="hover:underline text-wt-accent cursor-pointer">
+            Rules
+          </a>
           </Link> • <Link href="/privacy"><a className="hover:underline text-wt-accent cursor-pointer">
             Privacy Policy
           </a>

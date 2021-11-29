@@ -1,6 +1,7 @@
 import { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
+import Script from 'next/script';
 import { Transition } from '@headlessui/react';
 import dayjs from 'dayjs';
 
@@ -72,7 +73,11 @@ const Navbar: FunctionComponent = () => {
 
   return (
     <div>
-      <nav className="bg-wt-surface-dark text-wt-text fixed top-0 w-full z-40">
+      <Script src="https://cdn.jsdelivr.net/npm/@erikwatson/snowfall/dist/snowfall.min.js" />
+      <Script src="/assets/snowflakes.js" />
+      <div id="snow-container" className="bg-wt-surface-dark z-30" style={{ height: '64px', width: '100%', position: 'fixed', top: 0 }}>
+      </div>
+      <nav className="text-wt-text fixed top-0 w-full z-40">
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
@@ -80,7 +85,12 @@ const Navbar: FunctionComponent = () => {
                 <div className="flex-shrink-0">
                   <Link href="/">
                     <a>
-                      <p className="font-bold text-3xl"><span className="text-wt-accent">Witch</span>Trade</p>
+                      <div className="relative">
+                        <p className="font-bold text-3xl"><span className="text-wt-accent">Witch</span>Trade</p>
+                        <div className="absolute -top-5 -left-4">
+                          <Image className="pixelImage" src={`/assets/images/christmasHat.png`} height={44} width={44} quality={100} alt="Christmas Hat" />
+                        </div>
+                      </div>
                     </a>
                   </Link>
                 </div>
@@ -185,7 +195,7 @@ const Navbar: FunctionComponent = () => {
                       <div>
                         {user.loggedIn &&
                           <div className="flex items-center">
-                            <button className="max-w-xs bg-wt-surface-dark rounded-full flex items-center text-sm font-bold p-1 focus:outline-none focus:ring-2 focus:ring-wt-accent" ref={userMenuToggleRef}>
+                            <button className="max-w-xs rounded-full flex items-center text-sm font-bold p-1 focus:outline-none focus:ring-2 focus:ring-wt-accent" ref={userMenuToggleRef}>
                               <span className="sr-only">Open user menu</span>
                               <div className="h-8 w-8">
                                 <Image className="rounded-full" src="/assets/images/piggy.png" height={32} width={32} alt="Profile Image" />
@@ -236,7 +246,7 @@ const Navbar: FunctionComponent = () => {
                   </div>
                 </div>
                 <div className="-mr-2 ml-2 flex md:hidden">
-                  <button className="bg-wt-surface-dark inline-flex items-center justify-center p-2 rounded-md text-wt-dark hover:bg-wt-hover focus:outline-none focus:ring-2 focus:ring-wt-accent" ref={hamburgerMenuToggleRef}>
+                  <button className="inline-flex items-center justify-center p-2 rounded-md text-wt-dark hover:bg-wt-hover focus:outline-none focus:ring-2 focus:ring-wt-accent" ref={hamburgerMenuToggleRef}>
                     <span className="sr-only">Open main menu</span>
                     {showhamburgerMenu ? (
                       <div className="block h-6 w-6">
@@ -253,7 +263,7 @@ const Navbar: FunctionComponent = () => {
             </div>
           </div>
 
-          <div className="md:hidden" ref={hamburgerMenuRef}>
+          <div className="md:hidden bg-wt-surface-dark" ref={hamburgerMenuRef}>
             <Transition
               show={showhamburgerMenu}
               as="div"
@@ -328,7 +338,7 @@ const Navbar: FunctionComponent = () => {
           </div>
         </>
       </nav>
-    </div >
+    </div>
   );
 };
 

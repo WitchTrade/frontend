@@ -146,9 +146,9 @@ const Gameservers: NextPage = () => {
         </ActionButton>
       </div>
       <div className="flex flex-wrap justify-center pb-2">
-        <Region regionShort="eu" servers={euServers} loading={loading} watchlist={watchlist} ownPlayer={ownPlayer} addPlayer={addPlayer} />
-        <Region regionShort="hk" servers={hkServers} loading={loading} watchlist={watchlist} ownPlayer={ownPlayer} addPlayer={addPlayer} />
-        <Region regionShort="us" servers={usServers} loading={loading} watchlist={watchlist} ownPlayer={ownPlayer} addPlayer={addPlayer} />
+        <Region regionShort="eu" servers={euServers} loading={loading} watchlist={watchlist} ownPlayer={ownPlayer} addPlayer={addPlayer} removePlayer={removePlayer} />
+        <Region regionShort="hk" servers={hkServers} loading={loading} watchlist={watchlist} ownPlayer={ownPlayer} addPlayer={addPlayer} removePlayer={removePlayer} />
+        <Region regionShort="us" servers={usServers} loading={loading} watchlist={watchlist} ownPlayer={ownPlayer} addPlayer={addPlayer} removePlayer={removePlayer} />
       </div>
     </div>
   );
