@@ -14,6 +14,7 @@ import AccountSettingsHandler from '../../../shared/handlers/account.handler';
 import useThemeProvider from '../../../shared/providers/theme.provider';
 import Tooltip from '../../../components/styles/Tooltip';
 import Divider from '../../../components/styles/Divider';
+import Verified from '../../../components/styles/VerifiedSvg';
 
 const Account: NextPage = () => {
   const { theme } = useThemeProvider();
@@ -42,7 +43,7 @@ const Account: NextPage = () => {
         {user.verified &&
           <Tooltip text="Verified">
             <div className="ml-1 h-6 w-6">
-              <Image src="/assets/svgs/verified.svg" height={24} width={24} alt="Verified" />
+              <Verified />
             </div>
           </Tooltip>
         }
@@ -97,7 +98,7 @@ const Account: NextPage = () => {
           <div className="flex justify-center mt-2">
             <Link href="/user/settings/changepw">
               <a>
-                <ActionButton type="accent">Change Password</ActionButton>
+                <ActionButton type="info">Change Password</ActionButton>
               </a>
             </Link>
           </div>
@@ -134,7 +135,7 @@ const Account: NextPage = () => {
           </div>
           <div className="flex justify-center text-center mt-2">
             <div className="mx-1">
-              <ActionButton type="proceed" onClick={updateAccountSettings}>Save</ActionButton>
+              <ActionButton type="success" onClick={updateAccountSettings}>Save</ActionButton>
             </div>
             <div className="mx-1">
               <ActionButton type="cancel" onClick={cancelEditAccountSettings}>Cancel</ActionButton>

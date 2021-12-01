@@ -81,13 +81,13 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
             <div className="mt-4 flex justify-evenly pb-2">
               {!loading &&
                 <>
-                  <ActionButton type="accent" onClick={() => {
+                  <ActionButton type="success" onClick={() => {
                     setLoading(true);
                     syncOffers(finished);
                   }}>
                     Sync
                   </ActionButton>
-                  <ActionButton type="neutral-enabled" onClick={() => setDialogOpen(false)}>
+                  <ActionButton type="cancel" onClick={() => setDialogOpen(false)}>
                     Cancel
                   </ActionButton>
                 </>
@@ -98,7 +98,7 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
           </div>
         </div>
       </WTDialog>
-      <ActionButton type="accent" onClick={() => setDialogOpen(true)}>
+      <ActionButton type="info" onClick={() => setDialogOpen(true)}>
         <Image src="/assets/svgs/sync.svg" height="24px" width="24px" alt="Sync Steam Friends" />
         Sync offers
       </ActionButton>

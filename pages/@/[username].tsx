@@ -19,6 +19,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import TradeView, { TRADE_TYPE } from '../../components/market/TradeView';
 import ItemDetailDialog from '../../components/items/ItemDetailDialog';
 import ItemsHandler from '../../shared/handlers/items.handler';
+import Verified from '../../components/styles/VerifiedSvg';
 
 interface Props {
   profile: UserInfo;
@@ -84,7 +85,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                   <a className="flex items-center">
                     <Tooltip text="Verified">
                       <div className="ml-1 h-6 w-6 flex items-center">
-                        <Image src="/assets/svgs/verified.svg" height={24} width={24} alt="Verified" />
+                        <Verified />
                       </div>
                     </Tooltip>
                   </a>

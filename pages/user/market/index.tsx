@@ -73,13 +73,13 @@ const Market: NextPage = () => {
               <p className="text-sm my-2">Are you sure that you want to delete ALL your {type === MARKET_TYPE.OFFER ? 'offers' : 'wishlist items'}?<br />This can&apos;t be undone.</p>
             </div>
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="cancel" onClick={() => {
+              <ActionButton type="success" onClick={() => {
                 setDeleteAllDialogOpen(false);
                 deleteAllTrades();
               }}>
                 Yes, delete them
               </ActionButton>
-              <ActionButton type="neutral-enabled" onClick={() => setDeleteAllDialogOpen(false)}>
+              <ActionButton type="cancel" onClick={() => setDeleteAllDialogOpen(false)}>
                 Cancel
               </ActionButton>
             </div>
@@ -104,7 +104,7 @@ const Market: NextPage = () => {
               {editingNote &&
                 <div className="flex">
                   <div className="mx-1">
-                    <ActionButton type="proceed" disabled={localNote.length > 200 || (localNote.match(/\n/g) || []).length + 1 > 10} onClick={() => updateNote()}>Save</ActionButton>
+                    <ActionButton type="success" disabled={localNote.length > 200 || (localNote.match(/\n/g) || []).length + 1 > 10} onClick={() => updateNote()}>Save</ActionButton>
                   </div>
                   <div className="mx-1">
                     <ActionButton type="cancel" onClick={() => { setLocalNote(type === MARKET_TYPE.OFFER && market.offerlistNote ? market.offerlistNote : type === MARKET_TYPE.WISH && market.wishlistNote ? market.wishlistNote : ''); setEditingNote(false); }}>Cancel</ActionButton>
@@ -132,7 +132,7 @@ const Market: NextPage = () => {
           </div>
           <div className="flex flex-wrap justify-center mt-10">
             <div className="m-1">
-              <ActionButton type="proceed" onClick={() => setCreatingNew(true)}>
+              <ActionButton type="success" onClick={() => setCreatingNew(true)}>
                 <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
                 New {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
               </ActionButton>

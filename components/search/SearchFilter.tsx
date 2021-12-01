@@ -98,7 +98,7 @@ const SearchFilter: FunctionComponent<Props> = ({ searchFilterValues, setSearchF
             }
             <div className="mt-2">
               {!searchInProgress &&
-                <ActionButton type="proceed" onClick={() => search()}>
+                <ActionButton type="success" onClick={() => search()}>
                   <Image src="/assets/svgs/search.svg" height="24px" width="24px" alt="Search" />
                   Search
                 </ActionButton>

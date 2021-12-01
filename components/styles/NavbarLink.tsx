@@ -14,13 +14,13 @@ const defaultStyle = "px-3 py-2 focus:outline-none flex items-center ";
 
 const NavbarLink: FunctionComponent<Props> = forwardRef(({ onClick, href, children, type }, ref?: React.LegacyRef<HTMLAnchorElement>) => {
   const types: Types = {
-    accent: 'rounded-md text-sm font-medium cursor-pointer focus:ring-2 focus:ring-wt-accent text-wt-light bg-wt-accent hover:bg-wt-accent-light',
+    info: 'rounded-md text-sm font-medium cursor-pointer focus:ring-2 focus:ring-wt-accent text-wt-light bg-wt-info-dark hover:bg-wt-info',
     nav: 'hover:bg-wt-hover rounded-md text-sm font-medium cursor-pointer focus:ring-2 focus:ring-wt-accent',
-    navSelected: 'bg-wt-selected-dark rounded-md text-sm font-medium focus:ring-2 focus:ring-wt-accent',
+    navSelected: 'bg-wt-selected rounded-md text-sm font-medium focus:ring-2 focus:ring-wt-accent',
     hamburger: 'hover:bg-wt-hover block rounded-md text-base font-medium cursor-pointer focus:ring-2 focus:ring-wt-accent',
-    hamburgerSelected: 'bg-wt-selected-dark block rounded-md text-base font-medium focus:ring-2 focus:ring-wt-accent',
-    menu: 'block px-4 text-sm text-wt-dark hover:bg-wt-hover-light cursor-pointer',
-    menuSelected: 'block px-4 text-sm text-wt-dark bg-wt-selected-light hover:bg-wt-hover-light'
+    hamburgerSelected: 'bg-wt-selected block rounded-md text-base font-medium focus:ring-2 focus:ring-wt-accent',
+    menu: 'block px-4 text-sm hover:bg-wt-hover cursor-pointer',
+    menuSelected: 'block px-4 text-sm bg-wt-selected hover:bg-wt-hover'
   };
 
   const checkKeyPress = (e: KeyboardEvent<HTMLAnchorElement>) => {

@@ -62,7 +62,7 @@ const Customization: NextPage = () => {
           {creatingCustomTheme &&
             <>
               <div className="mx-1">
-                <ActionButton type="proceed" onClick={saveCustomTheme}>Save</ActionButton>
+                <ActionButton type="success" onClick={saveCustomTheme}>Save</ActionButton>
               </div>
               <div className="mx-1">
                 <ActionButton type="cancel" onClick={cancelCustomTheme}>Cancel</ActionButton>
@@ -76,7 +76,7 @@ const Customization: NextPage = () => {
               <p className="text-center">Custom theme <span className="text-wt-accent font-bold">{selectedTheme?.displayName}</span></p>
               <div className="flex flex-wrap justify-center">
                 <div className="m-2">
-                  <ActionButton type="neutral-enabled" onClick={downloadTheme}>Export Theme</ActionButton>
+                  <ActionButton type="info" onClick={downloadTheme}>Export Theme</ActionButton>
                 </div>
                 <div className="m-2">
                   <ActionButton type="warning" onClick={() => initCustomTheme(true)}>Edit theme</ActionButton>
@@ -94,14 +94,14 @@ const Customization: NextPage = () => {
               <FileInput inputId="themeUpload" text="Import Theme" inputRef={themeUploadFile} inputChanged={checkThemeInputFile}></FileInput>
             </div>
             <div className="mx-2">
-              <ActionButton type="proceed" onClick={() => initCustomTheme(false)}>Create new theme</ActionButton>
+              <ActionButton type="success" onClick={() => initCustomTheme(false)}>Create new theme</ActionButton>
             </div>
           </div>
         }
         {creatingCustomTheme && customTheme &&
           <>
             <div className="my-2 text-center flex justify-center">
-              <ActionButton type={liveTheme ? 'neutral-enabled' : 'neutral'} onClick={switchLiveTheme}>
+              <ActionButton type="info" onClick={switchLiveTheme}>
                 <Image src={`/assets/svgs/eye/${liveTheme ? 'filled' : 'outline'}_${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="24px" width="24px" alt="Live Theme Icon" />
                 <p className="ml-1">{liveTheme ? 'Disable live theme' : 'Enable live theme'}</p>
               </ActionButton>
@@ -123,13 +123,13 @@ const Customization: NextPage = () => {
             <div className="mt-3 flex flex-wrap justify-center">
               <PickerArea areaTitle="Text colors">
                 <div className="mx-1">
+                  <ColorPicker title="Default Text Color" hexColor={customTheme.colors.text} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, text: color } })} />
+                </div>
+                <div className="mx-1">
                   <ColorPicker title="Light Color" hexColor={customTheme.colors.light} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, light: color } })} />
                 </div>
                 <div className="mx-1">
                   <ColorPicker title="Dark Color" hexColor={customTheme.colors.dark} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, dark: color } })} />
-                </div>
-                <div className="mx-1">
-                  <ColorPicker title="Default Text Color" hexColor={customTheme.colors.text} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, text: color } })} />
                 </div>
               </PickerArea>
               <PickerArea areaTitle="Surface colors">
@@ -145,21 +145,10 @@ const Customization: NextPage = () => {
                   <ColorPicker title="Selected" hexColor={customTheme.colors.selected} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, selected: color } })} />
                 </div>
                 <div className="mx-1">
-                  <ColorPicker title="Selected Light" hexColor={customTheme.colors.selectedLight} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, selectedLight: color } })} />
-                </div>
-                <div className="mx-1">
-                  <ColorPicker title="Selected Dark" hexColor={customTheme.colors.selectedDark} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, selectedDark: color } })} />
-                </div>
-                <div className="mx-1">
-                  <ColorPicker title="Disabled" hexColor={customTheme.colors.disabled} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, disabled: color } })} />
-                </div>
-              </PickerArea>
-              <PickerArea areaTitle="Hover colors">
-                <div className="mx-1">
                   <ColorPicker title="Hover" hexColor={customTheme.colors.hover} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, hover: color } })} />
                 </div>
                 <div className="mx-1">
-                  <ColorPicker title="Hover Light" hexColor={customTheme.colors.hoverLight} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, hoverLight: color } })} />
+                  <ColorPicker title="Disabled" hexColor={customTheme.colors.disabled} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, disabled: color } })} />
                 </div>
               </PickerArea>
               <PickerArea areaTitle="Accent colors">
@@ -168,6 +157,9 @@ const Customization: NextPage = () => {
                 </div>
                 <div className="mx-1">
                   <ColorPicker title="Accent Light" hexColor={customTheme.colors.accentLight} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, accentLight: color } })} />
+                </div>
+                <div className="mx-1">
+                  <ColorPicker title="Verified badge color" hexColor={customTheme.colors.verified} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, verified: color } })} />
                 </div>
               </PickerArea>
               <PickerArea areaTitle="Chart colors">
@@ -207,7 +199,7 @@ const Customization: NextPage = () => {
                   </div>
                 </div>
               }
-              <PickerArea areaTitle="Status colors">
+              <PickerArea areaTitle="Status colors (Notifications and action buttons)">
                 <div className="flex flex-wrap justify-center">
                   <div className="mx-1">
                     <ColorPicker title="Info" hexColor={customTheme.colors.info} setHexColor={(color) => setCustomTheme({ ...customTheme, colors: { ...customTheme.colors, info: color } })} />
@@ -259,7 +251,7 @@ const Customization: NextPage = () => {
                   <Dropdown selectedValue={notificationType} setValue={setNotificationType} values={notificationTypes} />
                 </div>
                 <div className="mx-1 flex justify-center">
-                  <ActionButton type="neutral" onClick={createTestNotification}>Create</ActionButton>
+                  <ActionButton type="info" onClick={createTestNotification}>Create</ActionButton>
                 </div>
               </div>
             </div>

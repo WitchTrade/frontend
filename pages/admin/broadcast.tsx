@@ -34,7 +34,7 @@ const Broadcast: NextPage = () => {
           <TextInput type="input" value={broadcastNotification.iconLink} setValue={(iconLink) => setBroadcastNotification({ ...broadcastNotification, iconLink })} placeholder="Image Link" required={false} />
         </div>
         <div className="flex justify-center my-1">
-          <ActionButton type="proceed" disabled={!broadcastNotification.text} onClick={() => broadcast()}>
+          <ActionButton type="success" disabled={!broadcastNotification.text} onClick={() => broadcast()}>
             Send
           </ActionButton>
         </div>

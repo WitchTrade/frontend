@@ -10,6 +10,7 @@ import TextInput from '../styles/TextInput';
 import Divider from '../styles/Divider';
 import { Badge } from '../../shared/stores/user/badge.model';
 import { Role } from '../../shared/stores/user/role.model';
+import Verified from '../styles/VerifiedSvg';
 
 interface Props {
   adminUser: AdminUser;
@@ -44,7 +45,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
             </div>
             <TextInput type="text" placeholder="Ban reason" required={false} value={banReason} setValue={setBanReason} />
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="proceed" onClick={() => {
+              <ActionButton type="success" onClick={() => {
                 if (banReason) {
                   ban(adminUser, banReason);
                   setDialogOpen(false);
@@ -77,7 +78,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
               }
             </div>
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="proceed" onClick={() => setBadgeDialogOpen(false)}>
+              <ActionButton type="success" onClick={() => setBadgeDialogOpen(false)}>
                 Done
               </ActionButton>
             </div>
@@ -99,7 +100,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
               }
             </div>
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="proceed" onClick={() => setRoleDialogOpen(false)}>
+              <ActionButton type="success" onClick={() => setRoleDialogOpen(false)}>
                 Done
               </ActionButton>
             </div>
@@ -110,14 +111,14 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
         <div className="flex items-center">
           <Link href={`/@/${adminUser.username}`}>
             <a target="_blank" rel="noreferrer">
-              <div className="bg-wt-selected-dark py-1 px-2 rounded-lg border border-wt-selected-dark hover:border-wt-accent">
+              <div className="py-1 px-2 rounded-lg border border-wt-accent hover:bg-wt-hover">
                 <p className="font-bold text-wt-accent">{adminUser.username}</p>
               </div>
             </a>
           </Link>
           {adminUser.verified &&
             <div className="ml-1 h-5 w-5">
-              <Image src="/assets/svgs/verified.svg" height={20} width={20} alt="Verified" />
+              <Verified />
             </div>
           }
           <span className="text-sm align-top ml-1">({adminUser.displayName})</span>
@@ -154,13 +155,13 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
           <p className="text-wt-accent-light mb-2 text-center">Actions</p>
           <div className="flex flex-wrap justify-evenly">
             <div className="my-1">
-              <ActionButton type={adminUser.verified ? 'cancel' : 'proceed'} onClick={() => changeVerification(adminUser)}>
+              <ActionButton type={adminUser.verified ? 'cancel' : 'success'} onClick={() => changeVerification(adminUser)}>
                 {adminUser.verified ? 'Unverify' : 'Verify'}
               </ActionButton>
             </div>
             {adminUser.banned &&
               <div className="my-1">
-                <ActionButton type="proceed" onClick={() => unban(adminUser)}>
+                <ActionButton type="success" onClick={() => unban(adminUser)}>
                   Unban
                 </ActionButton>
               </div>
@@ -172,12 +173,12 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
               </div>
             }
             <div className="my-1">
-              <ActionButton type="proceed" onClick={() => setBadgeDialogOpen(true)}>
+              <ActionButton type="success" onClick={() => setBadgeDialogOpen(true)}>
                 Manage Badges
               </ActionButton>
             </div>
             <div className="my-1">
-              <ActionButton type="proceed" onClick={() => setRoleDialogOpen(true)}>
+              <ActionButton type="success" onClick={() => setRoleDialogOpen(true)}>
                 Manage Roles
               </ActionButton>
             </div>

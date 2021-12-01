@@ -109,11 +109,11 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, d
               </>
             }
             {inventory.showInTrading && owned &&
-              <p className="text-wt-text text-sm bg-wt-success-dark">You own <span className="whitespace-nowrap">{amount > 1 ? amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : `${amount}x`}</span></p>
+              <p className="text-wt-light text-sm bg-wt-success-dark">You own <span className="whitespace-nowrap">{amount > 1 ? amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : `${amount}x`}</span></p>
             }
             {inventory.showInTrading && !owned &&
               <div className="flex justify-center items-center bg-wt-error-dark h-5">
-                <p className="text-wt-text text-xs">You don&apos;t own this item</p>
+                <p className="text-wt-light text-xs">You don&apos;t own this item</p>
               </div>
             }
           </div>
