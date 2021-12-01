@@ -108,6 +108,10 @@ const AdminHandler = () => {
     }
   };
 
+  const sendMessage = (adminUser: AdminUser, text: string, link: string, iconLink: string) => {
+    adminService.sendMessage({ userId: adminUser.id, text, link, iconLink }).subscribe();
+  };
+
   const broadcast = () => {
     adminService.broadcast(broadcastNotification).subscribe((res) => {
       if (res.ok) {
@@ -142,6 +146,7 @@ const AdminHandler = () => {
     changeBadge,
     roles,
     changeRole,
+    sendMessage,
     logs,
     broadcastNotification,
     setBroadcastNotification,

@@ -22,7 +22,8 @@ const Admin: NextPage = () => {
     badges,
     changeBadge,
     roles,
-    changeRole
+    changeRole,
+    sendMessage
   } = AdminHandler();
 
   return (
@@ -57,6 +58,7 @@ const Admin: NextPage = () => {
               changeBadge={changeBadge}
               roles={roles}
               changeRole={changeRole}
+              sendMessage={sendMessage}
             />
           ))}
         </InfiniteScroll>

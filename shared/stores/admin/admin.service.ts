@@ -473,6 +473,48 @@ export class AdminService {
     );
   }
 
+  public sendMessage(data: { userId: string, text: string, iconLink: string, link: string; }) {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/notification`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).pipe(
+      tap(
+        {
+          next: async (res) => {
+            if (res.ok) {
+              serverNotificationService.fetchNotifications().subscribe();
+              const notification = createNotification({
+                content: 'Notification sent',
+                duration: 5000,
+                type: 'success'
+              });
+              notificationService.addNotification(notification);
+            } else {
+              const notification = createNotification({
+                content: res.statusText,
+                duration: 5000,
+                type: 'error'
+              });
+              notificationService.addNotification(notification);
+            }
+          },
+          error: err => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+            return of(err);
+          }
+        }
+      )
+    );
+  }
+
   public broadcast(data: { text: string, iconLink: string, link: string; }) {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/broadcast`, {
       method: 'POST',

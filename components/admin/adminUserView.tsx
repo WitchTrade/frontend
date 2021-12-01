@@ -21,9 +21,10 @@ interface Props {
   changeBadge: (adminUser: AdminUser, badge: Badge) => void;
   roles: Role[];
   changeRole: (adminUser: AdminUser, role: Role) => void;
+  sendMessage: (adminUser: AdminUser, text: string, link: string, iconLink: string) => void;
 };
 
-const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification, ban, unban, badges, changeBadge, roles, changeRole }) => {
+const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification, ban, unban, badges, changeBadge, roles, changeRole, sendMessage }) => {
   const { theme } = useThemeProvider();
 
   const [show, setShow] = useState(false);
@@ -31,8 +32,13 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
   const [dialogOpen, setDialogOpen] = useState(false);
   const [badgeDialogOpen, setBadgeDialogOpen] = useState(false);
   const [roleDialogOpen, setRoleDialogOpen] = useState(false);
+  const [messageDialogOpen, setMessageDialogOpen] = useState(false);
 
   const [banReason, setBanReason] = useState('');
+
+  const [text, setText] = useState('');
+  const [link, setLink] = useState('');
+  const [iconLink, setIconLink] = useState('');
 
   return (
     <>
@@ -102,6 +108,29 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
             <div className="mt-4 flex justify-evenly pb-2">
               <ActionButton type="success" onClick={() => setRoleDialogOpen(false)}>
                 Done
+              </ActionButton>
+            </div>
+          </div>
+        </div>
+      </WTDialog>
+      <WTDialog dialogOpen={messageDialogOpen} setDialogOpen={setMessageDialogOpen} closeOnOutsideClick={true}>
+        <div className="inline-block max-w-md p-6 my-8 overflow-auto text-left align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4 border-wt-success">
+          <div className="h-full flex flex-col justify-between">
+            <div>
+              <p className="text-2xl font-medium leading-6">Send message to <span className="text-wt-accent">{adminUser.username}</span></p>
+            </div>
+            <div className="m-1">
+              <TextInput type="input" value={text} setValue={(text) => setText(text)} placeholder="Text" required={true} />
+            </div>
+            <div className="m-1">
+              <TextInput type="input" value={link} setValue={(link) => setLink(link)} placeholder="Link" required={false} />
+            </div>
+            <div className="m-1">
+              <TextInput type="input" value={iconLink} setValue={(iconLink) => setIconLink(iconLink)} placeholder="Image Link" required={false} />
+            </div>
+            <div className="mt-4 flex justify-evenly pb-2">
+              <ActionButton type="success" onClick={() => { sendMessage(adminUser, text, link, iconLink); setMessageDialogOpen(false); }}>
+                Send
               </ActionButton>
             </div>
           </div>
@@ -180,6 +209,11 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
             <div className="my-1">
               <ActionButton type="success" onClick={() => setRoleDialogOpen(true)}>
                 Manage Roles
+              </ActionButton>
+            </div>
+            <div className="my-1">
+              <ActionButton type="success" onClick={() => setMessageDialogOpen(true)}>
+                Send message
               </ActionButton>
             </div>
           </div>
