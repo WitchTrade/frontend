@@ -10,6 +10,8 @@ export interface AdminUser {
   banMessage: string;
   roles: Role[];
   badges: Badge[];
+  created: Date;
+  lastOnline: Date;
 }
 
 export interface AdminLog {

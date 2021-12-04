@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import AdminFilter from '../../components/admin/adminFilter';
 import AdminUserView from '../../components/admin/adminUserView';
 import CustomHeader from '../../components/core/CustomHeader';
 import LoginWrapper from '../../components/core/LoginWrapper';
@@ -7,13 +8,10 @@ import AdminNav from '../../components/navs/AdminNav';
 import PageHeader from '../../components/styles/PageHeader';
 import TextInput from '../../components/styles/TextInput';
 import AdminHandler from '../../shared/handlers/admin.handler';
+import AdminFilterHandler from '../../shared/handlers/adminFilter.handler';
 
 const Admin: NextPage = () => {
   const {
-    adminUsers,
-    loadedAdminUsers,
-    loadMoreAdminUsers,
-    hasMoreAdminUsers,
     playerSearchString,
     setPlayerSearchString,
     changeVerification,
@@ -26,6 +24,16 @@ const Admin: NextPage = () => {
     sendMessage
   } = AdminHandler();
 
+  const {
+    totalAdminUserCount,
+    filteredAdminUsers,
+    loadedAdminUsers,
+    loadMoreAdminUsers,
+    hasMoreAdminUsers,
+    adminFilterValues,
+    setAdminFilterValues
+  } = AdminFilterHandler(25);
+
   return (
     <LoginWrapper admin={true}>
       <CustomHeader
@@ -36,10 +44,17 @@ const Admin: NextPage = () => {
       <PageHeader title="Administration" />
       <AdminNav />
       <div className="flex flex-col justify-center max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-2 ">
-        <div className="mt-4 max-w-xl w-full self-center">
-          <TextInput placeholder="Search by username" required={false} type="text" value={playerSearchString} setValue={(playerSearchString: string) => setPlayerSearchString(playerSearchString)} clearOption={true} />
-        </div>
-        <p className="text-center mt-1"><span className="font-bold text-wt-accent">{adminUsers.length}</span> user{adminUsers.length === 1 ? '' : 's'}</p>
+        <AdminFilter adminFilterValues={adminFilterValues} setAdminFilterValues={setAdminFilterValues} />
+        <p className="text-center mt-1">
+          <span className="text-wt-accent font-bold">
+            {totalAdminUserCount}
+          </span> user
+          {totalAdminUserCount === 1 ? '' : 's'}
+          {totalAdminUserCount !== filteredAdminUsers.length ? (
+            <> in total, <span className="text-wt-accent font-bold">
+              {filteredAdminUsers.length}
+            </span> filtered</>) : ''}
+        </p>
         <InfiniteScroll
           className="flex flex-col justify-center"
           dataLength={loadedAdminUsers.length}

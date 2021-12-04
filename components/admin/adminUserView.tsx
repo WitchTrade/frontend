@@ -11,6 +11,8 @@ import Divider from '../styles/Divider';
 import { Badge } from '../../shared/stores/user/badge.model';
 import { Role } from '../../shared/stores/user/role.model';
 import Verified from '../styles/VerifiedSvg';
+import Chip from '../styles/Chip';
+import dayjs from 'dayjs';
 
 interface Props {
   adminUser: AdminUser;
@@ -136,7 +138,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
           </div>
         </div>
       </WTDialog>
-      <div className={`flex flex-wrap justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md p-4 cursor-pointer border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} style={{ minHeight: '70px' }} onClick={() => setShow(!show)}>
+      <div className={`flex flex-wrap justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md pt-4 px-4 pb-2 cursor-pointer border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} style={{ minHeight: '62px' }} onClick={() => setShow(!show)}>
         <div className="flex items-center">
           <Link href={`/@/${adminUser.username}`}>
             <a target="_blank" rel="noreferrer">
@@ -178,6 +180,10 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
       </div>
       {show &&
         <div className="bg-wt-surface-dark rounded-b-lg mx-1 pb-2 px-4 z-10 border-wt-accent border-l-2 border-b-2 border-r-2">
+          <div className="flex flex-wrap justify-center">
+            <Chip title="Created" text={dayjs(adminUser.created).format('DD.MM.YYYY HH:mm')} />
+            <Chip title="Last Online" text={dayjs(adminUser.lastOnline).format('DD.MM.YYYY HH:mm')} />
+          </div>
           <div className="px-1 py-1">
             <Divider />
           </div>
