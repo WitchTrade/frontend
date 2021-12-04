@@ -13,6 +13,18 @@ import { User } from '../stores/user/user.model';
 
 class AppService {
   public init(): void {
+    const signature = [
+      'background: #393166',
+      'color: #bdb2ff',
+      'padding-left: 4px',
+      'padding-right: 4px',
+      'border-radius: 20px'
+    ].join(';');
+    console.log(`\\    /\\
+ )  ( ')
+(  /  )
+ \\(__)| %cGiyoMoon`, signature);
+
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js');
