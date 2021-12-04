@@ -38,7 +38,7 @@ const PriceSelector: FunctionComponent<Props> = ({ type, prices, price, setPrice
           </div>
         </div>
       </WTDialog>
-      <ActionButton type="success" onClick={() => setDialogOpen(true)}>
+      <ActionButton type="info" onClick={() => setDialogOpen(true)}>
         {buttonText}
       </ActionButton>
     </>
