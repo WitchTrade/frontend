@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import AdminFilter from '../../components/admin/adminFilter';
+import AdminFilter from '../../components/admin/AdminFilter';
 import AdminUserView from '../../components/admin/adminUserView';
 import CustomHeader from '../../components/core/CustomHeader';
 import LoginWrapper from '../../components/core/LoginWrapper';
