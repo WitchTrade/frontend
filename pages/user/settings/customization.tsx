@@ -12,6 +12,7 @@ import TextInput from '../../../components/styles/TextInput';
 import FileInput from '../../../components/styles/FileInput';
 import useThemeProvider from '../../../shared/providers/theme.provider';
 import LoginWrapper from '../../../components/core/LoginWrapper';
+import ThemeDropdown from '../../../components/styles/ThemeDropdown';
 
 const Customization: NextPage = () => {
   const { theme } = useThemeProvider();
@@ -55,7 +56,7 @@ const Customization: NextPage = () => {
         <PageHeader title="Customization" description="Customize your WitchTrade expirience" />
         {selectedTheme && !creatingCustomTheme && allThemes &&
           <div className="w-60 self-center">
-            <Dropdown selectedValue={selectedTheme} setValue={applyNewTheme} values={allThemes} />
+            <ThemeDropdown selectedTheme={selectedTheme} setTheme={applyNewTheme} themes={allThemes} />
           </div>
         }
         <div className="flex justify-center text-center mt-2">

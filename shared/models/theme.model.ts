@@ -4,6 +4,7 @@ export interface Theme {
   key: string;
   type: 'light' | 'dark';
   displayName: string;
+  creator: string;
   colors: ThemeColors;
   official: boolean;
 }
