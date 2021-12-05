@@ -3,17 +3,16 @@ export interface ThemeColors {
   dark: string;
   text: string;
 
-  selectedLight: string;
   selected: string;
-  selectedDark: string;
   disabled: string;
   surface: string;
   surfaceDark: string;
   hover: string;
-  hoverLight: string;
 
   accentLight: string;
   accent: string;
+
+  verified: string;
 
   info: string;
   infoDark: string;
@@ -43,16 +42,14 @@ export function createThemeColors(params: Partial<ThemeColors>) {
     light: params.light ? params.light : '',
     dark: params.dark ? params.dark : '',
     text: params.text ? params.text : '',
-    selectedLight: params.selectedLight ? params.selectedLight : '',
     selected: params.selected ? params.selected : '',
-    selectedDark: params.selectedDark ? params.selectedDark : '',
     disabled: params.disabled ? params.disabled : '',
     surface: params.surface ? params.surface : '',
     surfaceDark: params.surfaceDark ? params.surfaceDark : '',
     hover: params.hover ? params.hover : '',
-    hoverLight: params.hoverLight ? params.hoverLight : '',
     accentLight: params.accentLight ? params.accentLight : '',
     accent: params.accent ? params.accent : '',
+    verified: params.verified ? params.verified : '',
     info: params.info ? params.info : '',
     infoDark: params.infoDark ? params.infoDark : '',
     infoLight: params.infoLight ? params.infoLight : '',

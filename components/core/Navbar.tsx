@@ -17,6 +17,7 @@ import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
 import useThemeProvider from '../../shared/providers/theme.provider';
 import useUserProvider from '../../shared/providers/user.provider';
 import NotificationItem from '../styles/NotificationItem';
+import Verified from '../styles/VerifiedSvg';
 
 const Navbar: FunctionComponent = () => {
   const router = useRouter();
@@ -203,7 +204,7 @@ const Navbar: FunctionComponent = () => {
                               <p className="text-wt-accent-light ml-1">{user.displayName}</p>
                               {user.verified &&
                                 <div className="ml-1 h-5 w-5">
-                                  <Image src="/assets/svgs/verified.svg" height={20} width={20} alt="Verified" />
+                                  <Verified />
                                 </div>
                               }
                             </button>
@@ -227,7 +228,7 @@ const Navbar: FunctionComponent = () => {
                           leaveTo="transform opacity-0 scale-95"
                         >
                           <div
-                            className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-wt-light ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
+                            className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-wt-surface ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
                           >
                             <Link href={`/@/${user.username}`} passHref>
                               <NavbarLink type={router.pathname.startsWith(`/@/`) && router.query.username === user.username ? 'menuSelected' : 'menu'}>Profile</NavbarLink>
@@ -246,7 +247,7 @@ const Navbar: FunctionComponent = () => {
                   </div>
                 </div>
                 <div className="-mr-2 ml-2 flex md:hidden">
-                  <button className="inline-flex items-center justify-center p-2 rounded-md text-wt-dark hover:bg-wt-hover focus:outline-none focus:ring-2 focus:ring-wt-accent" ref={hamburgerMenuToggleRef}>
+                  <button className="inline-flex items-center justify-center p-2 rounded-md hover:bg-wt-hover focus:outline-none focus:ring-2 focus:ring-wt-accent" ref={hamburgerMenuToggleRef}>
                     <span className="sr-only">Open main menu</span>
                     {showhamburgerMenu ? (
                       <div className="block h-6 w-6">
@@ -304,7 +305,7 @@ const Navbar: FunctionComponent = () => {
                         {user.displayName}
                         {user.verified &&
                           <div className="ml-1 h-5 w-5">
-                            <Image src="/assets/svgs/verified.svg" height={20} width={20} alt="Verified" />
+                            <Verified />
                           </div>
                         }
                       </div>

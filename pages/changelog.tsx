@@ -15,6 +15,44 @@ const Changelog: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={2}>Version 1.0.3 (05.12.2021)</Title>
+        <p><b>Added:</b></p>
+        <ul className="list-disc pl-8">
+          <li>
+            Three new themes!
+            <ul className="list-disc pl-8">
+              <li>
+                &quot;Midnight Pumpkin&quot; by <Link href="/@/pumpkin227"><a className="hover:underline text-wt-accent cursor-pointer">pumpkin22/7</a></Link>
+              </li>
+              <li>
+                &quot;Minty Gingerbread&quot; by <Link href="/@/gedankenkind"><a className="hover:underline text-wt-accent cursor-pointer">gedankenkind</a></Link>
+              </li>
+              <li>
+                &quot;Morgaryll Forest&quot; by <Link href="/@/windverweht"><a className="hover:underline text-wt-accent cursor-pointer">Faline</a></Link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <p><b>Changes:</b></p>
+        <ul className="list-disc pl-8">
+          <li>
+            Revised theming
+            <ul className="list-disc pl-8">
+              <li>
+                Buttons are now always based on status colors
+              </li>
+              <li>
+                The user dropdown is now themed like the notification dropdown
+              </li>
+              <li>
+                The color of the verified badge can now be customized
+              </li>
+              <li>
+                Removed some unnecessary/unused colors
+              </li>
+            </ul>
+          </li>
+        </ul>
         <Title level={2}>Version 1.0.2 (29.11.2021)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">

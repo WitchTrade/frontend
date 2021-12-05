@@ -10,6 +10,9 @@ import TextInput from '../styles/TextInput';
 import Divider from '../styles/Divider';
 import { Badge } from '../../shared/stores/user/badge.model';
 import { Role } from '../../shared/stores/user/role.model';
+import Verified from '../styles/VerifiedSvg';
+import Chip from '../styles/Chip';
+import dayjs from 'dayjs';
 
 interface Props {
   adminUser: AdminUser;
@@ -20,9 +23,10 @@ interface Props {
   changeBadge: (adminUser: AdminUser, badge: Badge) => void;
   roles: Role[];
   changeRole: (adminUser: AdminUser, role: Role) => void;
+  sendMessage: (adminUser: AdminUser, text: string, link: string, iconLink: string) => void;
 };
 
-const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification, ban, unban, badges, changeBadge, roles, changeRole }) => {
+const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification, ban, unban, badges, changeBadge, roles, changeRole, sendMessage }) => {
   const { theme } = useThemeProvider();
 
   const [show, setShow] = useState(false);
@@ -30,8 +34,13 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
   const [dialogOpen, setDialogOpen] = useState(false);
   const [badgeDialogOpen, setBadgeDialogOpen] = useState(false);
   const [roleDialogOpen, setRoleDialogOpen] = useState(false);
+  const [messageDialogOpen, setMessageDialogOpen] = useState(false);
 
   const [banReason, setBanReason] = useState('');
+
+  const [text, setText] = useState('');
+  const [link, setLink] = useState('');
+  const [iconLink, setIconLink] = useState('');
 
   return (
     <>
@@ -44,7 +53,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
             </div>
             <TextInput type="text" placeholder="Ban reason" required={false} value={banReason} setValue={setBanReason} />
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="proceed" onClick={() => {
+              <ActionButton type="success" onClick={() => {
                 if (banReason) {
                   ban(adminUser, banReason);
                   setDialogOpen(false);
@@ -77,7 +86,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
               }
             </div>
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="proceed" onClick={() => setBadgeDialogOpen(false)}>
+              <ActionButton type="success" onClick={() => setBadgeDialogOpen(false)}>
                 Done
               </ActionButton>
             </div>
@@ -99,25 +108,48 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
               }
             </div>
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="proceed" onClick={() => setRoleDialogOpen(false)}>
+              <ActionButton type="success" onClick={() => setRoleDialogOpen(false)}>
                 Done
               </ActionButton>
             </div>
           </div>
         </div>
       </WTDialog>
-      <div className={`flex flex-wrap justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md p-4 cursor-pointer border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} style={{ minHeight: '70px' }} onClick={() => setShow(!show)}>
+      <WTDialog dialogOpen={messageDialogOpen} setDialogOpen={setMessageDialogOpen} closeOnOutsideClick={true}>
+        <div className="inline-block max-w-md p-6 my-8 overflow-auto text-left align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4 border-wt-success">
+          <div className="h-full flex flex-col justify-between">
+            <div>
+              <p className="text-2xl font-medium leading-6">Send message to <span className="text-wt-accent">{adminUser.username}</span></p>
+            </div>
+            <div className="m-1">
+              <TextInput type="input" value={text} setValue={(text) => setText(text)} placeholder="Text" required={true} />
+            </div>
+            <div className="m-1">
+              <TextInput type="input" value={link} setValue={(link) => setLink(link)} placeholder="Link" required={false} />
+            </div>
+            <div className="m-1">
+              <TextInput type="input" value={iconLink} setValue={(iconLink) => setIconLink(iconLink)} placeholder="Image Link" required={false} />
+            </div>
+            <div className="mt-4 flex justify-evenly pb-2">
+              <ActionButton type="success" onClick={() => { sendMessage(adminUser, text, link, iconLink); setMessageDialogOpen(false); }}>
+                Send
+              </ActionButton>
+            </div>
+          </div>
+        </div>
+      </WTDialog>
+      <div className={`flex flex-wrap justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md pt-4 px-4 pb-2 cursor-pointer border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} style={{ minHeight: '62px' }} onClick={() => setShow(!show)}>
         <div className="flex items-center">
           <Link href={`/@/${adminUser.username}`}>
             <a target="_blank" rel="noreferrer">
-              <div className="bg-wt-selected-dark py-1 px-2 rounded-lg border border-wt-selected-dark hover:border-wt-accent">
+              <div className="py-1 px-2 rounded-lg border border-wt-accent hover:bg-wt-hover">
                 <p className="font-bold text-wt-accent">{adminUser.username}</p>
               </div>
             </a>
           </Link>
           {adminUser.verified &&
             <div className="ml-1 h-5 w-5">
-              <Image src="/assets/svgs/verified.svg" height={20} width={20} alt="Verified" />
+              <Verified />
             </div>
           }
           <span className="text-sm align-top ml-1">({adminUser.displayName})</span>
@@ -148,19 +180,23 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
       </div>
       {show &&
         <div className="bg-wt-surface-dark rounded-b-lg mx-1 pb-2 px-4 z-10 border-wt-accent border-l-2 border-b-2 border-r-2">
+          <div className="flex flex-wrap justify-center">
+            <Chip title="Created" text={dayjs(adminUser.created).format('DD.MM.YYYY HH:mm')} />
+            <Chip title="Last Online" text={dayjs(adminUser.lastOnline).format('DD.MM.YYYY HH:mm')} />
+          </div>
           <div className="px-1 py-1">
             <Divider />
           </div>
           <p className="text-wt-accent-light mb-2 text-center">Actions</p>
           <div className="flex flex-wrap justify-evenly">
             <div className="my-1">
-              <ActionButton type={adminUser.verified ? 'cancel' : 'proceed'} onClick={() => changeVerification(adminUser)}>
+              <ActionButton type={adminUser.verified ? 'cancel' : 'success'} onClick={() => changeVerification(adminUser)}>
                 {adminUser.verified ? 'Unverify' : 'Verify'}
               </ActionButton>
             </div>
             {adminUser.banned &&
               <div className="my-1">
-                <ActionButton type="proceed" onClick={() => unban(adminUser)}>
+                <ActionButton type="success" onClick={() => unban(adminUser)}>
                   Unban
                 </ActionButton>
               </div>
@@ -172,13 +208,18 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
               </div>
             }
             <div className="my-1">
-              <ActionButton type="proceed" onClick={() => setBadgeDialogOpen(true)}>
+              <ActionButton type="success" onClick={() => setBadgeDialogOpen(true)}>
                 Manage Badges
               </ActionButton>
             </div>
             <div className="my-1">
-              <ActionButton type="proceed" onClick={() => setRoleDialogOpen(true)}>
+              <ActionButton type="success" onClick={() => setRoleDialogOpen(true)}>
                 Manage Roles
+              </ActionButton>
+            </div>
+            <div className="my-1">
+              <ActionButton type="success" onClick={() => setMessageDialogOpen(true)}>
+                Send message
               </ActionButton>
             </div>
           </div>

@@ -47,7 +47,7 @@ const Login: NextPage = () => {
           <CheckboxInput placeholder="Keep me logged in on this device" value={stayLoggedIn} setValue={setStayLoggedIn} />
         </div>
         <div className="flex justify-center text-center mb-4">
-          <NavbarLink type="accent" onClick={login}>Login</NavbarLink>
+          <NavbarLink type="info" onClick={login}>Login</NavbarLink>
         </div>
       </form>
     </div>

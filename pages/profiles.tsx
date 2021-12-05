@@ -1,5 +1,4 @@
 import type { NextPage, } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { firstValueFrom } from 'rxjs';
@@ -8,6 +7,7 @@ import Divider from '../components/styles/Divider';
 import PageHeader from '../components/styles/PageHeader';
 import TextInput from '../components/styles/TextInput';
 import Tooltip from '../components/styles/Tooltip';
+import Verified from '../components/styles/VerifiedSvg';
 import ProfilesHandler from '../shared/handlers/profiles.handler';
 import { itemsQuery } from '../shared/stores/items/items.query';
 import { createPreviewMarket, PreviewMarket } from '../shared/stores/markets/market.model';
@@ -57,8 +57,8 @@ const Profiles: NextPage<Props> = ({ profiles }) => {
                   <p className="text-center text-lg font-bold text-wt-accent">{profile.displayName}</p>
                   {profile.verified &&
                     <Tooltip text="Verified">
-                      <div className="ml-1 h-4 w-4 flex items-center">
-                        <Image src="/assets/svgs/verified.svg" height={16} width={16} alt="Verified" />
+                      <div className="ml-1 h-5 w-5 flex items-center">
+                        <Verified />
                       </div>
                     </Tooltip>
                   }

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import useUserProvider from '../providers/user.provider';
 import { adminService } from '../stores/admin/admin.service';
 import { AdminLog, AdminUser, BroadcastNotification } from '../stores/admin/admin.model';
-import { adminQuery } from '../stores/admin/admin.query';
 import { Badge } from '../stores/user/badge.model';
 import { Role } from '../stores/user/role.model';
 import { Subscription } from 'rxjs';
@@ -11,11 +10,6 @@ const AdminHandler = () => {
   const { user } = useUserProvider();
 
   const [playerSearchString, setPlayerSearchString] = useState('');
-
-  const [unfilteredAdminUsers, setUnfilteredAdminUsers] = useState<AdminUser[]>([]);
-
-  const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
-  const [loadedAdminUsers, setLoadedAdminUsers] = useState<AdminUser[]>([]);
 
   const [badges, setBadges] = useState<Badge[]>([]);
 
@@ -28,12 +22,6 @@ const AdminHandler = () => {
     link: '',
     iconLink: ''
   });
-
-  useEffect(() => {
-    adminQuery.selectAll().subscribe((adminUsers) => {
-      setUnfilteredAdminUsers(adminUsers.sort((a, b) => a.username.localeCompare(b.username)));
-    });
-  }, []);
 
   useEffect(() => {
     let badgeSub: Subscription;
@@ -68,14 +56,6 @@ const AdminHandler = () => {
     };
   }, [user]);
 
-  useEffect(() => {
-    setAdminUsers(unfilteredAdminUsers.filter((adminUser) => adminUser.username.includes(playerSearchString.toLowerCase())));
-  }, [unfilteredAdminUsers, playerSearchString]);
-
-  useEffect(() => {
-    setLoadedAdminUsers(adminUsers.slice(0, 25));
-  }, [adminUsers]);
-
   const changeVerification = (adminUser: AdminUser) => {
     if (adminUser.verified) {
       adminService.unverify({ userId: adminUser.id }).subscribe();
@@ -108,6 +88,10 @@ const AdminHandler = () => {
     }
   };
 
+  const sendMessage = (adminUser: AdminUser, text: string, link: string, iconLink: string) => {
+    adminService.sendMessage({ userId: adminUser.id, text, link, iconLink }).subscribe();
+  };
+
   const broadcast = () => {
     adminService.broadcast(broadcastNotification).subscribe((res) => {
       if (res.ok) {
@@ -120,19 +104,7 @@ const AdminHandler = () => {
     });
   };
 
-  const loadMoreAdminUsers = () => {
-    setLoadedAdminUsers(adminUsers.slice(0, loadedAdminUsers.length + 25));
-  };
-
-  const hasMoreAdminUsers = () => {
-    return adminUsers.length > loadedAdminUsers.length;
-  };
-
   return {
-    adminUsers,
-    loadedAdminUsers,
-    loadMoreAdminUsers,
-    hasMoreAdminUsers,
     playerSearchString,
     setPlayerSearchString,
     changeVerification,
@@ -142,6 +114,7 @@ const AdminHandler = () => {
     changeBadge,
     roles,
     changeRole,
+    sendMessage,
     logs,
     broadcastNotification,
     setBroadcastNotification,

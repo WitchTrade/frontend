@@ -50,7 +50,7 @@ const Gameservers: NextPage = () => {
             </div>
             <TextInput type="text" placeholder="Player name" required={false} value={dialogName} setValue={setDialogName} />
             <div className="mt-4 flex justify-evenly pb-2">
-              <ActionButton type="proceed" onClick={() => {
+              <ActionButton type="success" onClick={() => {
                 if (dialogName) {
                   addPlayer(dialogName);
                   setDialogName('');
@@ -79,14 +79,14 @@ const Gameservers: NextPage = () => {
             <div>
               <div className="flex flex-wrap justify-center pt-2">
                 <div className="m-1">
-                  <ActionButton type="proceed" onClick={() => setDialogOpen(true)}>
+                  <ActionButton type="success" onClick={() => setDialogOpen(true)}>
                     <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
                     Add player
                   </ActionButton>
                 </div>
                 {user && user.steamProfileLink && !steamSyncLoading &&
                   <div className="m-1">
-                    <ActionButton type="accent" onClick={syncSteamFriends}>
+                    <ActionButton type="info" onClick={syncSteamFriends}>
                       <Image src="/assets/svgs/sync.svg" height="24px" width="24px" alt="Sync Steam Friends" />
                       Sync Steam Friends
                     </ActionButton>
@@ -140,7 +140,7 @@ const Gameservers: NextPage = () => {
         </div>
       </div>
       <div className="flex justify-center pt-2">
-        <ActionButton type="proceed" onClick={getGameServers} disabled={loading}>
+        <ActionButton type="success" onClick={getGameServers} disabled={loading}>
           <Image src="/assets/svgs/refresh.svg" height="24px" width="24px" alt="Refresh" />
           Refresh
         </ActionButton>

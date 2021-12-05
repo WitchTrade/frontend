@@ -102,7 +102,7 @@ const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen,
               <Loading text="Loading offers" />
             }
             <div className="self-center mt-4">
-              <ActionButton type="neutral-enabled" onClick={() => setDialogOpen(false)}>
+              <ActionButton type="info" onClick={() => setDialogOpen(false)}>
                 Close
               </ActionButton>
             </div>

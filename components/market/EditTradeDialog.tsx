@@ -105,13 +105,13 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
             <div className="mt-4 flex justify-evenly pb-2">
               {!loading &&
                 <>
-                  <ActionButton type="accent" onClick={() => {
+                  <ActionButton type="success" onClick={() => {
                     setLoading(true);
                     updateTrade(localTrade, finished);
                   }}>
                     Update
                   </ActionButton>
-                  <ActionButton type="neutral-enabled" onClick={() => setDialogOpen(false)}>
+                  <ActionButton type="cancel" onClick={() => setDialogOpen(false)}>
                     Cancel
                   </ActionButton>
                 </>

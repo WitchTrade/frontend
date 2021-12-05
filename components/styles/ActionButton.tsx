@@ -15,11 +15,8 @@ const defaultStyle = "flex items-center focus:outline-none rounded-md text-sm cu
 
 const ActionButton: FunctionComponent<Props> = ({ onClick, children, type, disabled, small }) => {
   const types: Types = {
-    neutral: 'hover:bg-wt-hover rounded-md',
-    'neutral-enabled': 'bg-wt-selected-dark hover:bg-wt-hover rounded-md',
     info: 'text-wt-light bg-wt-info-dark hover:bg-wt-info',
-    accent: 'text-wt-light bg-wt-accent hover:bg-wt-accent-light',
-    proceed: 'text-wt-light bg-wt-success-dark hover:bg-wt-success',
+    success: 'text-wt-light bg-wt-success-dark hover:bg-wt-success',
     warning: 'text-wt-light bg-wt-warning-dark hover:bg-wt-warning',
     cancel: 'text-wt-light bg-wt-error-dark hover:bg-wt-error',
   };

@@ -5,6 +5,7 @@ import { SearchMarket, SearchOffer, SearchWish, SEARCH_VIEW } from '../../shared
 import { Inventory } from '../../shared/stores/inventory/inventory.model';
 import { createItem, Item } from '../../shared/stores/items/item.model';
 import { Price } from '../../shared/stores/markets/market.model';
+import Verified from '../styles/VerifiedSvg';
 
 interface Props {
   trade: SearchOffer | SearchWish;
@@ -125,11 +126,11 @@ const SearchTradeView: FunctionComponent<Props> = ({ trade, items, prices, type,
               <Image className="rounded-lg" src={item.iconUrl} height={120} width={120} alt={item.name} />
             </div>
             {inventory.showInTrading && owned &&
-              <p className="text-wt-text text-sm bg-wt-success-dark p-1 rounded-md">You own <span className="whitespace-nowrap">{amount > 1 ? amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : `${amount}x`}</span></p>
+              <p className="text-wt-light text-sm bg-wt-success-dark p-1 rounded-md">You own <span className="whitespace-nowrap">{amount > 1 ? amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : `${amount}x`}</span></p>
             }
             {inventory.showInTrading && !owned &&
               <div className="flex justify-center items-center bg-wt-error-dark p-1 rounded-md">
-                <p className="text-wt-text text-xs text-center">You don&apos;t own this item</p>
+                <p className="text-wt-light text-xs text-center">You don&apos;t own this item</p>
               </div>
             }
           </div>
@@ -147,7 +148,9 @@ const SearchTradeView: FunctionComponent<Props> = ({ trade, items, prices, type,
                         <p className="whitespace-nowrap overflow-ellipsis overflow-hidden">{m.user.displayName}</p>
                         {m.user.verified &&
                           <div className="flex items-center ml-1 h-6 w-6">
-                            <Image src="/assets/svgs/verified.svg" height={16} width={16} alt="Verified" />
+                            <div className="h-4 w-4">
+                              <Verified />
+                            </div>
                           </div>
                         }
                       </div>

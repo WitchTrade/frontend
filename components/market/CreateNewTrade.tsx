@@ -96,11 +96,11 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                       <p className="text-sm p-1 break-words font-semibold">{trade.selectedItem.name}</p>
                       <div>
                         {inventory.showInTrading && selectedItemOwned &&
-                          <p className="text-wt-text text-sm bg-wt-success-dark">You own <span className="whitespace-nowrap">{selectedItemAmount > 1 ? selectedItemAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : `${selectedItemAmount}x`}</span></p>
+                          <p className="text-wt-light text-sm bg-wt-success-dark">You own <span className="whitespace-nowrap">{selectedItemAmount > 1 ? selectedItemAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + 'x' : `${selectedItemAmount}x`}</span></p>
                         }
                         {inventory.showInTrading && !selectedItemOwned &&
                           <div className="flex justify-center items-center bg-wt-error-dark">
-                            <p className="text-wt-text text-xs">You don&apos;t own this item</p>
+                            <p className="text-wt-light text-xs">You don&apos;t own this item</p>
                           </div>
                         }
                       </div>
@@ -163,7 +163,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                 </div>
                 <div className="flex justify-center">
                   {!loading &&
-                    <ActionButton type="proceed" disabled={!trade.mainPrice} onClick={() => { setLoading(true); createTrade(() => { setProgress(0); setLoading(false); }); }}>
+                    <ActionButton type="success" disabled={!trade.mainPrice} onClick={() => { setLoading(true); createTrade(() => { setProgress(0); setLoading(false); }); }}>
                       Create {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
                     </ActionButton>
                     ||

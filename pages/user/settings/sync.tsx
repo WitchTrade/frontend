@@ -45,7 +45,7 @@ const Sync: NextPage = () => {
           {!invLoading &&
             <>
               <div className="flex justify-evenly mt-2 items-center">
-                <ActionButton onClick={syncInventory} type="accent">Sync Inventory</ActionButton>
+                <ActionButton onClick={syncInventory} type="info">Sync Inventory</ActionButton>
                 {inventory.lastSynced &&
                   <p>Last synced: {dayjs().to(dayjs(inventory.lastSynced))}</p>
                 }
@@ -72,7 +72,7 @@ const Sync: NextPage = () => {
           <div>
             {!localSyncSettings.syncInventory &&
               <div className="flex justify-center my-2">
-                <ActionButton onClick={() => setLocalSyncSettings({ ...localSyncSettings, syncInventory: !localSyncSettings.syncInventory })} type="proceed">Enable Auto Sync</ActionButton>
+                <ActionButton onClick={() => setLocalSyncSettings({ ...localSyncSettings, syncInventory: !localSyncSettings.syncInventory })} type="success">Enable Auto Sync</ActionButton>
               </div>
             }
             {localSyncSettings.syncInventory &&
@@ -150,7 +150,7 @@ const Sync: NextPage = () => {
               <>
                 <p className="text-wt-error text-center">You have unsaved changes!</p>
                 <div className="flex justify-center my-2">
-                  <ActionButton onClick={updateSyncSettings} type="proceed">Save settings</ActionButton>
+                  <ActionButton onClick={updateSyncSettings} type="success">Save settings</ActionButton>
                 </div>
               </>
             }
