@@ -15,6 +15,12 @@ const Changelog: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={2}>Version 1.0.4 (05.12.2021)</Title>
+        <p><b>Added:</b></p>
+        <ul className="list-disc pl-8">
+          <li>Winterdream 2021 event</li>
+          <li>Items from Witch It version 1.2.3</li>
+        </ul>
         <Title level={2}>Version 1.0.3 (05.12.2021)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">
