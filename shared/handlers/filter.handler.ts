@@ -92,6 +92,7 @@ export const itemEventValues: DropdownValue[] = [
   { key: 'winterdream2018', displayName: 'Winterdream 2018', imagePath: '/assets/images/eventIcons/winterdream2018.png' },
   { key: 'winterdream2019', displayName: 'Winterdream 2019', imagePath: '/assets/images/eventIcons/winterdream2019.png' },
   { key: 'winterdream2020', displayName: 'Winterdream 2020', imagePath: '/assets/images/eventIcons/winterdream2020.png' },
+  { key: 'winterdream2021', displayName: 'Winterdream 2021', imagePath: '/assets/images/eventIcons/winterdream2021.png' },
   { key: 'winterdream witch', displayName: 'Winterdream Witch', imagePath: '/assets/images/eventIcons/winterdreamwitch.png' },
   { key: 'witchforest', displayName: 'Witch Forest', imagePath: '/assets/images/eventIcons/witchforest.png' }
 ];
