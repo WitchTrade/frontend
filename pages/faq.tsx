@@ -59,7 +59,7 @@ const FAQ: NextPage = () => {
             You have both a valid steam profile and trade link linked to your WitchTrade account.
           </li>
           <li>
-            In order to ensure that you are really the steam user that you have linked, you need to link your WitchTrade profile in the steam profile description and make sure it&apos;s public. This link can be removed again after you are verified.
+            To make sure you are really the Steam user you linked, you need to verify your Steam account in your account settings.
           </li>
           <li>
             Your market is real and you are really offering the items present.
