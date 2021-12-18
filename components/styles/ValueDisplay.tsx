@@ -24,7 +24,7 @@ const ValueDisplay: FunctionComponent<Props> = ({ name, value, boldValue, link, 
         ||
         <p className={value && boldValue ? 'font-bold' : ''}>{value ? value : 'Not set'}</p>
       }
-    </div >
+    </div>
   );
 };
 

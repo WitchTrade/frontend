@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import useUserProvider from '../providers/user.provider';
 import { createNotification } from '../stores/notification/notification.model';
@@ -26,6 +26,26 @@ const AccountSettingsHandler = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newRepeatPassword, setNewRepeatPassword] = useState('');
+
+  const [steamVerificationState, setSteamVerificationState] = useState('');
+
+  useEffect(() => {
+    if (router.query['openid.ns'] && steamVerificationState === '') {
+      setSteamVerificationState('Verifing...');
+      let queryString = '?';
+      for (const queryParam in router.query) {
+        queryString += queryParam;
+        queryString += '=';
+        queryString += encodeURIComponent(router.query[queryParam] as string);
+        queryString += '&';
+      }
+      router.replace('/user/settings/account', undefined, { shallow: true });
+
+      userService.verifySteamProfileUrl(queryString).subscribe(() => {
+        setSteamVerificationState('');
+      });
+    }
+  });
 
   const editAccountSettings = () => {
     setEditing(true);
@@ -160,6 +180,16 @@ const AccountSettingsHandler = () => {
     });
   };
 
+  const verifySteamProfileLink = () => {
+    setSteamVerificationState('Redirecting...');
+    userService.getSteamLoginUrl().subscribe(async (res) => {
+      if (res.status === 200) {
+        const text = await res.text();
+        router.push(text);
+      }
+    });
+  };
+
   return {
     user,
     formValue,
@@ -174,7 +204,9 @@ const AccountSettingsHandler = () => {
     setNewPassword,
     newRepeatPassword,
     setNewRepeatPassword,
-    changePassword
+    changePassword,
+    verifySteamProfileLink,
+    steamVerificationState
   };
 };
 

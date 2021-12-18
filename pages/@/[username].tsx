@@ -122,7 +122,16 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                           </a>
                         </Link>
                       </Tooltip>
-                      <p className="text-sm mt-1">Profile</p>
+                      <div className="flex mt-1">
+                        <p className="text-sm">Profile</p>
+                        {profile.verifiedSteamProfileLink &&
+                          <div className="flex items-center h-5 w-5 ml-1">
+                            <div className="h-4 w-4">
+                              <Verified />
+                            </div>
+                          </div>
+                        }
+                      </div>
                     </div>
                   }
                   {profile.steamTradeLink &&
