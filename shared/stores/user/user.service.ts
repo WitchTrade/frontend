@@ -178,6 +178,7 @@ export class UserService {
         next: async res => {
           const json = await res.json();
           if (res.ok) {
+            authService.setTokens(json.token, json.refreshToken);
             const user = createUser(json);
             user.loggedIn = true;
             this.userStore.update(user);
@@ -377,6 +378,70 @@ export class UserService {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/friends`).pipe(
       tap({
         next: async () => { },
+        error: err => {
+          const notification = createNotification({
+            content: err,
+            duration: 5000,
+            type: 'error'
+          });
+          notificationService.addNotification(notification);
+          return of(err);
+        }
+      })
+    );
+  }
+
+  public getSteamLoginUrl() {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/login`).pipe(
+      tap({
+        next: async res => {
+          if (!res.ok) {
+            const notification = createNotification({
+              content: res.statusText,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+          }
+        },
+        error: err => {
+          const notification = createNotification({
+            content: err,
+            duration: 5000,
+            type: 'error'
+          });
+          notificationService.addNotification(notification);
+          return of(err);
+        }
+      })
+    );
+  }
+
+  public verifySteamProfileUrl(query: string) {
+    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/auth${query}`).pipe(
+      tap({
+        next: async res => {
+          const json = await res.json();
+          if (res.ok) {
+            authService.setTokens(json.token, json.refreshToken);
+            const user = createUser(json);
+            user.loggedIn = true;
+            this.userStore.update(user);
+            const notification = createNotification({
+              content: 'Steam Profile Link verified',
+              duration: 5000,
+              type: 'success'
+            });
+            notificationService.addNotification(notification);
+          } else {
+            const notification = createNotification({
+              content: json.message,
+              duration: 5000,
+              type: 'error'
+            });
+            notificationService.addNotification(notification);
+          }
+        },
         error: err => {
           const notification = createNotification({
             content: err,

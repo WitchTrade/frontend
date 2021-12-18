@@ -10,6 +10,7 @@ export interface User {
   lastOnline: Date;
   displayName: string;
   steamProfileLink: string;
+  verifiedSteamProfileLink: boolean;
   steamTradeLink: string;
   discordTag: string;
   usingSteamGuard: boolean;
@@ -38,6 +39,7 @@ export function createUser(params: Partial<User>) {
     lastOnline: params.lastOnline ? params.lastOnline : null,
     displayName: params.displayName ? params.displayName : null,
     steamProfileLink: params.steamProfileLink ? params.steamProfileLink : null,
+    verifiedSteamProfileLink: params.verifiedSteamProfileLink || params.verifiedSteamProfileLink === false ? params.verifiedSteamProfileLink : null,
     steamTradeLink: params.steamTradeLink ? params.steamTradeLink : null,
     discordTag: params.discordTag ? params.discordTag : null,
     usingSteamGuard: params.usingSteamGuard || params.usingSteamGuard === false ? params.usingSteamGuard : null,
@@ -56,6 +58,7 @@ export interface UserInfo {
   lastOnline: Date;
   displayName: string;
   steamProfileLink: string;
+  verifiedSteamProfileLink: string;
   steamTradeLink: string;
   discordTag: string;
   usingSteamGuard: boolean;
@@ -72,6 +75,7 @@ export function createUserInfo(userInfo: Partial<UserInfo>): UserInfo {
     lastOnline: userInfo.lastOnline ? userInfo.lastOnline : null,
     displayName: userInfo.displayName ? userInfo.displayName : '',
     steamProfileLink: userInfo.steamProfileLink ? userInfo.steamProfileLink : '',
+    verifiedSteamProfileLink: userInfo.verifiedSteamProfileLink ? userInfo.verifiedSteamProfileLink : false,
     steamTradeLink: userInfo.steamTradeLink ? userInfo.steamTradeLink : '',
     discordTag: userInfo.discordTag ? userInfo.discordTag : '',
     usingSteamGuard: userInfo.usingSteamGuard ? userInfo.usingSteamGuard : false,

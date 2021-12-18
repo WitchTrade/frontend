@@ -26,7 +26,9 @@ const Account: NextPage = () => {
     editing,
     editAccountSettings,
     updateAccountSettings,
-    cancelEditAccountSettings
+    cancelEditAccountSettings,
+    verifySteamProfileLink,
+    steamVerificationState
   } = AccountSettingsHandler();
 
   return (
@@ -78,7 +80,30 @@ const Account: NextPage = () => {
             <ValueDisplay name="Email" value={user.email} svgPath={`/assets/svgs/email/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
           </div>
           <div className="m-1 mt-4">
-            <ValueDisplay name="Steam Profile Link" value={user.steamProfileLink} link={true} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
+            <div className="flex justify-between h-11 rounded-lg bg-wt-surface-dark items-center px-2">
+              <div className="flex items-center">
+                <Image src={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="24px" width="24px" alt="Value Icon" />
+                <p className="ml-1">Steam Profile Link:</p>
+              </div>
+              <div className="flex items-center">
+                {user.steamProfileLink &&
+                  <a className="hover:underline text-wt-accent-light rounded-md focus:outline-none focus:ring-2 focus:ring-wt-accent" href={user.steamProfileLink} target="_blank" rel="noreferrer">click here</a>
+                  ||
+                  <p>Not set</p>
+                }
+                {user.steamProfileLink && user.verifiedSteamProfileLink &&
+                  <div className="flex items-center h-6 w-4 ml-1">
+                    <div className="h-4 w-4">
+                      <Verified />
+                    </div>
+                  </div>
+                  || user.steamProfileLink &&
+                  <div className="flex justify-center items-center ml-1">
+                    <ActionButton type="info" onClick={verifySteamProfileLink}>{steamVerificationState ? steamVerificationState : 'Verify'}</ActionButton>
+                  </div>
+                }
+              </div>
+            </div>
           </div>
           <div className="m-1">
             <ValueDisplay name="Steam Trade Link" value={user.steamTradeLink} link={true} svgPath={`/assets/svgs/steam/${theme?.type === 'light' ? 'black' : 'white'}.svg`} />
@@ -143,8 +168,8 @@ const Account: NextPage = () => {
           </div>
         </div>
       }
-      {user.verified &&
-        <p className="text-center"><span className="text-wt-success">Notice:</span> If you want to get your profile verified, have a look into the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link></p>
+      {!user.verified &&
+        <p className="text-center mb-2"><span className="text-wt-success">Notice:</span> If you want to get your profile verified, have a look into the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link></p>
       }
     </LoginWrapper>
   );
