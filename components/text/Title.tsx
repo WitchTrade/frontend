@@ -14,7 +14,7 @@ const Title: FunctionComponent<Props> = ({ level, id, children }) => {
     level1: 'text-center text-wt-accent text-4xl font-bold pt-2',
     level2: 'text-center text-wt-accent text-2xl font-bold pt-4',
     level3: 'text-center text-wt-accent text-xl font-bold',
-    level4: 'text-wt-accent text-lg font-bold',
+    level4: 'text-wt-accent text-lg font-bold pt-4',
   };
 
   return (

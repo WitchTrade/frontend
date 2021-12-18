@@ -15,13 +15,18 @@ const Changelog: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
-        <Title level={2}>Version 1.0.4 (13.12.2021)</Title>
+        <Title level={4}>Version 1.0.5 (18.12.2021)</Title>
+        <p><b>Added:</b></p>
+        <ul className="list-disc pl-8">
+          <li>Steam profile verification</li>
+        </ul>
+        <Title level={4}>Version 1.0.4 (13.12.2021)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">
           <li>Winterdream 2021 event</li>
           <li>Items from Witch It version 1.2.3</li>
         </ul>
-        <Title level={2}>Version 1.0.3 (05.12.2021)</Title>
+        <Title level={4}>Version 1.0.3 (05.12.2021)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">
           <li>
@@ -59,7 +64,7 @@ const Changelog: NextPage = () => {
             </ul>
           </li>
         </ul>
-        <Title level={2}>Version 1.0.2 (29.11.2021)</Title>
+        <Title level={4}>Version 1.0.2 (29.11.2021)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">
           <li>
@@ -84,7 +89,7 @@ const Changelog: NextPage = () => {
             Fixed item dialog closing when clicking near the listed trades
           </li>
         </ul>
-        <Title level={2}>Version 1.0.1 (27.11.2021)</Title>
+        <Title level={4}>Version 1.0.1 (27.11.2021)</Title>
         <p><b>Changes: </b></p>
         <ul className="list-disc pl-8">
           <li>
@@ -115,7 +120,7 @@ const Changelog: NextPage = () => {
             Fixed some icons overlapping in the game servers view
           </li>
         </ul>
-        <Title level={2}>Version 1.0.0 (24.11.2021)</Title>
+        <Title level={4}>Version 1.0.0 (24.11.2021)</Title>
         <p><b>New Features: </b></p>
         <ul className="list-disc pl-8">
           <li>

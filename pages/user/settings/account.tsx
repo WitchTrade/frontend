@@ -168,8 +168,8 @@ const Account: NextPage = () => {
           </div>
         </div>
       }
-      {user.verified &&
-        <p className="text-center"><span className="text-wt-success">Notice:</span> If you want to get your profile verified, have a look into the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link></p>
+      {!user.verified &&
+        <p className="text-center mb-2"><span className="text-wt-success">Notice:</span> If you want to get your profile verified, have a look into the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link></p>
       }
     </LoginWrapper>
   );
