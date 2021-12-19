@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { tap } from 'rxjs';
+import { selectAll } from '@ngneat/elf-entities';
+import { useObservable } from '@ngneat/react-rxjs';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import { Item } from '../stores/items/item.model';
 import { AdminUser } from '../stores/admin/admin.model';
-import { adminQuery } from '../stores/admin/admin.query';
+import { adminStore } from '../stores/admin/admin.store';
 
 export interface AdminFilterValues {
   searchString: string;
@@ -50,18 +53,12 @@ export const badgeValues: DropdownValue[] = [
 
 const AdminFilterHandler = (itemsToLoad: number) => {
 
-  const [adminUsers, setAdminUsers] = useState<AdminUser[]>([]);
+  const [adminUsers] = useObservable(adminStore.pipe(selectAll(), tap(users => users.sort((a, b) => a.username.localeCompare(b.username)))));
 
   const [filteredAdminUsers, setFilteredAdminUsers] = useState<AdminUser[]>([]);
   const [loadedAdminUsers, setLoadedAdminUsers] = useState<AdminUser[]>([]);
 
   const [adminFilterValues, setAdminFilterValues] = useState<AdminFilterValues>(createDefaultAdminFilter());
-
-  useEffect(() => {
-    adminQuery.selectAll().subscribe((adminUsers) => {
-      setAdminUsers(adminUsers.sort((a, b) => a.username.localeCompare(b.username)));
-    });
-  }, []);
 
   useEffect(() => {
     filterAdminUsers();

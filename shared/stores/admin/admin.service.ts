@@ -1,14 +1,13 @@
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { setEntities, updateEntities } from '@ngneat/elf-entities';
+import { adminStore } from './admin.store';
 import authService from '../../services/auth.service';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
 import { serverNotificationService } from '../serverNotification/server-notification.service';
-import { AdminStore, adminStore } from './admin.store';
 
 export class AdminService {
-
-  constructor(private adminStore: AdminStore) { }
 
   public fetchUsers() {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/admin/users`, {
@@ -21,7 +20,7 @@ export class AdminService {
           next: async (res) => {
             const json = await res.json();
             if (res.ok) {
-              this.adminStore.set(json);
+              adminStore.update(setEntities(json));
             } else {
               const notification = createNotification({
                 content: json.message,
@@ -58,7 +57,7 @@ export class AdminService {
           next: async (res) => {
             const json = await res.json();
             if (res.ok) {
-              this.adminStore.update(json.id, json);
+              adminStore.update(updateEntities(json.id, json));
               const notification = createNotification({
                 content: `Banned ${json.username}`,
                 duration: 5000,
@@ -101,7 +100,7 @@ export class AdminService {
           next: async (res) => {
             const json = await res.json();
             if (res.ok) {
-              this.adminStore.update(json.id, json);
+              adminStore.update(updateEntities(json.id, json));
               const notification = createNotification({
                 content: `Unbanned ${json.username}`,
                 duration: 5000,
@@ -172,7 +171,7 @@ export class AdminService {
           next: async (res) => {
             const json = await res.json();
             if (res.ok) {
-              this.adminStore.update(json.id, json);
+              adminStore.update(updateEntities(json.id, json));
               const notification = createNotification({
                 content: `Added badge to ${json.username}`,
                 duration: 5000,
@@ -215,7 +214,7 @@ export class AdminService {
           next: async (res) => {
             const json = await res.json();
             if (res.ok) {
-              this.adminStore.update(json.id, json);
+              adminStore.update(updateEntities(json.id, json));
               const notification = createNotification({
                 content: `Removed badge from ${json.username}`,
                 duration: 5000,
@@ -286,7 +285,7 @@ export class AdminService {
           next: async (res) => {
             const json = await res.json();
             if (res.ok) {
-              this.adminStore.update(json.id, json);
+              adminStore.update(updateEntities(json.id, json));
               const notification = createNotification({
                 content: `Added role to ${json.username}`,
                 duration: 5000,
@@ -329,7 +328,7 @@ export class AdminService {
           next: async (res) => {
             const json = await res.json();
             if (res.ok) {
-              this.adminStore.update(json.id, json);
+              adminStore.update(updateEntities(json.id, json));
               const notification = createNotification({
                 content: `Removed role from ${json.username}`,
                 duration: 5000,
@@ -372,7 +371,7 @@ export class AdminService {
           next: async (res) => {
             const json = await res.json();
             if (res.ok) {
-              this.adminStore.update(json.id, json);
+              adminStore.update(updateEntities(json.id, json));
               const notification = createNotification({
                 content: `Verified ${json.username}`,
                 duration: 5000,
@@ -415,7 +414,7 @@ export class AdminService {
           next: async (res) => {
             const json = await res.json();
             if (res.ok) {
-              this.adminStore.update(json.id, json);
+              adminStore.update(updateEntities(json.id, json));
               const notification = createNotification({
                 content: `Unverified ${json.username}`,
                 duration: 5000,
@@ -558,4 +557,4 @@ export class AdminService {
   }
 }
 
-export const adminService = new AdminService(adminStore);
+export const adminService = new AdminService();
