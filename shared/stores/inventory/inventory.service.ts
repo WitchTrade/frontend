@@ -1,19 +1,15 @@
 import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { inventoryStore } from './inventory.store';
 import authService from '../../services/auth.service';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
-import { User } from '../user/user.model';
-import { userQuery, UserQuery } from '../user/user.query';
 import { createInventory, InventoryChangeDTO } from './inventory.model';
-import { InventoryStore, inventoryStore } from './inventory.store';
 
 export class InventoryService {
 
-  constructor(private inventoryStore: InventoryStore, private _userQuery: UserQuery) { }
-
   public removeInventory() {
-    this.inventoryStore.update(createInventory({}));
+    inventoryStore.update(() => createInventory({}));
   }
 
   public fetchInventory() {
@@ -22,7 +18,7 @@ export class InventoryService {
         next: async res => {
           const json = await res.json();
           if (res.ok) {
-            this.inventoryStore.update(json);
+            inventoryStore.update(() => json);
           } else if (res.status !== 404) {
             const notification = createNotification({
               content: json.message,
@@ -54,7 +50,7 @@ export class InventoryService {
           next: async res => {
             const json = await res.json();
             if (res.ok) {
-              this.inventoryStore.update(json);
+              inventoryStore.update(() => json);
               const notification = createNotification({
                 content: 'Synced inventory from steam!',
                 duration: 5000,
@@ -95,7 +91,7 @@ export class InventoryService {
         next: async res => {
           const json = await res.json();
           if (res.ok) {
-            this.inventoryStore.update(json);
+            inventoryStore.update(() => json);
             const notification = createNotification({
               content: 'Updated inventory settings',
               duration: 5000,
@@ -136,7 +132,7 @@ export class InventoryService {
         next: async res => {
           const json = await res.json();
           if (res.ok) {
-            this.inventoryStore.update(json);
+            inventoryStore.update(() => json);
             const notification = createNotification({
               content: 'Updated sync settings',
               duration: 5000,
@@ -167,4 +163,4 @@ export class InventoryService {
 
 }
 
-export const inventoryService = new InventoryService(inventoryStore, userQuery);
+export const inventoryService = new InventoryService();

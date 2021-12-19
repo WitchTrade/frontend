@@ -1,13 +1,6 @@
-import { Store, StoreConfig } from '@datorama/akita';
+import { Store, createState, withProps } from '@ngneat/elf';
 import { createInventory, Inventory } from './inventory.model';
 
-@StoreConfig({ name: 'inventory' })
-export class InventoryStore extends Store<Inventory> {
+const { state, config } = createState(withProps<Inventory>(createInventory({})));
 
-  constructor() {
-    super(createInventory({}));
-  }
-
-}
-
-export const inventoryStore = new InventoryStore();
+export const inventoryStore = new Store({ name: 'inventory', state, config });

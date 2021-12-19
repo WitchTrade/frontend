@@ -3,7 +3,8 @@ import { useRouter } from 'next/dist/client/router';
 import { selectAll } from '@ngneat/elf-entities';
 import { useObservable } from '@ngneat/react-rxjs';
 import { getItemRarities, itemsStore } from '../stores/items/items.store';
-import useInventoryProvider from '../providers/inventory.provider';
+import { Item } from '../stores/items/item.model';
+import { inventoryStore } from '../stores/inventory/inventory.store';
 import usePricesProvider from '../providers/prices.provider';
 import {
   inventoryValues,
@@ -16,7 +17,6 @@ import {
 } from './filter.handler';
 import { searchService } from '../stores/search/search.service';
 import { DropdownValue } from '../../components/styles/Dropdown';
-import { Item } from '../stores/items/item.model';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
 
@@ -93,7 +93,7 @@ export enum SEARCH_VIEW {
 const SearchHandler = () => {
   const router = useRouter();
 
-  const { inventory } = useInventoryProvider();
+  const [inventory] = useObservable(inventoryStore);
 
   const [items] = useObservable(itemsStore.pipe(selectAll()));
   const { prices } = usePricesProvider();

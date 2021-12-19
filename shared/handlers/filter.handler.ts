@@ -3,9 +3,9 @@ import { useRouter } from 'next/dist/client/router';
 import { useObservable } from '@ngneat/react-rxjs';
 import { selectAll } from '@ngneat/elf-entities';
 import { Item } from '../stores/items/item.model';
+import { inventoryStore } from '../stores/inventory/inventory.store';
 import { getItemRarities, itemsStore } from '../stores/items/items.store';
 import { DropdownValue } from '../../components/styles/Dropdown';
-import useInventoryProvider from '../providers/inventory.provider';
 import { Offer, Wish } from '../stores/markets/market.model';
 import { MARKET_TYPE } from './market.handler';
 
@@ -136,7 +136,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
   const router = useRouter();
   const username = router.query.username;
 
-  const { inventory } = useInventoryProvider();
+  const [inventory] = useObservable(inventoryStore);
 
   const [items] = useObservable(itemsStore.pipe(selectAll()));
 

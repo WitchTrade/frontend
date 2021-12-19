@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import useInventoryProvider from '../providers/inventory.provider';
+import { useObservable } from '@ngneat/react-rxjs';
+import { inventoryStore } from '../stores/inventory/inventory.store';
 import { Offer, Wish } from '../stores/markets/market.model';
 import { marketsService } from '../stores/markets/markets.service';
 import { MARKET_TYPE } from './market.handler';
 
 const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | Wish) => void) => {
-  const { inventory } = useInventoryProvider();
+  const [inventory] = useObservable(inventoryStore);
 
   const [progress, setProgress] = useState(0);
 

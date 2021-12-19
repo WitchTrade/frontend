@@ -4,9 +4,8 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { Transition } from '@headlessui/react';
 import dayjs from 'dayjs';
-
-import { createInventory, Inventory } from '../../shared/stores/inventory/inventory.model';
-import { inventoryQuery } from '../../shared/stores/inventory/inventory.query';
+import { useObservable } from '@ngneat/react-rxjs';
+import { inventoryStore } from '../../shared/stores/inventory/inventory.store';
 import { ServerNotification } from '../../shared/stores/serverNotification/server-notification.model';
 import { serverNotificationQuery } from '../../shared/stores/serverNotification/server-notification.query';
 import { serverNotificationService } from '../../shared/stores/serverNotification/server-notification.service';
@@ -25,7 +24,8 @@ const Navbar: FunctionComponent = () => {
   const { theme } = useThemeProvider();
 
   const { user } = useUserProvider();
-  const [inventory, setInventory] = useState<Inventory>(createInventory({}));
+  const [inventory] = useObservable(inventoryStore);
+  
   const [lastSynced, setLastSynced] = useState({ old: false, lastSyncedString: '' });
   const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();
   const [notifications, setNotifications] = useState<ServerNotification[]>([]);
@@ -35,12 +35,9 @@ const Navbar: FunctionComponent = () => {
   const { show: showhamburgerMenu, nodeRef: hamburgerMenuRef, toggleRef: hamburgerMenuToggleRef } = useDetectOutsideClick(false, true);
 
   useEffect(() => {
-    const inventorySub = inventoryQuery.select().subscribe(setInventory);
-
     const notiSub = serverNotificationQuery.selectAll().subscribe(setNotifications);
 
     return (() => {
-      inventorySub.unsubscribe();
       notiSub.unsubscribe();
     });
   }, []);
