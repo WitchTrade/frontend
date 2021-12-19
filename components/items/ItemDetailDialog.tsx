@@ -1,8 +1,11 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
+import { selectAll } from '@ngneat/elf-entities';
+import { useObservable } from '@ngneat/react-rxjs';
 import { Inventory } from '../../shared/stores/inventory/inventory.model';
 import { Item } from '../../shared/stores/items/item.model';
+import { itemsStore } from '../../shared/stores/items/items.store';
 import WTDialog from '../styles/WTDialog';
 import { itemCharacterValues, itemEventValues, itemSlotValues } from '../../shared/handlers/filter.handler';
 import Chip from '../styles/Chip';
@@ -10,7 +13,6 @@ import ActionButton from '../styles/ActionButton';
 import { searchService } from '../../shared/stores/search/search.service';
 import { SearchOffer, SEARCH_VIEW } from '../../shared/handlers/search.handler';
 import SearchTradeView from '../search/SearchTradeView';
-import useItemsProvider from '../../shared/providers/items.provider';
 import usePricesProvider from '../../shared/providers/prices.provider';
 import Divider from '../styles/Divider';
 import Loading from '../styles/Loading';
@@ -25,7 +27,7 @@ interface Props {
 
 const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, item, inventory, capitalizeFirstLetter }) => {
   const router = useRouter();
-  const { items } = useItemsProvider();
+  const [items] = useObservable(itemsStore.pipe(selectAll()));
   const { prices } = usePricesProvider();
 
   const [searchOffer, setSearchOffer] = useState<SearchOffer | undefined>();

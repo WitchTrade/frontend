@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
+import { selectAll } from '@ngneat/elf-entities';
+import { useObservable } from '@ngneat/react-rxjs';
+import { getItemRarities, itemsStore } from '../stores/items/items.store';
 import useInventoryProvider from '../providers/inventory.provider';
-import useItemsProvider from '../providers/items.provider';
 import usePricesProvider from '../providers/prices.provider';
 import {
   inventoryValues,
@@ -15,7 +17,6 @@ import {
 import { searchService } from '../stores/search/search.service';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import { Item } from '../stores/items/item.model';
-import { itemsQuery } from '../stores/items/items.query';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
 
@@ -94,7 +95,7 @@ const SearchHandler = () => {
 
   const { inventory } = useInventoryProvider();
 
-  const { items } = useItemsProvider();
+  const [items] = useObservable(itemsStore.pipe(selectAll()));
   const { prices } = usePricesProvider();
 
   const [searchView, setSearchView] = useState(SEARCH_VIEW.OFFERS);
@@ -288,8 +289,8 @@ const SearchHandler = () => {
       return 0;
     }
     if (searchOrderValues.orderBy.key === 'tagRarity') {
-      one = itemsQuery.getRarities().indexOf(one as string);
-      two = itemsQuery.getRarities().indexOf(two as string);
+      one = getItemRarities().indexOf(one as string);
+      two = getItemRarities().indexOf(two as string);
     }
     let returnValue = 0;
     if (one > two) {

@@ -1,10 +1,12 @@
+import { selectAll } from '@ngneat/elf-entities';
+import { useObservable } from '@ngneat/react-rxjs';
 import { createRef, KeyboardEvent, useEffect, useState } from 'react';
-import useItemsProvider from '../providers/items.provider';
 import { Item } from '../stores/items/item.model';
+import { itemsStore } from '../stores/items/items.store';
 
 const ItemAutocompleteHandler = (setItem: (item: Item | undefined) => void) => {
 
-  const { items } = useItemsProvider();
+  const [items] = useObservable(itemsStore.pipe(selectAll()));
 
   const [searchValue, setSearchValue] = useState('');
 
