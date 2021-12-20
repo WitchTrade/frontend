@@ -9,8 +9,8 @@ import CheckboxInput from '../styles/CheckboxInput';
 import ActionButton from '../styles/ActionButton';
 import Loading from '../styles/Loading';
 import { createDefaultSearchFilter, SearchFilterValues, SearchOrderValues } from '../../shared/handlers/search.handler';
-import useUserProvider from '../../shared/providers/user.provider';
 import ItemAutocomplete from './ItemAutocomplete';
+import { userStore } from '../../shared/stores/user/user.store';
 
 interface Props {
   searchFilterValues: SearchFilterValues;
@@ -25,7 +25,7 @@ interface Props {
 const SearchFilter: FunctionComponent<Props> = ({ searchFilterValues, setSearchFilterValues, searchOrderValues, setSearchOrderValues, initialOpen, search, searchInProgress }) => {
   const { theme } = useThemeProvider();
 
-  const { user } = useUserProvider();
+  const [user] = useObservable(userStore);
   const [inventory] = useObservable(inventoryStore);
 
   const [filterOpen, setFilterOpen] = useState(initialOpen);

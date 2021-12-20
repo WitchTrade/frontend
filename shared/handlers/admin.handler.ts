@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import useUserProvider from '../providers/user.provider';
+import { Subscription } from 'rxjs';
+import { useObservable } from '@ngneat/react-rxjs';
 import { adminService } from '../stores/admin/admin.service';
 import { AdminLog, AdminUser, BroadcastNotification } from '../stores/admin/admin.model';
 import { Badge } from '../stores/user/badge.model';
 import { Role } from '../stores/user/role.model';
-import { Subscription } from 'rxjs';
+import { userStore } from '../stores/user/user.store';
 
 const AdminHandler = () => {
-  const { user } = useUserProvider();
+  const [user] = useObservable(userStore);
 
   const [playerSearchString, setPlayerSearchString] = useState('');
 

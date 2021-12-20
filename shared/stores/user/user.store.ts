@@ -1,16 +1,6 @@
-import { Store, StoreConfig } from '@datorama/akita';
+import { Store, createState, withProps } from '@ngneat/elf';
 import { createUser, User } from './user.model';
 
-@StoreConfig({
-  name: 'user',
-  resettable: true
-})
-export class UserStore extends Store<User> {
+const { state, config } = createState(withProps<User>(createUser({})));
 
-  constructor() {
-    super({});
-  }
-
-}
-
-export const userStore = new UserStore();
+export const userStore = new Store({ name: 'user', state, config });

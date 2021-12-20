@@ -1,25 +1,22 @@
-import { UserStore, userStore } from './user.store';
+import { of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { tap } from 'rxjs/operators';
-import { userQuery, UserQuery } from './user.query';
-import { of } from 'rxjs';
-import { createUser, DecodedToken, RegisterUser, User } from './user.model';
-import { inventoryService, InventoryService } from '../inventory/inventory.service';
+import { userStore } from './user.store';
+import { createUser, RegisterUser, User } from './user.model';
+import { inventoryService } from '../inventory/inventory.service';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
-import { SyncSettingsStore, syncSettingsStore } from './syncSettings.store';
+import { syncSettingsStore } from './syncSettings.store';
 import { createSyncSettings } from './syncSettings.model';
 import authService from '../../services/auth.service';
 
 export class UserService {
 
-  constructor(private syncSettingsStore: SyncSettingsStore, private userStore: UserStore, private _userQuery: UserQuery, private _inventoryService: InventoryService) { }
-
   public async init() {
     const loggedIn = authService.init();
     if (!loggedIn) {
       const user = createUser({ loggedIn: false });
-      userStore.update(user);
+      userStore.update(() => user);
       return;
     }
 
@@ -35,7 +32,7 @@ export class UserService {
       completeUser.loggedIn = true;
 
       // update the store with the new user information
-      this.userStore.update(completeUser);
+      userStore.update(() => completeUser);
     });
   }
 
@@ -49,7 +46,7 @@ export class UserService {
         next: async res => {
           const json = await res.json();
           if (res.ok) {
-            this.syncSettingsStore.update(json);
+            syncSettingsStore.update(json);
           } else if (res.status !== 404) {
             const notification = createNotification({
               content: json.message,
@@ -90,7 +87,7 @@ export class UserService {
               authService.setTokens(json.token, json.refreshToken, stayLoggedIn);
               const user = createUser(json);
               user.loggedIn = true;
-              this.userStore.update(user);
+              userStore.update(() => user);
 
               const notification = createNotification({
                 content: `Logged in as ${json.username}`,
@@ -136,7 +133,7 @@ export class UserService {
             authService.setTokens(json.token, json.refreshToken, false);
             const user = createUser(json);
             user.loggedIn = true;
-            this.userStore.update(user);
+            userStore.update(() => user);
 
             const notification = createNotification({
               content: `Registered and logged in as ${json.username}`,
@@ -181,7 +178,7 @@ export class UserService {
             authService.setTokens(json.token, json.refreshToken);
             const user = createUser(json);
             user.loggedIn = true;
-            this.userStore.update(user);
+            userStore.update(() => user);
             const notification = createNotification({
               content: 'Saved',
               duration: 5000,
@@ -223,7 +220,7 @@ export class UserService {
           const json = await res.json();
           if (res.ok) {
             const syncSettings = createSyncSettings(json);
-            this.syncSettingsStore.update(syncSettings);
+            syncSettingsStore.update(syncSettings);
             const notification = createNotification({
               content: 'Saved',
               duration: 5000,
@@ -270,7 +267,7 @@ export class UserService {
               authService.setTokens(json.token, json.refreshToken);
               const user = createUser(json);
               user.loggedIn = true;
-              this.userStore.update(user);
+              userStore.update(() => user);
 
               const notification = createNotification({
                 content: 'Password changed',
@@ -305,8 +302,8 @@ export class UserService {
     localStorage.removeItem('refreshToken');
     sessionStorage.removeItem('jwt');
     sessionStorage.removeItem('refreshToken');
-    this.userStore.update(createUser({ loggedIn: false }));
-    this._inventoryService.removeInventory();
+    userStore.update(() => createUser({ loggedIn: false }));
+    inventoryService.removeInventory();
     if (!background) {
       const notification = createNotification({
         content: 'Logged out',
@@ -426,7 +423,7 @@ export class UserService {
             authService.setTokens(json.token, json.refreshToken);
             const user = createUser(json);
             user.loggedIn = true;
-            this.userStore.update(user);
+            userStore.update(() => user);
             const notification = createNotification({
               content: 'Steam Profile Link verified',
               duration: 5000,
@@ -457,4 +454,4 @@ export class UserService {
 
 }
 
-export const userService = new UserService(syncSettingsStore, userStore, userQuery, inventoryService);
+export const userService = new UserService();

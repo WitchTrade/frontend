@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
+import { useObservable } from '@ngneat/react-rxjs';
 import { useRouter } from 'next/dist/client/router';
-import useUserProvider from '../providers/user.provider';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
 import { discordTagRegex, steamTradeLinkRegex, steamProfileLinkRegex } from '../stores/user/user.model';
 import { userService } from '../stores/user/user.service';
+import { userStore } from '../stores/user/user.store';
 
 const AccountSettingsHandler = () => {
   const router = useRouter();
 
-  const { user } = useUserProvider();
+  const [user] = useObservable(userStore);
 
   const [editing, setEditing] = useState(false);
 

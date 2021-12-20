@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import useSyncSettingsProvider from '../providers/syncSettings.provider';
-import useUserProvider from '../providers/user.provider';
 import { InventoryChangeDTO } from '../stores/inventory/inventory.model';
 import { inventoryService } from '../stores/inventory/inventory.service';
 import { userService } from '../stores/user/user.service';
@@ -82,7 +81,6 @@ export const getRarityNumber = (rarityStrings: string[]): number => {
 };
 
 const useSyncSettingsHandler = () => {
-  const { user } = useUserProvider();
   const { syncSettings } = useSyncSettingsProvider();
 
   const [invLoading, setInvLoading] = useState(false);

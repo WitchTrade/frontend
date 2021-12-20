@@ -6,10 +6,10 @@ import { pairwise } from 'rxjs';
 import { itemsService } from '../stores/items/items.service';
 import { userService } from '../stores/user/user.service';
 import themeService from './theme.service';
-import { userQuery } from '../stores/user/user.query';
 import { inventoryService } from '../stores/inventory/inventory.service';
 import { serverNotificationService } from '../stores/serverNotification/server-notification.service';
 import { User } from '../stores/user/user.model';
+import { userStore } from '../stores/user/user.store';
 
 class AppService {
   public init(): void {
@@ -38,7 +38,7 @@ class AppService {
     userService.init();
     itemsService.fetchAllItems().subscribe();
 
-    userQuery.select().pipe(pairwise()).subscribe(([oldUser, newUser]: User[]) => {
+    userStore.pipe(pairwise()).subscribe(([oldUser, newUser]: User[]) => {
       if (!oldUser.loggedIn && newUser.loggedIn) {
         inventoryService.fetchInventory().subscribe();
         serverNotificationService.fetchNotifications().subscribe();

@@ -15,19 +15,19 @@ import NavbarLink from '../styles/NavbarLink';
 import Image from 'next/image';
 import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
 import useThemeProvider from '../../shared/providers/theme.provider';
-import useUserProvider from '../../shared/providers/user.provider';
 import NotificationItem from '../styles/NotificationItem';
 import Verified from '../styles/VerifiedSvg';
+import { userStore } from '../../shared/stores/user/user.store';
 
 const Navbar: FunctionComponent = () => {
   const router = useRouter();
 
   const { theme } = useThemeProvider();
 
-  const { user } = useUserProvider();
+  const [user] = useObservable(userStore);
   const [inventory] = useObservable(inventoryStore);
   const [notifications] = useObservable(serverNotificationStore.pipe(selectAll()));
-  
+
   const [lastSynced, setLastSynced] = useState({ old: false, lastSyncedString: '' });
   const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();
 
