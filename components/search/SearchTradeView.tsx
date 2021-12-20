@@ -6,6 +6,7 @@ import { Inventory } from '../../shared/stores/inventory/inventory.model';
 import { createItem, Item } from '../../shared/stores/items/item.model';
 import Verified from '../styles/VerifiedSvg';
 import { Price } from '../../shared/stores/prices/price.model';
+import { itemSlotValues } from '../../shared/static/filterValues';
 
 interface Props {
   trade: SearchOffer | SearchWish;
@@ -119,7 +120,7 @@ const SearchTradeView: FunctionComponent<Props> = ({ trade, items, prices, type,
   return (
     <>
       {item.id &&
-        <div className="flex bg-wt-surface-dark border-2 p-1 rounded-lg h-full" style={{ borderColor: `#${item.rarityColor}`, width: '370px' }}>
+        <div className="flex bg-wt-surface-dark border-2 p-1 rounded-lg h-full" style={{ borderColor: `#${item.rarityColor}`, width: '430px' }}>
           <div className="flex flex-col justify-between items-center w-1/3">
             <p className="font-bold text-center mb-2 break-words max-w-full">{item.name}</p>
             <div>
@@ -136,12 +137,12 @@ const SearchTradeView: FunctionComponent<Props> = ({ trade, items, prices, type,
           </div>
           <div className="flex flex-col w-2/3">
             <p className="text-center">{trade.markets.length} {type === SEARCH_VIEW.OFFERS ? 'market' : 'user'}{trade.markets.length === 1 ? '' : 's'}{type === SEARCH_VIEW.OFFERS ? (<span className="text-wt-accent"> ({(trade.markets as any).reduce((a, b) => a + b.quantity, 0)}x)</span>) : ` want${trade.markets.length === 1 ? 's' : ''} this item`}</p>
-            <div className="flex flex-col overflow-y-auto max-w-full" style={{ maxHeight: '180px' }}>
+            <div className="flex flex-col overflow-y-auto overflow-x-hidden max-w-full" style={{ maxHeight: '200px' }}>
               {trade.markets.sort(sortMarkets).sort((a, b) => (a.user.verified === b.user.verified) ? 0 : a.user.verified ? -1 : 1).map((m, i) => (
-                <Link key={i} href={`/@/${m.user.username}?searchString=${item.name}&itemSlot=${item.tagSlot}${type === SEARCH_VIEW.WISHES ? '&marketType=1' : ''}`}>
+                <Link key={i} href={`/@/${m.user.username}?searchString=${item.name}&itemSlot=${itemSlotValues.find(isv => isv.key === item.tagSlot)?.id}${type === SEARCH_VIEW.WISHES ? '&marketType=1' : ''}`}>
                   <a>
                     <div className="flex justify-between items-center hover:bg-wt-surface cursor-pointer my-1 mx-2 p-1 rounded-lg">
-                      <div className="flex" style={{ maxWidth: m.secondaryPrice ? '120px' : '180px' }}>
+                      <div className="flex" style={{ maxWidth: m.secondaryPrice ? '140px' : '180px' }}>
                         {type === SEARCH_VIEW.OFFERS &&
                           <p className="text-wt-accent mr-1">{m.quantity}x</p>
                         }
@@ -160,22 +161,23 @@ const SearchTradeView: FunctionComponent<Props> = ({ trade, items, prices, type,
                             <Image className="rounded-lg" src={`/assets/images/prices/${m.mainPrice.priceKey}.png`} height={32} width={32} quality={100} alt={getPrice(m.mainPrice.priceKey).displayName} />
                           </div>
                           {getPrice(m.mainPrice.priceKey).withAmount &&
-                            <p className="mr-1 text-sm">{m.mainPriceAmount}</p>
-                            ||
-                            <div style={{ height: '14px' }}></div>
+                            <p className="text-sm">{m.mainPriceAmount}</p>
                           }
                         </div>
                         {m.secondaryPrice &&
-                          <div className="flex items-center mx-1">
-                            <div className="h-8 w-8">
-                              <Image className="rounded-lg" src={`/assets/images/prices/${m.secondaryPrice.priceKey}.png`} height={32} width={32} quality={100} alt={getPrice(m.secondaryPrice.priceKey).displayName} />
+                          <>
+                            <div className="flex items-center">
+                              <p className="font-bold text-wt-accent">{m.wantsBoth ? '+' : '/'}</p>
                             </div>
-                            {getPrice(m.secondaryPrice.priceKey).withAmount &&
-                              <p className="mr-1 text-sm">{m.secondaryPriceAmount}</p>
-                              ||
-                              <div style={{ height: '14px' }}></div>
-                            }
-                          </div>
+                            <div className="flex items-center mx-1">
+                              <div className="h-8 w-8">
+                                <Image className="rounded-lg" src={`/assets/images/prices/${m.secondaryPrice.priceKey}.png`} height={32} width={32} quality={100} alt={getPrice(m.secondaryPrice.priceKey).displayName} />
+                              </div>
+                              {getPrice(m.secondaryPrice.priceKey).withAmount &&
+                                <p className="mr-1 text-sm">{m.secondaryPriceAmount}</p>
+                              }
+                            </div>
+                          </>
                         }
                       </div>
                     </div>

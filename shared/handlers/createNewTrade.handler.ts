@@ -15,6 +15,7 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
     quantity: 1,
     mainPrice: null,
     mainPriceAmount: 4,
+    wantsBoth: true,
     secondaryPrice: null,
     secondaryPriceAmount: 4
   });
@@ -28,6 +29,7 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
       selectedItem: null,
       quantity: 1,
       mainPrice: null,
+      wantsBoth: true,
       mainPriceAmount: 4,
       secondaryPrice: null,
       secondaryPriceAmount: 4
@@ -52,6 +54,7 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
     tradeDTO.mainPriceId = trade.mainPrice.id;
     tradeDTO.mainPriceAmount = trade.mainPriceAmount;
     if (trade.secondaryPrice) {
+      tradeDTO.wantsBoth = trade.wantsBoth;
       tradeDTO.secondaryPriceId = trade.secondaryPrice.id;
       tradeDTO.secondaryPriceAmount = trade.secondaryPriceAmount;
     }

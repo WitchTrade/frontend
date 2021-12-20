@@ -184,6 +184,7 @@ const MarketHandler = () => {
     }
     if (trade.secondaryPrice) {
       tradeDTO.secondaryPriceId = trade.secondaryPrice.id;
+      tradeDTO.wantsBoth = trade.wantsBoth;
       if (trade.secondaryPrice.withAmount) {
         tradeDTO.secondaryPriceAmount = trade.secondaryPriceAmount ? trade.secondaryPriceAmount : 0;
       }

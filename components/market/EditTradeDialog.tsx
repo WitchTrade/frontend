@@ -10,6 +10,8 @@ import NumberInput from '../styles/NumberInput';
 import PriceSelector from './PriceSelector';
 import { MARKET_TYPE } from '../../shared/handlers/market.handler';
 import { Price } from '../../shared/stores/prices/price.model';
+import Dropdown, { DropdownValue } from '../styles/Dropdown';
+import { wantsBothValues } from './CreateNewTrade';
 
 interface Props {
   type: TRADE_TYPE;
@@ -23,12 +25,20 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
 
   const [localTrade, setLocalTrade] = useState<any>(createTrade(selectedTrade));
 
+  const [wantsBothDropdown, setWantsBothDropdown] = useState<DropdownValue>(wantsBothValues[0]);
+
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLocalTrade(createTrade(selectedTrade));
+    setLocalTrade({ ...createTrade(selectedTrade) });
+    if (selectedTrade.wantsBoth !== undefined) {
+      const wantsBoth = wantsBothValues.find(wbv => wbv.key === selectedTrade.wantsBoth);
+      if (wantsBoth) {
+        setWantsBothDropdown(wantsBoth);
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dialogOpen]);
 
@@ -58,8 +68,8 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                   <NumberInput value={localTrade.quantity} setValue={(quantity) => setLocalTrade({ ...localTrade, quantity })} min={0} max={10000} />
                 </div>
               }
-              <div className="flex flex-wrap justify-center">
-                <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${localTrade.mainPrice ? 'rounded-lg bg-wt-surface' : ''}`}>
+              <div className="flex flex-col justify-center items-center">
+                <div className={`flex flex-col mx-4 justify-between items-center mb-2 p-1 ${localTrade.mainPrice ? 'rounded-lg bg-wt-surface' : ''}`}>
                   {localTrade.mainPrice &&
                     <div className="h-14 w-14 mb-2">
                       <Image className="rounded-lg" src={`/assets/images/prices/${localTrade.mainPrice.priceKey}.png`} height={56} width={56} quality={100} alt={localTrade.mainPrice.displayName} />
@@ -76,29 +86,37 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                   }
                 </div>
                 {localTrade.mainPrice &&
-                  <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${localTrade.secondaryPrice ? 'rounded-lg bg-wt-surface' : ''}`}>
+                  <>
                     {localTrade.secondaryPrice &&
-                      <>
-                        <div className="h-14 w-14 mb-2">
-                          <Image className="rounded-lg" src={`/assets/images/prices/${localTrade.secondaryPrice.priceKey}.png`} height={56} width={56} quality={100} alt={localTrade.secondaryPrice.displayName} />
-                        </div>
-                        <div className="mt-1 mb-2">
-                          <ActionButton type="cancel" onClick={() => setLocalTrade({ ...localTrade, secondaryPrice: null })}>
-                            Remove price #2
-                          </ActionButton>
-                        </div>
-                      </>
-                    }
-                    <PriceSelector type={type === TRADE_TYPE.MANAGE_OFFER ? MARKET_TYPE.OFFER : MARKET_TYPE.WISH} prices={prices} price={localTrade.secondaryPrice} setPrice={(secondaryPrice) => setLocalTrade({ ...localTrade, secondaryPrice })} buttonText="Select price #2" excludeIds={[localTrade.mainPrice.id]} />
-                    {localTrade.secondaryPrice?.withAmount &&
-                      <div className="flex justify-between items-center m-2 w-60">
-                        <div className="flex flex-col justify-start">
-                          <p>Amount of {localTrade.secondaryPrice.displayName}</p>
-                        </div>
-                        <NumberInput value={localTrade.secondaryPriceAmount ? localTrade.secondaryPriceAmount : 1} setValue={(secondaryPriceAmount) => setLocalTrade({ ...localTrade, secondaryPriceAmount })} min={1} max={99} />
+                      <div className="mb-2" style={{ width: '220px' }}>
+                        <p className="mb-1">I want</p>
+                        <Dropdown selectedValue={wantsBothDropdown} setValue={(wantsBothDropdown) => { setWantsBothDropdown(wantsBothDropdown); setLocalTrade({ ...localTrade, wantsBoth: wantsBothDropdown.key }); }} values={wantsBothValues} />
                       </div>
                     }
-                  </div>
+                    <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${localTrade.secondaryPrice ? 'rounded-lg bg-wt-surface' : ''}`}>
+                      {localTrade.secondaryPrice &&
+                        <>
+                          <div className="h-14 w-14 mb-2">
+                            <Image className="rounded-lg" src={`/assets/images/prices/${localTrade.secondaryPrice.priceKey}.png`} height={56} width={56} quality={100} alt={localTrade.secondaryPrice.displayName} />
+                          </div>
+                          <div className="mt-1 mb-2">
+                            <ActionButton type="cancel" onClick={() => setLocalTrade({ ...localTrade, secondaryPrice: null })}>
+                              Remove price #2
+                            </ActionButton>
+                          </div>
+                        </>
+                      }
+                      <PriceSelector type={type === TRADE_TYPE.MANAGE_OFFER ? MARKET_TYPE.OFFER : MARKET_TYPE.WISH} prices={prices} price={localTrade.secondaryPrice} setPrice={(secondaryPrice) => setLocalTrade({ ...localTrade, secondaryPrice })} buttonText="Select price #2" excludeIds={[localTrade.mainPrice.id]} />
+                      {localTrade.secondaryPrice?.withAmount &&
+                        <div className="flex justify-between items-center m-2 w-60">
+                          <div className="flex flex-col justify-start">
+                            <p>Amount of {localTrade.secondaryPrice.displayName}</p>
+                          </div>
+                          <NumberInput value={localTrade.secondaryPriceAmount ? localTrade.secondaryPriceAmount : 1} setValue={(secondaryPriceAmount) => setLocalTrade({ ...localTrade, secondaryPriceAmount })} min={1} max={99} />
+                        </div>
+                      }
+                    </div>
+                  </>
                 }
               </div>
             </div>

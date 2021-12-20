@@ -39,6 +39,7 @@ export interface SearchMarket {
     priceKey: string;
   };
   mainPriceAmount?: number;
+  wantsBoth?: number;
   secondaryPrice?: {
     priceKey: string;
   };

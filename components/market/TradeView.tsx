@@ -80,14 +80,17 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, d
                   }
                 </div>
                 {trade.secondaryPrice &&
-                  <div className="flex flex-col">
-                    <Tooltip text={trade.secondaryPrice.displayName}>
-                      <Image className="rounded-lg" src={`/assets/images/prices/${trade.secondaryPrice.priceKey}.png`} height={40} width={40} quality={100} alt={trade.secondaryPrice.displayName} />
-                    </Tooltip>
-                    {trade.secondaryPrice.withAmount &&
-                      <p className="ml-1">{trade.secondaryPriceAmount}</p>
-                    }
-                  </div>
+                  <>
+                    <p className="font-bold mt-2 text-wt-accent">{trade.wantsBoth ? '+' : '/'}</p>
+                    <div className="flex flex-col">
+                      <Tooltip text={trade.secondaryPrice.displayName}>
+                        <Image className="rounded-lg" src={`/assets/images/prices/${trade.secondaryPrice.priceKey}.png`} height={40} width={40} quality={100} alt={trade.secondaryPrice.displayName} />
+                      </Tooltip>
+                      {trade.secondaryPrice.withAmount &&
+                        <p className="ml-1">{trade.secondaryPriceAmount}</p>
+                      }
+                    </div>
+                  </>
                 }
               </div>
             </div>
