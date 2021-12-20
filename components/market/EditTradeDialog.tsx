@@ -89,7 +89,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                   <>
                     {localTrade.secondaryPrice &&
                       <div className="mb-2" style={{ width: '220px' }}>
-                        <p className="mb-1">I want</p>
+                        <p className="mb-1">{type === TRADE_TYPE.MANAGE_OFFER ? 'I want' : 'I\'m offering'}</p>
                         <Dropdown selectedValue={wantsBothDropdown} setValue={(wantsBothDropdown) => { setWantsBothDropdown(wantsBothDropdown); setLocalTrade({ ...localTrade, wantsBoth: wantsBothDropdown.key }); }} values={wantsBothValues} />
                       </div>
                     }

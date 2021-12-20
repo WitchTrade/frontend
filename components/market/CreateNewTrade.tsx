@@ -147,7 +147,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                         <>
                           {trade.secondaryPrice &&
                             <div className="mb-2" style={{ width: '220px' }}>
-                              <p className="mb-1">I want</p>
+                              <p className="mb-1">{type === MARKET_TYPE.OFFER ? 'I want' : 'I\'m offering'}</p>
                               <Dropdown selectedValue={wantsBothDropdown} setValue={(wantsBothDropdown) => { setWantsBothDropdown(wantsBothDropdown); setTrade({ ...trade, wantsBoth: wantsBothDropdown.key }); }} values={wantsBothValues} />
                             </div>
                           }
