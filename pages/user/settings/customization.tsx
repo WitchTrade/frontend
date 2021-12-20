@@ -10,12 +10,13 @@ import PageHeader from '../../../components/styles/PageHeader';
 import CustomizationHandler from '../../../shared/handlers/customization.handler';
 import TextInput from '../../../components/styles/TextInput';
 import FileInput from '../../../components/styles/FileInput';
-import useThemeProvider from '../../../shared/providers/theme.provider';
 import LoginWrapper from '../../../components/core/LoginWrapper';
 import ThemeDropdown from '../../../components/styles/ThemeDropdown';
+import { useObservable } from '@ngneat/react-rxjs';
+import { themeStore } from '../../../shared/stores/theme/theme.store';
 
 const Customization: NextPage = () => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const {
     allThemes,

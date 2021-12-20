@@ -12,11 +12,11 @@ import TextInput from '../../components/styles/TextInput';
 import WTDialog from '../../components/styles/WTDialog';
 import useGameserverHandler from '../../shared/handlers/gameserver.handler';
 import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
-import useThemeProvider from '../../shared/providers/theme.provider';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 import { userStore } from '../../shared/stores/user/user.store';
 
 const Gameservers: NextPage = () => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
   const [user] = useObservable(userStore);
 
   const { show, nodeRef, toggleRef } = useDetectOutsideClick(false);

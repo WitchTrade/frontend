@@ -2,7 +2,6 @@ import { FunctionComponent, useState } from 'react';
 import Image from 'next/image';
 import { useObservable } from '@ngneat/react-rxjs';
 import { inventoryStore } from '../../shared/stores/inventory/inventory.store';
-import useThemeProvider from '../../shared/providers/theme.provider';
 import { inventoryValues, itemCharacterValues, itemEventValues, itemSlotValues, orderDirectionValues, tradeableItemRarityValues, tradeableOrderByValues } from '../../shared/handlers/filter.handler';
 import Dropdown from '../styles/Dropdown';
 import CheckboxInput from '../styles/CheckboxInput';
@@ -11,6 +10,7 @@ import Loading from '../styles/Loading';
 import { createDefaultSearchFilter, SearchFilterValues, SearchOrderValues } from '../../shared/handlers/search.handler';
 import ItemAutocomplete from './ItemAutocomplete';
 import { userStore } from '../../shared/stores/user/user.store';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 interface Props {
   searchFilterValues: SearchFilterValues;
@@ -23,7 +23,7 @@ interface Props {
 };
 
 const SearchFilter: FunctionComponent<Props> = ({ searchFilterValues, setSearchFilterValues, searchOrderValues, setSearchOrderValues, initialOpen, search, searchInProgress }) => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const [user] = useObservable(userStore);
   const [inventory] = useObservable(inventoryStore);

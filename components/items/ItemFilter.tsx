@@ -2,12 +2,12 @@ import { FunctionComponent, useState } from 'react';
 import Image from 'next/image';
 import { useObservable } from '@ngneat/react-rxjs';
 import { inventoryStore } from '../../shared/stores/inventory/inventory.store';
-import useThemeProvider from '../../shared/providers/theme.provider';
 import { createDefaultItemFilter, FILTER_TYPE, inventoryValues, itemCharacterValues, itemEventValues, ItemFilterValues, itemRarityValues, itemSlotValues, orderByValues, orderDirectionValues, tradeableItemRarityValues, tradeableOrderByValues } from '../../shared/handlers/filter.handler';
 import Dropdown from '../styles/Dropdown';
 import TextInput from '../styles/TextInput';
 import CheckboxInput from '../styles/CheckboxInput';
 import ActionButton from '../styles/ActionButton';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 interface Props {
   itemFilterValues: ItemFilterValues;
@@ -17,7 +17,7 @@ interface Props {
 };
 
 const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterValues, initialOpen, type }) => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const [inventory] = useObservable(inventoryStore);
 

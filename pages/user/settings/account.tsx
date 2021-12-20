@@ -1,6 +1,7 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useObservable } from '@ngneat/react-rxjs';
 import CustomHeader from '../../../components/core/CustomHeader';
 import LoginWrapper from '../../../components/core/LoginWrapper';
 import SettingNav from '../../../components/navs/SettingNav';
@@ -11,13 +12,13 @@ import PageHeader from '../../../components/styles/PageHeader';
 import TextInput from '../../../components/styles/TextInput';
 import ValueDisplay from '../../../components/styles/ValueDisplay';
 import AccountSettingsHandler from '../../../shared/handlers/account.handler';
-import useThemeProvider from '../../../shared/providers/theme.provider';
 import Tooltip from '../../../components/styles/Tooltip';
 import Divider from '../../../components/styles/Divider';
 import Verified from '../../../components/styles/VerifiedSvg';
+import { themeStore } from '../../../shared/stores/theme/theme.store';
 
 const Account: NextPage = () => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const {
     user,

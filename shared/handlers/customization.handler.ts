@@ -3,15 +3,18 @@ import { Chart } from 'chart.js';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import { createTheme, Theme } from '../models/theme.model';
 import { createThemeColors } from '../models/themeColor.model';
-import themeService from '../services/theme.service';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
+import { useObservable } from '@ngneat/react-rxjs';
+import { allThemesStore, themeStore } from '../stores/theme/theme.store';
+import { selectAll } from '@ngneat/elf-entities';
+import { themeService } from '../stores/theme/theme.service';
 
 const CustomizationHandler = () => {
-  const [allThemes, setAllThemes] = useState<Theme[]>();
+  const [allThemes] = useObservable(allThemesStore.pipe(selectAll()));
 
   // selected theme in the dropdown
-  const [selectedTheme, setSelectedTheme] = useState<Theme>();
+  const [selectedTheme] = useObservable(themeStore);
 
   let themeTypes: DropdownValue[] = [
     { key: 'light', displayName: 'Light' },
@@ -40,16 +43,6 @@ const CustomizationHandler = () => {
   const [notificationType, setNotificationType] = useState(notificationTypes[0]);
 
   const exampleChartRef = useRef<any>(null);
-
-  useEffect(() => {
-    const themeSub = themeService.currentTheme$.subscribe(setSelectedTheme);
-    const availableThemeSub = themeService.allThemes$.subscribe(setAllThemes);
-
-    return () => {
-      themeSub.unsubscribe();
-      availableThemeSub.unsubscribe();
-    };
-  }, []);
 
   useEffect(() => {
     let exampleChart: any;

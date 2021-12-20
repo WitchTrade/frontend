@@ -1,9 +1,10 @@
 import { FunctionComponent, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import dayjs from 'dayjs';
+import { useObservable } from '@ngneat/react-rxjs';
 import { AdminUser } from '../../shared/stores/admin/admin.model';
 import Tooltip from '../styles/Tooltip';
-import useThemeProvider from '../../shared/providers/theme.provider';
 import ActionButton from '../styles/ActionButton';
 import WTDialog from '../styles/WTDialog';
 import TextInput from '../styles/TextInput';
@@ -12,7 +13,7 @@ import { Badge } from '../../shared/stores/user/badge.model';
 import { Role } from '../../shared/stores/user/role.model';
 import Verified from '../styles/VerifiedSvg';
 import Chip from '../styles/Chip';
-import dayjs from 'dayjs';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 interface Props {
   adminUser: AdminUser;
@@ -27,7 +28,7 @@ interface Props {
 };
 
 const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification, ban, unban, badges, changeBadge, roles, changeRole, sendMessage }) => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const [show, setShow] = useState(false);
 

@@ -1,3 +1,4 @@
+import { useObservable } from '@ngneat/react-rxjs';
 import { NextPage } from 'next';
 import Link from 'next/link';
 import CustomHeader from '../../../components/core/CustomHeader';
@@ -6,10 +7,10 @@ import ActionButton from '../../../components/styles/ActionButton';
 import PageHeader from '../../../components/styles/PageHeader';
 import TextInput from '../../../components/styles/TextInput';
 import AccountSettingsHandler from '../../../shared/handlers/account.handler';
-import useThemeProvider from '../../../shared/providers/theme.provider';
+import { themeStore } from '../../../shared/stores/theme/theme.store';
 
 const Changepw: NextPage = () => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const {
     oldPassword,

@@ -14,15 +14,15 @@ import { userService } from '../../shared/stores/user/user.service';
 import NavbarLink from '../styles/NavbarLink';
 import Image from 'next/image';
 import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
-import useThemeProvider from '../../shared/providers/theme.provider';
 import NotificationItem from '../styles/NotificationItem';
 import Verified from '../styles/VerifiedSvg';
 import { userStore } from '../../shared/stores/user/user.store';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 const Navbar: FunctionComponent = () => {
   const router = useRouter();
 
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const [user] = useObservable(userStore);
   const [inventory] = useObservable(inventoryStore);

@@ -1,13 +1,14 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import useThemeProvider from '../../shared/providers/theme.provider';
+import { useObservable } from '@ngneat/react-rxjs';
 import KofiButton from '../styles/KofiButton';
 import Tooltip from '../styles/Tooltip';
 import useWTStatsProvider from '../../shared/providers/wtStats.provider';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 const Footer: FunctionComponent = () => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
   const { wtStats } = useWTStatsProvider();
 
   return (

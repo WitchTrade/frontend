@@ -1,7 +1,8 @@
-import Image from 'next/image';
 import { Fragment, FunctionComponent } from 'react';
+import Image from 'next/image';
 import { Listbox, Transition } from '@headlessui/react';
-import useThemeProvider from '../../shared/providers/theme.provider';
+import { useObservable } from '@ngneat/react-rxjs';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 export interface DropdownValue {
   key: any;
@@ -17,7 +18,7 @@ interface Props {
 }
 
 const Dropdown: FunctionComponent<Props> = ({ selectedValue, setValue, values }) => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   return (
     <Listbox value={selectedValue} onChange={setValue}>
