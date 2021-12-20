@@ -20,7 +20,7 @@ import Dropdown, { DropdownValue } from '../styles/Dropdown';
 
 export const wantsBothValues: DropdownValue[] = [
   { key: true, displayName: 'both prices' },
-  { key: false, displayName: 'either of the prices' }
+  { key: false, displayName: 'one of them' }
 ];
 
 interface Props {
