@@ -24,8 +24,18 @@ const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, 
           className="relative w-full py-2 pl-3 pr-10 text-left bg-wt-surface-dark rounded-lg shadow-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-wt-accent sm:text-sm border border-wt-accent-light"
           ref={toggleRef}
         >
-          <div className="flex">
-            <span className="block truncate ml-1">{selectedValues.map(sv => sv.displayName).join(', ')}</span>
+          <div className="flex items-center truncate ml-1">
+            {selectedValues.map((sv, i) => (
+              <>
+                {sv.imagePath &&
+                  <div className="flex items-center mr-1" style={{ minWidth: '20px' }}>
+                    <Image className="min-w-full" src={sv.imagePath} height="20px" width="20px" alt="Dropdown Item Icon" />
+                  </div>
+                  ||
+                  <p>{sv.displayName}{i !== selectedValues.length - 1 ? ', ' : ''}</p>
+                }
+              </>
+            ))}
           </div>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <div className="w-5 h-5">
@@ -64,13 +74,11 @@ const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, 
                           {value.displayName}
                         </span>
                       </div>
-                      {selectedValues.some(sv => sv.key === value.key) ? (
-                        <span
-                          className="absolute inset-y-0 left-0 flex items-center pl-3"
-                        >
-                          <Image src={`/assets/svgs/check_circle/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
-                        </span>
-                      ) : null}
+                      <span
+                        className="absolute inset-y-0 left-0 flex items-center pl-3"
+                      >
+                        <Image src={`/assets/svgs/${selectedValues.some(sv => sv.key === value.key) ? 'check_box' : 'check_box_outline'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
+                      </span>
                     </>
                   )}
                 </Listbox.Option>
