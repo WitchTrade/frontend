@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { Subscription } from 'rxjs';
 import { useObservable } from '@ngneat/react-rxjs';
 import usePricesProvider from '../providers/prices.provider';
-import useSyncSettingsProvider from '../providers/syncSettings.provider';
 import { createMarket, createOffer, createWish, Market, Offer, Wish } from '../stores/markets/market.model';
 import { marketsService } from '../stores/markets/markets.service';
 import { userStore } from '../stores/user/user.store';
 import { getRarityNumber, getRarityStrings, itemRarityValues, modeValues } from './sync.handler';
+import { syncSettingsStore } from '../stores/syncSettings/syncSettings.store';
 
 export enum MARKET_TYPE {
   OFFER,
@@ -15,7 +15,7 @@ export enum MARKET_TYPE {
 
 const MarketHandler = () => {
   const [user] = useObservable(userStore);
-  const { syncSettings } = useSyncSettingsProvider();
+  const [syncSettings] = useObservable(syncSettingsStore);
   const { prices } = usePricesProvider();
 
   const [market, setMarket] = useState<Market>(createMarket({}));

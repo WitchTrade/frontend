@@ -6,9 +6,9 @@ import { createUser, RegisterUser, User } from './user.model';
 import { inventoryService } from '../inventory/inventory.service';
 import { createNotification } from '../notification/notification.model';
 import { notificationService } from '../notification/notification.service';
-import { syncSettingsStore } from './syncSettings.store';
-import { createSyncSettings } from './syncSettings.model';
+import { syncSettingsStore } from '../syncSettings/syncSettings.store';
 import authService from '../../services/auth.service';
+import { createSyncSettings } from '../syncSettings/syncSettings.model';
 
 export class UserService {
 
@@ -46,7 +46,7 @@ export class UserService {
         next: async res => {
           const json = await res.json();
           if (res.ok) {
-            syncSettingsStore.update(json);
+            syncSettingsStore.update(() => json);
           } else if (res.status !== 404) {
             const notification = createNotification({
               content: json.message,
@@ -220,7 +220,7 @@ export class UserService {
           const json = await res.json();
           if (res.ok) {
             const syncSettings = createSyncSettings(json);
-            syncSettingsStore.update(syncSettings);
+            syncSettingsStore.update(() => syncSettings);
             const notification = createNotification({
               content: 'Saved',
               duration: 5000,
