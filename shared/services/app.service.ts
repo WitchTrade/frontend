@@ -11,6 +11,7 @@ import { User } from '../stores/user/user.model';
 import { userStore } from '../stores/user/user.store';
 import { themeService } from '../stores/theme/theme.service';
 import { pricesService } from '../stores/prices/prices.service';
+import { wtStatsService } from '../stores/wtStats/wtStats.service';
 
 class AppService {
   public init(): void {
@@ -39,6 +40,7 @@ class AppService {
     userService.init();
     itemsService.fetchAllItems().subscribe();
     pricesService.fetchPrices().subscribe();
+    wtStatsService.fetchWtStats().subscribe();
 
     userStore.pipe(pairwise()).subscribe(([oldUser, newUser]: User[]) => {
       if (!oldUser.loggedIn && newUser.loggedIn) {

@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { useObservable } from '@ngneat/react-rxjs';
 import KofiButton from '../styles/KofiButton';
 import Tooltip from '../styles/Tooltip';
-import useWTStatsProvider from '../../shared/providers/wtStats.provider';
 import { themeStore } from '../../shared/stores/theme/theme.store';
+import { wtStatsStore } from '../../shared/stores/wtStats/wtStats.store';
 
 const Footer: FunctionComponent = () => {
   const [theme] = useObservable(themeStore);
-  const { wtStats } = useWTStatsProvider();
+  const [wtStats] = useObservable(wtStatsStore);
 
   return (
     <div className="bg-wt-surface-dark text-wt-text py-4">
