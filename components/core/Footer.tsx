@@ -1,14 +1,15 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import useThemeProvider from '../../shared/providers/theme.provider';
+import { useObservable } from '@ngneat/react-rxjs';
 import KofiButton from '../styles/KofiButton';
 import Tooltip from '../styles/Tooltip';
-import useWTStatsProvider from '../../shared/providers/wtStats.provider';
+import { themeStore } from '../../shared/stores/theme/theme.store';
+import { wtStatsStore } from '../../shared/stores/wtStats/wtStats.store';
 
 const Footer: FunctionComponent = () => {
-  const { theme } = useThemeProvider();
-  const { wtStats } = useWTStatsProvider();
+  const [theme] = useObservable(themeStore);
+  const [wtStats] = useObservable(wtStatsStore);
 
   return (
     <div className="bg-wt-surface-dark text-wt-text py-4">

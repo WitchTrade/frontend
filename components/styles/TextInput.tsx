@@ -1,6 +1,7 @@
-import Image from 'next/image';
 import { FunctionComponent, KeyboardEvent } from 'react';
-import useThemeProvider from '../../shared/providers/theme.provider';
+import Image from 'next/image';
+import { useObservable } from '@ngneat/react-rxjs';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 interface Props {
   type: string;
@@ -16,8 +17,7 @@ interface Props {
 }
 
 const TextInput: FunctionComponent<Props> = ({ type, placeholder, value, setValue, required, svgPath, handleKeyPress, autocompleteValue, clearOption, onKeyDown }) => {
-
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   return (
     <div className="relative" >

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Chart } from 'chart.js';
-import useThemeProvider from '../providers/theme.provider';
-import themeService from '../services/theme.service';
+import { themeService } from '../stores/theme/theme.service';
+import { useObservable } from '@ngneat/react-rxjs';
+import { themeStore } from '../stores/theme/theme.store';
 
 export interface Stat {
   statGroup: string;
@@ -29,7 +30,7 @@ const sortedWeekDays = [
 ];
 
 const useStatsHandler = () => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const playerDistRegion = useRef<any>(null);
   const playerDistMode = useRef<any>(null);

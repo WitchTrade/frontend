@@ -2,6 +2,7 @@ import '../styles/global.scss';
 
 import { useEffect, useState } from 'react';
 import type { AppProps } from 'next/app';
+import { useObservable } from '@ngneat/react-rxjs';
 import {
   Chart,
   PieController,
@@ -16,14 +17,14 @@ import {
 } from 'chart.js';
 import Layout from '../components/core/Layout';
 import appService from '../shared/services/app.service';
-import useThemeProvider from '../shared/providers/theme.provider';
+import { themeStore } from '../shared/stores/theme/theme.store';
 
 function WitchTrade({ Component, pageProps }: AppProps) {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
   const [themeStyles, setThemeStyles] = useState<any>();
 
   useEffect(() => {
-    if (theme) {
+    if (theme && theme.colors) {
       setThemeStyles({
         '--wt-light': theme.colors.light,
         '--wt-dark': theme.colors.dark,

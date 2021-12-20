@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
-import { DropdownValue } from '../../components/styles/Dropdown';
-import useInventoryProvider from '../providers/inventory.provider';
-import useItemsProvider from '../providers/items.provider';
+import { useObservable } from '@ngneat/react-rxjs';
+import { selectAll } from '@ngneat/elf-entities';
 import { Item } from '../stores/items/item.model';
-import { itemsQuery } from '../stores/items/items.query';
+import { inventoryStore } from '../stores/inventory/inventory.store';
+import { getItemRarities, itemsStore } from '../stores/items/items.store';
+import { DropdownValue } from '../../components/styles/Dropdown';
 import { Offer, Wish } from '../stores/markets/market.model';
 import { MARKET_TYPE } from './market.handler';
 
@@ -135,9 +136,9 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
   const router = useRouter();
   const username = router.query.username;
 
-  const { inventory } = useInventoryProvider();
+  const [inventory] = useObservable(inventoryStore);
 
-  const { items } = useItemsProvider();
+  const [items] = useObservable(itemsStore.pipe(selectAll()));
 
   const [queryLoaded, setQueryLoaded] = useState(false);
   const [usernameChanged, setUsernameChanged] = useState(false);
@@ -293,8 +294,8 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
             return 0;
           }
           if (itemFilterValues.orderBy.key === 'tagRarity') {
-            one = itemsQuery.getRarities().indexOf(one as string);
-            two = itemsQuery.getRarities().indexOf(two as string);
+            one = getItemRarities().indexOf(one as string);
+            two = getItemRarities().indexOf(two as string);
           }
           let returnValue = 0;
           if (one > two) {
@@ -325,8 +326,8 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
           return 0;
         }
         if (itemFilterValues.orderBy.key === 'tagRarity') {
-          one = itemsQuery.getRarities().indexOf(one as string);
-          two = itemsQuery.getRarities().indexOf(two as string);
+          one = getItemRarities().indexOf(one as string);
+          two = getItemRarities().indexOf(two as string);
         }
         let returnValue = 0;
         if (one > two) {

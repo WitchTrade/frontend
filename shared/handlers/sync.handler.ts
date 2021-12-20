@@ -1,9 +1,9 @@
+import { useObservable } from '@ngneat/react-rxjs';
 import { useEffect, useState } from 'react';
 import { DropdownValue } from '../../components/styles/Dropdown';
-import useSyncSettingsProvider from '../providers/syncSettings.provider';
-import useUserProvider from '../providers/user.provider';
 import { InventoryChangeDTO } from '../stores/inventory/inventory.model';
 import { inventoryService } from '../stores/inventory/inventory.service';
+import { syncSettingsStore } from '../stores/syncSettings/syncSettings.store';
 import { userService } from '../stores/user/user.service';
 
 export const modeValues: DropdownValue[] = [
@@ -82,8 +82,7 @@ export const getRarityNumber = (rarityStrings: string[]): number => {
 };
 
 const useSyncSettingsHandler = () => {
-  const { user } = useUserProvider();
-  const { syncSettings } = useSyncSettingsProvider();
+  const [syncSettings] = useObservable(syncSettingsStore);
 
   const [invLoading, setInvLoading] = useState(false);
 

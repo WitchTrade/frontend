@@ -2,9 +2,10 @@ import { FunctionComponent } from 'react';
 import Image from 'next/image';
 import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
 import { Gameserver } from '../../shared/models/gameserver.model';
-import useThemeProvider from '../../shared/providers/theme.provider';
 import dayjs from 'dayjs';
 import Divider from '../styles/Divider';
+import { useObservable } from '@ngneat/react-rxjs';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 interface Props {
   server: Gameserver;
@@ -15,7 +16,7 @@ interface Props {
 };
 
 const Server: FunctionComponent<Props> = ({ server, watchlist, ownPlayer, addPlayer, removePlayer }) => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const { show, nodeRef, toggleRef } = useDetectOutsideClick(false);
 

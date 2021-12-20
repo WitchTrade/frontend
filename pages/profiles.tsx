@@ -9,7 +9,7 @@ import TextInput from '../components/styles/TextInput';
 import Tooltip from '../components/styles/Tooltip';
 import Verified from '../components/styles/VerifiedSvg';
 import ProfilesHandler from '../shared/handlers/profiles.handler';
-import { itemsQuery } from '../shared/stores/items/items.query';
+import { getItemRarities, itemRarityToColor } from '../shared/stores/items/items.store';
 import { createPreviewMarket, PreviewMarket } from '../shared/stores/markets/market.model';
 import { marketsService } from '../shared/stores/markets/markets.service';
 
@@ -69,9 +69,9 @@ const Profiles: NextPage<Props> = ({ profiles }) => {
                 <p>{profile.offerCount} offers</p>
                 <div className="flex flex-wrap justify-center mt-1">
                   {profile.offers.slice().sort((a, b) => {
-                    return itemsQuery.getRarities().indexOf(b.rarity) - itemsQuery.getRarities().indexOf(a.rarity);
+                    return getItemRarities().indexOf(b.rarity) - getItemRarities().indexOf(a.rarity);
                   }).map((offer) => (
-                    <div key={offer.rarity} className="rounded-full text-center flex justify-center items-center mr-1 px-1" style={{ minWidth: '25px', height: '25px', backgroundColor: itemsQuery.rarityToColor(offer.rarity) }}>
+                    <div key={offer.rarity} className="rounded-full text-center flex justify-center items-center mr-1 px-1" style={{ minWidth: '25px', height: '25px', backgroundColor: itemRarityToColor(offer.rarity) }}>
                       <p className="font-bold text-xs text-wt-dark">{offer.count}</p>
                     </div>
                   ))}

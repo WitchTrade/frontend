@@ -1,18 +1,7 @@
-import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { createState, Store } from '@ngneat/elf';
+import { withEntities } from '@ngneat/elf-entities';
 import { AdminUser } from './admin.model';
 
-export interface AdminState extends EntityState<AdminUser> { }
+const { state, config } = createState(withEntities<AdminUser>());
 
-@StoreConfig({
-  name: 'admin',
-  idKey: 'id'
-})
-export class AdminStore extends EntityStore<AdminState> {
-
-  constructor() {
-    super();
-  }
-
-}
-
-export const adminStore = new AdminStore();
+export const adminStore = new Store({ name: 'admin', state, config });

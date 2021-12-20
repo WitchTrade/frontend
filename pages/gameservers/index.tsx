@@ -1,3 +1,4 @@
+import { useObservable } from '@ngneat/react-rxjs';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import CustomHeader from '../../components/core/CustomHeader';
@@ -11,12 +12,12 @@ import TextInput from '../../components/styles/TextInput';
 import WTDialog from '../../components/styles/WTDialog';
 import useGameserverHandler from '../../shared/handlers/gameserver.handler';
 import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
-import useThemeProvider from '../../shared/providers/theme.provider';
-import useUserProvider from '../../shared/providers/user.provider';
+import { themeStore } from '../../shared/stores/theme/theme.store';
+import { userStore } from '../../shared/stores/user/user.store';
 
 const Gameservers: NextPage = () => {
-  const { theme } = useThemeProvider();
-  const { user } = useUserProvider();
+  const [theme] = useObservable(themeStore);
+  const [user] = useObservable(userStore);
 
   const { show, nodeRef, toggleRef } = useDetectOutsideClick(false);
 

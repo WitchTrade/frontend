@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import { Fragment, FunctionComponent } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import useThemeProvider from '../../shared/providers/theme.provider';
 import { DropdownValue } from './Dropdown';
 import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
+import { useObservable } from '@ngneat/react-rxjs';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 interface Props {
   selectedValues: DropdownValue[];
@@ -12,7 +13,7 @@ interface Props {
 }
 
 const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, values }) => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const { show, nodeRef, toggleRef } = useDetectOutsideClick(false);
 

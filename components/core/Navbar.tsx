@@ -1,49 +1,39 @@
 import { Fragment, FunctionComponent, useEffect, useState } from 'react';
+import { selectAll } from '@ngneat/elf-entities';
+import { serverNotificationStore } from '../../shared/stores/serverNotification/server-notification.store';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import Script from 'next/script';
 import { Transition } from '@headlessui/react';
 import dayjs from 'dayjs';
-
-import { createInventory, Inventory } from '../../shared/stores/inventory/inventory.model';
-import { inventoryQuery } from '../../shared/stores/inventory/inventory.query';
+import { useObservable } from '@ngneat/react-rxjs';
+import { inventoryStore } from '../../shared/stores/inventory/inventory.store';
 import { ServerNotification } from '../../shared/stores/serverNotification/server-notification.model';
-import { serverNotificationQuery } from '../../shared/stores/serverNotification/server-notification.query';
 import { serverNotificationService } from '../../shared/stores/serverNotification/server-notification.service';
 import { userService } from '../../shared/stores/user/user.service';
 import NavbarLink from '../styles/NavbarLink';
 import Image from 'next/image';
 import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
-import useThemeProvider from '../../shared/providers/theme.provider';
-import useUserProvider from '../../shared/providers/user.provider';
 import NotificationItem from '../styles/NotificationItem';
 import Verified from '../styles/VerifiedSvg';
+import { userStore } from '../../shared/stores/user/user.store';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 const Navbar: FunctionComponent = () => {
   const router = useRouter();
 
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
-  const { user } = useUserProvider();
-  const [inventory, setInventory] = useState<Inventory>(createInventory({}));
+  const [user] = useObservable(userStore);
+  const [inventory] = useObservable(inventoryStore);
+  const [notifications] = useObservable(serverNotificationStore.pipe(selectAll()));
+
   const [lastSynced, setLastSynced] = useState({ old: false, lastSyncedString: '' });
   const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();
-  const [notifications, setNotifications] = useState<ServerNotification[]>([]);
 
   const { show: showNotificationMenu, nodeRef: notificationMenuRef, toggleRef: notificationMenuToggleRef } = useDetectOutsideClick(false);
   const { show: showUserMenu, nodeRef: userMenuRef, toggleRef: userMenuToggleRef } = useDetectOutsideClick(false, true);
   const { show: showhamburgerMenu, nodeRef: hamburgerMenuRef, toggleRef: hamburgerMenuToggleRef } = useDetectOutsideClick(false, true);
-
-  useEffect(() => {
-    const inventorySub = inventoryQuery.select().subscribe(setInventory);
-
-    const notiSub = serverNotificationQuery.selectAll().subscribe(setNotifications);
-
-    return (() => {
-      inventorySub.unsubscribe();
-      notiSub.unsubscribe();
-    });
-  }, []);
 
   useEffect(() => {
     if (inventory.id) {

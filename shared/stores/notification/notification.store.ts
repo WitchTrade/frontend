@@ -1,18 +1,7 @@
-import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
+import { createState, Store } from '@ngneat/elf';
+import { withEntities } from '@ngneat/elf-entities';
 import { Notification } from './notification.model';
 
-export interface NotificationState extends EntityState<Notification> { }
+const { state, config } = createState(withEntities<Notification>());
 
-@StoreConfig({
-  name: 'notification',
-  idKey: 'id'
-})
-export class NotificationStore extends EntityStore<NotificationState> {
-
-  constructor() {
-    super();
-  }
-
-}
-
-export const notificationStore = new NotificationStore();
+export const notificationStore = new Store({ name: 'notification', state, config });

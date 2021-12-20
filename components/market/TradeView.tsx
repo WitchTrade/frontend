@@ -1,13 +1,17 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { Inventory } from '../../shared/stores/inventory/inventory.model';
-import { Offer, Price, Wish } from '../../shared/stores/markets/market.model';
+import { Offer, Wish } from '../../shared/stores/markets/market.model';
 import Image from 'next/image';
-import { itemsQuery } from '../../shared/stores/items/items.query';
-import { createItem, Item } from '../../shared/stores/items/item.model';
+import { head } from '@ngneat/elf';
+import { selectAllApply } from '@ngneat/elf-entities';
+import { useObservable } from '@ngneat/react-rxjs';
+import { Item } from '../../shared/stores/items/item.model';
+import { itemsStore } from '../../shared/stores/items/items.store';
 import Tooltip from '../styles/Tooltip';
 import ActionButton from '../styles/ActionButton';
 import Loading from '../styles/Loading';
 import EditTradeDialog from './EditTradeDialog';
+import { Price } from '../../shared/stores/prices/price.model';
 
 interface TradeWish extends Wish {
   quantity: number;
@@ -31,7 +35,12 @@ interface Props {
 };
 
 const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, deleteTrade, updateTrade, openItemDetails }) => {
-  const [item, setItem] = useState<Item>(createItem({}));
+  const [item] = useObservable(itemsStore.pipe(
+    selectAllApply({
+      filterEntity: (item) => item.id === trade.item.id
+    }),
+    head())
+  );
 
   const [loading, setLoading] = useState(false);
 
@@ -41,19 +50,6 @@ const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, d
   if (inventoryItem) {
     amount = inventoryItem.amount;
   }
-
-  const items = itemsQuery.getAll();
-
-  useEffect(() => {
-    if (itemsQuery.getAll().length > 0) {
-      let item = itemsQuery.getAll().find(i => i.id === trade.item.id);
-      if (item) {
-        setItem(item);
-      }
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items]);
 
   return (
     <>

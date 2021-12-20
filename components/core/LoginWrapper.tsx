@@ -1,13 +1,14 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
-import useUserProvider from '../../shared/providers/user.provider';
+import { useObservable } from '@ngneat/react-rxjs';
+import { userStore } from '../../shared/stores/user/user.store';
 
 interface Props {
   admin?: boolean;
 }
 
 const LoginWrapper: FunctionComponent<Props> = ({ admin, children }) => {
-  const { user } = useUserProvider();
+  const [user] = useObservable(userStore);
 
   return (
     <>

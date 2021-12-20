@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { SearchMarket, SearchOffer, SearchWish, SEARCH_VIEW } from '../../shared/handlers/search.handler';
 import { Inventory } from '../../shared/stores/inventory/inventory.model';
 import { createItem, Item } from '../../shared/stores/items/item.model';
-import { Price } from '../../shared/stores/markets/market.model';
 import Verified from '../styles/VerifiedSvg';
+import { Price } from '../../shared/stores/prices/price.model';
 
 interface Props {
   trade: SearchOffer | SearchWish;

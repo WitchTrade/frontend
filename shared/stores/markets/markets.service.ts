@@ -125,32 +125,6 @@ export class MarketsService {
     );
   }
 
-  public fetchPrices() {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/prices`).pipe(
-      tap({
-        next: async res => {
-          if (!res.ok) {
-            const notification = createNotification({
-              content: res.statusText,
-              duration: 5000,
-              type: 'error'
-            });
-            notificationService.addNotification(notification);
-          }
-        },
-        error: err => {
-          const notification = createNotification({
-            content: err,
-            duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-          return of(err);
-        }
-      })
-    );
-  }
-
   public createOffer(offer: any) {
     return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/offers`,
       {

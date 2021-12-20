@@ -1,10 +1,10 @@
 import { FunctionComponent, useState } from 'react';
 import Image from 'next/image';
-import { Price } from '../../shared/stores/markets/market.model';
 import WTDialog from '../styles/WTDialog';
 import ActionButton from '../styles/ActionButton';
 import Tooltip from '../styles/Tooltip';
 import { MARKET_TYPE } from '../../shared/handlers/market.handler';
+import { Price } from '../../shared/stores/prices/price.model';
 
 interface Props {
   type: MARKET_TYPE;

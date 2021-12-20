@@ -11,7 +11,6 @@ import { userService } from '../../shared/stores/user/user.service';
 import Tooltip from '../../components/styles/Tooltip';
 import ProfileHandler from '../../shared/handlers/profile.handler';
 import MarketNav from '../../components/navs/MarketNav';
-import useThemeProvider from '../../shared/providers/theme.provider';
 import FilterHandler, { FILTER_TYPE } from '../../shared/handlers/filter.handler';
 import { MARKET_TYPE } from '../../shared/handlers/market.handler';
 import ItemFilter from '../../components/items/ItemFilter';
@@ -20,6 +19,8 @@ import TradeView, { TRADE_TYPE } from '../../components/market/TradeView';
 import ItemDetailDialog from '../../components/items/ItemDetailDialog';
 import ItemsHandler from '../../shared/handlers/items.handler';
 import Verified from '../../components/styles/VerifiedSvg';
+import { useObservable } from '@ngneat/react-rxjs';
+import { themeStore } from '../../shared/stores/theme/theme.store';
 
 interface Props {
   profile: UserInfo;
@@ -30,7 +31,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
   const router = useRouter();
   const { username } = router.query;
 
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const oneMonthAgo = new Date().setDate(new Date().getDate() - 30);
 

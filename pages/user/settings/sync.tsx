@@ -1,5 +1,7 @@
 import { NextPage } from 'next';
 import dayjs from 'dayjs';
+import { useObservable } from '@ngneat/react-rxjs';
+import { inventoryStore } from '../../../shared/stores/inventory/inventory.store';
 import CustomHeader from '../../../components/core/CustomHeader';
 import LoginWrapper from '../../../components/core/LoginWrapper';
 import SettingNav from '../../../components/navs/SettingNav';
@@ -9,13 +11,12 @@ import Divider from '../../../components/styles/Divider';
 import Dropdown from '../../../components/styles/Dropdown';
 import Loading from '../../../components/styles/Loading';
 import useSyncSettingsHandler from '../../../shared/handlers/sync.handler';
-import useInventoryProvider from '../../../shared/providers/inventory.provider';
 import NumberInput from '../../../components/styles/NumberInput';
 import PageHeader from '../../../components/styles/PageHeader';
 import MultiDropdown from '../../../components/styles/MultiDropdown';
 
 const Sync: NextPage = () => {
-  const { inventory } = useInventoryProvider();
+  const [inventory] = useObservable(inventoryStore);
 
   const {
     invLoading,

@@ -1,3 +1,4 @@
+import { useObservable } from '@ngneat/react-rxjs';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import CustomHeader from '../components/core/CustomHeader';
@@ -6,10 +7,10 @@ import NavbarLink from '../components/styles/NavbarLink';
 import PageHeader from '../components/styles/PageHeader';
 import TextInput from '../components/styles/TextInput';
 import RegisterHandler from '../shared/handlers/register.handler';
-import useThemeProvider from '../shared/providers/theme.provider';
+import { themeStore } from '../shared/stores/theme/theme.store';
 
 const Register: NextPage = () => {
-  const { theme } = useThemeProvider();
+  const [theme] = useObservable(themeStore);
 
   const {
     username,
