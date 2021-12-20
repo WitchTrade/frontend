@@ -15,6 +15,15 @@ const Changelog: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={4}>Version 1.0.6 (20.12.2021)</Title>
+        <p><b>Added:</b></p>
+        <ul className="list-disc pl-8">
+          <li>AND/OR option if a trade has two prices set</li>
+        </ul>
+        <p><b>Changes:</b></p>
+        <ul className="list-disc pl-8">
+          <li>Multi select dropdowns for the item filter</li>
+        </ul>
         <Title level={4}>Version 1.0.5 (18.12.2021)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">
