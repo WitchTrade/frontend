@@ -1,18 +1,20 @@
 import { FunctionComponent, useState } from 'react';
 import Image from 'next/image';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useObservable } from '@ngneat/react-rxjs';
+import { selectAll } from '@ngneat/elf-entities';
 import CreateNewTradeHandler from '../../shared/handlers/createNewTrade.handler';
 import FilterHandler, { FILTER_TYPE } from '../../shared/handlers/filter.handler';
 import { MARKET_TYPE } from '../../shared/handlers/market.handler';
 import { Item } from '../../shared/stores/items/item.model';
 import { Offer, Wish } from '../../shared/stores/markets/market.model';
+import { pricesStore } from '../../shared/stores/prices/prices.store';
 import ItemFilter from '../items/ItemFilter';
 import ActionButton from '../styles/ActionButton';
 import SmallItemView from './SmallItemView';
 import NumberInput from '../styles/NumberInput';
 import PriceSelector from './PriceSelector';
 import Loading from '../styles/Loading';
-import usePricesProvider from '../../shared/providers/prices.provider';
 
 interface Props {
   dialogOpen: boolean;
@@ -25,7 +27,7 @@ interface Props {
 
 const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, type, addNewTrade, existingTrades, openItemDetails }) => {
 
-  const { prices } = usePricesProvider();
+  const [prices] = useObservable(pricesStore.pipe(selectAll()));
 
   const {
     inventory,

@@ -3,13 +3,13 @@ import Image from 'next/image';
 import WTDialog from '../styles/WTDialog';
 import ActionButton from '../styles/ActionButton';
 import Loading from '../styles/Loading';
-import { createTrade, Offer, Price, Wish } from '../../shared/stores/markets/market.model';
+import { createTrade, Offer, Wish } from '../../shared/stores/markets/market.model';
 import { TRADE_TYPE } from './TradeView';
 import { Item } from '../../shared/stores/items/item.model';
 import NumberInput from '../styles/NumberInput';
 import PriceSelector from './PriceSelector';
-import usePricesProvider from '../../shared/providers/prices.provider';
 import { MARKET_TYPE } from '../../shared/handlers/market.handler';
+import { Price } from '../../shared/stores/prices/price.model';
 
 interface Props {
   type: TRADE_TYPE;

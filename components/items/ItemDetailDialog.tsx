@@ -13,9 +13,9 @@ import ActionButton from '../styles/ActionButton';
 import { searchService } from '../../shared/stores/search/search.service';
 import { SearchOffer, SEARCH_VIEW } from '../../shared/handlers/search.handler';
 import SearchTradeView from '../search/SearchTradeView';
-import usePricesProvider from '../../shared/providers/prices.provider';
 import Divider from '../styles/Divider';
 import Loading from '../styles/Loading';
+import { pricesStore } from '../../shared/stores/prices/prices.store';
 
 interface Props {
   dialogOpen: boolean;
@@ -28,7 +28,7 @@ interface Props {
 const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, item, inventory, capitalizeFirstLetter }) => {
   const router = useRouter();
   const [items] = useObservable(itemsStore.pipe(selectAll()));
-  const { prices } = usePricesProvider();
+  const [prices] = useObservable(pricesStore.pipe(selectAll()));
 
   const [searchOffer, setSearchOffer] = useState<SearchOffer | undefined>();
   const [loading, setLoading] = useState(false);

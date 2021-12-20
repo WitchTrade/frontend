@@ -5,7 +5,6 @@ import { useObservable } from '@ngneat/react-rxjs';
 import { getItemRarities, itemsStore } from '../stores/items/items.store';
 import { Item } from '../stores/items/item.model';
 import { inventoryStore } from '../stores/inventory/inventory.store';
-import usePricesProvider from '../providers/prices.provider';
 import {
   inventoryValues,
   itemCharacterValues,
@@ -19,6 +18,7 @@ import { searchService } from '../stores/search/search.service';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
+import { pricesStore } from '../stores/prices/prices.store';
 
 export interface SearchTrade {
   offers: SearchOffer[];
@@ -96,7 +96,7 @@ const SearchHandler = () => {
   const [inventory] = useObservable(inventoryStore);
 
   const [items] = useObservable(itemsStore.pipe(selectAll()));
-  const { prices } = usePricesProvider();
+  const [prices] = useObservable(pricesStore.pipe(selectAll()));
 
   const [searchView, setSearchView] = useState(SEARCH_VIEW.OFFERS);
 

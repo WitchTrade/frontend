@@ -10,6 +10,7 @@ import { serverNotificationService } from '../stores/serverNotification/server-n
 import { User } from '../stores/user/user.model';
 import { userStore } from '../stores/user/user.store';
 import { themeService } from '../stores/theme/theme.service';
+import { pricesService } from '../stores/prices/prices.service';
 
 class AppService {
   public init(): void {
@@ -37,6 +38,7 @@ class AppService {
     themeService.init();
     userService.init();
     itemsService.fetchAllItems().subscribe();
+    pricesService.fetchPrices().subscribe();
 
     userStore.pipe(pairwise()).subscribe(([oldUser, newUser]: User[]) => {
       if (!oldUser.loggedIn && newUser.loggedIn) {

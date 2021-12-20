@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from 'react';
 import { Inventory } from '../../shared/stores/inventory/inventory.model';
-import { Offer, Price, Wish } from '../../shared/stores/markets/market.model';
+import { Offer, Wish } from '../../shared/stores/markets/market.model';
 import Image from 'next/image';
 import { head } from '@ngneat/elf';
 import { selectAllApply } from '@ngneat/elf-entities';
@@ -11,6 +11,7 @@ import Tooltip from '../styles/Tooltip';
 import ActionButton from '../styles/ActionButton';
 import Loading from '../styles/Loading';
 import EditTradeDialog from './EditTradeDialog';
+import { Price } from '../../shared/stores/prices/price.model';
 
 interface TradeWish extends Wish {
   quantity: number;

@@ -1,3 +1,5 @@
+import { Price } from '../prices/price.model';
+
 export interface Market {
   id: number;
   lastUpdated: Date;
@@ -59,15 +61,6 @@ export function createTrade(params: Partial<any>) {
     secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 1,
     quantity: params.quantity ? params.quantity : 0
   };
-}
-
-export interface Price {
-  id: number;
-  priceKey: string;
-  displayName: string;
-  forOffers: boolean;
-  forWishes: boolean;
-  withAmount: number;
 }
 
 export function createMarket(params: Partial<Market>) {
