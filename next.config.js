@@ -13,6 +13,12 @@ module.exports = {
         permanent: true,
       },
       {
+        source: '/discord',
+        destination: 'https://discord.gg/wm7sTW8MJq',
+        permanent: false,
+        basePath: false
+      },
+      {
         source: '/items/odd_mushroom',
         destination: '/items?tradeableOnly=true&itemCharacter=3&itemSlot=2-3-4-5-11&itemRarity=5-6-7',
         permanent: false,
