@@ -4,7 +4,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useObservable } from '@ngneat/react-rxjs';
 import { selectAll } from '@ngneat/elf-entities';
 import CreateNewTradeHandler from '../../shared/handlers/createNewTrade.handler';
-import FilterHandler, { FILTER_TYPE } from '../../shared/handlers/filter.handler';
+import FilterHandler from '../../shared/handlers/filter.handler';
+import { FILTER_TYPE } from '../../shared/static/filterValues';
 import { MARKET_TYPE } from '../../shared/handlers/market.handler';
 import { Item } from '../../shared/stores/items/item.model';
 import { Offer, Wish } from '../../shared/stores/markets/market.model';
@@ -15,6 +16,12 @@ import SmallItemView from './SmallItemView';
 import NumberInput from '../styles/NumberInput';
 import PriceSelector from './PriceSelector';
 import Loading from '../styles/Loading';
+import Dropdown, { DropdownValue } from '../styles/Dropdown';
+
+export const wantsBothValues: DropdownValue[] = [
+  { key: true, displayName: 'both prices' },
+  { key: false, displayName: 'either of the prices' }
+];
 
 interface Props {
   dialogOpen: boolean;
@@ -49,6 +56,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
     selectedItemAmount
   } = CreateNewTradeHandler(type, addNewTrade);
 
+  const [wantsBothDropdown, setWantsBothDropdown] = useState<DropdownValue>(wantsBothValues[0]);
   const [loading, setLoading] = useState(false);
 
   return (
@@ -136,29 +144,37 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                         }
                       </div>
                       {trade.mainPrice &&
-                        <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${trade.secondaryPrice ? 'rounded-lg bg-wt-surface' : ''}`}>
+                        <>
                           {trade.secondaryPrice &&
-                            <>
-                              <div className="h-14 w-14 mb-2">
-                                <Image className="rounded-lg" src={`/assets/images/prices/${trade.secondaryPrice.priceKey}.png`} height={56} width={56} quality={100} alt={trade.secondaryPrice.displayName} />
-                              </div>
-                              <div className="mt-1 mb-2">
-                                <ActionButton type="cancel" onClick={() => setTrade({ ...trade, secondaryPrice: null })}>
-                                  Remove price #2
-                                </ActionButton>
-                              </div>
-                            </>
-                          }
-                          <PriceSelector type={type} prices={prices} price={trade.secondaryPrice} setPrice={(secondaryPrice) => setTrade({ ...trade, secondaryPrice })} buttonText="Select price #2" excludeIds={[trade.mainPrice.id]} />
-                          {trade.secondaryPrice?.withAmount &&
-                            <div className="flex justify-between items-center m-2 w-60">
-                              <div className="flex flex-col justify-start">
-                                <p>Amount of {trade.secondaryPrice.displayName}</p>
-                              </div>
-                              <NumberInput value={trade.secondaryPriceAmount} setValue={(secondaryPriceAmount) => setTrade({ ...trade, secondaryPriceAmount })} min={1} max={99} />
+                            <div className="mb-2" style={{ width: '220px' }}>
+                              <p className="mb-1">I want</p>
+                              <Dropdown selectedValue={wantsBothDropdown} setValue={(wantsBothDropdown) => { setWantsBothDropdown(wantsBothDropdown); setTrade({ ...trade, wantsBoth: wantsBothDropdown.key }); }} values={wantsBothValues} />
                             </div>
                           }
-                        </div>
+                          <div className={`flex flex-col mx-4 justify-between items-center mb-10 p-1 ${trade.secondaryPrice ? 'rounded-lg bg-wt-surface' : ''}`}>
+                            {trade.secondaryPrice &&
+                              <>
+                                <div className="h-14 w-14 mb-2">
+                                  <Image className="rounded-lg" src={`/assets/images/prices/${trade.secondaryPrice.priceKey}.png`} height={56} width={56} quality={100} alt={trade.secondaryPrice.displayName} />
+                                </div>
+                                <div className="mt-1 mb-2">
+                                  <ActionButton type="cancel" onClick={() => setTrade({ ...trade, secondaryPrice: null })}>
+                                    Remove price #2
+                                  </ActionButton>
+                                </div>
+                              </>
+                            }
+                            <PriceSelector type={type} prices={prices} price={trade.secondaryPrice} setPrice={(secondaryPrice) => setTrade({ ...trade, secondaryPrice })} buttonText="Select price #2" excludeIds={[trade.mainPrice.id]} />
+                            {trade.secondaryPrice?.withAmount &&
+                              <div className="flex justify-between items-center m-2 w-60">
+                                <div className="flex flex-col justify-start">
+                                  <p>Amount of {trade.secondaryPrice.displayName}</p>
+                                </div>
+                                <NumberInput value={trade.secondaryPriceAmount} setValue={(secondaryPriceAmount) => setTrade({ ...trade, secondaryPriceAmount })} min={1} max={99} />
+                              </div>
+                            }
+                          </div>
+                        </>
                       }
                     </div>
                   </div>

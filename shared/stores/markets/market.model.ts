@@ -14,6 +14,7 @@ export interface Offer {
   item: { id: number; };
   mainPrice: Price;
   mainPriceAmount?: number;
+  wantsBoth?: boolean;
   secondaryPrice?: Price;
   secondaryPriceAmount?: number;
   quantity: number;
@@ -25,6 +26,7 @@ export function createOffer(params: Partial<Offer>) {
     item: params.item ? params.item : {},
     mainPrice: params.mainPrice ? params.mainPrice : null,
     mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 1,
+    wantsBoth: params.wantsBoth || params.wantsBoth === false ? params.wantsBoth : null,
     secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
     secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 1,
     quantity: params.quantity ? params.quantity : 0
@@ -36,6 +38,7 @@ export interface Wish {
   item: { id: number; };
   mainPrice: Price;
   mainPriceAmount?: number;
+  wantsBoth?: boolean;
   secondaryPrice?: Price;
   secondaryPriceAmount?: number;
 }
@@ -46,6 +49,7 @@ export function createWish(params: Partial<Wish>) {
     item: params.item ? params.item : {},
     mainPrice: params.mainPrice ? params.mainPrice : null,
     mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 1,
+    wantsBoth: params.wantsBoth || params.wantsBoth === false ? params.wantsBoth : null,
     secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
     secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 1
   } as Wish;
@@ -57,6 +61,7 @@ export function createTrade(params: Partial<any>) {
     item: params.item ? params.item : {},
     mainPrice: params.mainPrice ? params.mainPrice : null,
     mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 1,
+    wantsBoth: params.wantsBoth || params.wantsBoth === false ? params.wantsBoth : true,
     secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
     secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 1,
     quantity: params.quantity ? params.quantity : 0

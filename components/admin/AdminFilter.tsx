@@ -3,7 +3,14 @@ import Image from 'next/image';
 import Dropdown from '../styles/Dropdown';
 import TextInput from '../styles/TextInput';
 import ActionButton from '../styles/ActionButton';
-import { AdminFilterValues, badgeValues, createDefaultAdminFilter, orderByValues, orderDirectionValues, verifiedValues } from '../../shared/handlers/adminFilter.handler';
+import {
+  AdminFilterValues,
+  adminOrderByValues,
+  badgeValues,
+  createDefaultAdminFilter,
+  verifiedValues
+} from '../../shared/static/adminFilterValues';
+import { orderDirectionValues } from '../../shared/static/filterValues';
 
 interface Props {
   adminFilterValues: AdminFilterValues;
@@ -36,7 +43,7 @@ const AdminFilter: FunctionComponent<Props> = ({ adminFilterValues, setAdminFilt
           <div className="flex flex-wrap justify-center">
             <div className="m-1" style={{ width: '220px' }}>
               <p className="mb-1">Order by</p>
-              <Dropdown selectedValue={adminFilterValues.orderBy} setValue={(orderBy) => setAdminFilterValues({ ...adminFilterValues, orderBy })} values={orderByValues} />
+              <Dropdown selectedValue={adminFilterValues.orderBy} setValue={(orderBy) => setAdminFilterValues({ ...adminFilterValues, orderBy })} values={adminOrderByValues} />
             </div>
             <div className="m-1" style={{ width: '220px' }}>
               <p className="mb-1">Show in</p>

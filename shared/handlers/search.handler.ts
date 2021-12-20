@@ -6,19 +6,17 @@ import { getItemRarities, itemsStore } from '../stores/items/items.store';
 import { Item } from '../stores/items/item.model';
 import { inventoryStore } from '../stores/inventory/inventory.store';
 import {
-  inventoryValues,
   itemCharacterValues,
   itemEventValues,
   itemSlotValues,
-  orderDirectionValues,
-  tradeableItemRarityValues,
-  tradeableOrderByValues
-} from './filter.handler';
+  tradeableItemRarityValues
+} from '../static/searchFilterValues';
 import { searchService } from '../stores/search/search.service';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
 import { pricesStore } from '../stores/prices/prices.store';
+import { inventoryValues, orderDirectionValues, tradeableOrderByValues } from '../static/filterValues';
 
 export interface SearchTrade {
   offers: SearchOffer[];
@@ -41,6 +39,7 @@ export interface SearchMarket {
     priceKey: string;
   };
   mainPriceAmount?: number;
+  wantsBoth?: number;
   secondaryPrice?: {
     priceKey: string;
   };

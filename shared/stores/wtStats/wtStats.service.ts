@@ -13,7 +13,6 @@ export class WtStatsService {
         next: async (res) => {
           const json = await res.json();
           if (res.ok) {
-            console.log(json);
             wtStatsStore.update(() => json);
           } else {
             const notification = createNotification({

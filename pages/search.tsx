@@ -48,7 +48,8 @@ const Search: NextPage = () => {
         </div>
       }
       <InfiniteScroll
-        className="flex flex-wrap justify-center py-2 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        className="flex flex-wrap justify-center py-2 mx-auto px-4 sm:px-6 lg:px-8"
+        style={{ maxWidth: '1400px' }}
         dataLength={loadedTrades.length}
         next={loadMoreTrades}
         hasMore={hasMoreTrades()}

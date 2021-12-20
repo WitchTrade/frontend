@@ -7,7 +7,7 @@ import { Inventory } from '../../shared/stores/inventory/inventory.model';
 import { Item } from '../../shared/stores/items/item.model';
 import { itemsStore } from '../../shared/stores/items/items.store';
 import WTDialog from '../styles/WTDialog';
-import { itemCharacterValues, itemEventValues, itemSlotValues } from '../../shared/handlers/filter.handler';
+import { itemCharacterValues, itemEventValues, itemSlotValues } from '../../shared/static/filterValues';
 import Chip from '../styles/Chip';
 import ActionButton from '../styles/ActionButton';
 import { searchService } from '../../shared/stores/search/search.service';

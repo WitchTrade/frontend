@@ -5,132 +5,9 @@ import { selectAll } from '@ngneat/elf-entities';
 import { Item } from '../stores/items/item.model';
 import { inventoryStore } from '../stores/inventory/inventory.store';
 import { getItemRarities, itemsStore } from '../stores/items/items.store';
-import { DropdownValue } from '../../components/styles/Dropdown';
 import { Offer, Wish } from '../stores/markets/market.model';
 import { MARKET_TYPE } from './market.handler';
-
-export interface ItemFilterValues {
-  searchString: string;
-  tradeableOnly: boolean;
-  newOnly: boolean;
-  orderBy: DropdownValue;
-  orderDirection: DropdownValue;
-  itemCharacter: DropdownValue;
-  itemSlot: DropdownValue;
-  itemEvent: DropdownValue;
-  itemRarity: DropdownValue;
-  inventory: DropdownValue;
-}
-
-export function createDefaultItemFilter(type: FILTER_TYPE): ItemFilterValues {
-  return {
-    searchString: '',
-    tradeableOnly: false,
-    newOnly: false,
-    orderBy: orderByValues[0],
-    orderDirection: type === FILTER_TYPE.MARKET ? orderDirectionValues[1] : orderDirectionValues[0],
-    itemCharacter: itemCharacterValues[0],
-    itemSlot: itemSlotValues[0],
-    itemEvent: itemEventValues[0],
-    itemRarity: itemRarityValues[0],
-    inventory: inventoryValues[0]
-  };
-}
-
-export const orderByValues: DropdownValue[] = [
-  { key: 'tagRarity', displayName: 'Rarity' },
-  { key: 'name', displayName: 'Name' },
-  { key: 'tradeable', displayName: 'Tradeable' }
-];
-
-export const tradeableOrderByValues: DropdownValue[] = [
-  { key: 'tagRarity', displayName: 'Rarity' },
-  { key: 'name', displayName: 'Name' }
-];
-
-export const orderDirectionValues: DropdownValue[] = [
-  { key: 'asc', displayName: 'Ascending Order' },
-  { key: 'desc', displayName: 'Descending Order' }
-];
-
-export const itemCharacterValues: DropdownValue[] = [
-  { key: 'any', displayName: 'Any' },
-  { key: 'none', displayName: 'No Character' },
-  { key: 'hunter', displayName: 'Hunter' },
-  { key: 'witch', displayName: 'Witch' }
-];
-
-export const itemSlotValues: DropdownValue[] = [
-  { key: 'any', displayName: 'Any' },
-  { key: 'ingredient', displayName: 'Ingredient', imagePath: '/assets/images/slotIcons/ingredient.png' },
-  { key: 'body', displayName: 'Body', imagePath: '/assets/images/slotIcons/body.png' },
-  { key: 'hat', displayName: 'Hat', imagePath: '/assets/images/slotIcons/hat.png' },
-  { key: 'head', displayName: 'Head', imagePath: '/assets/images/slotIcons/head.png' },
-  { key: 'skin color', displayName: 'Skin Color', imagePath: '/assets/images/slotIcons/skincolor.png' },
-  { key: 'player icon', displayName: 'Player Icon', imagePath: '/assets/images/slotIcons/playericon.png' },
-  { key: 'upper body', displayName: 'Upper Body', imagePath: '/assets/images/slotIcons/upperbody.png' },
-  { key: 'lower body', displayName: 'Lower Body', imagePath: '/assets/images/slotIcons/lowerbody.png' },
-  { key: 'melee weapon', displayName: 'Melee Weapon', imagePath: '/assets/images/slotIcons/melee.png' },
-  { key: 'projectile', displayName: 'Projectile', imagePath: '/assets/images/slotIcons/projectile.png' },
-  { key: 'broom', displayName: 'Broom', imagePath: '/assets/images/slotIcons/broom.png' },
-  { key: 'recipe', displayName: 'Recipe', imagePath: '/assets/images/slotIcons/recipe.png' },
-];
-
-export const itemEventValues: DropdownValue[] = [
-  { key: 'any', displayName: 'Any' },
-  { key: 'none', displayName: 'No Event' },
-  { key: 'chinese newyear', displayName: 'Chinese New Year', imagePath: '/assets/images/eventIcons/chineseNewYear.png' },
-  { key: 'halloween', displayName: 'Halloween 2017', imagePath: '/assets/images/eventIcons/halloween.png' },
-  { key: 'halloween2018', displayName: 'Halloween 2018', imagePath: '/assets/images/eventIcons/halloween2018.png' },
-  { key: 'halloween2019', displayName: 'Halloween 2019', imagePath: '/assets/images/eventIcons/halloween2019.png' },
-  { key: 'halloween2020', displayName: 'Halloween 2020', imagePath: '/assets/images/eventIcons/halloween2020.png' },
-  { key: 'mystic sands', displayName: 'Mystic Sands', imagePath: '/assets/images/eventIcons/mysticSands.png' },
-  { key: 'plunderparty', displayName: 'Plunder Party', imagePath: '/assets/images/eventIcons/plunderparty.png' },
-  { key: 'springfever', displayName: 'Spring Fever', imagePath: '/assets/images/eventIcons/springfever.png' },
-  { key: 'summerevent', displayName: 'Summer', imagePath: '/assets/images/eventIcons/summer.png' },
-  { key: 'theater', displayName: 'Theater', imagePath: '/assets/images/eventIcons/theater.png' },
-  { key: 'winterdream', displayName: 'Winterdream 2017', imagePath: '/assets/images/eventIcons/winterdream.png' },
-  { key: 'winterdream2018', displayName: 'Winterdream 2018', imagePath: '/assets/images/eventIcons/winterdream2018.png' },
-  { key: 'winterdream2019', displayName: 'Winterdream 2019', imagePath: '/assets/images/eventIcons/winterdream2019.png' },
-  { key: 'winterdream2020', displayName: 'Winterdream 2020', imagePath: '/assets/images/eventIcons/winterdream2020.png' },
-  { key: 'winterdream2021', displayName: 'Winterdream 2021', imagePath: '/assets/images/eventIcons/winterdream2021.png' },
-  { key: 'winterdream witch', displayName: 'Winterdream Witch', imagePath: '/assets/images/eventIcons/winterdreamwitch.png' },
-  { key: 'witchforest', displayName: 'Witch Forest', imagePath: '/assets/images/eventIcons/witchforest.png' }
-];
-
-export const itemRarityValues: DropdownValue[] = [
-  { key: 'any', displayName: 'Any' },
-  { key: 'common', displayName: 'Common', imagePath: '/assets/svgs/rarity_circles/common.svg' },
-  { key: 'uncommon', displayName: 'Uncommon', imagePath: '/assets/svgs/rarity_circles/uncommon.svg' },
-  { key: 'unlock', displayName: 'Unlock', imagePath: '/assets/svgs/rarity_circles/unlock.svg' },
-  { key: 'eventrarity', displayName: 'Eventrarity', imagePath: '/assets/svgs/rarity_circles/eventrarity.svg' },
-  { key: 'rare', displayName: 'Rare', imagePath: '/assets/svgs/rarity_circles/rare.svg' },
-  { key: 'veryrare', displayName: 'Veryrare', imagePath: '/assets/svgs/rarity_circles/veryrare.svg' },
-  { key: 'whimsical', displayName: 'Whimsical', imagePath: '/assets/svgs/rarity_circles/whimsical.svg' },
-  { key: 'promo', displayName: 'Promo', imagePath: '/assets/svgs/rarity_circles/promo.svg' }
-];
-
-export const tradeableItemRarityValues: DropdownValue[] = [
-  { key: 'any', displayName: 'Any' },
-  { key: 'common', displayName: 'Common', imagePath: '/assets/svgs/rarity_circles/common.svg' },
-  { key: 'uncommon', displayName: 'Uncommon', imagePath: '/assets/svgs/rarity_circles/uncommon.svg' },
-  { key: 'rare', displayName: 'Rare', imagePath: '/assets/svgs/rarity_circles/rare.svg' },
-  { key: 'veryrare', displayName: 'Veryrare', imagePath: '/assets/svgs/rarity_circles/veryrare.svg' },
-  { key: 'whimsical', displayName: 'Whimsical', imagePath: '/assets/svgs/rarity_circles/whimsical.svg' }
-];
-
-export const inventoryValues: DropdownValue[] = [
-  { key: 'any', displayName: 'Any' },
-  { key: 'owned', displayName: 'Owned' },
-  { key: 'duplicateown', displayName: 'Duplicates only' },
-  { key: 'notowned', displayName: 'Not owned' }
-];
-
-export enum FILTER_TYPE {
-  ITEM,
-  MARKET,
-  NEWTRADE
-}
+import { createDefaultItemFilter, FILTER_TYPE, inventoryValues, itemCharacterValues, itemEventValues, ItemFilterValues, itemRarityValues, itemSlotValues, orderByValues, orderDirectionValues, tradeableItemRarityValues } from '../static/filterValues';
 
 const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] | Wish[], marketType?: MARKET_TYPE, setMarketType?: (marketType: MARKET_TYPE) => void) => {
   const router = useRouter();
@@ -163,21 +40,21 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       if (typeof router.query.orderDirection === 'string') {
         orderDirection = orderDirectionValues.find(odv => odv.key === router.query.orderDirection);
       }
-      let itemCharacter;
+      let itemCharacters;
       if (typeof router.query.itemCharacter === 'string') {
-        itemCharacter = itemCharacterValues.find(icv => icv.key === router.query.itemCharacter);
+        itemCharacters = router.query.itemCharacter.split('-').map(id => itemCharacterValues.find(icv => icv.id === parseInt(id))).filter(val => val);;
       }
-      let itemSlot;
+      let itemSlots;
       if (typeof router.query.itemSlot === 'string') {
-        itemSlot = itemSlotValues.find(isv => isv.key === router.query.itemSlot);
+        itemSlots = router.query.itemSlot.split('-').map(id => itemSlotValues.find(isv => isv.id === parseInt(id))).filter(val => val);;
       }
-      let itemEvent;
+      let itemEvents;
       if (typeof router.query.itemEvent === 'string') {
-        itemEvent = itemEventValues.find(iev => iev.key === router.query.itemEvent);
+        itemEvents = router.query.itemEvent.split('-').map(id => itemEventValues.find(iev => iev.id === parseInt(id))).filter(val => val);;
       }
-      let itemRarity;
+      let itemRarities;
       if (typeof router.query.itemRarity === 'string') {
-        itemRarity = itemRarityValues.find(irv => irv.key === router.query.itemRarity);
+        itemRarities = router.query.itemRarity.split('-').map(id => itemRarityValues.find(irv => irv.id === parseInt(id))).filter(val => val);
       }
       let inventory;
       if (typeof router.query.inventory === 'string') {
@@ -190,10 +67,10 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
         newOnly,
         orderBy: orderBy ? orderBy : orderByValues[0],
         orderDirection: orderDirection ? orderDirection : type === FILTER_TYPE.MARKET ? orderDirectionValues[1] : orderDirectionValues[0],
-        itemCharacter: itemCharacter ? itemCharacter : itemCharacterValues[0],
-        itemSlot: itemSlot ? itemSlot : itemSlotValues[0],
-        itemEvent: itemEvent ? itemEvent : itemEventValues[0],
-        itemRarity: itemRarity ? itemRarity : itemRarityValues[0],
+        itemCharacter: itemCharacters ? itemCharacters : itemCharacterValues,
+        itemSlot: itemSlots ? itemSlots : itemSlotValues,
+        itemEvent: itemEvents ? itemEvents : itemEventValues,
+        itemRarity: itemRarities ? itemRarities : type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues,
         inventory: inventory ? inventory : inventoryValues[0]
       });
       if (setMarketType) {
@@ -230,10 +107,10 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       newOnly: itemFilterValues.newOnly !== false ? itemFilterValues.newOnly : undefined,
       orderBy: itemFilterValues.orderBy.key !== orderByValues[0].key ? itemFilterValues.orderBy.key : undefined,
       orderDirection: (type === FILTER_TYPE.MARKET && itemFilterValues.orderDirection.key === orderDirectionValues[0].key) || (type !== FILTER_TYPE.MARKET && itemFilterValues.orderDirection.key === orderDirectionValues[1].key) ? itemFilterValues.orderDirection.key : undefined,
-      itemCharacter: itemFilterValues.itemCharacter.key !== itemCharacterValues[0].key ? itemFilterValues.itemCharacter.key : undefined,
-      itemSlot: itemFilterValues.itemSlot.key !== itemSlotValues[0].key ? itemFilterValues.itemSlot.key : undefined,
-      itemEvent: itemFilterValues.itemEvent.key !== itemEventValues[0].key ? itemFilterValues.itemEvent.key : undefined,
-      itemRarity: itemFilterValues.itemRarity.key !== itemRarityValues[0].key ? itemFilterValues.itemRarity.key : undefined,
+      itemCharacter: itemFilterValues.itemCharacter.length < itemCharacterValues.length ? itemFilterValues.itemCharacter.map(ic => ic.id).join('-') : undefined,
+      itemSlot: itemFilterValues.itemSlot.length < itemSlotValues.length ? itemFilterValues.itemSlot.map(is => is.id).join('-') : undefined,
+      itemEvent: itemFilterValues.itemEvent.length < itemEventValues.length ? itemFilterValues.itemEvent.map(ie => ie.id).join('-') : undefined,
+      itemRarity: itemFilterValues.itemRarity.length < (type === FILTER_TYPE.ITEM ? itemRarityValues.length : tradeableItemRarityValues.length) ? itemFilterValues.itemRarity.map(ir => ir.id).join('-') : undefined,
       inventory: itemFilterValues.inventory.key !== inventoryValues[0].key ? itemFilterValues.inventory.key : undefined,
       username: router.query.username ? router.query.username as string : undefined,
       marketType: marketType ? marketType.toString() : undefined
@@ -252,10 +129,10 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       const searchString = item.name.toLowerCase().includes(itemFilterValues.searchString.toLowerCase());
       const tradeableOnly = itemFilterValues.tradeableOnly ? item.tradeable : true;
       const newOnly = itemFilterValues.newOnly ? item.new : true;
-      const itemCharacter = itemFilterValues.itemCharacter.key !== 'any' ? itemFilterValues.itemCharacter.key === 'none' ? item.tagCharacter === null : item.tagCharacter === itemFilterValues.itemCharacter.key : true;
-      const itemSlot = itemFilterValues.itemSlot.key !== 'any' ? item.tagSlot === itemFilterValues.itemSlot.key : true;
-      const itemEvent = itemFilterValues.itemEvent.key !== 'any' ? itemFilterValues.itemEvent.key === 'none' ? item.tagEvent === null : item.tagEvent === itemFilterValues.itemEvent.key : true;
-      const itemRarity = itemFilterValues.itemRarity.key !== 'any' ? item.tagRarity === itemFilterValues.itemRarity.key : true;
+      const itemCharacter = itemFilterValues.itemCharacter.some(is => is.key === item.tagCharacter) || item.tagCharacter === null && itemFilterValues.itemCharacter.some(is => is.key === 'none');
+      const itemSlot = itemFilterValues.itemSlot.some(is => is.key === item.tagSlot);
+      const itemEvent = itemFilterValues.itemEvent.some(is => is.key === item.tagEvent) || item.tagEvent === null && itemFilterValues.itemEvent.some(is => is.key === 'none');
+      const itemRarity = itemFilterValues.itemRarity.some(ir => ir.key === item.tagRarity);
 
       let inventoryFilter = true;
       if (inventory.id && itemFilterValues.inventory.key == 'owned') {
@@ -263,7 +140,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       } else if (inventory.id && itemFilterValues.inventory.key == 'duplicateown') {
         inventoryFilter = inventory.inventoryItems.some(ii => ii.item.id === item.id && ii.amount > 1);
       } else if (inventory.id && itemFilterValues.inventory.key == 'notowned') {
-        inventoryFilter = !inventory.inventoryItems.some(ii => ii.item.id === item.id) && item.tagSlot !== 'ingredient' && item.tagSlot !== 'recipe';
+        inventoryFilter = !inventory.inventoryItems.some(ii => ii.item.id === item.id);
       }
 
       return searchString &&

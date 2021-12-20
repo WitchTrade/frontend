@@ -11,7 +11,7 @@ import { userService } from '../../shared/stores/user/user.service';
 import Tooltip from '../../components/styles/Tooltip';
 import ProfileHandler from '../../shared/handlers/profile.handler';
 import MarketNav from '../../components/navs/MarketNav';
-import FilterHandler, { FILTER_TYPE } from '../../shared/handlers/filter.handler';
+import FilterHandler from '../../shared/handlers/filter.handler';
 import { MARKET_TYPE } from '../../shared/handlers/market.handler';
 import ItemFilter from '../../components/items/ItemFilter';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -21,6 +21,7 @@ import ItemsHandler from '../../shared/handlers/items.handler';
 import Verified from '../../components/styles/VerifiedSvg';
 import { useObservable } from '@ngneat/react-rxjs';
 import { themeStore } from '../../shared/stores/theme/theme.store';
+import { FILTER_TYPE } from '../../shared/static/filterValues';
 
 interface Props {
   profile: UserInfo;
