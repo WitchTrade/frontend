@@ -1,4 +1,6 @@
 import { Fragment, FunctionComponent, useEffect, useState } from 'react';
+import { selectAll } from '@ngneat/elf-entities';
+import { serverNotificationStore } from '../../shared/stores/serverNotification/server-notification.store';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
 import Script from 'next/script';
@@ -7,7 +9,6 @@ import dayjs from 'dayjs';
 import { useObservable } from '@ngneat/react-rxjs';
 import { inventoryStore } from '../../shared/stores/inventory/inventory.store';
 import { ServerNotification } from '../../shared/stores/serverNotification/server-notification.model';
-import { serverNotificationQuery } from '../../shared/stores/serverNotification/server-notification.query';
 import { serverNotificationService } from '../../shared/stores/serverNotification/server-notification.service';
 import { userService } from '../../shared/stores/user/user.service';
 import NavbarLink from '../styles/NavbarLink';
@@ -25,22 +26,14 @@ const Navbar: FunctionComponent = () => {
 
   const { user } = useUserProvider();
   const [inventory] = useObservable(inventoryStore);
+  const [notifications] = useObservable(serverNotificationStore.pipe(selectAll()));
   
   const [lastSynced, setLastSynced] = useState({ old: false, lastSyncedString: '' });
   const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();
-  const [notifications, setNotifications] = useState<ServerNotification[]>([]);
 
   const { show: showNotificationMenu, nodeRef: notificationMenuRef, toggleRef: notificationMenuToggleRef } = useDetectOutsideClick(false);
   const { show: showUserMenu, nodeRef: userMenuRef, toggleRef: userMenuToggleRef } = useDetectOutsideClick(false, true);
   const { show: showhamburgerMenu, nodeRef: hamburgerMenuRef, toggleRef: hamburgerMenuToggleRef } = useDetectOutsideClick(false, true);
-
-  useEffect(() => {
-    const notiSub = serverNotificationQuery.selectAll().subscribe(setNotifications);
-
-    return (() => {
-      notiSub.unsubscribe();
-    });
-  }, []);
 
   useEffect(() => {
     if (inventory.id) {
