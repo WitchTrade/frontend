@@ -1,23 +1,14 @@
-import { Order } from '@datorama/akita';
-import { Transition } from '@headlessui/react';
 import { FunctionComponent, useEffect, useState } from 'react';
+import { Transition } from '@headlessui/react';
+import { tap } from 'rxjs';
+import { selectAll } from '@ngneat/elf-entities';
+import { useObservable } from '@ngneat/react-rxjs';
 import { Notification } from '../../shared/stores/notification/notification.model';
-import { notificationQuery } from '../../shared/stores/notification/notification.query';
+import { notificationStore } from '../../shared/stores/notification/notification.store';
 
 const NotificationComponent: FunctionComponent = () => {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications] = useObservable(notificationStore.pipe(selectAll(), tap(notifications => notifications.sort((a, b) => b.id - a.id))));
   const [shownNotifications, setShownNotifications] = useState<Notification[]>([]);
-
-  useEffect(() => {
-    const notificationSub = notificationQuery.selectAll({
-      sortBy: 'id',
-      sortByOrder: Order.DESC
-    }).subscribe(setNotifications);
-
-    return () => {
-      notificationSub.unsubscribe();
-    };
-  }, []);
 
   // showNotification is a mirror of the latest three notifications, but they get deleted after a 150 ms delay
   // this is to ensure that the fade out animation is displayed correctly.
