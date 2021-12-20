@@ -5,8 +5,9 @@ import ItemFilter from '../components/items/ItemFilter';
 import ItemView from '../components/items/ItemView';
 import PageHeader from '../components/styles/PageHeader';
 import ItemsHandler from '../shared/handlers/items.handler';
-import FilterHandler, { FILTER_TYPE } from '../shared/handlers/filter.handler';
+import FilterHandler from '../shared/handlers/filter.handler';
 import ItemDetailDialog from '../components/items/ItemDetailDialog';
+import { FILTER_TYPE } from '../shared/static/filterValues';
 
 const Items: NextPage = () => {
   const {

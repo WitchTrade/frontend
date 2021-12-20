@@ -13,7 +13,7 @@ import Loading from '../../../components/styles/Loading';
 import useSyncSettingsHandler from '../../../shared/handlers/sync.handler';
 import NumberInput from '../../../components/styles/NumberInput';
 import PageHeader from '../../../components/styles/PageHeader';
-import MultiDropdown from '../../../components/styles/MultiDropdown';
+import MultiDropdown, { updateMultiSelectValue } from '../../../components/styles/MultiDropdown';
 
 const Sync: NextPage = () => {
   const [inventory] = useObservable(inventoryStore);
@@ -111,7 +111,14 @@ const Sync: NextPage = () => {
                     </div>
                     <div className="mb-5 mr-1" style={{ width: '180px' }}>
                       <p className="mb-1">Rarity</p>
-                      <MultiDropdown selectedValues={localSyncSettings.ms_rarity} updateValue={(newRarity) => updateSyncSettingsRarity(localSyncSettings, setLocalSyncSettings, newRarity)} values={itemRarityValues} />
+                      <MultiDropdown
+                        selectedValues={localSyncSettings.ms_rarity}
+                        updateValue={(newRarity) => setLocalSyncSettings({
+                          ...localSyncSettings,
+                          ms_rarity: updateMultiSelectValue(localSyncSettings.ms_rarity, newRarity, itemRarityValues, 1)
+                        })}
+                        values={itemRarityValues}
+                      />
                     </div>
                   </div>
                   <div className="flex justify-between my-2">

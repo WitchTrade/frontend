@@ -5,6 +5,7 @@ import { useObservable } from '@ngneat/react-rxjs';
 import { themeStore } from '../../shared/stores/theme/theme.store';
 
 export interface DropdownValue {
+  id?: number;
   key: any;
   displayName: string;
   imagePath?: string;

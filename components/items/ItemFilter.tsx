@@ -2,12 +2,26 @@ import { FunctionComponent, useState } from 'react';
 import Image from 'next/image';
 import { useObservable } from '@ngneat/react-rxjs';
 import { inventoryStore } from '../../shared/stores/inventory/inventory.store';
-import { createDefaultItemFilter, FILTER_TYPE, inventoryValues, itemCharacterValues, itemEventValues, ItemFilterValues, itemRarityValues, itemSlotValues, orderByValues, orderDirectionValues, tradeableItemRarityValues, tradeableOrderByValues } from '../../shared/handlers/filter.handler';
+import {
+  createDefaultItemFilter,
+  FILTER_TYPE,
+  inventoryValues,
+  itemCharacterValues,
+  itemEventValues,
+  ItemFilterValues,
+  itemRarityValues,
+  itemSlotValues,
+  orderByValues,
+  orderDirectionValues,
+  tradeableItemRarityValues,
+  tradeableOrderByValues
+} from '../../shared/static/filterValues';
 import Dropdown from '../styles/Dropdown';
 import TextInput from '../styles/TextInput';
 import CheckboxInput from '../styles/CheckboxInput';
 import ActionButton from '../styles/ActionButton';
 import { themeStore } from '../../shared/stores/theme/theme.store';
+import MultiDropdown, { updateMultiSelectValue } from '../styles/MultiDropdown';
 
 interface Props {
   itemFilterValues: ItemFilterValues;
@@ -45,19 +59,47 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
             <div className="flex flex-wrap justify-center">
               <div className="m-1" style={{ width: '220px' }}>
                 <p className="mb-1">Character</p>
-                <Dropdown selectedValue={itemFilterValues.itemCharacter} setValue={(itemCharacter) => setItemFilterValues({ ...itemFilterValues, itemCharacter })} values={itemCharacterValues} />
+                <MultiDropdown selectedValues={itemFilterValues.itemCharacter} updateValue={(newCharacter) => setItemFilterValues({
+                  ...itemFilterValues,
+                  itemCharacter: updateMultiSelectValue(itemFilterValues.itemCharacter, newCharacter, itemCharacterValues)
+                })}
+                  values={itemCharacterValues}
+                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemCharacter: itemCharacterValues })}
+                  selectNone={() => setItemFilterValues({ ...itemFilterValues, itemCharacter: [] })}
+                />
               </div>
               <div className="m-1" style={{ width: '220px' }}>
                 <p className="mb-1">Slot</p>
-                <Dropdown selectedValue={itemFilterValues.itemSlot} setValue={(itemSlot) => setItemFilterValues({ ...itemFilterValues, itemSlot })} values={itemSlotValues} />
+                <MultiDropdown selectedValues={itemFilterValues.itemSlot} updateValue={(newSlot) => setItemFilterValues({
+                  ...itemFilterValues,
+                  itemSlot: updateMultiSelectValue(itemFilterValues.itemSlot, newSlot, itemSlotValues)
+                })}
+                  values={itemSlotValues}
+                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemSlot: itemSlotValues })}
+                  selectNone={() => setItemFilterValues({ ...itemFilterValues, itemSlot: [] })}
+                />
               </div>
               <div className="m-1" style={{ width: '220px' }}>
                 <p className="mb-1">Event</p>
-                <Dropdown selectedValue={itemFilterValues.itemEvent} setValue={(itemEvent) => setItemFilterValues({ ...itemFilterValues, itemEvent })} values={itemEventValues} />
+                <MultiDropdown selectedValues={itemFilterValues.itemEvent} updateValue={(newEvent) => setItemFilterValues({
+                  ...itemFilterValues,
+                  itemEvent: updateMultiSelectValue(itemFilterValues.itemEvent, newEvent, itemEventValues)
+                })}
+                  values={itemEventValues}
+                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemEvent: itemEventValues })}
+                  selectNone={() => setItemFilterValues({ ...itemFilterValues, itemEvent: [] })}
+                />
               </div>
               <div className="m-1" style={{ width: '220px' }}>
                 <p className="mb-1">Rarity</p>
-                <Dropdown selectedValue={itemFilterValues.itemRarity} setValue={(itemRarity) => setItemFilterValues({ ...itemFilterValues, itemRarity })} values={type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues} />
+                <MultiDropdown selectedValues={itemFilterValues.itemRarity} updateValue={(newRarity) => setItemFilterValues({
+                  ...itemFilterValues,
+                  itemRarity: updateMultiSelectValue(itemFilterValues.itemRarity, newRarity, type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues)
+                })}
+                  values={type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues}
+                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemRarity: type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues })}
+                  selectNone={() => setItemFilterValues({ ...itemFilterValues, itemRarity: [] })}
+                />
               </div>
             </div>
             <div className="flex flex-wrap justify-center">

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import WTDialog from '../styles/WTDialog';
 import ActionButton from '../styles/ActionButton';
 import Dropdown from '../styles/Dropdown';
-import MultiDropdown from '../styles/MultiDropdown';
+import MultiDropdown, { updateMultiSelectValue } from '../styles/MultiDropdown';
 import NumberInput from '../styles/NumberInput';
 import CheckboxInput from '../styles/CheckboxInput';
 import { itemRarityValues, modeValues, updateSyncSettingsRarity } from '../../shared/handlers/sync.handler';
@@ -45,7 +45,14 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
               </div>
               <div className="mb-5 mr-1" style={{ width: '180px' }}>
                 <p className="mb-1">Rarity</p>
-                <MultiDropdown selectedValues={localSyncSettings.ms_rarity} updateValue={(newRarity) => updateSyncSettingsRarity(localSyncSettings, setLocalSyncSettings, newRarity)} values={itemRarityValues} />
+                <MultiDropdown
+                  selectedValues={localSyncSettings.ms_rarity}
+                  updateValue={(newRarity) => setLocalSyncSettings({
+                    ...localSyncSettings,
+                    ms_rarity: updateMultiSelectValue(localSyncSettings.ms_rarity, newRarity, itemRarityValues, 1)
+                  })}
+                  values={itemRarityValues}
+                />
               </div>
             </div>
             <div className="flex justify-between my-2">

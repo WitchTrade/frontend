@@ -6,13 +6,38 @@ import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick';
 import { useObservable } from '@ngneat/react-rxjs';
 import { themeStore } from '../../shared/stores/theme/theme.store';
 
+export function updateMultiSelectValue(existingValues: DropdownValue[], clickedValue: DropdownValue, allValues: DropdownValue[], minSelected?: number): DropdownValue[] {
+  if (existingValues.some(ev => ev.key === clickedValue.key)) {
+    if (minSelected && existingValues.length === minSelected) {
+      return existingValues;
+    }
+    const newValues = [...existingValues];
+    const index = newValues.indexOf(clickedValue);
+    newValues[index] = newValues[newValues.length - 1];
+    newValues.pop();
+    newValues.sort((a, b) => {
+      return allValues.findIndex(dv => dv.key === a.key) - allValues.findIndex(dv => dv.key === b.key);
+    });
+    return newValues;
+  } else {
+    const newValues = [...existingValues];
+    newValues.push(clickedValue);
+    newValues.sort((a, b) => {
+      return allValues.findIndex(dv => dv.key === a.key) - allValues.findIndex(dv => dv.key === b.key);
+    });
+    return newValues;
+  }
+}
+
 interface Props {
   selectedValues: DropdownValue[];
   updateValue: (value: DropdownValue) => void;
   values: DropdownValue[];
+  selectAll?: () => void;
+  selectNone?: () => void;
 }
 
-const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, values }) => {
+const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, values, selectAll, selectNone }) => {
   const [theme] = useObservable(themeStore);
 
   const { show, nodeRef, toggleRef } = useDetectOutsideClick(false);
@@ -25,8 +50,8 @@ const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, 
           ref={toggleRef}
         >
           <div className="flex items-center truncate ml-1">
-            {selectedValues.map((sv, i) => (
-              <>
+            {selectedValues.length !== values.length && selectedValues.map((sv, i) => (
+              <Fragment key={sv.key} >
                 {sv.imagePath &&
                   <div className="flex items-center mr-1" style={{ minWidth: '20px' }}>
                     <Image className="min-w-full" src={sv.imagePath} height="20px" width="20px" alt="Dropdown Item Icon" />
@@ -34,8 +59,14 @@ const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, 
                   ||
                   <p>{sv.displayName}{i !== selectedValues.length - 1 ? ', ' : ''}</p>
                 }
-              </>
+              </Fragment>
             ))}
+            {selectedValues.length === 0 &&
+              <p>None selected</p>
+            }
+            {selectedValues.length === values.length &&
+              <p>Any</p>
+            }
           </div>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <div className="w-5 h-5">
@@ -55,6 +86,20 @@ const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, 
               static
               className="absolute w-full mt-1 overflow-auto text-base bg-wt-surface-dark rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-30"
             >
+              {selectAll && selectNone &&
+                <div className="flex justify-evenly mb-1">
+                  <button
+                    className="flex items-center p-1 focus:outline-none rounded-md text-sm cursor-pointer text-wt-light bg-wt-success-dark hover:bg-wt-success"
+                    onClick={selectAll}>
+                    Select All
+                  </button>
+                  <button
+                    className="flex items-center p-1 focus:outline-none rounded-md text-sm cursor-pointer text-wt-light bg-wt-error-dark hover:bg-wt-error"
+                    onClick={selectNone}>
+                    Select None
+                  </button>
+                </div>
+              }
               {values.map((value, i) => (
                 <Listbox.Option
                   key={i}

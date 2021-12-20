@@ -9,7 +9,7 @@ import Textarea from '../../../components/styles/Textarea';
 import MarketHandler, { MARKET_TYPE } from '../../../shared/handlers/market.handler';
 import ActionButton from '../../../components/styles/ActionButton';
 import Loading from '../../../components/styles/Loading';
-import FilterHandler, { FILTER_TYPE } from '../../../shared/handlers/filter.handler';
+import FilterHandler from '../../../shared/handlers/filter.handler';
 import ItemFilter from '../../../components/items/ItemFilter';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import TradeView, { TRADE_TYPE } from '../../../components/market/TradeView';
@@ -18,6 +18,7 @@ import WTDialog from '../../../components/styles/WTDialog';
 import SyncOffersDialog from '../../../components/market/SyncOffersDialog';
 import ItemDetailDialog from '../../../components/items/ItemDetailDialog';
 import ItemsHandler from '../../../shared/handlers/items.handler';
+import { FILTER_TYPE } from '../../../shared/static/filterValues';
 
 const Market: NextPage = () => {
 
