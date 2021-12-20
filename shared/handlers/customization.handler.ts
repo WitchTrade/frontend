@@ -1,14 +1,14 @@
 import { createRef, useEffect, useRef, useState } from 'react';
 import { Chart } from 'chart.js';
-import { DropdownValue } from '../../components/styles/Dropdown';
-import { createTheme, Theme } from '../models/theme.model';
-import { createThemeColors } from '../models/themeColor.model';
+import { DropdownValue } from '../../components/styles/Dropdown';;
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
 import { useObservable } from '@ngneat/react-rxjs';
 import { allThemesStore, themeStore } from '../stores/theme/theme.store';
 import { selectAll } from '@ngneat/elf-entities';
 import { themeService } from '../stores/theme/theme.service';
+import { createTheme, Theme } from '../stores/theme/theme.model';
+import { createThemeColors } from '../stores/theme/themeColor.model';
 
 const CustomizationHandler = () => {
   const [allThemes] = useObservable(allThemesStore.pipe(selectAll()));

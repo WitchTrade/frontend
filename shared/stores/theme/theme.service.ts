@@ -1,5 +1,5 @@
 import { getEntities, setEntities } from '@ngneat/elf-entities';
-import { Theme } from '../../models/theme.model';
+import { Theme } from './theme.model';
 import { allThemesStore, officialThemes, themeStore } from './theme.store';
 
 class ThemeService {

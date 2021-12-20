@@ -1,6 +1,5 @@
 import { createState, Store, withProps } from '@ngneat/elf';
 import { withEntities } from '@ngneat/elf-entities';
-import { Theme } from '../../models/theme.model';
 import { betaBlueTheme } from '../../themes/betaBlue';
 import { darkTheme } from '../../themes/dark';
 import { draculaTheme } from '../../themes/dracula';
@@ -8,6 +7,7 @@ import { lightTheme } from '../../themes/light';
 import { midnightPumpkinTheme } from '../../themes/midnightPumpkin';
 import { mintyGingerbreadTheme } from '../../themes/mintyGingerbread';
 import { morgaryllForestTheme } from '../../themes/morgaryllForest';
+import { Theme } from './theme.model';
 
 export const officialThemes: Theme[] = [
   { key: 'dark', type: 'dark', displayName: 'Dark', colors: darkTheme, creator: 'official', official: true },

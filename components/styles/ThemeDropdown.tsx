@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import { Fragment, FunctionComponent } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
-import { Theme } from '../../shared/models/theme.model';
 import { useObservable } from '@ngneat/react-rxjs';
 import { themeStore } from '../../shared/stores/theme/theme.store';
+import { Theme } from '../../shared/stores/theme/theme.model';
 
 interface Props {
   selectedTheme: Theme;

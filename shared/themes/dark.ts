@@ -1,4 +1,4 @@
-import { ThemeColors } from '../models/themeColor.model';
+import { ThemeColors } from '../stores/theme/themeColor.model';
 
 const darkTheme: ThemeColors = {
   light: '#FFF',
