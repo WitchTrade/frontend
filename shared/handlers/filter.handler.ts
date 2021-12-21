@@ -67,10 +67,10 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
         newOnly,
         orderBy: orderBy ? orderBy : orderByValues[0],
         orderDirection: orderDirection ? orderDirection : type === FILTER_TYPE.MARKET ? orderDirectionValues[1] : orderDirectionValues[0],
-        itemCharacter: itemCharacters ? itemCharacters : itemCharacterValues,
-        itemSlot: itemSlots ? itemSlots : itemSlotValues,
-        itemEvent: itemEvents ? itemEvents : itemEventValues,
-        itemRarity: itemRarities ? itemRarities : type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues,
+        itemCharacter: itemCharacters ? itemCharacters : [],
+        itemSlot: itemSlots ? itemSlots : [],
+        itemEvent: itemEvents ? itemEvents : [],
+        itemRarity: itemRarities ? itemRarities : [],
         inventory: inventory ? inventory : inventoryValues[0]
       });
       if (setMarketType) {
@@ -107,10 +107,10 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       newOnly: itemFilterValues.newOnly !== false ? itemFilterValues.newOnly : undefined,
       orderBy: itemFilterValues.orderBy.key !== orderByValues[0].key ? itemFilterValues.orderBy.key : undefined,
       orderDirection: (type === FILTER_TYPE.MARKET && itemFilterValues.orderDirection.key === orderDirectionValues[0].key) || (type !== FILTER_TYPE.MARKET && itemFilterValues.orderDirection.key === orderDirectionValues[1].key) ? itemFilterValues.orderDirection.key : undefined,
-      itemCharacter: itemFilterValues.itemCharacter.length < itemCharacterValues.length ? itemFilterValues.itemCharacter.map(ic => ic.id).join('-') : undefined,
-      itemSlot: itemFilterValues.itemSlot.length < itemSlotValues.length ? itemFilterValues.itemSlot.map(is => is.id).join('-') : undefined,
-      itemEvent: itemFilterValues.itemEvent.length < itemEventValues.length ? itemFilterValues.itemEvent.map(ie => ie.id).join('-') : undefined,
-      itemRarity: itemFilterValues.itemRarity.length < (type === FILTER_TYPE.ITEM ? itemRarityValues.length : tradeableItemRarityValues.length) ? itemFilterValues.itemRarity.map(ir => ir.id).join('-') : undefined,
+      itemCharacter: itemFilterValues.itemCharacter.length > 0 ? itemFilterValues.itemCharacter.map(ic => ic.id).join('-') : undefined,
+      itemSlot: itemFilterValues.itemSlot.length > 0 ? itemFilterValues.itemSlot.map(is => is.id).join('-') : undefined,
+      itemEvent: itemFilterValues.itemEvent.length > 0 ? itemFilterValues.itemEvent.map(ie => ie.id).join('-') : undefined,
+      itemRarity: itemFilterValues.itemRarity.length > 0 ? itemFilterValues.itemRarity.map(ir => ir.id).join('-') : undefined,
       inventory: itemFilterValues.inventory.key !== inventoryValues[0].key ? itemFilterValues.inventory.key : undefined,
       username: router.query.username ? router.query.username as string : undefined,
       marketType: marketType ? marketType.toString() : undefined
@@ -129,10 +129,22 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
       const searchString = item.name.toLowerCase().includes(itemFilterValues.searchString.toLowerCase());
       const tradeableOnly = itemFilterValues.tradeableOnly ? item.tradeable : true;
       const newOnly = itemFilterValues.newOnly ? item.new : true;
-      const itemCharacter = itemFilterValues.itemCharacter.some(is => is.key === item.tagCharacter) || item.tagCharacter === null && itemFilterValues.itemCharacter.some(is => is.key === 'none');
-      const itemSlot = itemFilterValues.itemSlot.some(is => is.key === item.tagSlot);
-      const itemEvent = itemFilterValues.itemEvent.some(is => is.key === item.tagEvent) || item.tagEvent === null && itemFilterValues.itemEvent.some(is => is.key === 'none');
-      const itemRarity = itemFilterValues.itemRarity.some(ir => ir.key === item.tagRarity);
+      let itemCharacter = true;
+      if (itemFilterValues.itemCharacter.length > 0) {
+        itemCharacter = itemFilterValues.itemCharacter.some(is => is.key === item.tagCharacter) || item.tagCharacter === null && itemFilterValues.itemCharacter.some(is => is.key === 'none');
+      }
+      let itemSlot = true;
+      if (itemFilterValues.itemSlot.length > 0) {
+        itemSlot = itemFilterValues.itemSlot.some(is => is.key === item.tagSlot);
+      }
+      let itemEvent = true;
+      if (itemFilterValues.itemEvent.length > 0) {
+        itemEvent = itemFilterValues.itemEvent.some(is => is.key === item.tagEvent) || item.tagEvent === null && itemFilterValues.itemEvent.some(is => is.key === 'none');
+      }
+      let itemRarity = true;
+      if (itemFilterValues.itemRarity.length > 0) {
+        itemRarity = itemFilterValues.itemRarity.some(ir => ir.key === item.tagRarity);
+      }
 
       let inventoryFilter = true;
       if (inventory.id && itemFilterValues.inventory.key == 'owned') {

@@ -33,11 +33,10 @@ interface Props {
   selectedValues: DropdownValue[];
   updateValue: (value: DropdownValue) => void;
   values: DropdownValue[];
-  selectAll?: () => void;
-  selectNone?: () => void;
+  clear?: () => void;
 }
 
-const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, values, selectAll, selectNone }) => {
+const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, values, clear }) => {
   const [theme] = useObservable(themeStore);
 
   const { show, nodeRef, toggleRef } = useDetectOutsideClick(false);
@@ -61,10 +60,7 @@ const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, 
                 }
               </Fragment>
             ))}
-            {selectedValues.length === 0 &&
-              <p>None selected</p>
-            }
-            {selectedValues.length === values.length &&
+            {(selectedValues.length === 0 || selectedValues.length === values.length) &&
               <p>Any</p>
             }
           </div>
@@ -86,17 +82,12 @@ const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, 
               static
               className="absolute w-full mt-1 overflow-auto text-base bg-wt-surface-dark rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-30"
             >
-              {selectAll && selectNone &&
+              {clear &&
                 <div className="flex justify-evenly mb-1">
                   <button
-                    className="flex items-center p-1 focus:outline-none rounded-md text-sm cursor-pointer text-wt-light bg-wt-success-dark hover:bg-wt-success"
-                    onClick={selectAll}>
-                    Select All
-                  </button>
-                  <button
                     className="flex items-center p-1 focus:outline-none rounded-md text-sm cursor-pointer text-wt-light bg-wt-error-dark hover:bg-wt-error"
-                    onClick={selectNone}>
-                    Select None
+                    onClick={clear}>
+                    Clear
                   </button>
                 </div>
               }

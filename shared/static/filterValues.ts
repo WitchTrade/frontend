@@ -26,10 +26,10 @@ export function createDefaultItemFilter(type: FILTER_TYPE): ItemFilterValues {
     newOnly: false,
     orderBy: orderByValues[0],
     orderDirection: type === FILTER_TYPE.MARKET ? orderDirectionValues[1] : orderDirectionValues[0],
-    itemCharacter: itemCharacterValues,
-    itemSlot: itemSlotValues,
-    itemEvent: itemEventValues,
-    itemRarity: type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues,
+    itemCharacter: [],
+    itemSlot: [],
+    itemEvent: [],
+    itemRarity: [],
     inventory: inventoryValues[0]
   };
 }

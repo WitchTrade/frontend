@@ -64,8 +64,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                   itemCharacter: updateMultiSelectValue(itemFilterValues.itemCharacter, newCharacter, itemCharacterValues)
                 })}
                   values={itemCharacterValues}
-                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemCharacter: itemCharacterValues })}
-                  selectNone={() => setItemFilterValues({ ...itemFilterValues, itemCharacter: [] })}
+                  clear={() => setItemFilterValues({ ...itemFilterValues, itemCharacter: [] })}
                 />
               </div>
               <div className="m-1" style={{ width: '220px' }}>
@@ -75,8 +74,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                   itemSlot: updateMultiSelectValue(itemFilterValues.itemSlot, newSlot, itemSlotValues)
                 })}
                   values={itemSlotValues}
-                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemSlot: itemSlotValues })}
-                  selectNone={() => setItemFilterValues({ ...itemFilterValues, itemSlot: [] })}
+                  clear={() => setItemFilterValues({ ...itemFilterValues, itemSlot: [] })}
                 />
               </div>
               <div className="m-1" style={{ width: '220px' }}>
@@ -86,8 +84,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                   itemEvent: updateMultiSelectValue(itemFilterValues.itemEvent, newEvent, itemEventValues)
                 })}
                   values={itemEventValues}
-                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemEvent: itemEventValues })}
-                  selectNone={() => setItemFilterValues({ ...itemFilterValues, itemEvent: [] })}
+                  clear={() => setItemFilterValues({ ...itemFilterValues, itemEvent: [] })}
                 />
               </div>
               <div className="m-1" style={{ width: '220px' }}>
@@ -97,8 +94,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                   itemRarity: updateMultiSelectValue(itemFilterValues.itemRarity, newRarity, type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues)
                 })}
                   values={type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues}
-                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemRarity: type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues })}
-                  selectNone={() => setItemFilterValues({ ...itemFilterValues, itemRarity: [] })}
+                  clear={() => setItemFilterValues({ ...itemFilterValues, itemRarity: [] })}
                 />
               </div>
             </div>
