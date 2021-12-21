@@ -64,6 +64,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                   itemCharacter: updateMultiSelectValue(itemFilterValues.itemCharacter, newCharacter, itemCharacterValues)
                 })}
                   values={itemCharacterValues}
+                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemCharacter: itemCharacterValues })}
                   clear={() => setItemFilterValues({ ...itemFilterValues, itemCharacter: [] })}
                 />
               </div>
@@ -74,6 +75,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                   itemSlot: updateMultiSelectValue(itemFilterValues.itemSlot, newSlot, itemSlotValues)
                 })}
                   values={itemSlotValues}
+                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemSlot: itemSlotValues })}
                   clear={() => setItemFilterValues({ ...itemFilterValues, itemSlot: [] })}
                 />
               </div>
@@ -84,6 +86,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                   itemEvent: updateMultiSelectValue(itemFilterValues.itemEvent, newEvent, itemEventValues)
                 })}
                   values={itemEventValues}
+                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemEvent: itemEventValues })}
                   clear={() => setItemFilterValues({ ...itemFilterValues, itemEvent: [] })}
                 />
               </div>
@@ -94,6 +97,7 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                   itemRarity: updateMultiSelectValue(itemFilterValues.itemRarity, newRarity, type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues)
                 })}
                   values={type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues}
+                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemRarity: type === FILTER_TYPE.ITEM ? itemRarityValues : tradeableItemRarityValues })}
                   clear={() => setItemFilterValues({ ...itemFilterValues, itemRarity: [] })}
                 />
               </div>

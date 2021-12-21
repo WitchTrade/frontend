@@ -33,10 +33,11 @@ interface Props {
   selectedValues: DropdownValue[];
   updateValue: (value: DropdownValue) => void;
   values: DropdownValue[];
+  selectAll?: () => void;
   clear?: () => void;
 }
 
-const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, values, clear }) => {
+const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, values, selectAll, clear }) => {
   const [theme] = useObservable(themeStore);
 
   const { show, nodeRef, toggleRef } = useDetectOutsideClick(false);
@@ -82,8 +83,13 @@ const MultiDropdown: FunctionComponent<Props> = ({ selectedValues, updateValue, 
               static
               className="absolute w-full mt-1 overflow-auto text-base bg-wt-surface-dark rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-30"
             >
-              {clear &&
+              {selectAll && clear &&
                 <div className="flex justify-evenly mb-1">
+                  <button
+                    className="flex items-center p-1 focus:outline-none rounded-md text-sm cursor-pointer text-wt-light bg-wt-success-dark hover:bg-wt-success"
+                    onClick={selectAll}>
+                    Select all
+                  </button>
                   <button
                     className="flex items-center p-1 focus:outline-none rounded-md text-sm cursor-pointer text-wt-light bg-wt-error-dark hover:bg-wt-error"
                     onClick={clear}>
