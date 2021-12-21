@@ -23,6 +23,6 @@ const { state: allThemeState, config: allThemeConfig } = createState(withEntitie
 
 export const allThemesStore = new Store({ name: 'allThemes', state: allThemeState, config: allThemeConfig });
 
-const { state, config } = createState(withProps<Theme>(allThemesStore.getValue()[0]));
+const { state, config } = createState(withProps<Theme>(officialThemes[0]));
 
 export const themeStore = new Store({ name: 'theme', state, config });
