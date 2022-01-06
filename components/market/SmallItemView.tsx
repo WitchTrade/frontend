@@ -7,9 +7,10 @@ interface Props {
   item: Item;
   inventory: Inventory;
   selectItem: (item: Item) => void;
+  selected?: boolean;
 };
 
-const SmallItemView: FunctionComponent<Props> = ({ item, inventory, selectItem }) => {
+const SmallItemView: FunctionComponent<Props> = ({ item, inventory, selectItem, selected }) => {
   const owned = inventory.inventoryItems.some(ii => ii.item.id === item.id);
   const inventoryItem = inventory.inventoryItems.find(ii => ii.item.id === item.id);
   let amount = 0;
@@ -18,7 +19,7 @@ const SmallItemView: FunctionComponent<Props> = ({ item, inventory, selectItem }
   }
 
   return (
-    <div className="flex w-28 flex-col justify-between rounded-lg bg-wt-surface-dark text-center m-1 shadow-md cursor-pointer transition duration-75 transform hover:scale-105" style={{ borderColor: `#${item.rarityColor}`, borderWidth: '4px' }} onClick={() => selectItem(item)}>
+    <div className={`flex w-28 flex-col justify-between rounded-lg bg-wt-surface-dark text-center m-1 shadow-md cursor-pointer transition duration-75 transform hover:scale-105${selected ? ' bg-wt-success' : ''}`} style={{ borderColor: `#${item.rarityColor}`, borderWidth: '4px' }} onClick={() => selectItem(item)}>
       <Image className="rounded-t-lg" src={item.iconUrl} height={112} width={112} alt={item.name} />
       <p className="text-xs p-1 break-words">{item.name}</p>
       <div>

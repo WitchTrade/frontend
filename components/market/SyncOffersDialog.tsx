@@ -12,6 +12,7 @@ import { MARKET_TYPE } from '../../shared/handlers/market.handler';
 import { Price } from '../../shared/stores/prices/price.model';
 import SyncPriceView from './SyncPriceView';
 import { wantsBothValues } from './CreateNewTrade';
+import IgnoreListDialog from './IgnoreListDialog';
 
 interface Props {
   localSyncSettings: any;
@@ -24,6 +25,8 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  const [ignoreListDialogOpen, setIgnoreListDialogOpen] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const finished = () => {
@@ -35,6 +38,7 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
     <>
       <WTDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} closeOnOutsideClick={true}>
         <div className="inline-block max-w-lg p-6 my-8 overflow-x-hidden text-left align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4 border-wt-accent">
+        <IgnoreListDialog dialogOpen={ignoreListDialogOpen} setDialogOpen={setIgnoreListDialogOpen} ignoreList={localSyncSettings.ignoreList} setIgnoreList={(ignoreList) => setLocalSyncSettings({ ...localSyncSettings, ignoreList })} />
           <div className="mx-2">
             <p className="text-xl font-bold text-center">Sync Offers</p>
             <p className="text-sm mt-1">This feature synchronises the offers in your market with the items in your Steam inventory.</p>
@@ -42,6 +46,7 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
             <p className="text-sm"><span className="font-bold text-wt-accent-light">Rarity:</span> Choose which rarities of items you want to sync</p>
             <p className="text-sm"><span className="font-bold text-wt-accent-light">Prices:</span> Default prices for every new offer. (Existing offers won&apos;t be affected)</p>
             <p className="text-sm mb-2"><span className="font-bold text-wt-accent-light">Amount to keep:</span> Amount of each item that you want to keep in your inventory</p>
+            <p className="text-sm mb-2"><span className="font-bold text-wt-accent-light">Ignore list:</span> Select items which should be ignored while syncing</p>
 
             <div className="flex flex-wrap justify-center">
               <div className="mb-5 mr-1" style={{ width: '180px' }}>
@@ -142,6 +147,12 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
             </div>
             <div>
               <CheckboxInput placeholder="Delete offers that have 0 items on stock" value={localSyncSettings.removeNoneOnStock} setValue={() => setLocalSyncSettings({ ...localSyncSettings, removeNoneOnStock: !localSyncSettings.removeNoneOnStock })} />
+            </div>
+            <div className="flex justify-between">
+              <p>Ignore list (<span className="font-bold"><span className="text-wt-accent">{localSyncSettings.ignoreList.length}</span> items</span>)</p>
+              <ActionButton type="info" onClick={() => setIgnoreListDialogOpen(true)}>
+                Edit
+              </ActionButton>
             </div>
             <div className="mt-4 flex justify-evenly pb-2">
               {!loading &&

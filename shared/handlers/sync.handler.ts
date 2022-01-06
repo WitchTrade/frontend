@@ -49,29 +49,6 @@ export const getRarityStrings = (rarityNumber: number): string[] => {
   return rarities;
 };
 
-export const updateSyncSettingsRarity = (localSyncSettings: any, setLocalSyncSettings: any, rarity: DropdownValue) => {
-  if (localSyncSettings.rarity.some(r => r.key === rarity.key)) {
-    if (localSyncSettings.rarity.length === 1) {
-      return;
-    }
-    const newRarities = [...localSyncSettings.rarity];
-    const index = newRarities.indexOf(rarity);
-    newRarities[index] = newRarities[newRarities.length - 1];
-    newRarities.pop();
-    newRarities.sort(function (a, b) {
-      return Object.keys(RARITY).indexOf(b.key.toUpperCase()) - Object.keys(RARITY).indexOf(a.key.toUpperCase());
-    });
-    setLocalSyncSettings({ ...localSyncSettings, rarity: newRarities });
-  } else {
-    const newRarities = [...localSyncSettings.rarity];
-    newRarities.push(rarity);
-    newRarities.sort(function (a, b) {
-      return Object.keys(RARITY).indexOf(b.key.toUpperCase()) - Object.keys(RARITY).indexOf(a.key.toUpperCase());
-    });
-    setLocalSyncSettings({ ...localSyncSettings, rarity: newRarities });
-  }
-};
-
 export const getRarityNumber = (rarityStrings: string[]): number => {
   const rarityLength = Object.keys(RARITY).length;
   let filler = new Array(rarityLength + 1).join('0');
@@ -89,6 +66,7 @@ const useSyncSettingsHandler = () => {
   const [prices] = useObservable(pricesStore.pipe(selectAll()));
 
   const [invLoading, setInvLoading] = useState(false);
+  const [ignoreListDialogOpen, setIgnoreListDialogOpen] = useState(false);
 
   const [localSyncSettings, setLocalSyncSettings] = useState<any>({
     syncInventory: false,
@@ -215,6 +193,8 @@ const useSyncSettingsHandler = () => {
 
   return {
     invLoading,
+    ignoreListDialogOpen,
+    setIgnoreListDialogOpen,
     prices,
     syncInventory,
     updateInventorySettings,
@@ -223,8 +203,7 @@ const useSyncSettingsHandler = () => {
     setLocalSyncSettings,
     updateSyncSettings,
     modeValues,
-    itemRarityValues,
-    updateSyncSettingsRarity
+    itemRarityValues
   };
 };
 

@@ -17,6 +17,7 @@ import MultiDropdown, { updateMultiSelectValue } from '../../../components/style
 import SyncPriceView from '../../../components/market/SyncPriceView';
 import { MARKET_TYPE } from '../../../shared/handlers/market.handler';
 import { wantsBothValues } from '../../../components/market/CreateNewTrade';
+import IgnoreListDialog from '../../../components/market/IgnoreListDialog';
 
 const Sync: NextPage = () => {
   const [inventory] = useObservable(inventoryStore);
@@ -24,6 +25,8 @@ const Sync: NextPage = () => {
   const {
     invLoading,
     prices,
+    ignoreListDialogOpen,
+    setIgnoreListDialogOpen,
     syncInventory,
     updateInventorySettings,
     localSyncSettings,
@@ -31,12 +34,12 @@ const Sync: NextPage = () => {
     setLocalSyncSettings,
     updateSyncSettings,
     modeValues,
-    itemRarityValues,
-    updateSyncSettingsRarity
+    itemRarityValues
   } = useSyncSettingsHandler();
 
   return (
     <LoginWrapper>
+      <IgnoreListDialog dialogOpen={ignoreListDialogOpen} setDialogOpen={setIgnoreListDialogOpen} ignoreList={localSyncSettings.ignoreList} setIgnoreList={(ignoreList) => setLocalSyncSettings({ ...localSyncSettings, ignoreList })} />
       <CustomHeader
         title="WitchTrade | Sync Settings"
         description="Sync Settings"
@@ -44,7 +47,7 @@ const Sync: NextPage = () => {
       />
       <SettingNav />
       <PageHeader title="Sync Settings" description="Sync your steam inventory or enable auto sync." />
-      <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6">
         <div className="bg-wt-surface-dark rounded-lg my-3 p-1">
           <p className="text-xl font-bold text-center">Steam Inventory Sync</p>
           {!invLoading &&
@@ -207,6 +210,12 @@ const Sync: NextPage = () => {
                   </div>
                   <div>
                     <CheckboxInput placeholder="Delete offers that have 0 items on stock" value={localSyncSettings.removeNoneOnStock} setValue={() => setLocalSyncSettings({ ...localSyncSettings, removeNoneOnStock: !localSyncSettings.removeNoneOnStock })} />
+                  </div>
+                  <div className="flex justify-between">
+                    <p>Ignore list (<span className="font-bold"><span className="text-wt-accent">{localSyncSettings.ignoreList.length}</span> items</span>)</p>
+                    <ActionButton type="info" onClick={() => setIgnoreListDialogOpen(true)}>
+                      Edit
+                    </ActionButton>
                   </div>
                 </div>
               </>
