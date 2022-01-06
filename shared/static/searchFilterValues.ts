@@ -33,17 +33,17 @@ export const itemCharacterValues: DropdownValue[] = [
 export const itemSlotValues: DropdownValue[] = [
   { key: 'any', displayName: 'Any' },
   { key: 'ingredient', displayName: 'Ingredient', imagePath: '/assets/images/slotIcons/ingredient.png' },
+  { key: 'recipe', displayName: 'Recipe', imagePath: '/assets/images/slotIcons/recipe.png' },
   { key: 'body', displayName: 'Body', imagePath: '/assets/images/slotIcons/body.png' },
+  { key: 'broom', displayName: 'Broom', imagePath: '/assets/images/slotIcons/broom.png' },
   { key: 'hat', displayName: 'Hat', imagePath: '/assets/images/slotIcons/hat.png' },
   { key: 'head', displayName: 'Head', imagePath: '/assets/images/slotIcons/head.png' },
-  { key: 'skin color', displayName: 'Skin Color', imagePath: '/assets/images/slotIcons/skincolor.png' },
-  { key: 'player icon', displayName: 'Player Icon', imagePath: '/assets/images/slotIcons/playericon.png' },
-  { key: 'upper body', displayName: 'Upper Body', imagePath: '/assets/images/slotIcons/upperbody.png' },
   { key: 'lower body', displayName: 'Lower Body', imagePath: '/assets/images/slotIcons/lowerbody.png' },
   { key: 'melee weapon', displayName: 'Melee Weapon', imagePath: '/assets/images/slotIcons/melee.png' },
+  { key: 'player icon', displayName: 'Player Icon', imagePath: '/assets/images/slotIcons/playericon.png' },
   { key: 'projectile', displayName: 'Projectile', imagePath: '/assets/images/slotIcons/projectile.png' },
-  { key: 'broom', displayName: 'Broom', imagePath: '/assets/images/slotIcons/broom.png' },
-  { key: 'recipe', displayName: 'Recipe', imagePath: '/assets/images/slotIcons/recipe.png' },
+  { key: 'skin color', displayName: 'Skin Color', imagePath: '/assets/images/slotIcons/skincolor.png' },
+  { key: 'upper body', displayName: 'Upper Body', imagePath: '/assets/images/slotIcons/upperbody.png' },
 ];
 
 export const itemEventValues: DropdownValue[] = [
