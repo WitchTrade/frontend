@@ -50,7 +50,7 @@ const SearchTradeView: FunctionComponent<Props> = ({ trade, items, prices, type,
     if (a.mainPriceAmount) {
       aPriceValue += getRealPriceValue(a.mainPrice.priceKey, a.mainPriceAmount);
     }
-    if (a.secondaryPrice && a.secondaryPriceAmount) {
+    if (a.secondaryPrice && a.secondaryPriceAmount && (!a.mainPriceAmount || a.wantsBoth)) {
       aPriceValue += getRealPriceValue(a.secondaryPrice.priceKey, a.secondaryPriceAmount);
     }
 
@@ -58,7 +58,7 @@ const SearchTradeView: FunctionComponent<Props> = ({ trade, items, prices, type,
     if (b.mainPriceAmount) {
       bPriceValue += getRealPriceValue(b.mainPrice.priceKey, b.mainPriceAmount);
     }
-    if (b.secondaryPrice && b.secondaryPriceAmount) {
+    if (b.secondaryPrice && b.secondaryPriceAmount && (!b.mainPriceAmount || b.wantsBoth)) {
       bPriceValue += getRealPriceValue(b.secondaryPrice.priceKey, b.secondaryPriceAmount);
     }
     if (type === SEARCH_VIEW.OFFERS) {

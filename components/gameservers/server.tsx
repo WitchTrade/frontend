@@ -28,15 +28,15 @@ const Server: FunctionComponent<Props> = ({ server, watchlist, ownPlayer, addPla
           {(server.players &&
             <>
               {ownPlayer && server.players.find(player => player.name === ownPlayer) &&
-                <div className="rounded-full text-center flex justify-center items-center px-1 bg-wt-accent-light" style={{ minWidth: '20px', height: '20px' }}>
+                <div className="rounded-full text-center flex justify-center items-center mr-1 px-1 bg-wt-accent-light" style={{ minWidth: '20px', height: '20px' }}>
                   <p className="font-bold text-sm text-wt-light">!</p>
                 </div>}
               {server.players.find(player => watchlist.includes(player.name)) &&
-                <div className="rounded-full text-center flex justify-center items-center mx-1 px-1 bg-wt-accent" style={{ minWidth: '20px', height: '20px' }}>
+                <div className="rounded-full text-center flex justify-center items-center mr-1 px-1 bg-wt-accent" style={{ minWidth: '20px', height: '20px' }}>
                   <p className="font-bold text-sm text-wt-light">{server.players.filter(player => watchlist.includes(player.name)).length}</p>
                 </div>}
             </>) ||
-            <div className="rounded-full text-center flex justify-center items-center mx-1 px-1 bg-wt-error" style={{ minWidth: '20px', height: '20px' }}>
+            <div className="rounded-full text-center flex justify-center items-center mr-1 px-1 bg-wt-error" style={{ minWidth: '20px', height: '20px' }}>
               <p className="font-bold text-sm text-wt-light">!</p>
             </div>
           }
