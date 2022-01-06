@@ -210,6 +210,10 @@ const MarketHandler = () => {
         if (res.ok) {
           const newOffers = market.offers.filter(o => o.id !== trade.id);
           setMarket({ ...market, offers: newOffers });
+          if (newOfferView) {
+            const newAllOffers = allOffers.filter(o => o.id !== trade.id);
+            setAllOffers(newAllOffers);
+          }
         }
       });
     } else {
@@ -245,6 +249,12 @@ const MarketHandler = () => {
           const updatedIndex = newOffers.findIndex(o => o.id === trade.id);
           newOffers[updatedIndex] = updatedOffer;
           setMarket({ ...market, offers: [...newOffers] });
+          if (newOfferView) {
+            const newAllOffers = [...allOffers];
+            const updatedIndex = newAllOffers.findIndex(o => o.id === trade.id);
+            newAllOffers[updatedIndex] = updatedOffer;
+            setAllOffers(newAllOffers);
+          }
           finished();
         }
       });
