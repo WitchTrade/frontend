@@ -32,9 +32,14 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLocalTrade({ ...createTrade(selectedTrade) });
-    if (selectedTrade.wantsBoth !== undefined) {
-      const wantsBoth = wantsBothValues.find(wbv => wbv.key === selectedTrade.wantsBoth);
+    if (!dialogOpen) {
+      return;
+    }
+    const createdTrade = createTrade(selectedTrade);
+    setLocalTrade({ ...createdTrade });
+
+    if (createdTrade.wantsBoth !== undefined) {
+      const wantsBoth = wantsBothValues.find(wbv => wbv.key === createdTrade.wantsBoth);
       if (wantsBoth) {
         setWantsBothDropdown(wantsBoth);
       }
