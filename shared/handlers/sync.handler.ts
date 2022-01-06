@@ -5,6 +5,8 @@ import { wantsBothValues } from '../../components/market/CreateNewTrade';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import { InventoryChangeDTO } from '../stores/inventory/inventory.model';
 import { inventoryService } from '../stores/inventory/inventory.service';
+import { createNotification } from '../stores/notification/notification.model';
+import { notificationService } from '../stores/notification/notification.service';
 import { pricesStore } from '../stores/prices/prices.store';
 import { syncSettingsStore } from '../stores/syncSettings/syncSettings.store';
 import { userService } from '../stores/user/user.service';
@@ -178,6 +180,48 @@ const useSyncSettingsHandler = () => {
   };
 
   const updateSyncSettings = () => {
+    if (
+      isNaN(localSyncSettings.keepItem) ||
+      isNaN(localSyncSettings.keepRecipe) ||
+      localSyncSettings.mainPriceItem.withAmount && isNaN(localSyncSettings.mainPriceAmountItem) ||
+      localSyncSettings.secondaryPriceItem?.withAmount && isNaN(localSyncSettings.secondaryPriceAmountItem) ||
+      localSyncSettings.mainPriceRecipe.withAmount && isNaN(localSyncSettings.mainPriceAmountRecipe) ||
+      localSyncSettings.secondaryPriceRecipe?.withAmount && isNaN(localSyncSettings.secondaryPriceAmountRecipe)
+    ) {
+      const notification = createNotification({
+        content: 'Please fill out every field',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
+    if (
+      localSyncSettings.mainPriceItem.withAmount && localSyncSettings.mainPriceAmountItem === 0 ||
+      localSyncSettings.secondaryPriceItem?.withAmount && localSyncSettings.secondaryPriceAmountItem === 0 ||
+      localSyncSettings.mainPriceRecipe.withAmount && localSyncSettings.mainPriceAmountRecipe === 0 ||
+      localSyncSettings.secondaryPriceRecipe?.withAmount && localSyncSettings.secondaryPriceAmountRecipe === 0
+    ) {
+      const notification = createNotification({
+        content: 'Prices have to be 1 or higher',
+        duration: 5000,
+        type: 'warning'
+      });
+      notificationService.addNotification(notification);
+      return;
+    }
+    if (!localSyncSettings.mainPriceAmountItem) {
+      localSyncSettings.mainPriceAmountItem = 4;
+    }
+    if (!localSyncSettings.secondaryPriceAmountItem) {
+      localSyncSettings.secondaryPriceAmountItem = 1;
+    }
+    if (!localSyncSettings.mainPriceAmountRecipe) {
+      localSyncSettings.mainPriceAmountRecipe = 2;
+    }
+    if (!localSyncSettings.secondaryPriceAmountRecipe) {
+      localSyncSettings.secondaryPriceAmountRecipe = 1;
+    }
     userService.updateSyncSettings({
       ...localSyncSettings,
       mode: localSyncSettings.mode.key,

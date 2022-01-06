@@ -17,6 +17,8 @@ import NumberInput from '../styles/NumberInput';
 import PriceSelector from './PriceSelector';
 import Loading from '../styles/Loading';
 import Dropdown, { DropdownValue } from '../styles/Dropdown';
+import { createNotification } from '../../shared/stores/notification/notification.model';
+import { notificationService } from '../../shared/stores/notification/notification.service';
 
 export const wantsBothValues: DropdownValue[] = [
   { key: true, displayName: 'both prices' },
@@ -139,7 +141,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                             <div className="flex flex-col justify-start">
                               <p>Amount of {trade.mainPrice.displayName}</p>
                             </div>
-                            <NumberInput value={trade.mainPriceAmount} setValue={(mainPriceAmount) => setTrade({ ...trade, mainPriceAmount })} min={1} max={99} />
+                            <NumberInput value={trade.mainPriceAmount} setValue={(mainPriceAmount) => setTrade({ ...trade, mainPriceAmount })} min={0} max={99} />
                           </div>
                         }
                       </div>
@@ -170,7 +172,7 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                                 <div className="flex flex-col justify-start">
                                   <p>Amount of {trade.secondaryPrice.displayName}</p>
                                 </div>
-                                <NumberInput value={trade.secondaryPriceAmount} setValue={(secondaryPriceAmount) => setTrade({ ...trade, secondaryPriceAmount })} min={1} max={99} />
+                                <NumberInput value={trade.secondaryPriceAmount} setValue={(secondaryPriceAmount) => setTrade({ ...trade, secondaryPriceAmount })} min={0} max={99} />
                               </div>
                             }
                           </div>
@@ -181,7 +183,38 @@ const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, t
                 </div>
                 <div className="flex justify-center">
                   {!loading &&
-                    <ActionButton type="success" disabled={!trade.mainPrice} onClick={() => { setLoading(true); createTrade(() => { setProgress(0); setLoading(false); }); }}>
+                    <ActionButton type="success" disabled={!trade.mainPrice} onClick={() => {
+                      if (
+                        isNaN(trade.quantity) ||
+                        isNaN(trade.mainPriceAmount) ||
+                        isNaN(trade.secondaryPriceAmount)
+                      ) {
+                        const notification = createNotification({
+                          content: 'Please fill out every field',
+                          duration: 5000,
+                          type: 'warning'
+                        });
+                        notificationService.addNotification(notification);
+                        return;
+                      }
+                      if (
+                        trade.mainPrice.withAmount && trade.mainPriceAmount === 0 ||
+                        trade.secondaryPrice?.withAmount && trade.secondaryPriceAmount === 0
+                      ) {
+                        const notification = createNotification({
+                          content: 'Prices have to be 1 or higher',
+                          duration: 5000,
+                          type: 'warning'
+                        });
+                        notificationService.addNotification(notification);
+                        return;
+                      }
+                      setLoading(true);
+                      createTrade(() => {
+                        setProgress(0);
+                        setLoading(false);
+                      });
+                    }}>
                       Create {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
                     </ActionButton>
                     ||

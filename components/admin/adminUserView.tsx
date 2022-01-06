@@ -139,7 +139,7 @@ const AdminUserView: FunctionComponent<Props> = ({ adminUser, changeVerification
           </div>
         </div>
       </WTDialog>
-      <div className={`flex flex-wrap justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md pt-4 px-4 pb-2 cursor-pointer border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} style={{ minHeight: '62px' }} onClick={() => setShow(!show)}>
+      <div className={`flex flex-wrap justify-between bg-wt-surface-dark text-center mx-1 mt-2 shadow-md px-4 py-2 cursor-pointer border-l-2 border-t-2 border-r-2 ${show ? 'rounded-t-lg border-wt-accent' : 'rounded-lg border-wt-surface-dark'}`} style={{ minHeight: '62px' }} onClick={() => setShow(!show)}>
         <div className="flex items-center">
           <Link href={`/@/${adminUser.username}`}>
             <a target="_blank" rel="noreferrer">

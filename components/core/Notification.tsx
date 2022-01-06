@@ -43,7 +43,7 @@ const NotificationComponent: FunctionComponent = () => {
   };
 
   return (
-    <div className="fixed bottom-0 z-40">
+    <div className="fixed bottom-0 z-50">
       {[...Array(3)].map((x, i) =>
         <Transition
           key={i}

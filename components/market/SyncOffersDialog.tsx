@@ -13,6 +13,8 @@ import { Price } from '../../shared/stores/prices/price.model';
 import SyncPriceView from './SyncPriceView';
 import { wantsBothValues } from './CreateNewTrade';
 import IgnoreListDialog from './IgnoreListDialog';
+import { createNotification } from '../../shared/stores/notification/notification.model';
+import { notificationService } from '../../shared/stores/notification/notification.service';
 
 interface Props {
   localSyncSettings: any;
@@ -38,7 +40,7 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
     <>
       <WTDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} closeOnOutsideClick={true}>
         <div className="inline-block max-w-lg p-6 my-8 overflow-x-hidden text-left align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4 border-wt-accent">
-        <IgnoreListDialog dialogOpen={ignoreListDialogOpen} setDialogOpen={setIgnoreListDialogOpen} ignoreList={localSyncSettings.ignoreList} setIgnoreList={(ignoreList) => setLocalSyncSettings({ ...localSyncSettings, ignoreList })} />
+          <IgnoreListDialog dialogOpen={ignoreListDialogOpen} setDialogOpen={setIgnoreListDialogOpen} ignoreList={localSyncSettings.ignoreList} setIgnoreList={(ignoreList) => setLocalSyncSettings({ ...localSyncSettings, ignoreList })} />
           <div className="mx-2">
             <p className="text-xl font-bold text-center">Sync Offers</p>
             <p className="text-sm mt-1">This feature synchronises the offers in your market with the items in your Steam inventory.</p>
@@ -158,6 +160,36 @@ const SyncOffersDialog: FunctionComponent<Props> = ({ localSyncSettings, setLoca
               {!loading &&
                 <>
                   <ActionButton type="success" onClick={() => {
+                    if (
+                      isNaN(localSyncSettings.keepItem) ||
+                      isNaN(localSyncSettings.keepRecipe) ||
+                      localSyncSettings.mainPriceItem.withAmount && isNaN(localSyncSettings.mainPriceAmountItem) ||
+                      localSyncSettings.secondaryPriceItem?.withAmount && isNaN(localSyncSettings.secondaryPriceAmountItem) ||
+                      localSyncSettings.mainPriceRecipe.withAmount && isNaN(localSyncSettings.mainPriceAmountRecipe) ||
+                      localSyncSettings.secondaryPriceRecipe?.withAmount && isNaN(localSyncSettings.secondaryPriceAmountRecipe)
+                    ) {
+                      const notification = createNotification({
+                        content: 'Please fill out every field',
+                        duration: 5000,
+                        type: 'warning'
+                      });
+                      notificationService.addNotification(notification);
+                      return;
+                    }
+                    if (
+                      localSyncSettings.mainPriceItem.withAmount && localSyncSettings.mainPriceAmountItem === 0 ||
+                      localSyncSettings.secondaryPriceItem?.withAmount && localSyncSettings.secondaryPriceAmountItem === 0 ||
+                      localSyncSettings.mainPriceRecipe.withAmount && localSyncSettings.mainPriceAmountRecipe === 0 ||
+                      localSyncSettings.secondaryPriceRecipe?.withAmount && localSyncSettings.secondaryPriceAmountRecipe === 0
+                    ) {
+                      const notification = createNotification({
+                        content: 'Prices have to be 1 or higher',
+                        duration: 5000,
+                        type: 'warning'
+                      });
+                      notificationService.addNotification(notification);
+                      return;
+                    }
                     setLoading(true);
                     syncOffers(finished);
                   }}>

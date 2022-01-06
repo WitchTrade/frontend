@@ -91,9 +91,9 @@ const useGameserverHandler = () => {
   const addPlayer = (playerName: string) => {
     if (watchlist.some(player => player === playerName)) {
       const notification = createNotification({
-        content: 'Player is already in the watchlis',
+        content: 'Player is already in the watchlist',
         duration: 5000,
-        type: 'error'
+        type: 'warning'
       });
       notificationService.addNotification(notification);
       return;
@@ -103,6 +103,7 @@ const useGameserverHandler = () => {
     setWatchlist(newWatchlist);
     if (dialogOpen) {
       setDialogOpen(false);
+      setDialogName('');
     }
   };
 

@@ -92,7 +92,7 @@ const SyncPriceView: FunctionComponent<Props> = ({ type, prices, price, setPrice
             <div className="flex flex-col justify-start">
               <p className="text-sm">Amount of {price.priceKey.startsWith('dynamic') ? 'ingredients' : price.displayName}</p>
             </div>
-            <NumberInput value={priceAmount ? priceAmount : 4} setValue={setPriceAmount} min={1} max={99} />
+            <NumberInput value={priceAmount} setValue={setPriceAmount} min={0} max={99} />
           </div>
         }
       </div>

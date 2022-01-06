@@ -230,13 +230,13 @@ const MarketHandler = () => {
     const tradeDTO: any = {};
     tradeDTO.mainPriceId = trade.mainPrice.id;
     if (trade.mainPrice.withAmount) {
-      tradeDTO.mainPriceAmount = trade.mainPriceAmount ? trade.mainPriceAmount : 0;
+      tradeDTO.mainPriceAmount = trade.mainPriceAmount;
     }
     if (trade.secondaryPrice) {
       tradeDTO.secondaryPriceId = trade.secondaryPrice.id;
       tradeDTO.wantsBoth = trade.wantsBoth;
       if (trade.secondaryPrice.withAmount) {
-        tradeDTO.secondaryPriceAmount = trade.secondaryPriceAmount ? trade.secondaryPriceAmount : 0;
+        tradeDTO.secondaryPriceAmount = trade.secondaryPriceAmount;
       }
     }
 
