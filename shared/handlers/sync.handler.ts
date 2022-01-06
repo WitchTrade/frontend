@@ -1,8 +1,11 @@
+import { selectAll } from '@ngneat/elf-entities';
 import { useObservable } from '@ngneat/react-rxjs';
 import { useEffect, useState } from 'react';
+import { wantsBothValues } from '../../components/market/CreateNewTrade';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import { InventoryChangeDTO } from '../stores/inventory/inventory.model';
 import { inventoryService } from '../stores/inventory/inventory.service';
+import { pricesStore } from '../stores/prices/prices.store';
 import { syncSettingsStore } from '../stores/syncSettings/syncSettings.store';
 import { userService } from '../stores/user/user.service';
 
@@ -47,25 +50,25 @@ export const getRarityStrings = (rarityNumber: number): string[] => {
 };
 
 export const updateSyncSettingsRarity = (localSyncSettings: any, setLocalSyncSettings: any, rarity: DropdownValue) => {
-  if (localSyncSettings.ms_rarity.some(r => r.key === rarity.key)) {
-    if (localSyncSettings.ms_rarity.length === 1) {
+  if (localSyncSettings.rarity.some(r => r.key === rarity.key)) {
+    if (localSyncSettings.rarity.length === 1) {
       return;
     }
-    const newRarities = [...localSyncSettings.ms_rarity];
+    const newRarities = [...localSyncSettings.rarity];
     const index = newRarities.indexOf(rarity);
     newRarities[index] = newRarities[newRarities.length - 1];
     newRarities.pop();
     newRarities.sort(function (a, b) {
       return Object.keys(RARITY).indexOf(b.key.toUpperCase()) - Object.keys(RARITY).indexOf(a.key.toUpperCase());
     });
-    setLocalSyncSettings({ ...localSyncSettings, ms_rarity: newRarities });
+    setLocalSyncSettings({ ...localSyncSettings, rarity: newRarities });
   } else {
-    const newRarities = [...localSyncSettings.ms_rarity];
+    const newRarities = [...localSyncSettings.rarity];
     newRarities.push(rarity);
     newRarities.sort(function (a, b) {
       return Object.keys(RARITY).indexOf(b.key.toUpperCase()) - Object.keys(RARITY).indexOf(a.key.toUpperCase());
     });
-    setLocalSyncSettings({ ...localSyncSettings, ms_rarity: newRarities });
+    setLocalSyncSettings({ ...localSyncSettings, rarity: newRarities });
   }
 };
 
@@ -83,20 +86,30 @@ export const getRarityNumber = (rarityStrings: string[]): number => {
 
 const useSyncSettingsHandler = () => {
   const [syncSettings] = useObservable(syncSettingsStore);
+  const [prices] = useObservable(pricesStore.pipe(selectAll()));
 
   const [invLoading, setInvLoading] = useState(false);
 
-  const [localSyncSettings, setLocalSyncSettings] = useState({
+  const [localSyncSettings, setLocalSyncSettings] = useState<any>({
     syncInventory: false,
     syncMarket: false,
-    ms_mode: modeValues[0],
-    ms_rarity: itemRarityValues,
-    ms_defaultPriceItem: 4,
-    ms_defaultPriceRecipe: 1,
-    ms_keepItem: 1,
-    ms_keepRecipe: 0,
-    ms_ignoreWishlistItems: true,
-    ms_removeNoneOnStock: false
+    mode: modeValues[0],
+    rarity: itemRarityValues,
+    mainPriceItem: prices.find(p => p.priceKey === 'dynamicRarity'),
+    mainPriceAmountItem: 4,
+    wantsBothItem: wantsBothValues.find(wbv => wbv.key === false),
+    secondaryPriceItem: undefined,
+    secondaryPriceAmountItem: 1,
+    mainPriceRecipe: prices.find(p => p.priceKey === 'dynamicRarity'),
+    mainPriceAmountRecipe: 2,
+    wantsBothRecipe: wantsBothValues.find(wbv => wbv.key === false),
+    secondaryPriceRecipe: undefined,
+    secondaryPriceAmountRecipe: 1,
+    keepItem: 1,
+    keepRecipe: 0,
+    ignoreWishlistItems: true,
+    removeNoneOnStock: false,
+    ignoreList: []
   });
 
   const [unsavedSettings, setUnsavedSettings] = useState(false);
@@ -106,26 +119,35 @@ const useSyncSettingsHandler = () => {
     if (Object.keys(syncSettings).length === 0) {
       return;
     }
-    let ms_mode = modeValues.find(mo => mo.key === syncSettings.ms_mode);
-    if (!ms_mode) {
-      ms_mode = modeValues[0];
+    let mode = modeValues.find(mo => mo.key === syncSettings.mode);
+    if (!mode) {
+      mode = modeValues[0];
     }
-    const rarityStrings = getRarityStrings(syncSettings.ms_rarity);
-    let ms_rarity = itemRarityValues.filter(ir => rarityStrings.includes(ir.key));
-    if (!ms_rarity) {
-      ms_rarity = itemRarityValues;
+    const rarityStrings = getRarityStrings(syncSettings.rarity);
+    let rarity = itemRarityValues.filter(ir => rarityStrings.includes(ir.key));
+    if (!rarity) {
+      rarity = itemRarityValues;
     }
     setLocalSyncSettings({
       syncInventory: syncSettings.syncInventory,
       syncMarket: syncSettings.syncMarket,
-      ms_mode,
-      ms_rarity,
-      ms_defaultPriceItem: syncSettings.ms_defaultPriceItem,
-      ms_defaultPriceRecipe: syncSettings.ms_defaultPriceRecipe,
-      ms_keepItem: syncSettings.ms_keepItem,
-      ms_keepRecipe: syncSettings.ms_keepRecipe,
-      ms_ignoreWishlistItems: syncSettings.ms_ignoreWishlistItems,
-      ms_removeNoneOnStock: syncSettings.ms_removeNoneOnStock
+      mode,
+      rarity,
+      mainPriceItem: syncSettings.mainPriceItem,
+      mainPriceAmountItem: syncSettings.mainPriceAmountItem,
+      wantsBothItem: wantsBothValues.find(wbv => wbv.key === syncSettings.wantsBothItem),
+      secondaryPriceItem: syncSettings.secondaryPriceItem,
+      secondaryPriceAmountItem: syncSettings.secondaryPriceAmountItem,
+      mainPriceRecipe: syncSettings.mainPriceRecipe,
+      mainPriceAmountRecipe: syncSettings.mainPriceAmountRecipe,
+      wantsBothRecipe: wantsBothValues.find(wbv => wbv.key === syncSettings.wantsBothRecipe),
+      secondaryPriceRecipe: syncSettings.secondaryPriceRecipe,
+      secondaryPriceAmountRecipe: syncSettings.secondaryPriceAmountRecipe,
+      keepItem: syncSettings.keepItem,
+      keepRecipe: syncSettings.keepRecipe,
+      ignoreWishlistItems: syncSettings.ignoreWishlistItems,
+      removeNoneOnStock: syncSettings.removeNoneOnStock,
+      ignoreList: syncSettings.ignoreList,
     });
   }, [syncSettings]);
 
@@ -133,14 +155,31 @@ const useSyncSettingsHandler = () => {
     if (
       localSyncSettings.syncInventory !== syncSettings.syncInventory ||
       localSyncSettings.syncMarket !== syncSettings.syncMarket ||
-      localSyncSettings.ms_mode.key !== syncSettings.ms_mode ||
-      getRarityNumber(localSyncSettings.ms_rarity.map(r => r.key)) !== syncSettings.ms_rarity ||
-      localSyncSettings.ms_defaultPriceItem !== syncSettings.ms_defaultPriceItem ||
-      localSyncSettings.ms_defaultPriceRecipe !== syncSettings.ms_defaultPriceRecipe ||
-      localSyncSettings.ms_keepItem !== syncSettings.ms_keepItem ||
-      localSyncSettings.ms_keepRecipe !== syncSettings.ms_keepRecipe ||
-      localSyncSettings.ms_ignoreWishlistItems !== syncSettings.ms_ignoreWishlistItems ||
-      localSyncSettings.ms_removeNoneOnStock !== syncSettings.ms_removeNoneOnStock
+      localSyncSettings.mode.key !== syncSettings.mode ||
+      getRarityNumber(localSyncSettings.rarity.map(r => r.key)) !== syncSettings.rarity ||
+      !localSyncSettings.mainPriceItem && syncSettings.mainPriceItem ||
+      localSyncSettings.mainPriceItem && !syncSettings.mainPriceItem ||
+      localSyncSettings.mainPriceItem && syncSettings.mainPriceAmountItem && localSyncSettings.mainPriceItem.id !== syncSettings.mainPriceItem.id ||
+      localSyncSettings.mainPriceAmountItem !== syncSettings.mainPriceAmountItem ||
+      localSyncSettings.wantsBothItem.key !== syncSettings.wantsBothItem ||
+      !localSyncSettings.secondaryPriceItem && syncSettings.secondaryPriceItem ||
+      localSyncSettings.secondaryPriceItem && !syncSettings.secondaryPriceItem ||
+      localSyncSettings.secondaryPriceItem && syncSettings.secondaryPriceItem && localSyncSettings.secondaryPriceItem.id !== syncSettings.secondaryPriceItem.id ||
+      localSyncSettings.secondaryPriceAmountItem !== syncSettings.secondaryPriceAmountItem ||
+      !localSyncSettings.mainPriceRecipe && syncSettings.mainPriceRecipe ||
+      localSyncSettings.mainPriceRecipe && !syncSettings.mainPriceRecipe ||
+      localSyncSettings.mainPriceRecipe && syncSettings.mainPriceRecipe && localSyncSettings.mainPriceRecipe.id !== syncSettings.mainPriceRecipe.id ||
+      localSyncSettings.wantsBothRecipe.key !== syncSettings.wantsBothRecipe ||
+      localSyncSettings.mainPriceAmountRecipe !== syncSettings.mainPriceAmountRecipe ||
+      !localSyncSettings.secondaryPriceRecipe && syncSettings.secondaryPriceRecipe ||
+      localSyncSettings.secondaryPriceRecipe && !syncSettings.secondaryPriceRecipe ||
+      localSyncSettings.secondaryPriceRecipe && syncSettings.secondaryPriceRecipe && localSyncSettings.secondaryPriceRecipe.id !== syncSettings.secondaryPriceRecipe.id ||
+      localSyncSettings.secondaryPriceAmountRecipe !== syncSettings.secondaryPriceAmountRecipe ||
+      localSyncSettings.keepItem !== syncSettings.keepItem ||
+      localSyncSettings.keepRecipe !== syncSettings.keepRecipe ||
+      localSyncSettings.ignoreWishlistItems !== syncSettings.ignoreWishlistItems ||
+      localSyncSettings.removeNoneOnStock !== syncSettings.removeNoneOnStock ||
+      localSyncSettings.ignoreList !== syncSettings.ignoreList
     ) {
       setUnsavedSettings(true);
     } else {
@@ -161,7 +200,13 @@ const useSyncSettingsHandler = () => {
   };
 
   const updateSyncSettings = () => {
-    userService.updateSyncSettings({ ...localSyncSettings, ms_mode: localSyncSettings.ms_mode.key, ms_rarity: getRarityNumber(localSyncSettings.ms_rarity.map(r => r.key)) }).subscribe((res) => {
+    userService.updateSyncSettings({
+      ...localSyncSettings,
+      mode: localSyncSettings.mode.key,
+      rarity: getRarityNumber(localSyncSettings.rarity.map(r => r.key)),
+      wantsBothItem: localSyncSettings.wantsBothItem.key,
+      wantsBothRecipe: localSyncSettings.wantsBothRecipe.key,
+    }).subscribe((res) => {
       if (res.ok) {
         setUnsavedSettings(false);
       }
@@ -170,6 +215,7 @@ const useSyncSettingsHandler = () => {
 
   return {
     invLoading,
+    prices,
     syncInventory,
     updateInventorySettings,
     unsavedSettings,

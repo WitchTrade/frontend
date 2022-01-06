@@ -179,7 +179,7 @@ export class MarketsService {
             const json = await res.json();
             if (res.ok) {
               const notification = createNotification({
-                content: `${json.newOffers} offer${json.newOffers === 1 ? '' : 's'} created, ${json.updatedOffers} updated and ${json.deletedOffers} deleted`,
+                content: `${json.newOffersCount} offer${json.newOffersCount === 1 ? '' : 's'} created, ${json.updatedOffersCount} updated and ${json.deletedOffersCount} deleted`,
                 duration: 5000,
                 type: 'success'
               });

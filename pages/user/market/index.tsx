@@ -140,7 +140,7 @@ const Market: NextPage = () => {
             </div>
             {type === MARKET_TYPE.OFFER &&
               <div className="m-1">
-                <SyncOffersDialog localSyncSettings={localSyncSettings} setLocalSyncSettings={setLocalSyncSettings} syncOffers={syncOffers} />
+                <SyncOffersDialog localSyncSettings={localSyncSettings} setLocalSyncSettings={setLocalSyncSettings} syncOffers={syncOffers} prices={prices} />
               </div>
             }
             {(type === MARKET_TYPE.OFFER && market.offers.length > 3 || type === MARKET_TYPE.WISH && market.wishes.length > 3) &&
