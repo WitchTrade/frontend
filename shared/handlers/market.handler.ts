@@ -9,6 +9,8 @@ import { getRarityNumber, getRarityStrings, itemRarityValues, modeValues } from 
 import { syncSettingsStore } from '../stores/syncSettings/syncSettings.store';
 import { pricesStore } from '../stores/prices/prices.store';
 import { wantsBothValues } from '../../components/market/CreateNewTrade';
+import { createNotification } from '../stores/notification/notification.model';
+import { notificationService } from '../stores/notification/notification.service';
 
 export enum MARKET_TYPE {
   OFFER,
@@ -23,6 +25,8 @@ const MarketHandler = () => {
 
   const [market, setMarket] = useState<Market>(createMarket({}));
   const [type, setType] = useState(MARKET_TYPE.OFFER);
+  const [newOfferView, setNewOfferView] = useState(false);
+  const [allOffers, setAllOffers] = useState<Offer[]>([]);
 
   const [editingNote, setEditingNote] = useState(false);
   const [localNote, setLocalNote] = useState('');
@@ -168,7 +172,15 @@ const MarketHandler = () => {
       rarity: getRarityNumber(localSyncSettings.rarity.map(r => r.key)),
       wantsBothItem: localSyncSettings.wantsBothItem.key,
       wantsBothRecipe: localSyncSettings.wantsBothRecipe.key,
-    }).subscribe(() => {
+    }).subscribe(async res => {
+      const json = await res.json();
+      const notification = createNotification({
+        content: `${json.newOffersCount} offer${json.newOffersCount === 1 ? '' : 's'} created, ${json.updatedOffersCount} updated and ${json.deletedOffersCount} deleted`,
+        duration: 5000,
+        type: 'success'
+      });
+      notificationService.addNotification(notification);
+
       marketsService.fetchOwnMarket().subscribe(async (res) => {
         if (res.ok) {
           const market = await res.json();
@@ -177,7 +189,15 @@ const MarketHandler = () => {
           } else if (market.wishlistNote) {
             setLocalNote(market.wishlistNote);
           }
-          setMarket(market);
+          if (json.newOffersCount > 0) {
+            setAllOffers(market.offers);
+            market.offers = market.offers.filter(o => json.newOffers.includes(o.id));
+            setMarket(market);
+            setNewOfferView(true);
+          } else {
+            setMarket(market);
+          }
+
           finished();
         }
       });
@@ -242,9 +262,15 @@ const MarketHandler = () => {
     }
   };
 
+  const closeNewOfferView = () => {
+    setMarket({ ...market, offers: allOffers });
+    setNewOfferView(false);
+  };
+
   return {
     market,
     prices,
+    newOfferView,
     editingNote,
     setEditingNote,
     localNote,
@@ -260,7 +286,8 @@ const MarketHandler = () => {
     setLocalSyncSettings,
     syncOffers,
     deleteTrade,
-    updateTrade
+    updateTrade,
+    closeNewOfferView
   };
 };
 
