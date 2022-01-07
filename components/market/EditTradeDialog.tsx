@@ -12,6 +12,8 @@ import { MARKET_TYPE } from '../../shared/handlers/market.handler';
 import { Price } from '../../shared/stores/prices/price.model';
 import Dropdown, { DropdownValue } from '../styles/Dropdown';
 import { wantsBothValues } from './CreateNewTrade';
+import { createNotification } from '../../shared/stores/notification/notification.model';
+import { notificationService } from '../../shared/stores/notification/notification.service';
 
 interface Props {
   type: TRADE_TYPE;
@@ -32,9 +34,14 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLocalTrade({ ...createTrade(selectedTrade) });
-    if (selectedTrade.wantsBoth !== undefined) {
-      const wantsBoth = wantsBothValues.find(wbv => wbv.key === selectedTrade.wantsBoth);
+    if (!dialogOpen) {
+      return;
+    }
+    const createdTrade = createTrade(selectedTrade);
+    setLocalTrade({ ...createdTrade });
+
+    if (createdTrade.wantsBoth !== undefined) {
+      const wantsBoth = wantsBothValues.find(wbv => wbv.key === createdTrade.wantsBoth);
       if (wantsBoth) {
         setWantsBothDropdown(wantsBoth);
       }
@@ -81,7 +88,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                       <div className="flex flex-col justify-start">
                         <p>Amount of {localTrade.mainPrice.displayName}</p>
                       </div>
-                      <NumberInput value={localTrade.mainPriceAmount ? localTrade.mainPriceAmount : 4} setValue={(mainPriceAmount) => setLocalTrade({ ...localTrade, mainPriceAmount })} min={1} max={99} />
+                      <NumberInput value={localTrade.mainPriceAmount} setValue={(mainPriceAmount) => setLocalTrade({ ...localTrade, mainPriceAmount })} min={0} max={99} />
                     </div>
                   }
                 </div>
@@ -112,7 +119,7 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
                           <div className="flex flex-col justify-start">
                             <p>Amount of {localTrade.secondaryPrice.displayName}</p>
                           </div>
-                          <NumberInput value={localTrade.secondaryPriceAmount ? localTrade.secondaryPriceAmount : 1} setValue={(secondaryPriceAmount) => setLocalTrade({ ...localTrade, secondaryPriceAmount })} min={1} max={99} />
+                          <NumberInput value={localTrade.secondaryPriceAmount} setValue={(secondaryPriceAmount) => setLocalTrade({ ...localTrade, secondaryPriceAmount })} min={0} max={99} />
                         </div>
                       }
                     </div>
@@ -124,6 +131,31 @@ const EditTradeDialog: FunctionComponent<Props> = ({ type, selectedTrade, select
               {!loading &&
                 <>
                   <ActionButton type="success" onClick={() => {
+                    if (
+                      isNaN(localTrade.quantity) ||
+                      isNaN(localTrade.mainPriceAmount) ||
+                      isNaN(localTrade.secondaryPriceAmount)
+                    ) {
+                      const notification = createNotification({
+                        content: 'Please fill out every field',
+                        duration: 5000,
+                        type: 'warning'
+                      });
+                      notificationService.addNotification(notification);
+                      return;
+                    }
+                    if (
+                      localTrade.mainPrice.withAmount && localTrade.mainPriceAmount === 0 ||
+                      localTrade.secondaryPrice?.withAmount && localTrade.secondaryPriceAmount === 0
+                    ) {
+                      const notification = createNotification({
+                        content: 'Prices have to be 1 or higher',
+                        duration: 5000,
+                        type: 'warning'
+                      });
+                      notificationService.addNotification(notification);
+                      return;
+                    }
                     setLoading(true);
                     updateTrade(localTrade, finished);
                   }}>

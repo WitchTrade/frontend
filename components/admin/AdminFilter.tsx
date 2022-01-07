@@ -29,7 +29,7 @@ const AdminFilter: FunctionComponent<Props> = ({ adminFilterValues, setAdminFilt
           <p className="font-semibold">Filter</p>
         </div>
         <div className="flex flex-col items-center p-2">
-          <TextInput placeholder="Search by username" required={false} type="text" value={adminFilterValues.searchString} setValue={(searchString) => setAdminFilterValues({ ...adminFilterValues, searchString })} clearOption={true} />
+          <TextInput placeholder="Search by name" required={false} type="text" value={adminFilterValues.searchString} setValue={(searchString) => setAdminFilterValues({ ...adminFilterValues, searchString })} clearOption={true} />
           <div className="flex flex-wrap justify-center">
             <div className="m-1" style={{ width: '220px' }}>
               <p className="mb-1">Verified</p>

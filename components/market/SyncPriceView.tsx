@@ -5,17 +5,21 @@ import ActionButton from '../styles/ActionButton';
 import Tooltip from '../styles/Tooltip';
 import { MARKET_TYPE } from '../../shared/handlers/market.handler';
 import { Price } from '../../shared/stores/prices/price.model';
+import NumberInput from '../styles/NumberInput';
 
 interface Props {
   type: MARKET_TYPE;
   prices: Price[];
   price: Price;
-  setPrice: (price: Price) => void;
-  buttonText: string;
+  setPrice: (price: Price | null) => void;
+  priceAmount: number;
+  setPriceAmount: (priceAmount: number) => void;
+  text: string;
+  removeButton: boolean;
   excludeIds: number[];
 };
 
-const PriceSelector: FunctionComponent<Props> = ({ type, prices, price, setPrice, buttonText, excludeIds }) => {
+const SyncPriceView: FunctionComponent<Props> = ({ type, prices, price, setPrice, priceAmount, setPriceAmount, text, removeButton, excludeIds }) => {
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -54,11 +58,46 @@ const PriceSelector: FunctionComponent<Props> = ({ type, prices, price, setPrice
           </div>
         </div>
       </WTDialog>
-      <ActionButton type="info" onClick={() => setDialogOpen(true)}>
-        {buttonText}
-      </ActionButton>
+      <div className="flex-col justify-evenly items-center rounded-lg border border-wt-accent m-1 p-1">
+        <div className="flex flex-wrap justify-center items-center">
+          <p className="text-sm underline">{text}</p>
+          <div className="flex items-center">
+            {price &&
+              <Tooltip text={price.displayName}>
+                <div className="h-10 w-10 mx-2">
+                  <Image className="rounded-lg" src={`/assets/images/prices/${price.priceKey}.png`} height={40} width={40} quality={100} alt={price.displayName} />
+                </div>
+              </Tooltip>
+            }
+            <div className="mx-1">
+              <Tooltip text="Select price">
+                <ActionButton type="info" onClick={() => setDialogOpen(true)}>
+                  <Image src={`/assets/svgs/change/white.svg`} height="24px" width="24px" alt="Dropdown Item Icon" />
+                </ActionButton>
+              </Tooltip>
+            </div>
+            {removeButton && price &&
+              <Tooltip text="Remove price">
+                <div className="mx-1">
+                  <ActionButton type="cancel" onClick={() => setPrice(null)}>
+                    <Image src={`/assets/svgs/bin/white.svg`} height="24px" width="24px" alt="Dropdown Item Icon" />
+                  </ActionButton>
+                </div>
+              </Tooltip>
+            }
+          </div>
+        </div>
+        {price?.withAmount &&
+          <div className="flex justify-between items-center my-2 mr-1">
+            <div className="flex flex-col justify-start">
+              <p className="text-sm">Amount of {price.priceKey.startsWith('dynamic') ? 'ingredients' : price.displayName}</p>
+            </div>
+            <NumberInput value={priceAmount} setValue={setPriceAmount} min={0} max={99} />
+          </div>
+        }
+      </div>
     </>
   );
 };
 
-export default PriceSelector;
+export default SyncPriceView;

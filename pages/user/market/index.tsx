@@ -25,6 +25,7 @@ const Market: NextPage = () => {
   const {
     market,
     prices,
+    newOfferView,
     editingNote,
     setEditingNote,
     localNote,
@@ -40,7 +41,8 @@ const Market: NextPage = () => {
     setLocalSyncSettings,
     syncOffers,
     deleteTrade,
-    updateTrade
+    updateTrade,
+    closeNewOfferView
   } = MarketHandler();
 
   const {
@@ -132,18 +134,20 @@ const Market: NextPage = () => {
             }
           </div>
           <div className="flex flex-wrap justify-center mt-10">
+            {type === MARKET_TYPE.WISH || !newOfferView &&
             <div className="m-1">
               <ActionButton type="success" onClick={() => setCreatingNew(true)}>
                 <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
                 New {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
               </ActionButton>
             </div>
-            {type === MARKET_TYPE.OFFER &&
+            }
+            {type === MARKET_TYPE.OFFER && !newOfferView &&
               <div className="m-1">
-                <SyncOffersDialog localSyncSettings={localSyncSettings} setLocalSyncSettings={setLocalSyncSettings} syncOffers={syncOffers} />
+                <SyncOffersDialog localSyncSettings={localSyncSettings} setLocalSyncSettings={setLocalSyncSettings} syncOffers={syncOffers} prices={prices} />
               </div>
             }
-            {(type === MARKET_TYPE.OFFER && market.offers.length > 3 || type === MARKET_TYPE.WISH && market.wishes.length > 3) &&
+            {(type === MARKET_TYPE.OFFER && market.offers.length > 3 && !newOfferView || type === MARKET_TYPE.WISH && market.wishes.length > 3) &&
               <div className="m-1">
                 <ActionButton type="cancel" onClick={() => setDeleteAllDialogOpen(true)}>
                   <Image src="/assets/svgs/bin/white.svg" height="24px" width="24px" alt="Remove all" />
@@ -155,17 +159,25 @@ const Market: NextPage = () => {
 
           <div className="flex flex-col justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <CreateNewTrade
-            type={type}
-            dialogOpen={creatingNew}
-            setDialogOpen={setCreatingNew}
-            addNewTrade={addNewTrade}
-            existingTrades={type === MARKET_TYPE.OFFER ? market.offers : market.wishes}
-            openItemDetails={openItemDetails}
+              type={type}
+              dialogOpen={creatingNew}
+              setDialogOpen={setCreatingNew}
+              addNewTrade={addNewTrade}
+              existingTrades={type === MARKET_TYPE.OFFER ? market.offers : market.wishes}
+              openItemDetails={openItemDetails}
             />
           </div>
           <div className="w-full">
             <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} initialOpen={false} type={FILTER_TYPE.MARKET} />
           </div>
+          {newOfferView && type === MARKET_TYPE.OFFER &&
+            <div className="flex justify-center items-center mt-4 rounded-lg bg-wt-success max-w-6xl mx-auto px-8 py-2">
+              <p className="text-2xl font-bold mr-10">Showing created offers ({market.offers.length})</p>
+              <ActionButton type="cancel" onClick={() => closeNewOfferView()}>
+                Close
+              </ActionButton>
+            </div>
+          }
           <p className="text-center mt-2">
             <span className="text-wt-accent font-bold">
               {totalItemCount}

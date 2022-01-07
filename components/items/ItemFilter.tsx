@@ -5,6 +5,7 @@ import { inventoryStore } from '../../shared/stores/inventory/inventory.store';
 import {
   createDefaultItemFilter,
   FILTER_TYPE,
+  ignoreListItemSlotValues,
   inventoryValues,
   itemCharacterValues,
   itemEventValues,
@@ -44,12 +45,12 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="bg-wt-surface-dark rounded-lg">
-        <div className={`flex p-2 rounded-lg ${type !== FILTER_TYPE.NEWTRADE ? 'justify-between cursor-pointer hover:bg-wt-hover' : 'justify-center'}`} onClick={() => type !== FILTER_TYPE.NEWTRADE ? setFilterOpen(!filterOpen) : undefined}>
-          {type !== FILTER_TYPE.NEWTRADE &&
+        <div className={`flex p-2 rounded-lg ${type !== FILTER_TYPE.NEWTRADE && type !== FILTER_TYPE.IGNORELIST ? 'justify-between cursor-pointer hover:bg-wt-hover' : 'justify-center'}`} onClick={() => type !== FILTER_TYPE.NEWTRADE && type !== FILTER_TYPE.IGNORELIST ? setFilterOpen(!filterOpen) : undefined}>
+          {type !== FILTER_TYPE.NEWTRADE && type !== FILTER_TYPE.IGNORELIST &&
             <Image src={`/assets/svgs/expand_${filterOpen ? 'less' : 'more'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
           }
           <p className="font-semibold">Filter</p>
-          {type !== FILTER_TYPE.NEWTRADE &&
+          {type !== FILTER_TYPE.NEWTRADE && type !== FILTER_TYPE.IGNORELIST &&
             <Image src={`/assets/svgs/expand_${filterOpen ? 'less' : 'more'}/${theme?.type === 'light' ? 'black' : 'white'}.svg`} height="20px" width="20px" alt="Dropdown Item Icon" />
           }
         </div>
@@ -72,10 +73,10 @@ const ItemFilter: FunctionComponent<Props> = ({ itemFilterValues, setItemFilterV
                 <p className="mb-1">Slot</p>
                 <MultiDropdown selectedValues={itemFilterValues.itemSlot} updateValue={(newSlot) => setItemFilterValues({
                   ...itemFilterValues,
-                  itemSlot: updateMultiSelectValue(itemFilterValues.itemSlot, newSlot, itemSlotValues)
+                  itemSlot: updateMultiSelectValue(itemFilterValues.itemSlot, newSlot, type === FILTER_TYPE.IGNORELIST ? ignoreListItemSlotValues : itemSlotValues)
                 })}
-                  values={itemSlotValues}
-                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemSlot: itemSlotValues })}
+                  values={type === FILTER_TYPE.IGNORELIST ? ignoreListItemSlotValues : itemSlotValues}
+                  selectAll={() => setItemFilterValues({ ...itemFilterValues, itemSlot: type === FILTER_TYPE.IGNORELIST ? ignoreListItemSlotValues : itemSlotValues })}
                   clear={() => setItemFilterValues({ ...itemFilterValues, itemSlot: [] })}
                 />
               </div>

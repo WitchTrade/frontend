@@ -15,6 +15,27 @@ const Changelog: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={4}>Version 1.1.0 (07.01.2022)</Title>
+        <p><b>Added:</b></p>
+        <ul className="list-disc pl-8">
+          <li>GitHub and Steam Group links in the footer</li>
+        </ul>
+        <p><b>Changes:</b></p>
+        <li>
+          Rework of the sync offer feature
+          <ul className="list-disc pl-8">
+            <li>Specify prices for both items and recipes!</li>
+            <li>Dynamic prices: Choose dynamic prices to set ingredients based on the item&apos;s rarity, character or event</li>
+            <li>Ignore list: Define a list of items which should be ignore when syncing your market</li>
+            <li>Sync overview: After a manual sync in the manage market view, there will be a overview of the newly added items (Makes reviewing new offers a lot easier)</li>
+          </ul>
+        </li>
+        <li>Reordered the slot dropdown values in the filter. Ingredients and recipes are now on the top. Other values are sorted alphabetically.</li>
+        <li>Changed how fetching the game servers works internally. Improves the speed slightly.</li>
+        <li>Improved usability of number input fields</li>
+        <p><b>Bug fixes:</b></p>
+        <li>Fixed price rating mistake in the search trade view</li>
+        <li>Fixed the &quot;I want both prices&quot; bug when editing a trade</li>
         <Title level={4}>Version 1.0.6 (20.12.2021)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">

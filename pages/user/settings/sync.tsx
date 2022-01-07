@@ -14,12 +14,19 @@ import useSyncSettingsHandler from '../../../shared/handlers/sync.handler';
 import NumberInput from '../../../components/styles/NumberInput';
 import PageHeader from '../../../components/styles/PageHeader';
 import MultiDropdown, { updateMultiSelectValue } from '../../../components/styles/MultiDropdown';
+import SyncPriceView from '../../../components/market/SyncPriceView';
+import { MARKET_TYPE } from '../../../shared/handlers/market.handler';
+import { wantsBothValues } from '../../../components/market/CreateNewTrade';
+import IgnoreListDialog from '../../../components/market/IgnoreListDialog';
 
 const Sync: NextPage = () => {
   const [inventory] = useObservable(inventoryStore);
 
   const {
     invLoading,
+    prices,
+    ignoreListDialogOpen,
+    setIgnoreListDialogOpen,
     syncInventory,
     updateInventorySettings,
     localSyncSettings,
@@ -27,12 +34,12 @@ const Sync: NextPage = () => {
     setLocalSyncSettings,
     updateSyncSettings,
     modeValues,
-    itemRarityValues,
-    updateSyncSettingsRarity
+    itemRarityValues
   } = useSyncSettingsHandler();
 
   return (
     <LoginWrapper>
+      <IgnoreListDialog dialogOpen={ignoreListDialogOpen} setDialogOpen={setIgnoreListDialogOpen} ignoreList={localSyncSettings.ignoreList} setIgnoreList={(ignoreList) => setLocalSyncSettings({ ...localSyncSettings, ignoreList })} />
       <CustomHeader
         title="WitchTrade | Sync Settings"
         description="Sync Settings"
@@ -40,7 +47,7 @@ const Sync: NextPage = () => {
       />
       <SettingNav />
       <PageHeader title="Sync Settings" description="Sync your steam inventory or enable auto sync." />
-      <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col justify-center max-w-lg mx-auto px-4 sm:px-6">
         <div className="bg-wt-surface-dark rounded-lg my-3 p-1">
           <p className="text-xl font-bold text-center">Steam Inventory Sync</p>
           {!invLoading &&
@@ -107,49 +114,108 @@ const Sync: NextPage = () => {
                   <div className="flex flex-wrap justify-center">
                     <div className="mb-5 mr-1" style={{ width: '180px' }}>
                       <p className="mb-1">Mode</p>
-                      <Dropdown selectedValue={localSyncSettings.ms_mode} setValue={(newMode) => setLocalSyncSettings({ ...localSyncSettings, ms_mode: newMode })} values={modeValues} />
+                      <Dropdown selectedValue={localSyncSettings.mode} setValue={(newMode) => setLocalSyncSettings({ ...localSyncSettings, mode: newMode })} values={modeValues} />
                     </div>
                     <div className="mb-5 mr-1" style={{ width: '180px' }}>
                       <p className="mb-1">Rarity</p>
                       <MultiDropdown
-                        selectedValues={localSyncSettings.ms_rarity}
+                        selectedValues={localSyncSettings.rarity}
                         updateValue={(newRarity) => setLocalSyncSettings({
                           ...localSyncSettings,
-                          ms_rarity: updateMultiSelectValue(localSyncSettings.ms_rarity, newRarity, itemRarityValues, 1)
+                          rarity: updateMultiSelectValue(localSyncSettings.rarity, newRarity, itemRarityValues, 1)
                         })}
                         values={itemRarityValues}
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between my-2">
-                    <div className="flex flex-col justify-start">
-                      <p>Default price</p>
-                      <p className="text-xs sm:text-sm italic">(Only for new offers,</p>
-                      <p className="text-xs sm:text-sm italic">will be ingredients of the matching rarity)</p>
+                  <SyncPriceView
+                    type={MARKET_TYPE.SYNC}
+                    prices={prices}
+                    price={localSyncSettings.mainPriceItem}
+                    setPrice={(mainPriceItem) => setLocalSyncSettings({ ...localSyncSettings, mainPriceItem })}
+                    priceAmount={localSyncSettings.mainPriceAmountItem}
+                    setPriceAmount={(mainPriceAmountItem) => setLocalSyncSettings({ ...localSyncSettings, mainPriceAmountItem })}
+                    text="Price #1 for items"
+                    removeButton={false}
+                    excludeIds={
+                      localSyncSettings.secondaryPriceItem ?
+                        [localSyncSettings.secondaryPriceItem.id, ...prices.filter(p => !p.canBeMain).map(p => p.id)] :
+                        prices.filter(p => !p.canBeMain).map(p => p.id)
+                    }
+                  />
+                  {localSyncSettings.secondaryPriceItem &&
+                    <div className="flex justify-center">
+                      <div className="mb-2" style={{ width: '220px' }}>
+                        <p className="mb-1">I want</p>
+                        <Dropdown selectedValue={localSyncSettings.wantsBothItem} setValue={(wantsBothItem) => setLocalSyncSettings({ ...localSyncSettings, wantsBothItem })} values={wantsBothValues} />
+                      </div>
                     </div>
-                    <NumberInput value={localSyncSettings.ms_defaultPriceItem} setValue={(ms_defaultPriceItem) => setLocalSyncSettings({ ...localSyncSettings, ms_defaultPriceItem })} min={1} max={99} />
-                  </div>
-                  <div className="flex justify-between my-2">
-                    <div className="flex flex-col justify-start">
-                      <p>Default price for recipes</p>
-                      <p className="text-xs sm:text-sm italic">(Only for new offers,</p>
-                      <p className="text-xs sm:text-sm italic">will be ingredients of the matching rarity)</p>
+                  }
+                  <SyncPriceView
+                    type={MARKET_TYPE.SYNC}
+                    prices={prices}
+                    price={localSyncSettings.secondaryPriceItem}
+                    setPrice={(secondaryPriceItem) => setLocalSyncSettings({ ...localSyncSettings, secondaryPriceItem })}
+                    priceAmount={localSyncSettings.secondaryPriceAmountItem}
+                    setPriceAmount={(secondaryPriceAmountItem) => setLocalSyncSettings({ ...localSyncSettings, secondaryPriceAmountItem })}
+                    text="Price #2 for items"
+                    removeButton={true}
+                    excludeIds={[localSyncSettings.mainPriceItem.id]}
+                  />
+                  <div className="m-4"></div>
+                  <SyncPriceView
+                    type={MARKET_TYPE.SYNC}
+                    prices={prices}
+                    price={localSyncSettings.mainPriceRecipe}
+                    setPrice={(mainPriceRecipe) => setLocalSyncSettings({ ...localSyncSettings, mainPriceRecipe })}
+                    priceAmount={localSyncSettings.mainPriceAmountRecipe}
+                    setPriceAmount={(mainPriceAmountRecipe) => setLocalSyncSettings({ ...localSyncSettings, mainPriceAmountRecipe })}
+                    text="Price #1 for recipes"
+                    removeButton={false}
+                    excludeIds={
+                      localSyncSettings.secondaryPriceRecipe ?
+                        [localSyncSettings.secondaryPriceRecipe.id, ...prices.filter(p => !p.canBeMain).map(p => p.id)] :
+                        prices.filter(p => !p.canBeMain).map(p => p.id)
+                    }
+                  />
+                  {localSyncSettings.secondaryPriceRecipe &&
+                    <div className="flex justify-center">
+                      <div className="mb-2" style={{ width: '220px' }}>
+                        <p className="mb-1">I want</p>
+                        <Dropdown selectedValue={localSyncSettings.wantsBothRecipe} setValue={(wantsBothRecipe) => setLocalSyncSettings({ ...localSyncSettings, wantsBothRecipe })} values={wantsBothValues} />
+                      </div>
                     </div>
-                    <NumberInput value={localSyncSettings.ms_defaultPriceRecipe} setValue={(ms_defaultPriceRecipe) => setLocalSyncSettings({ ...localSyncSettings, ms_defaultPriceRecipe })} min={1} max={99} />
-                  </div>
+                  }
+                  <SyncPriceView
+                    type={MARKET_TYPE.SYNC}
+                    prices={prices}
+                    price={localSyncSettings.secondaryPriceRecipe}
+                    setPrice={(secondaryPriceRecipe) => setLocalSyncSettings({ ...localSyncSettings, secondaryPriceRecipe })}
+                    priceAmount={localSyncSettings.secondaryPriceAmountRecipe}
+                    setPriceAmount={(secondaryPriceAmountRecipe) => setLocalSyncSettings({ ...localSyncSettings, secondaryPriceAmountRecipe })}
+                    text="Price #2 for recipes"
+                    removeButton={true}
+                    excludeIds={[localSyncSettings.mainPriceRecipe.id]}
+                  />
                   <div className="flex justify-between my-2 align-middle items-center">
                     <p>Amount of each item to keep</p>
-                    <NumberInput value={localSyncSettings.ms_keepItem} setValue={(ms_keepItem) => setLocalSyncSettings({ ...localSyncSettings, ms_keepItem })} min={0} max={99} />
+                    <NumberInput value={localSyncSettings.keepItem} setValue={(keepItem) => setLocalSyncSettings({ ...localSyncSettings, keepItem })} min={0} max={99} />
                   </div>
                   <div className="flex justify-between my-2  items-center">
                     <p>Amount of each recipe to keep</p>
-                    <NumberInput value={localSyncSettings.ms_keepRecipe} setValue={(ms_keepRecipe) => setLocalSyncSettings({ ...localSyncSettings, ms_keepRecipe })} min={0} max={99} />
+                    <NumberInput value={localSyncSettings.keepRecipe} setValue={(keepRecipe) => setLocalSyncSettings({ ...localSyncSettings, keepRecipe })} min={0} max={99} />
                   </div>
                   <div>
-                    <CheckboxInput placeholder="Ignore items in your wish list" value={localSyncSettings.ms_ignoreWishlistItems} setValue={() => setLocalSyncSettings({ ...localSyncSettings, ms_ignoreWishlistItems: !localSyncSettings.ms_ignoreWishlistItems })} />
+                    <CheckboxInput placeholder="Ignore items in your wish list" value={localSyncSettings.ignoreWishlistItems} setValue={() => setLocalSyncSettings({ ...localSyncSettings, ignoreWishlistItems: !localSyncSettings.ignoreWishlistItems })} />
                   </div>
                   <div>
-                    <CheckboxInput placeholder="Delete offers that have 0 items on stock" value={localSyncSettings.ms_removeNoneOnStock} setValue={() => setLocalSyncSettings({ ...localSyncSettings, ms_removeNoneOnStock: !localSyncSettings.ms_removeNoneOnStock })} />
+                    <CheckboxInput placeholder="Delete offers that have 0 items on stock" value={localSyncSettings.removeNoneOnStock} setValue={() => setLocalSyncSettings({ ...localSyncSettings, removeNoneOnStock: !localSyncSettings.removeNoneOnStock })} />
+                  </div>
+                  <div className="flex justify-between">
+                    <p>Ignore list (<span className="font-bold"><span className="text-wt-accent">{localSyncSettings.ignoreList.length}</span> items</span>)</p>
+                    <ActionButton type="info" onClick={() => setIgnoreListDialogOpen(true)}>
+                      Edit
+                    </ActionButton>
                   </div>
                 </div>
               </>

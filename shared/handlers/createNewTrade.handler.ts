@@ -52,11 +52,15 @@ const CreateNewTradeHandler = (type: MARKET_TYPE, addNewTrade: (trade: Offer | W
     const tradeDTO: any = {};
     tradeDTO.itemId = trade.selectedItem.id;
     tradeDTO.mainPriceId = trade.mainPrice.id;
-    tradeDTO.mainPriceAmount = trade.mainPriceAmount;
+    if (trade.mainPrice.withAmount) {
+      tradeDTO.mainPriceAmount = trade.mainPriceAmount;
+    }
     if (trade.secondaryPrice) {
       tradeDTO.wantsBoth = trade.wantsBoth;
       tradeDTO.secondaryPriceId = trade.secondaryPrice.id;
-      tradeDTO.secondaryPriceAmount = trade.secondaryPriceAmount;
+      if (trade.secondaryPrice.withAmount) {
+        tradeDTO.secondaryPriceAmount = trade.secondaryPriceAmount;
+      }
     }
 
     if (type == MARKET_TYPE.OFFER) {

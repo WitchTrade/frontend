@@ -26,7 +26,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
   const [itemFilterValues, setItemFilterValues] = useState<ItemFilterValues>(createDefaultItemFilter(type));
 
   useEffect(() => {
-    if ((!queryLoaded || usernameChanged) && router.isReady && type !== FILTER_TYPE.NEWTRADE) {
+    if ((!queryLoaded || usernameChanged) && router.isReady && type !== FILTER_TYPE.NEWTRADE && type !== FILTER_TYPE.IGNORELIST) {
       const searchString = typeof router.query.searchString === 'string' ? router.query.searchString : '';
       const tradeableOnly = typeof router.query.tradeableOnly === 'string' && router.query.tradeableOnly === 'true' ? true : false;
       const newOnly = typeof router.query.newOnly === 'string' && router.query.newOnly === 'true' ? true : false;
@@ -97,7 +97,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
 
   useEffect(() => {
     filterItems();
-    if (!queryLoaded || type === FILTER_TYPE.NEWTRADE) {
+    if (!queryLoaded || type === FILTER_TYPE.NEWTRADE || type === FILTER_TYPE.IGNORELIST) {
       return;
     }
 
@@ -206,6 +206,9 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
     } else {
       if (type === FILTER_TYPE.NEWTRADE) {
         filteredItems = filteredItems.filter(i => i.tradeable && !trades?.some(t => t.item.id === i.id));
+      }
+      if (type === FILTER_TYPE.IGNORELIST) {
+        filteredItems = filteredItems.filter(i => i.tradeable && i.tagSlot !== 'ingredient');
       }
       filteredItems.sort((a, b) => {
         const key = itemFilterValues.orderBy.key as keyof Item;

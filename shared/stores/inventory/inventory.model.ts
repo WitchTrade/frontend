@@ -6,18 +6,6 @@ export interface Inventory {
   inventoryItems: InventoryItem[];
   showInTrading: boolean;
   automaticSync: boolean;
-  invSyncSetting: InvSyncSetting;
-}
-
-interface InvSyncSetting {
-  syncMarket: boolean;
-  mode: string;
-  defaultPrice: number;
-  defaultRecipePrice: number;
-  rarity: string;
-  keep: number;
-  keepRecipe: number;
-  ignoreWishlistItems: boolean;
 }
 
 interface InventoryItem {
@@ -33,7 +21,6 @@ export function createInventory(params: Partial<Inventory>) {
     inventoryItems: params.inventoryItems ? params.inventoryItems : [],
     showInTrading: params.showInTrading ? params.showInTrading : false,
     automaticSync: params.automaticSync ? params.automaticSync : false,
-    invSyncSetting: params.invSyncSetting ? params.invSyncSetting : null,
   } as Inventory;
 }
 

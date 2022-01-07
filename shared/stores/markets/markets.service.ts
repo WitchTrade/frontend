@@ -176,17 +176,9 @@ export class MarketsService {
       }).pipe(
         tap({
           next: async res => {
-            const json = await res.json();
-            if (res.ok) {
+            if (!res.ok) {
               const notification = createNotification({
-                content: `${json.newOffers} offer${json.newOffers === 1 ? '' : 's'} created, ${json.updatedOffers} updated and ${json.deletedOffers} deleted`,
-                duration: 5000,
-                type: 'success'
-              });
-              notificationService.addNotification(notification);
-            } else {
-              const notification = createNotification({
-                content: json.message,
+                content: res.statusText,
                 duration: 5000,
                 type: 'error'
               });

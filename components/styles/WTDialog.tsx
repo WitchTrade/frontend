@@ -19,7 +19,7 @@ const WTDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, closeOn
       <Transition appear show={dialogOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-50 overflow-y-auto"
+          className="fixed inset-0 z-40 overflow-y-auto"
           onClose={() => {
             if (closeOnOutsideClick) {
               closeModal();

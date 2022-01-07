@@ -2,7 +2,9 @@ export interface Price {
   id: number;
   priceKey: string;
   displayName: string;
+  withAmount: number;
   forOffers: boolean;
   forWishes: boolean;
-  withAmount: number;
+  forSync: boolean;
+  canBeMain: boolean;
 }

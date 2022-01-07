@@ -26,7 +26,7 @@ const AdminFilterHandler = (itemsToLoad: number) => {
 
   const filterAdminUsers = () => {
     let filteredItems = adminUsers.filter((adminUser) => {
-      const searchString = adminUser.username.toLowerCase().includes(adminFilterValues.searchString.toLowerCase());
+      const searchString = adminUser.username.toLowerCase().includes(adminFilterValues.searchString.toLowerCase()) || adminUser.displayName.toLowerCase().includes(adminFilterValues.searchString.toLowerCase());
 
       const verified = adminFilterValues.verified.key !== 'any' ? (adminUser.verified && adminFilterValues.verified.key === 'verified') || (!adminUser.verified && adminFilterValues.verified.key === 'notverified') : true;
       const badge = adminFilterValues.badge.key !== 'any' ? adminUser.badges.some(b => b.id === adminFilterValues.badge.key) : true;

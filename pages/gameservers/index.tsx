@@ -54,7 +54,6 @@ const Gameservers: NextPage = () => {
               <ActionButton type="success" onClick={() => {
                 if (dialogName) {
                   addPlayer(dialogName);
-                  setDialogName('');
                 }
               }}>
                 Add player
@@ -111,7 +110,7 @@ const Gameservers: NextPage = () => {
                   </div>
                 </div>
                 {show &&
-                  <div ref={nodeRef} className="absolute top-8 left-0 bg-wt-surface-dark rounded-b-md border-l-2 border-b-2 border-r-2 border-wt-accent-light z-50 p-2 px-3 w-full overflow-y-auto" style={{ maxHeight: '400px' }}>
+                  <div ref={nodeRef} className="absolute top-8 left-0 bg-wt-surface-dark rounded-b-md border-l-2 border-b-2 border-r-2 border-wt-accent-light z-40 p-2 px-3 w-full overflow-y-auto" style={{ maxHeight: '400px' }}>
                     <div className="mx-5 my-1">
                       <Divider />
                     </div>
