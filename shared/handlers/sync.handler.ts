@@ -5,6 +5,7 @@ import { wantsBothValues } from '../../components/market/CreateNewTrade';
 import { DropdownValue } from '../../components/styles/Dropdown';
 import { InventoryChangeDTO } from '../stores/inventory/inventory.model';
 import { inventoryService } from '../stores/inventory/inventory.service';
+import { Item } from '../stores/items/item.model';
 import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
 import { pricesStore } from '../stores/prices/prices.store';
@@ -127,7 +128,7 @@ const useSyncSettingsHandler = () => {
       keepRecipe: syncSettings.keepRecipe,
       ignoreWishlistItems: syncSettings.ignoreWishlistItems,
       removeNoneOnStock: syncSettings.removeNoneOnStock,
-      ignoreList: syncSettings.ignoreList,
+      ignoreList: [...syncSettings.ignoreList],
     });
   }, [syncSettings]);
 
@@ -159,7 +160,7 @@ const useSyncSettingsHandler = () => {
       localSyncSettings.keepRecipe !== syncSettings.keepRecipe ||
       localSyncSettings.ignoreWishlistItems !== syncSettings.ignoreWishlistItems ||
       localSyncSettings.removeNoneOnStock !== syncSettings.removeNoneOnStock ||
-      localSyncSettings.ignoreList !== syncSettings.ignoreList
+      !equalIgnoreLists(localSyncSettings.ignoreList, syncSettings.ignoreList)
     ) {
       setUnsavedSettings(true);
     } else {
@@ -233,6 +234,21 @@ const useSyncSettingsHandler = () => {
         setUnsavedSettings(false);
       }
     });
+  };
+
+  const equalIgnoreLists = (a: Item[], b: Item[]) => {
+    if (a.length !== b.length) {
+      return false;
+    }
+    const aIds = a.map(i => i.id);
+    const bIds = b.map(i => i.id);
+    let idsMatching = true;
+    aIds.forEach(aId => {
+      if (!bIds.includes(aId)) {
+        idsMatching = false;
+      }
+    });
+    return idsMatching;
   };
 
   return {

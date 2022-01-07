@@ -3,7 +3,8 @@ import { DropdownValue } from '../../components/styles/Dropdown';
 export enum FILTER_TYPE {
   ITEM,
   MARKET,
-  NEWTRADE
+  NEWTRADE,
+  IGNORELIST
 }
 
 export interface ItemFilterValues {
@@ -58,6 +59,20 @@ export const itemCharacterValues: DropdownValue[] = [
 
 export const itemSlotValues: DropdownValue[] = [
   { id: 1, key: 'ingredient', displayName: 'Ingredient', imagePath: '/assets/images/slotIcons/ingredient.png' },
+  { id: 12, key: 'recipe', displayName: 'Recipe', imagePath: '/assets/images/slotIcons/recipe.png' },
+  { id: 2, key: 'body', displayName: 'Body', imagePath: '/assets/images/slotIcons/body.png' },
+  { id: 11, key: 'broom', displayName: 'Broom', imagePath: '/assets/images/slotIcons/broom.png' },
+  { id: 3, key: 'hat', displayName: 'Hat', imagePath: '/assets/images/slotIcons/hat.png' },
+  { id: 4, key: 'head', displayName: 'Head', imagePath: '/assets/images/slotIcons/head.png' },
+  { id: 8, key: 'lower body', displayName: 'Lower Body', imagePath: '/assets/images/slotIcons/lowerbody.png' },
+  { id: 9, key: 'melee weapon', displayName: 'Melee Weapon', imagePath: '/assets/images/slotIcons/melee.png' },
+  { id: 6, key: 'player icon', displayName: 'Player Icon', imagePath: '/assets/images/slotIcons/playericon.png' },
+  { id: 10, key: 'projectile', displayName: 'Projectile', imagePath: '/assets/images/slotIcons/projectile.png' },
+  { id: 5, key: 'skin color', displayName: 'Skin Color', imagePath: '/assets/images/slotIcons/skincolor.png' },
+  { id: 7, key: 'upper body', displayName: 'Upper Body', imagePath: '/assets/images/slotIcons/upperbody.png' },
+];
+
+export const ignoreListItemSlotValues: DropdownValue[] = [
   { id: 12, key: 'recipe', displayName: 'Recipe', imagePath: '/assets/images/slotIcons/recipe.png' },
   { id: 2, key: 'body', displayName: 'Body', imagePath: '/assets/images/slotIcons/body.png' },
   { id: 11, key: 'broom', displayName: 'Broom', imagePath: '/assets/images/slotIcons/broom.png' },

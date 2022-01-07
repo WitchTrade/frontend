@@ -24,7 +24,7 @@ const IgnoreListDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen,
     hasMoreItems,
     itemFilterValues,
     setItemFilterValues
-  } = FilterHandler(FILTER_TYPE.NEWTRADE, 100);
+  } = FilterHandler(FILTER_TYPE.IGNORELIST, 100);
 
   return (
     <WTDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} closeOnOutsideClick={true}>
@@ -32,16 +32,17 @@ const IgnoreListDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen,
         <p className="text-center text-xl">Select items to ignore when syncing offers</p>
         <div className="flex flex-wrap">
           <div className="w-full sm:w-1/2 overflow-auto my-1 border border-wt-accent rounded-lg" style={{ maxHeight: '384px' }}>
-            <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} initialOpen={true} type={FILTER_TYPE.NEWTRADE} />
+            <ItemFilter itemFilterValues={itemFilterValues} setItemFilterValues={setItemFilterValues} initialOpen={true} type={FILTER_TYPE.IGNORELIST} />
           </div>
-          <div id="itemScroll" className="w-full sm:w-1/2 overflow-auto" style={{ maxHeight: '384px' }}>
+          <div className="w-full sm:w-1/2">
             <InfiniteScroll
               className="flex flex-row flex-wrap justify-center py-2 h-full"
               dataLength={loadedItems.length}
               next={loadMoreItems}
               hasMore={hasMoreItems()}
               loader={<p></p>}
-              scrollableTarget="itemScroll"
+              height="full"
+              style={{ maxHeight: '384px' }}
             >
               {loadedItems.map((item, i) => (
                 <SmallItemView key={i} item={item} inventory={inventory} selectItem={(selectedItem: Item) => {
