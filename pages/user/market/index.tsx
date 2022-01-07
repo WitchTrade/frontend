@@ -134,7 +134,7 @@ const Market: NextPage = () => {
             }
           </div>
           <div className="flex flex-wrap justify-center mt-10">
-            {type === MARKET_TYPE.WISH || !newOfferView &&
+            {(type === MARKET_TYPE.WISH || !newOfferView) &&
             <div className="m-1">
               <ActionButton type="success" onClick={() => setCreatingNew(true)}>
                 <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
