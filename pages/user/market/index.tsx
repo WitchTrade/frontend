@@ -134,7 +134,7 @@ const Market: NextPage = () => {
               ||
               <div className="w-full px-3 py-1 text-base placeholder-wt-text rounded-lg bg-wt-surface-dark" style={{ minHeight: '34px' }}>
                 <ReactMarkdown
-                className="markdown-content whitespace-pre-line break-words"
+                className="markdown-content break-words"
                 components={MarkdownComponents}
                 >{localNote ? localNote : `No ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note set.`}</ReactMarkdown>
               </div>
