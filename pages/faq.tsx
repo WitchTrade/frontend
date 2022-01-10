@@ -16,7 +16,92 @@ const FAQ: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Frequenty asked questions (FAQ)</Title>
         </div>
-        <div className="mb-2">
+        <div id="markdown" className="mb-2">
+          <Title level={2}>Market description syntax</Title>
+        </div>
+        <Section>
+          The market descriptions use a subset of the Markdown markup language to allow users to format their text.
+        </Section>
+        <Title level={4}>Available syntax</Title>
+        <div className="flex justify-center">
+          <div className="max-w-2xl flex-1">
+            <table className="min-w-full">
+              <tr className="bg-wt-accent">
+                <th className="rounded-tl-lg">Name</th>
+                <th>Example</th>
+                <th className="rounded-tr-lg">Result</th>
+              </tr>
+              <tr className="border-b">
+                <td>Heading 1</td>
+                <td># Title</td>
+                <td><h1 className="text-2xl font-bold">Title</h1></td>
+              </tr>
+              <tr className="border-b">
+                <td>Heading 2</td>
+                <td># Title</td>
+                <td><h2 className="text-xl font-bold">Title</h2></td>
+              </tr>
+              <tr className="border-b">
+                <td>Heading 3</td>
+                <td># Title</td>
+                <td><h3 className="text-lg font-bold">Title</h3></td>
+              </tr>
+              <tr className="border-b">
+                <td>Bold</td>
+                <td>**bold text**</td>
+                <td><b>bold text</b></td>
+              </tr>
+              <tr className="border-b">
+                <td>Italic</td>
+                <td>*italicized text*</td>
+                <td><em>italicized text</em></td>
+              </tr>
+              <tr className="border-b">
+                <td>Blockquote</td>
+                <td>&gt; blockquote</td>
+                <td><blockquote className="border-l-4 border-wt-accent pl-1">blockquote</blockquote></td>
+              </tr>
+              <tr className="border-b">
+                <td>Ordered list</td>
+                <td>1. first<br />2. second<br />3. third</td>
+                <td>
+                  <ol className="list-decimal ml-4">
+                    <li>first</li>
+                    <li>second</li>
+                    <li>third</li>
+                  </ol>
+                </td>
+              </tr>
+              <tr className="border-b">
+                <td>Unordered list</td>
+                <td>- first<br />- second<br />- third</td>
+                <td>
+                  <ul className="list-disc ml-4">
+                    <li>first</li>
+                    <li>second</li>
+                    <li>third</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr className="border-b">
+                <td>Code</td>
+                <td>`code`</td>
+                <td><code>code</code></td>
+              </tr>
+              <tr className="border-b">
+                <td>Horizontal Rule</td>
+                <td>---</td>
+                <td><hr className="border-t border-wt-accent pl-1" /></td>
+              </tr>
+              <tr className="border-b">
+                <td>Centered text<br />(Works for every heading and default text)</td>
+                <td>[c]centered text<br />## [c]Title</td>
+                <td><p className="text-center">centered text</p><br /><h2 className="text-xl font-bold text-center">Title</h2></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div id="verification" className="mb-2">
           <Title level={2}>Profile verification</Title>
         </div>
         <Title level={4}>What are the benefits of being verified?</Title>

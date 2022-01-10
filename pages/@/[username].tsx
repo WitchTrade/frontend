@@ -4,6 +4,7 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/dist/client/router';
 import { firstValueFrom } from 'rxjs';
+import ReactMarkdown from 'react-markdown';
 import CustomHeader from '../../components/core/CustomHeader';
 import { createMarket, Market } from '../../shared/stores/markets/market.model';
 import { createUserInfo, UserInfo } from '../../shared/stores/user/user.model';
@@ -22,6 +23,7 @@ import Verified from '../../components/styles/VerifiedSvg';
 import { useObservable } from '@ngneat/react-rxjs';
 import { themeStore } from '../../shared/stores/theme/theme.store';
 import { FILTER_TYPE } from '../../shared/static/filterValues';
+import { MarkdownComponents } from '../../shared/static/markdownComponents';
 
 interface Props {
   profile: UserInfo;
@@ -193,7 +195,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
             {((type === MARKET_TYPE.OFFER && market.offerlistNote) || (type === MARKET_TYPE.WISH && market.wishlistNote)) &&
               <div className="rounded-lg bg-wt-surface-dark mt-2 border-2 border-wt-accent p-1">
                 <p className="text-2xl font-bold text-center">{type === MARKET_TYPE.OFFER ? 'Offerlist note' : 'Wishlist note'}</p>
-                <p className="text-center whitespace-pre-line break-words">{type === MARKET_TYPE.OFFER ? market.offerlistNote : market.wishlistNote}</p>
+                <ReactMarkdown className="markdown-content whitespace-pre-line break-words" components={MarkdownComponents}>{type === MARKET_TYPE.OFFER ? market.offerlistNote : market.wishlistNote}</ReactMarkdown>
               </div>
             }
           </div>

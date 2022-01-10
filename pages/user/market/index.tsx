@@ -1,6 +1,7 @@
 import { NextPage } from 'next';
 import { useState } from 'react';
 import Image from 'next/image';
+import ReactMarkdown from 'react-markdown';
 import LoginWrapper from '../../../components/core/LoginWrapper';
 import CustomHeader from '../../../components/core/CustomHeader';
 import PageHeader from '../../../components/styles/PageHeader';
@@ -19,6 +20,8 @@ import SyncOffersDialog from '../../../components/market/SyncOffersDialog';
 import ItemDetailDialog from '../../../components/items/ItemDetailDialog';
 import ItemsHandler from '../../../shared/handlers/items.handler';
 import { FILTER_TYPE } from '../../../shared/static/filterValues';
+import { MarkdownComponents } from '../../../shared/static/markdownComponents';
+import Link from 'next/link';
 
 const Market: NextPage = () => {
 
@@ -126,10 +129,14 @@ const Market: NextPage = () => {
                 <Textarea placeholder={`Enter your ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note`} value={localNote} setValue={setLocalNote} rows={6} />
                 <p className={`text-sm ${localNote.length > 200 ? 'text-wt-error' : ''}`}>{localNote.length}/200 characters</p>
                 <p className={`text-sm ${(localNote.match(/\n/g) || []).length + 1 > 10 ? 'text-wt-error' : ''}`}>{(localNote.match(/\n/g) || []).length + 1}/10 lines</p>
+                <p className="text-sm">Need help formatting your description? Check the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link></p>
               </>
               ||
               <div className="w-full px-3 py-1 text-base placeholder-wt-text rounded-lg bg-wt-surface-dark" style={{ minHeight: '34px' }}>
-                <p className={`whitespace-pre-line break-words ${localNote ? 'text-center' : 'italic'}`}>{localNote ? localNote : `No ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note set.`} </p>
+                <ReactMarkdown
+                className="markdown-content whitespace-pre-line break-words"
+                components={MarkdownComponents}
+                >{localNote ? localNote : `No ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note set.`}</ReactMarkdown>
               </div>
             }
           </div>

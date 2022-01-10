@@ -15,6 +15,11 @@ const Changelog: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={4}>Version 1.1.1 (11.01.2022)</Title>
+        <p><b>Added:</b></p>
+        <ul className="list-disc pl-8">
+          <li>Markdown markup language support for market descriptions. Check out the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link>.</li>
+        </ul>
         <Title level={4}>Version 1.1.0 (07.01.2022)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">

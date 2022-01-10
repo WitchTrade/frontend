@@ -1,6 +1,6 @@
 {
   "name": "witchtrade-fe",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "A Witch It trading website.",
   "license": "GPLv3",
@@ -24,6 +24,7 @@
     "react-colorful": "^5.5.1",
     "react-dom": "17.0.2",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-markdown": "^7.1.2",
     "rxjs": "^7.5.1",
     "sass": "^1.46.0",
     "sharp": "^0.29.3"
