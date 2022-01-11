@@ -38,12 +38,12 @@ const FAQ: NextPage = () => {
               </tr>
               <tr className="border-b">
                 <td>Heading 2</td>
-                <td># Title</td>
+                <td>## Title</td>
                 <td><h2 className="text-xl font-bold">Title</h2></td>
               </tr>
               <tr className="border-b">
                 <td>Heading 3</td>
-                <td># Title</td>
+                <td>### Title</td>
                 <td><h3 className="text-lg font-bold">Title</h3></td>
               </tr>
               <tr className="border-b">
