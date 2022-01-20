@@ -1,10 +1,24 @@
 import type { NextPage } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import CustomHeader from '../components/core/CustomHeader';
 import Section from '../components/text/Section';
 import Title from '../components/text/Title';
+import { createNotification } from '../shared/stores/notification/notification.model';
+import { notificationService } from '../shared/stores/notification/notification.service';
 
 const FAQ: NextPage = () => {
+
+  const copyEmote = (emote: string) => {
+    navigator.clipboard.writeText(emote);
+    const notification = createNotification({
+      content: `${emote} copied to clipboard`,
+      duration: 5000,
+      type: 'success'
+    });
+    notificationService.addNotification(notification);
+  };
+
   return (
     <>
       <CustomHeader
@@ -22,7 +36,7 @@ const FAQ: NextPage = () => {
         <Section>
           The market descriptions use a subset of the Markdown markup language to allow users to format their text.
         </Section>
-        <Title level={4}>Available syntax</Title>
+        <Title level={3}>Available syntax</Title>
         <div className="flex justify-center">
           <div className="max-w-2xl flex-1">
             <table className="min-w-full">
@@ -97,6 +111,95 @@ const FAQ: NextPage = () => {
                 <td>Centered text<br />(Works for every heading and default text)</td>
                 <td>[c]centered text<br />## [c]Title</td>
                 <td><p className="text-center">centered text</p><br /><h2 className="text-xl font-bold text-center">Title</h2></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <Title level={3}>Available emotes</Title>
+        <div className="flex justify-center">
+          <div className="max-w-2xl flex-1">
+            <table className="min-w-full">
+              <tr className="bg-wt-accent">
+                <th className="rounded-tl-lg">Syntax</th>
+                <th className="rounded-tr-lg">Emote</th>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':witchtrade:')}>:witchtrade:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/witchtrade.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':piggy:')}>:piggy:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/piggy.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':sheep:')}>:sheep:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/sheep.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':chicken:')}>:chicken:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/chicken.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':thl:')}>:thl:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/thl.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="h-6"></tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':fingernails:')}>:fingernails:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/fingernails.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':mouse_poop:')}>:mouse_poop:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/mouse_poop.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':troll_eyes:')}>:troll_eyes:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/troll_eyes.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':mandrake:')}>:mandrake:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/mandrake.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':crystallized_moonlight:')}>:crystallized_moonlight:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/crystallized_moonlight.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="h-6"></tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':odd_mushroom:')}>:odd_mushroom:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/odd_mushroom.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':rusty_nails:')}>:rusty_nails:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/rusty_nails.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':shell:')}>:shell:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/shell.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':ectoplasm:')}>:ectoplasm:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/ectoplasm.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':red_string:')}>:red_string:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/red_string.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':coin:')}>:coin:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/coin.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':candy_cane:')}>:candy_cane:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/candy_cane.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':morgaryll_flower:')}>:morgaryll_flower:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/morgaryll_flower.png" height={24} width={24} /></span></td>
+              </tr>
+              <tr className="border-b text-center">
+                <td className="hover:underline text-wt-accent cursor-pointer" onClick={() => copyEmote(':scarab:')}>:scarab:</td>
+                <td><span className="emoteWrapper"><Image src="/assets/images/emotes/scarab.png" height={24} width={24} /></span></td>
               </tr>
             </table>
           </div>

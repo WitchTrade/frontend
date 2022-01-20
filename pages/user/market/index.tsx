@@ -20,7 +20,7 @@ import SyncOffersDialog from '../../../components/market/SyncOffersDialog';
 import ItemDetailDialog from '../../../components/items/ItemDetailDialog';
 import ItemsHandler from '../../../shared/handlers/items.handler';
 import { FILTER_TYPE } from '../../../shared/static/filterValues';
-import { MarkdownComponents } from '../../../shared/static/markdownComponents';
+import { emojified, MarkdownComponents } from '../../../shared/static/markdownComponents';
 import Link from 'next/link';
 
 const Market: NextPage = () => {
@@ -134,20 +134,20 @@ const Market: NextPage = () => {
               ||
               <div className="w-full px-3 py-1 text-base placeholder-wt-text rounded-lg bg-wt-surface-dark" style={{ minHeight: '34px' }}>
                 <ReactMarkdown
-                className="markdown-content break-words"
-                components={MarkdownComponents}
-                >{localNote ? localNote : `No ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note set.`}</ReactMarkdown>
+                  className="markdown-content break-words"
+                  components={MarkdownComponents}
+                >{localNote ? emojified(localNote) : `No ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note set.`}</ReactMarkdown>
               </div>
             }
           </div>
           <div className="flex flex-wrap justify-center mt-10">
             {(type === MARKET_TYPE.WISH || !newOfferView) &&
-            <div className="m-1">
-              <ActionButton type="success" onClick={() => setCreatingNew(true)}>
-                <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
-                New {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
-              </ActionButton>
-            </div>
+              <div className="m-1">
+                <ActionButton type="success" onClick={() => setCreatingNew(true)}>
+                  <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
+                  New {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
+                </ActionButton>
+              </div>
             }
             {type === MARKET_TYPE.OFFER && !newOfferView &&
               <div className="m-1">
