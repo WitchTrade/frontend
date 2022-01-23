@@ -23,7 +23,7 @@ const Changelog: NextPage = () => {
         </ul>
         <p><b>Changes:</b></p>
         <ul className="list-disc pl-8">
-          <li>Updated max description length to 300 characters.</li>
+          <li>Updated max description length to 250 characters.</li>
         </ul>
         <Title level={4}>Version 1.1.1 (11.01.2022)</Title>
         <p><b>Added:</b></p>
