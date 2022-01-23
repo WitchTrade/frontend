@@ -110,7 +110,7 @@ const Market: NextPage = () => {
               {editingNote &&
                 <div className="flex">
                   <div className="mx-1">
-                    <ActionButton type="success" disabled={localNote.length > 200 || (localNote.match(/\n/g) || []).length + 1 > 10} onClick={() => updateNote()}>Save</ActionButton>
+                    <ActionButton type="success" disabled={localNote.length > 300 || (localNote.match(/\n/g) || []).length + 1 > 10} onClick={() => updateNote()}>Save</ActionButton>
                   </div>
                   <div className="mx-1">
                     <ActionButton type="cancel" onClick={() => { setLocalNote(type === MARKET_TYPE.OFFER && market.offerlistNote ? market.offerlistNote : type === MARKET_TYPE.WISH && market.wishlistNote ? market.wishlistNote : ''); setEditingNote(false); }}>Cancel</ActionButton>
@@ -127,7 +127,7 @@ const Market: NextPage = () => {
             {editingNote &&
               <>
                 <Textarea placeholder={`Enter your ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note`} value={localNote} setValue={setLocalNote} rows={6} />
-                <p className={`text-sm ${localNote.length > 200 ? 'text-wt-error' : ''}`}>{localNote.length}/200 characters</p>
+                <p className={`text-sm ${localNote.length > 300 ? 'text-wt-error' : ''}`}>{localNote.length}/300 characters</p>
                 <p className={`text-sm ${(localNote.match(/\n/g) || []).length + 1 > 10 ? 'text-wt-error' : ''}`}>{(localNote.match(/\n/g) || []).length + 1}/10 lines</p>
                 <p className="text-sm">Need help formatting your description? Check the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link></p>
               </>
