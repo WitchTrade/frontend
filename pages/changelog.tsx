@@ -15,6 +15,16 @@ const Changelog: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={4}>Version 1.1.2 (24.01.2022)</Title>
+        <p><b>Added:</b></p>
+        <ul className="list-disc pl-8">
+          <li>Emotes for the market descriptions. Check out the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link>.</li>
+          <li>Moderator badge</li>
+        </ul>
+        <p><b>Changes:</b></p>
+        <ul className="list-disc pl-8">
+          <li>Updated max description length to 300 characters.</li>
+        </ul>
         <Title level={4}>Version 1.1.1 (11.01.2022)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">

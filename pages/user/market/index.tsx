@@ -20,7 +20,7 @@ import SyncOffersDialog from '../../../components/market/SyncOffersDialog';
 import ItemDetailDialog from '../../../components/items/ItemDetailDialog';
 import ItemsHandler from '../../../shared/handlers/items.handler';
 import { FILTER_TYPE } from '../../../shared/static/filterValues';
-import { MarkdownComponents } from '../../../shared/static/markdownComponents';
+import { emojified, MarkdownComponents } from '../../../shared/static/markdownComponents';
 import Link from 'next/link';
 
 const Market: NextPage = () => {
@@ -110,7 +110,7 @@ const Market: NextPage = () => {
               {editingNote &&
                 <div className="flex">
                   <div className="mx-1">
-                    <ActionButton type="success" disabled={localNote.length > 200 || (localNote.match(/\n/g) || []).length + 1 > 10} onClick={() => updateNote()}>Save</ActionButton>
+                    <ActionButton type="success" disabled={localNote.length > 300 || (localNote.match(/\n/g) || []).length + 1 > 10} onClick={() => updateNote()}>Save</ActionButton>
                   </div>
                   <div className="mx-1">
                     <ActionButton type="cancel" onClick={() => { setLocalNote(type === MARKET_TYPE.OFFER && market.offerlistNote ? market.offerlistNote : type === MARKET_TYPE.WISH && market.wishlistNote ? market.wishlistNote : ''); setEditingNote(false); }}>Cancel</ActionButton>
@@ -127,27 +127,27 @@ const Market: NextPage = () => {
             {editingNote &&
               <>
                 <Textarea placeholder={`Enter your ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note`} value={localNote} setValue={setLocalNote} rows={6} />
-                <p className={`text-sm ${localNote.length > 200 ? 'text-wt-error' : ''}`}>{localNote.length}/200 characters</p>
+                <p className={`text-sm ${localNote.length > 300 ? 'text-wt-error' : ''}`}>{localNote.length}/300 characters</p>
                 <p className={`text-sm ${(localNote.match(/\n/g) || []).length + 1 > 10 ? 'text-wt-error' : ''}`}>{(localNote.match(/\n/g) || []).length + 1}/10 lines</p>
                 <p className="text-sm">Need help formatting your description? Check the <Link href="/faq"><a className="hover:underline text-wt-accent cursor-pointer">FAQ</a></Link></p>
               </>
               ||
               <div className="w-full px-3 py-1 text-base placeholder-wt-text rounded-lg bg-wt-surface-dark" style={{ minHeight: '34px' }}>
                 <ReactMarkdown
-                className="markdown-content break-words"
-                components={MarkdownComponents}
-                >{localNote ? localNote : `No ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note set.`}</ReactMarkdown>
+                  className="markdown-content break-words"
+                  components={MarkdownComponents}
+                >{localNote ? emojified(localNote) : `No ${type === MARKET_TYPE.OFFER ? 'offerlist' : 'wishlist'} note set.`}</ReactMarkdown>
               </div>
             }
           </div>
           <div className="flex flex-wrap justify-center mt-10">
             {(type === MARKET_TYPE.WISH || !newOfferView) &&
-            <div className="m-1">
-              <ActionButton type="success" onClick={() => setCreatingNew(true)}>
-                <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
-                New {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
-              </ActionButton>
-            </div>
+              <div className="m-1">
+                <ActionButton type="success" onClick={() => setCreatingNew(true)}>
+                  <Image src="/assets/svgs/add/white.svg" height="24px" width="24px" alt="Add player" />
+                  New {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
+                </ActionButton>
+              </div>
             }
             {type === MARKET_TYPE.OFFER && !newOfferView &&
               <div className="m-1">

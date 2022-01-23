@@ -23,7 +23,7 @@ import Verified from '../../components/styles/VerifiedSvg';
 import { useObservable } from '@ngneat/react-rxjs';
 import { themeStore } from '../../shared/stores/theme/theme.store';
 import { FILTER_TYPE } from '../../shared/static/filterValues';
-import { MarkdownComponents } from '../../shared/static/markdownComponents';
+import { emojified, MarkdownComponents } from '../../shared/static/markdownComponents';
 
 interface Props {
   profile: UserInfo;
@@ -194,7 +194,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
             <MarketNav market={market} type={type} setType={setType} />
             {((type === MARKET_TYPE.OFFER && market.offerlistNote) || (type === MARKET_TYPE.WISH && market.wishlistNote)) &&
               <div className="rounded-lg bg-wt-surface-dark mt-2 border-2 border-wt-accent p-1">
-                <ReactMarkdown className="markdown-content break-words" components={MarkdownComponents}>{type === MARKET_TYPE.OFFER ? market.offerlistNote : market.wishlistNote}</ReactMarkdown>
+                <ReactMarkdown className="markdown-content break-words" components={MarkdownComponents}>{type === MARKET_TYPE.OFFER ? emojified(market.offerlistNote) : emojified(market.wishlistNote)}</ReactMarkdown>
               </div>
             }
           </div>
