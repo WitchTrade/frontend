@@ -37,5 +37,6 @@ export const badgeValues: DropdownValue[] = [
   { key: 'beta', displayName: 'Beta User', imagePath: '/assets/svgs/badges/beta.svg' },
   { key: 'developer', displayName: 'Developer', imagePath: '/assets/svgs/badges/developer.svg' },
   { key: 'earlybird', displayName: 'Early Bird', imagePath: '/assets/svgs/badges/earlybird.svg' },
+  { key: 'moderator', displayName: 'Moderator', imagePath: '/assets/svgs/badges/moderator.svg' },
   { key: 'inspirational_witch', displayName: 'Inspirational Witch', imagePath: '/assets/svgs/badges/inspirational_witch.svg' }
 ];
