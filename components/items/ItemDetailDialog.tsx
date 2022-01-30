@@ -67,7 +67,7 @@ const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen,
   return (
     <WTDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} closeOnOutsideClick={true}>
       {item &&
-        <div className="inline-block max-w-lg p-6 overflow-auto text-center align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4" style={{ borderColor: `#${item.rarityColor}`, borderWidth: '6px', width: '512px' }}>
+        <div className="inline-block max-w-lg px-1 py-6 overflow-auto text-center align-middle transition-all transform bg-wt-surface-dark shadow-xl rounded-2xl border-4" style={{ borderColor: `#${item.rarityColor}`, borderWidth: '6px', width: '512px' }}>
           <div className="h-full flex flex-col justify-between">
             <p className="text-2xl font-bold mb-4">{item.name}</p>
             <div className="w-80 h-80 self-center">
