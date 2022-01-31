@@ -15,6 +15,11 @@ const Changelog: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={4}>Version 1.1.3 (01.02.2022)</Title>
+        <p><b>Added:</b></p>
+        <ul className="list-disc pl-8">
+          <li>Completionist badges</li>
+        </ul>
         <Title level={4}>Version 1.1.2 (24.01.2022)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">
