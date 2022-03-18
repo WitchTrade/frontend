@@ -3,7 +3,6 @@ import { selectAllEntities } from '@ngneat/elf-entities';
 import { serverNotificationStore } from '../../shared/stores/serverNotification/server-notification.store';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
-import Script from 'next/script';
 import { Transition } from '@headlessui/react';
 import dayjs from 'dayjs';
 import { useObservable } from '@ngneat/react-rxjs';
@@ -64,11 +63,7 @@ const Navbar: FunctionComponent = () => {
 
   return (
     <div>
-      <Script src="https://cdn.jsdelivr.net/npm/@erikwatson/snowfall/dist/snowfall.min.js" />
-      <Script src="/assets/snowflakes.js" />
-      <div id="snow-container" className="bg-wt-surface-dark z-30" style={{ height: '64px', width: '100%', position: 'fixed', top: 0 }}>
-      </div>
-      <nav className="text-wt-text fixed top-0 w-full z-40">
+      <nav className="bg-wt-surface-dark text-wt-text fixed top-0 w-full z-40">
         <>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between h-16">
@@ -76,12 +71,7 @@ const Navbar: FunctionComponent = () => {
                 <div className="flex-shrink-0">
                   <Link href="/">
                     <a>
-                      <div className="relative">
-                        <p className="font-bold text-3xl"><span className="text-wt-accent">Witch</span>Trade</p>
-                        <div className="absolute -top-5 -left-4">
-                          <Image className="pixelImage" src={`/assets/images/christmasHat.png`} height={44} width={44} quality={100} alt="Christmas Hat" />
-                        </div>
-                      </div>
+                      <p className="font-bold text-3xl"><span className="text-wt-accent">Witch</span>Trade</p>
                     </a>
                   </Link>
                 </div>
@@ -254,7 +244,7 @@ const Navbar: FunctionComponent = () => {
             </div>
           </div>
 
-          <div className="md:hidden bg-wt-surface-dark" ref={hamburgerMenuRef}>
+          <div className="md:hidden" ref={hamburgerMenuRef}>
             <Transition
               show={showhamburgerMenu}
               as="div"
