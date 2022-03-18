@@ -1,4 +1,4 @@
-import { selectAll } from '@ngneat/elf-entities';
+import { selectAllEntities } from '@ngneat/elf-entities';
 import { useObservable } from '@ngneat/react-rxjs';
 import { useEffect, useState } from 'react';
 import { wantsBothValues } from '../../components/market/CreateNewTrade';
@@ -66,7 +66,7 @@ export const getRarityNumber = (rarityStrings: string[]): number => {
 
 const useSyncSettingsHandler = () => {
   const [syncSettings] = useObservable(syncSettingsStore);
-  const [prices] = useObservable(pricesStore.pipe(selectAll()));
+  const [prices] = useObservable(pricesStore.pipe(selectAllEntities()));
 
   const [invLoading, setInvLoading] = useState(false);
   const [ignoreListDialogOpen, setIgnoreListDialogOpen] = useState(false);

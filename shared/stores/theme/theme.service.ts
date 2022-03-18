@@ -1,4 +1,4 @@
-import { getEntities, setEntities } from '@ngneat/elf-entities';
+import { getAllEntities, setEntities } from '@ngneat/elf-entities';
 import { Theme } from './theme.model';
 import { allThemesStore, officialThemes, themeStore } from './theme.store';
 
@@ -13,7 +13,7 @@ class ThemeService {
       storageTheme = themeStore.getValue().key;
     }
 
-    let theme = allThemesStore.query(getEntities()).find(theme => theme.key === storageTheme) as Theme;
+    let theme = allThemesStore.query(getAllEntities()).find(theme => theme.key === storageTheme) as Theme;
 
     if (!theme) {
       return;

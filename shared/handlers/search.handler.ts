@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
-import { selectAll } from '@ngneat/elf-entities';
+import { selectAllEntities } from '@ngneat/elf-entities';
 import { useObservable } from '@ngneat/react-rxjs';
 import { getItemRarities, itemsStore } from '../stores/items/items.store';
 import { Item } from '../stores/items/item.model';
@@ -94,8 +94,8 @@ const SearchHandler = () => {
 
   const [inventory] = useObservable(inventoryStore);
 
-  const [items] = useObservable(itemsStore.pipe(selectAll()));
-  const [prices] = useObservable(pricesStore.pipe(selectAll()));
+  const [items] = useObservable(itemsStore.pipe(selectAllEntities()));
+  const [prices] = useObservable(pricesStore.pipe(selectAllEntities()));
 
   const [searchView, setSearchView] = useState(SEARCH_VIEW.OFFERS);
 

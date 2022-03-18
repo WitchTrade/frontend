@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { tap } from 'rxjs';
-import { selectAll } from '@ngneat/elf-entities';
+import { selectAllEntities } from '@ngneat/elf-entities';
 import { useObservable } from '@ngneat/react-rxjs';
 import { Item } from '../stores/items/item.model';
 import { AdminUser } from '../stores/admin/admin.model';
@@ -9,7 +9,7 @@ import { AdminFilterValues, createDefaultAdminFilter } from '../static/adminFilt
 
 const AdminFilterHandler = (itemsToLoad: number) => {
 
-  const [adminUsers] = useObservable(adminStore.pipe(selectAll(), tap(users => users.sort((a, b) => a.username.localeCompare(b.username)))));
+  const [adminUsers] = useObservable(adminStore.pipe(selectAllEntities(), tap(users => users.sort((a, b) => a.username.localeCompare(b.username)))));
 
   const [filteredAdminUsers, setFilteredAdminUsers] = useState<AdminUser[]>([]);
   const [loadedAdminUsers, setLoadedAdminUsers] = useState<AdminUser[]>([]);

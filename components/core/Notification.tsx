@@ -1,13 +1,13 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Transition } from '@headlessui/react';
 import { tap } from 'rxjs';
-import { selectAll } from '@ngneat/elf-entities';
+import { selectAllEntities } from '@ngneat/elf-entities';
 import { useObservable } from '@ngneat/react-rxjs';
 import { Notification } from '../../shared/stores/notification/notification.model';
 import { notificationStore } from '../../shared/stores/notification/notification.store';
 
 const NotificationComponent: FunctionComponent = () => {
-  const [notifications] = useObservable(notificationStore.pipe(selectAll(), tap(notifications => notifications.sort((a, b) => b.id - a.id))));
+  const [notifications] = useObservable(notificationStore.pipe(selectAllEntities(), tap(notifications => notifications.sort((a, b) => b.id - a.id))));
   const [shownNotifications, setShownNotifications] = useState<Notification[]>([]);
 
   // showNotification is a mirror of the latest three notifications, but they get deleted after a 150 ms delay

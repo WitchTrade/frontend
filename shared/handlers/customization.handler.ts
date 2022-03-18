@@ -5,13 +5,13 @@ import { createNotification } from '../stores/notification/notification.model';
 import { notificationService } from '../stores/notification/notification.service';
 import { useObservable } from '@ngneat/react-rxjs';
 import { allThemesStore, themeStore } from '../stores/theme/theme.store';
-import { selectAll } from '@ngneat/elf-entities';
+import { selectAllEntities } from '@ngneat/elf-entities';
 import { themeService } from '../stores/theme/theme.service';
 import { createTheme, Theme } from '../stores/theme/theme.model';
 import { createThemeColors } from '../stores/theme/themeColor.model';
 
 const CustomizationHandler = () => {
-  const [allThemes] = useObservable(allThemesStore.pipe(selectAll()));
+  const [allThemes] = useObservable(allThemesStore.pipe(selectAllEntities()));
 
   // selected theme in the dropdown
   const [selectedTheme] = useObservable(themeStore);

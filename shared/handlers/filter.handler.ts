@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import { useObservable } from '@ngneat/react-rxjs';
-import { selectAll } from '@ngneat/elf-entities';
+import { selectAllEntities } from '@ngneat/elf-entities';
 import { Item } from '../stores/items/item.model';
 import { inventoryStore } from '../stores/inventory/inventory.store';
 import { getItemRarities, itemsStore } from '../stores/items/items.store';
@@ -15,7 +15,7 @@ const FilterHandler = (type: FILTER_TYPE, itemsToLoad: number, trades?: Offer[] 
 
   const [inventory] = useObservable(inventoryStore);
 
-  const [items] = useObservable(itemsStore.pipe(selectAll()));
+  const [items] = useObservable(itemsStore.pipe(selectAllEntities()));
 
   const [queryLoaded, setQueryLoaded] = useState(false);
   const [usernameChanged, setUsernameChanged] = useState(false);
