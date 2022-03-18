@@ -13,9 +13,11 @@ const Quest: FunctionComponent<Props> = ({ quest, openItemDetails }) => {
     <div className="flex flex-col sm:flex-row rounded-lg bg-wt-surface-dark m-2 border-2 p-2 w-full" style={{ borderColor: `#${quest.rewardItem.rarityColor}`, maxWidth: '300px' }}>
       <div className="relative h-20 w-20 self-center">
         <Image className="rounded-lg cursor-pointer" src={quest.rewardItem.iconUrl} height={80} width={80} alt={quest.rewardItem.name} onClick={() => openItemDetails(quest.rewardItem)} />
-        <p className="absolute bottom-0 right-1 font-bold">{quest.rewardAmount}</p>
+        {quest.rewardAmount > 1 &&
+          <p className="absolute bottom-0 right-1 font-bold">{quest.rewardAmount}</p>
+        }
       </div>
-      <div className="ml-2 flex-1">
+      <div className="ml-2 flex-1 flex flex-col justify-between">
         <p>{quest.quest.string}</p>
         <div className="w-100 h-6 rounded-full bg-wt-surface relative">
           <div
