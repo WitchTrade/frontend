@@ -2,8 +2,8 @@ import { useObservable } from '@ngneat/react-rxjs';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import CustomHeader from '../../components/core/CustomHeader';
-import Region from '../../components/gameservers/region';
-import GameServerNav from '../../components/navs/GameServerNav';
+import Region from '../../components/witchit/region';
+import WitchItNav from '../../components/navs/WitchItNav';
 import ActionButton from '../../components/styles/ActionButton';
 import Divider from '../../components/styles/Divider';
 import Loading from '../../components/styles/Loading';
@@ -68,9 +68,9 @@ const Gameservers: NextPage = () => {
       <CustomHeader
         title="WitchTrade | Gameservers"
         description="View the Witch It Servers live on WitchTrade"
-        url="https://witchtrade.org/gameservers"
+        url="https://witchtrade.org/witchit/gameservers"
       />
-      <GameServerNav />
+      <WitchItNav />
       <PageHeader title="Witch It Game Servers" />
       <div className="flex justify-center">
         <div className="flex flex-col bg-wt-surface-dark border-2 border-wt-accent rounded-lg p-2 m-2" style={{ width: '750px' }}>

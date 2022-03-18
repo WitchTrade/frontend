@@ -96,8 +96,8 @@ const Navbar: FunctionComponent = () => {
                     <Link href="/items" passHref>
                       <NavbarLink type={router.pathname.startsWith('/items') ? 'navSelected' : 'nav'}>Items</NavbarLink>
                     </Link>
-                    <Link href="/gameservers" passHref>
-                      <NavbarLink type={router.pathname.startsWith('/gameservers') ? 'navSelected' : 'nav'}>Game Servers</NavbarLink>
+                    <Link href="/witchit" passHref>
+                      <NavbarLink type={router.pathname.startsWith('/witchit') ? 'navSelected' : 'nav'}>Witch It</NavbarLink>
                     </Link>
                     {user.roles?.length > 0 &&
                       <Link href="/admin" passHref>
@@ -275,8 +275,8 @@ const Navbar: FunctionComponent = () => {
                 <Link href="/items" passHref>
                   <NavbarLink type={router.pathname.startsWith('/items') ? 'hamburgerSelected' : 'hamburger'}>Items</NavbarLink>
                 </Link>
-                <Link href="/gameservers" passHref>
-                  <NavbarLink type={router.pathname.startsWith('/gameservers') ? 'hamburgerSelected' : 'hamburger'}>Game Servers</NavbarLink>
+                <Link href="/witchit" passHref>
+                  <NavbarLink type={router.pathname.startsWith('/witchit') ? 'hamburgerSelected' : 'hamburger'}>Witch It</NavbarLink>
                 </Link>
                 {user.roles?.length > 0 &&
                   <Link href="/admin" passHref>

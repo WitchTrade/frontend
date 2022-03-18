@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useState } from 'react';
 import CustomHeader from '../../components/core/CustomHeader';
-import GameServerNav from '../../components/navs/GameServerNav';
+import WitchItNav from '../../components/navs/WitchItNav';
 import PageHeader from '../../components/styles/PageHeader';
 import useStatsHandler from '../../shared/handlers/stats.handler';
 
@@ -23,7 +23,7 @@ const Stats: NextPage = () => {
         description="View statistics of Witch It servers on WitchTrade"
         url="https://witchtrade.org/gameservers/stats"
       />
-      <GameServerNav />
+      <WitchItNav />
       <PageHeader title="Game Server Stats" description="Statistics of Witch It servers" />
       <p className="text-center mb-4">All times on this site are UTC. Current UTC time: <b>{now.getUTCHours()}:{now.getUTCMinutes() >= 10 ? now.getUTCMinutes() : `0${now.getUTCMinutes()}`}</b></p>
       <p className="text-2xl text-center font-bold">Players</p>
