@@ -3,7 +3,7 @@ import { Inventory } from '../../shared/stores/inventory/inventory.model';
 import { Offer, Wish } from '../../shared/stores/markets/market.model';
 import Image from 'next/image';
 import { head } from '@ngneat/elf';
-import { selectAllApply } from '@ngneat/elf-entities';
+import { selectAllEntitiesApply } from '@ngneat/elf-entities';
 import { useObservable } from '@ngneat/react-rxjs';
 import { Item } from '../../shared/stores/items/item.model';
 import { itemsStore } from '../../shared/stores/items/items.store';
@@ -36,7 +36,7 @@ interface Props {
 
 const TradeView: FunctionComponent<Props> = ({ type, trade, inventory, prices, deleteTrade, updateTrade, openItemDetails }) => {
   const [item] = useObservable(itemsStore.pipe(
-    selectAllApply({
+    selectAllEntitiesApply({
       filterEntity: (item) => item.id === trade.item.id
     }),
     head())

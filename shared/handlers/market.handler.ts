@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Subscription } from 'rxjs';
-import { selectAll } from '@ngneat/elf-entities';
+import { selectAllEntities } from '@ngneat/elf-entities';
 import { useObservable } from '@ngneat/react-rxjs';
 import { createMarket, createOffer, createWish, Market, Offer, Wish } from '../stores/markets/market.model';
 import { marketsService } from '../stores/markets/markets.service';
@@ -21,7 +21,7 @@ export enum MARKET_TYPE {
 const MarketHandler = () => {
   const [user] = useObservable(userStore);
   const [syncSettings] = useObservable(syncSettingsStore);
-  const [prices] = useObservable(pricesStore.pipe(selectAll()));
+  const [prices] = useObservable(pricesStore.pipe(selectAllEntities()));
 
   const [market, setMarket] = useState<Market>(createMarket({}));
   const [type, setType] = useState(MARKET_TYPE.OFFER);

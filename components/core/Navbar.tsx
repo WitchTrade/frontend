@@ -1,5 +1,5 @@
 import { Fragment, FunctionComponent, useEffect, useState } from 'react';
-import { selectAll } from '@ngneat/elf-entities';
+import { selectAllEntities } from '@ngneat/elf-entities';
 import { serverNotificationStore } from '../../shared/stores/serverNotification/server-notification.store';
 import { useRouter } from 'next/dist/client/router';
 import Link from 'next/link';
@@ -26,7 +26,7 @@ const Navbar: FunctionComponent = () => {
 
   const [user] = useObservable(userStore);
   const [inventory] = useObservable(inventoryStore);
-  const [notifications] = useObservable(serverNotificationStore.pipe(selectAll()));
+  const [notifications] = useObservable(serverNotificationStore.pipe(selectAllEntities()));
 
   const [lastSynced, setLastSynced] = useState({ old: false, lastSyncedString: '' });
   const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();

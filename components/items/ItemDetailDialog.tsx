@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
-import { selectAll } from '@ngneat/elf-entities';
+import { selectAllEntities } from '@ngneat/elf-entities';
 import { useObservable } from '@ngneat/react-rxjs';
 import { Inventory } from '../../shared/stores/inventory/inventory.model';
 import { Item } from '../../shared/stores/items/item.model';
@@ -27,8 +27,8 @@ interface Props {
 
 const ItemDetailDialog: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, item, inventory, capitalizeFirstLetter }) => {
   const router = useRouter();
-  const [items] = useObservable(itemsStore.pipe(selectAll()));
-  const [prices] = useObservable(pricesStore.pipe(selectAll()));
+  const [items] = useObservable(itemsStore.pipe(selectAllEntities()));
+  const [prices] = useObservable(pricesStore.pipe(selectAllEntities()));
 
   const [searchOffer, setSearchOffer] = useState<SearchOffer | undefined>();
   const [loading, setLoading] = useState(false);

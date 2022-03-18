@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from 'react';
 import Image from 'next/image';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useObservable } from '@ngneat/react-rxjs';
-import { selectAll } from '@ngneat/elf-entities';
+import { selectAllEntities } from '@ngneat/elf-entities';
 import CreateNewTradeHandler from '../../shared/handlers/createNewTrade.handler';
 import FilterHandler from '../../shared/handlers/filter.handler';
 import { FILTER_TYPE } from '../../shared/static/filterValues';
@@ -36,7 +36,7 @@ interface Props {
 
 const CreateNewTrade: FunctionComponent<Props> = ({ dialogOpen, setDialogOpen, type, addNewTrade, existingTrades, openItemDetails }) => {
 
-  const [prices] = useObservable(pricesStore.pipe(selectAll()));
+  const [prices] = useObservable(pricesStore.pipe(selectAllEntities()));
 
   const {
     inventory,
