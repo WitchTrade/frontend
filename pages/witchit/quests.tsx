@@ -12,6 +12,7 @@ import Quest from '../../components/witchit/quest';
 import ItemDetailDialog from '../../components/items/ItemDetailDialog';
 import ItemsHandler from '../../shared/handlers/items.handler';
 import { inventoryStore } from '../../shared/stores/inventory/inventory.store';
+import NextQuest from '../../components/witchit/nextQuest';
 
 const Quests = () => {
   const [user] = useObservable(userStore);
@@ -37,7 +38,6 @@ const Quests = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
-
 
   return (
     <>
@@ -78,12 +78,18 @@ const Quests = () => {
                 {quests.filter(q => q.type === 'weekly').map((q, index) => (
                   <Quest key={index} quest={q} openItemDetails={openItemDetails} />
                 ))}
+                {quests.filter(q => q.type === 'weekly').length < 2 &&
+                  <NextQuest type='weekly' />
+                }
               </div>
               <p className="font-bold text-2xl" >Daily</p>
               <div className='flex flex-wrap justify-center'>
                 {quests.filter(q => q.type === 'daily').map((q, index) => (
                   <Quest key={index} quest={q} openItemDetails={openItemDetails} />
                 ))}
+                {quests.filter(q => q.type === 'daily').length < 3 &&
+                  <NextQuest type='daily' />
+                }
               </div>
             </div>
           }
