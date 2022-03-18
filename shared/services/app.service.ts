@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import duration from 'dayjs/plugin/duration';
+import utc from 'dayjs/plugin/utc';
 import { pairwise } from 'rxjs';
 
 import { itemsService } from '../stores/items/items.service';
@@ -35,6 +36,7 @@ class AppService {
 
     dayjs.extend(relativeTime);
     dayjs.extend(duration);
+    dayjs.extend(utc);
 
     themeService.init();
     userService.init();
