@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useObservable } from '@ngneat/react-rxjs';
 import Image from 'next/image';
 import Link from 'next/link';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import CustomHeader from '../../components/core/CustomHeader';
 import WitchItNav from '../../components/navs/WitchItNav';
 import PageHeader from '../../components/styles/PageHeader';
@@ -13,15 +15,19 @@ import ItemDetailDialog from '../../components/items/ItemDetailDialog';
 import ItemsHandler from '../../shared/handlers/items.handler';
 import { inventoryStore } from '../../shared/stores/inventory/inventory.store';
 import NextQuest from '../../components/witchit/nextQuest';
+import ActionButton from '../../components/styles/ActionButton';
 
 const Quests = () => {
   const [user] = useObservable(userStore);
   const [inventory] = useObservable(inventoryStore);
+  const [timeString, setTimeString] = useState('');
+  const [timeLeft, setTimeLeft] = useState(0);
 
   const {
     quests,
     loading,
     getQuests,
+    cachedAt,
   } = useQuestsHandler();
 
   const {
@@ -33,11 +39,33 @@ const Quests = () => {
   } = ItemsHandler();
 
   useEffect(() => {
+    dayjs.extend(duration);
+  }, []);
+
+  useEffect(() => {
     if (user.loggedIn && user.verifiedSteamProfileLink) {
       getQuests();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [user]);
+
+  useEffect(() => {
+    formatDate()
+    const interval = setInterval(() => {
+      formatDate()
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cachedAt]);
+
+  const formatDate = () => {
+    const cachedAtDate = new Date(cachedAt);
+    setTimeLeft(new Date(cachedAtDate.getTime() + 5.06 * 60000).getTime() - new Date().getTime());
+    setTimeString(dayjs.duration(dayjs(cachedAtDate.getTime() + 5.06 * 60000).diff(dayjs())).format('mm:ss'));
+  }
 
   return (
     <>
@@ -67,7 +95,13 @@ const Quests = () => {
         </div>
       }
       {user.loggedIn && user.verifiedSteamProfileLink &&
-        <div className="flex text-center justify-center">
+        <div className="flex flex-col text-center justify-center">
+          <div className="flex justify-center pb-2">
+            <ActionButton type="success" onClick={getQuests} disabled={loading || timeLeft > 0}>
+              <Image src="/assets/svgs/refresh.svg" height="24px" width="24px" alt="Refresh" />
+              Refresh{timeLeft > 0 ? `(${timeString})` : ''}
+            </ActionButton>
+          </div>
           {loading &&
             <Loading text="Loading quests" />
           }

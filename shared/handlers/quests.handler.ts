@@ -7,6 +7,7 @@ import { notificationService } from '../stores/notification/notification.service
 
 const useQuestsHandler = () => {
   const [quests, setQuests] = useState<Quest[]>([]);
+  const [cachedAt, setCachedAt] = useState<Date>(new Date());
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -28,7 +29,8 @@ const useQuestsHandler = () => {
         next: async res => {
           const json = await res.json();
           if (res.ok) {
-            setQuests(json);
+            setQuests(json.quests);
+            setCachedAt(json.cachedAt);
           } else {
             const notification = createNotification({
               content: json.message,
@@ -54,7 +56,8 @@ const useQuestsHandler = () => {
   return {
     quests,
     loading,
-    getQuests
+    getQuests,
+    cachedAt
   };
 };
 

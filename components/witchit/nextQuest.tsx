@@ -32,9 +32,13 @@ const NextQuest: FunctionComponent<Props> = ({ type }) => {
 
   useEffect(() => {
     formatDate()
-    setInterval(() => {
+    const interval = setInterval(() => {
       formatDate()
     }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nextQuestDate]);
 
