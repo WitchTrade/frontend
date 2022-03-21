@@ -70,14 +70,16 @@ const Quests = () => {
   return (
     <>
       <CustomHeader
-        title="WitchTrade | Witch It"
-        description="Witch It related tools on WitchTrade."
-        url="https://witchtrade.org/witchit"
+        title="WitchTrade | Quests"
+        description="View your Witch It quests on WitchTrade."
+        url="https://witchtrade.org/witchit/quests"
       />
       <ItemDetailDialog dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} item={selectedItem} inventory={inventory} capitalizeFirstLetter={capitalizeFirstLetter} />
       <WitchItNav />
       <PageHeader title="Witch It Quests" description="Ingame quest overview" />
-      <p className="text-center mb-2 -mt-2 text-sm"><span className="text-wt-warning">Warning:</span> Quests are cached for 5 minutes</p>
+      {user.loggedIn && user.verifiedSteamProfileLink &&
+        <p className="text-center mb-2 -mt-2 text-sm"><span className="text-wt-warning">Warning:</span> Quests are cached for 5 minutes</p>
+      }
       {!user.loggedIn &&
         <div className="flex flex-col text-center">
           <p className="text-center pt-2 text-xl text-wt-warning-light">Please log in to access this page</p>
