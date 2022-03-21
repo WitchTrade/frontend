@@ -15,6 +15,15 @@ const Changelog: NextPage = () => {
         <div className="mb-2">
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={4}>Version 1.2.0 (21.03.2022)</Title>
+        <p><b>Added:</b></p>
+        <ul className="list-disc pl-8">
+          <li>Witch It quests! View your current ingame quests <Link href="/witchit/quests"><a className="hover:underline text-wt-accent cursor-pointer">here</a></Link></li>
+        </ul>
+        <p><b>Changes:</b></p>
+        <ul className="list-disc pl-8">
+          <li>Disabled Christmas themed navbar</li>
+        </ul>
         <Title level={4}>Version 1.1.3 (01.02.2022)</Title>
         <p><b>Added:</b></p>
         <ul className="list-disc pl-8">
