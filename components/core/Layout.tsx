@@ -1,10 +1,14 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 import DefaultHeader from './DefaultHeader';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Notification from './Notification';
 
-const Layout: FunctionComponent = ({ children }) => {
+interface Props {
+  children: ReactNode
+}
+
+const Layout: FunctionComponent<Props> = ({ children }) => {
   return (
     <>
       <DefaultHeader />

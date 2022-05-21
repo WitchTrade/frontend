@@ -1,9 +1,10 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 import Image from 'next/image';
 import { useObservable } from '@ngneat/react-rxjs';
 import { userStore } from '../../shared/stores/user/user.store';
 
 interface Props {
+  children: ReactNode
   admin?: boolean;
 }
 

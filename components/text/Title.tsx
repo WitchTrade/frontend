@@ -1,10 +1,11 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 
 interface Types {
   [key: string]: string;
 }
 
 interface Props {
+  children: ReactNode
   level: number;
   id?: string;
 }

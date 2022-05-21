@@ -1,10 +1,11 @@
-import { forwardRef, FunctionComponent, KeyboardEvent } from 'react';
+import { forwardRef, FunctionComponent, KeyboardEvent, ReactNode } from 'react';
 
 interface Types {
   [key: string]: string;
 }
 
 interface Props {
+  children: ReactNode
   onClick?: any;
   href?: string;
   type: string;

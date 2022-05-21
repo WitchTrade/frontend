@@ -1,6 +1,9 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
+interface Props {
+  children: ReactNode
+}
 
-const Section: FunctionComponent = ({ children }) => {
+const Section: FunctionComponent<Props> = ({ children }) => {
   return (
     <p className="my-2">{children}</p>
   );

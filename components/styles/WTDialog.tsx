@@ -1,7 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, FunctionComponent } from 'react';
+import { Fragment, FunctionComponent, ReactNode } from 'react';
 
 interface Props {
+  children: ReactNode
   dialogOpen: boolean;
   setDialogOpen: (dialogOpen: boolean) => void;
   closeOnOutsideClick: boolean;

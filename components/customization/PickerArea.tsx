@@ -1,6 +1,7 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, ReactNode } from 'react';
 
 interface Props {
+  children: ReactNode
   areaTitle: string;
 }
 
