@@ -1,17 +1,17 @@
-import { Item } from '../items/item.model';
+import { Item } from '../items/item.model'
 
 export interface Inventory {
-  id: number;
-  lastSynced: Date;
-  inventoryItems: InventoryItem[];
-  showInTrading: boolean;
-  automaticSync: boolean;
+  id: number
+  lastSynced: Date
+  inventoryItems: InventoryItem[]
+  showInTrading: boolean
+  automaticSync: boolean
 }
 
 interface InventoryItem {
-  id: number;
-  amount: number;
-  item: Item;
+  id: number
+  amount: number
+  item: Item
 }
 
 export function createInventory(params: Partial<Inventory>) {
@@ -21,10 +21,10 @@ export function createInventory(params: Partial<Inventory>) {
     inventoryItems: params.inventoryItems ? params.inventoryItems : [],
     showInTrading: params.showInTrading ? params.showInTrading : false,
     automaticSync: params.automaticSync ? params.automaticSync : false,
-  } as Inventory;
+  } as Inventory
 }
 
 export interface InventoryChangeDTO {
-  showInTrading: boolean;
-  automaticSync: boolean;
+  showInTrading: boolean
+  automaticSync: boolean
 }

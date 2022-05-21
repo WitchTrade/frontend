@@ -1,4 +1,4 @@
-import { ThemeColors } from '../stores/theme/themeColor.model';
+import { ThemeColors } from '../stores/theme/themeColor.model'
 
 const betaBlueTheme: ThemeColors = {
   light: '#FFF',
@@ -30,7 +30,7 @@ const betaBlueTheme: ThemeColors = {
   chartColor4: '#33FFE5',
   chartColor5: '#813CF9',
   chartBackground: '#1F2937',
-  chartText: '#FFF'
-};
+  chartText: '#FFF',
+}
 
-export { betaBlueTheme };
+export { betaBlueTheme }

@@ -1,8 +1,8 @@
 export interface Notification {
-  id: number;
-  duration: number;
-  content: string;
-  type: 'error' | 'warning' | 'info' | 'success';
+  id: number
+  duration: number
+  content: string
+  type: 'error' | 'warning' | 'info' | 'success'
 }
 
 export function createNotification(params: Partial<Notification>) {
@@ -11,5 +11,5 @@ export function createNotification(params: Partial<Notification>) {
     duration: params.duration ? params.duration : null,
     content: params.content ? params.content : null,
     type: params.type ? params.type : null,
-  } as Notification;
+  } as Notification
 }

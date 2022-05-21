@@ -1,18 +1,18 @@
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import duration from 'dayjs/plugin/duration';
-import utc from 'dayjs/plugin/utc';
-import { pairwise } from 'rxjs';
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
+import { pairwise } from 'rxjs'
 
-import { itemsService } from '../stores/items/items.service';
-import { userService } from '../stores/user/user.service';
-import { inventoryService } from '../stores/inventory/inventory.service';
-import { serverNotificationService } from '../stores/serverNotification/server-notification.service';
-import { User } from '../stores/user/user.model';
-import { userStore } from '../stores/user/user.store';
-import { themeService } from '../stores/theme/theme.service';
-import { pricesService } from '../stores/prices/prices.service';
-import { wtStatsService } from '../stores/wtStats/wtStats.service';
+import { inventoryService } from '../stores/inventory/inventory.service'
+import { itemsService } from '../stores/items/items.service'
+import { pricesService } from '../stores/prices/prices.service'
+import { serverNotificationService } from '../stores/serverNotification/server-notification.service'
+import { themeService } from '../stores/theme/theme.service'
+import { User } from '../stores/user/user.model'
+import { userService } from '../stores/user/user.service'
+import { userStore } from '../stores/user/user.store'
+import { wtStatsService } from '../stores/wtStats/wtStats.service'
 
 class AppService {
   public init(): void {
@@ -21,38 +21,41 @@ class AppService {
       'color: #bdb2ff',
       'padding-left: 4px',
       'padding-right: 4px',
-      'border-radius: 20px'
-    ].join(';');
-    console.log(`\\    /\\
+      'border-radius: 20px',
+    ].join(';')
+    console.log(
+      `\\    /\\
  )  ( ')
 (  /  )
- \\(__)| %cGiyoMoon`, signature);
+ \\(__)| %cGiyoMoon`,
+      signature
+    )
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js');
-      });
+        navigator.serviceWorker.register('/sw.js')
+      })
     }
 
-    dayjs.extend(relativeTime);
-    dayjs.extend(duration);
-    dayjs.extend(utc);
+    dayjs.extend(relativeTime)
+    dayjs.extend(duration)
+    dayjs.extend(utc)
 
-    themeService.init();
-    userService.init();
-    itemsService.fetchAllItems().subscribe();
-    pricesService.fetchPrices().subscribe();
-    wtStatsService.fetchWtStats().subscribe();
+    themeService.init()
+    userService.init()
+    itemsService.fetchAllItems().subscribe()
+    pricesService.fetchPrices().subscribe()
+    wtStatsService.fetchWtStats().subscribe()
 
     userStore.pipe(pairwise()).subscribe(([oldUser, newUser]: User[]) => {
       if (!oldUser.loggedIn && newUser.loggedIn) {
-        inventoryService.fetchInventory().subscribe();
-        serverNotificationService.fetchNotifications().subscribe();
-        userService.fetchSyncSettings().subscribe();
+        inventoryService.fetchInventory().subscribe()
+        serverNotificationService.fetchNotifications().subscribe()
+        userService.fetchSyncSettings().subscribe()
       }
-    });
+    })
   }
 }
 
-const appService = new AppService();
-export default appService;
+const appService = new AppService()
+export default appService

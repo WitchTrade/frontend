@@ -1,16 +1,16 @@
 export interface Item {
-  id: number;
-  name: string;
-  description: string;
-  iconUrl: string;
-  rarityColor: string;
-  tradeable: boolean;
-  tagRarity: string;
-  tagCharacter?: string;
-  tagSlot: string;
-  tagType: string;
-  tagEvent?: string;
-  new: boolean;
+  id: number
+  name: string
+  description: string
+  iconUrl: string
+  rarityColor: string
+  tradeable: boolean
+  tagRarity: string
+  tagCharacter?: string
+  tagSlot: string
+  tagType: string
+  tagEvent?: string
+  new: boolean
 }
 
 export function createItem(params: Partial<Item>) {
@@ -27,5 +27,5 @@ export function createItem(params: Partial<Item>) {
     tagType: params.tagType ? params.tagType : null,
     tagEvent: params.tagEvent ? params.tagEvent : null,
     new: params.new ? params.new : null,
-  } as Item;
+  } as Item
 }

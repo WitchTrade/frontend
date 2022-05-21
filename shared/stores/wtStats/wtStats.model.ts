@@ -1,4 +1,4 @@
 export interface WtStats {
-  users: number;
-  offers: number;
+  users: number
+  offers: number
 }

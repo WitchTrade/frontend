@@ -1,4 +1,4 @@
 export interface Badge {
-  id: string;
-  description: string;
+  id: string
+  description: string
 }

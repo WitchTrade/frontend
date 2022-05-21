@@ -1,23 +1,23 @@
-import { Price } from '../prices/price.model';
+import { Price } from '../prices/price.model'
 
 export interface Market {
-  id: number;
-  lastUpdated: Date;
-  offerlistNote: string;
-  wishlistNote: string;
-  offers: Offer[];
-  wishes: Wish[];
+  id: number
+  lastUpdated: Date
+  offerlistNote: string
+  wishlistNote: string
+  offers: Offer[]
+  wishes: Wish[]
 }
 
 export interface Offer {
-  id: number;
-  item: { id: number; };
-  mainPrice: Price;
-  mainPriceAmount?: number;
-  wantsBoth?: boolean;
-  secondaryPrice?: Price;
-  secondaryPriceAmount?: number;
-  quantity: number;
+  id: number
+  item: { id: number }
+  mainPrice: Price
+  mainPriceAmount?: number
+  wantsBoth?: boolean
+  secondaryPrice?: Price
+  secondaryPriceAmount?: number
+  quantity: number
 }
 
 export function createOffer(params: Partial<Offer>) {
@@ -26,21 +26,24 @@ export function createOffer(params: Partial<Offer>) {
     item: params.item ? params.item : {},
     mainPrice: params.mainPrice ? params.mainPrice : null,
     mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 1,
-    wantsBoth: params.wantsBoth || params.wantsBoth === false ? params.wantsBoth : null,
+    wantsBoth:
+      params.wantsBoth || params.wantsBoth === false ? params.wantsBoth : null,
     secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
-    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 1,
-    quantity: params.quantity ? params.quantity : 0
-  } as Offer;
+    secondaryPriceAmount: params.secondaryPriceAmount
+      ? params.secondaryPriceAmount
+      : 1,
+    quantity: params.quantity ? params.quantity : 0,
+  } as Offer
 }
 
 export interface Wish {
-  id: number;
-  item: { id: number; };
-  mainPrice: Price;
-  mainPriceAmount?: number;
-  wantsBoth?: boolean;
-  secondaryPrice?: Price;
-  secondaryPriceAmount?: number;
+  id: number
+  item: { id: number }
+  mainPrice: Price
+  mainPriceAmount?: number
+  wantsBoth?: boolean
+  secondaryPrice?: Price
+  secondaryPriceAmount?: number
 }
 
 export function createWish(params: Partial<Wish>) {
@@ -49,10 +52,13 @@ export function createWish(params: Partial<Wish>) {
     item: params.item ? params.item : {},
     mainPrice: params.mainPrice ? params.mainPrice : null,
     mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 1,
-    wantsBoth: params.wantsBoth || params.wantsBoth === false ? params.wantsBoth : null,
+    wantsBoth:
+      params.wantsBoth || params.wantsBoth === false ? params.wantsBoth : null,
     secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
-    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 1
-  } as Wish;
+    secondaryPriceAmount: params.secondaryPriceAmount
+      ? params.secondaryPriceAmount
+      : 1,
+  } as Wish
 }
 
 export function createTrade(params: Partial<any>) {
@@ -61,11 +67,14 @@ export function createTrade(params: Partial<any>) {
     item: params.item ? params.item : {},
     mainPrice: params.mainPrice ? params.mainPrice : null,
     mainPriceAmount: params.mainPriceAmount ? params.mainPriceAmount : 1,
-    wantsBoth: params.wantsBoth || params.wantsBoth === false ? params.wantsBoth : true,
+    wantsBoth:
+      params.wantsBoth || params.wantsBoth === false ? params.wantsBoth : true,
     secondaryPrice: params.secondaryPrice ? params.secondaryPrice : null,
-    secondaryPriceAmount: params.secondaryPriceAmount ? params.secondaryPriceAmount : 1,
-    quantity: params.quantity ? params.quantity : 0
-  };
+    secondaryPriceAmount: params.secondaryPriceAmount
+      ? params.secondaryPriceAmount
+      : 1,
+    quantity: params.quantity ? params.quantity : 0,
+  }
 }
 
 export function createMarket(params: Partial<Market>) {
@@ -76,21 +85,21 @@ export function createMarket(params: Partial<Market>) {
     wishlistNote: params.wishlistNote ? params.wishlistNote : null,
     offers: params.offers ? params.offers : null,
     wishes: params.wishes ? params.wishes : null,
-  } as Market;
+  } as Market
 }
 
 // Preview market which is used in the profile list
 export interface PreviewMarket {
-  username: string;
-  displayName: string;
-  verified: boolean;
-  offerCount: number;
-  offers: PreviewOffer[];
+  username: string
+  displayName: string
+  verified: boolean
+  offerCount: number
+  offers: PreviewOffer[]
 }
 
 export interface PreviewOffer {
-  rarity: string;
-  count: number;
+  rarity: string
+  count: number
 }
 
 export function createPreviewMarket(params: Partial<PreviewMarket>) {
@@ -99,6 +108,6 @@ export function createPreviewMarket(params: Partial<PreviewMarket>) {
     displayName: params.displayName ? params.displayName : null,
     verified: params.verified ? params.verified : false,
     offerCount: params.offerCount ? params.offerCount : null,
-    offers: params.offers ? params.offers : []
-  } as PreviewMarket;
+    offers: params.offers ? params.offers : [],
+  } as PreviewMarket
 }

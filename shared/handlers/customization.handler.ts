@@ -1,57 +1,60 @@
-import { createRef, useEffect, useRef, useState } from 'react';
-import { Chart } from 'chart.js';
-import { DropdownValue } from '../../components/styles/Dropdown';;
-import { createNotification } from '../stores/notification/notification.model';
-import { notificationService } from '../stores/notification/notification.service';
-import { useObservable } from '@ngneat/react-rxjs';
-import { allThemesStore, themeStore } from '../stores/theme/theme.store';
-import { selectAllEntities } from '@ngneat/elf-entities';
-import { themeService } from '../stores/theme/theme.service';
-import { createTheme, Theme } from '../stores/theme/theme.model';
-import { createThemeColors } from '../stores/theme/themeColor.model';
+import { selectAllEntities } from '@ngneat/elf-entities'
+import { useObservable } from '@ngneat/react-rxjs'
+import { Chart } from 'chart.js'
+import { createRef, useEffect, useRef, useState } from 'react'
+import { DropdownValue } from '../../components/styles/Dropdown'
+import { createNotification } from '../stores/notification/notification.model'
+import { notificationService } from '../stores/notification/notification.service'
+import { createTheme, Theme } from '../stores/theme/theme.model'
+import { themeService } from '../stores/theme/theme.service'
+import { allThemesStore, themeStore } from '../stores/theme/theme.store'
+import { createThemeColors } from '../stores/theme/themeColor.model'
 
 const CustomizationHandler = () => {
-  const [allThemes] = useObservable(allThemesStore.pipe(selectAllEntities()));
+  const [allThemes] = useObservable(allThemesStore.pipe(selectAllEntities()))
 
   // selected theme in the dropdown
-  const [selectedTheme] = useObservable(themeStore);
+  const [selectedTheme] = useObservable(themeStore)
 
-  let themeTypes: DropdownValue[] = [
+  const themeTypes: DropdownValue[] = [
     { key: 'light', displayName: 'Light' },
     { key: 'dark', displayName: 'Dark' },
-  ];
+  ]
 
-  const [themeType, setThemeType] = useState(themeTypes[0]);
+  const [themeType, setThemeType] = useState(themeTypes[0])
 
   // original theme => Gets set when creating a custom theme, in order to be able to reset
-  const [originalTheme, setOriginalTheme] = useState<Theme>();
+  const [originalTheme, setOriginalTheme] = useState<Theme>()
 
-  const [creatingCustomTheme, setCreatingCustomTheme] = useState(false);
-  const [liveTheme, setLiveTheme] = useState(false);
-  const [customTheme, setCustomTheme] = useState<Theme>();
-  const [editingTheme, setEditingTheme] = useState(false);
+  const [creatingCustomTheme, setCreatingCustomTheme] = useState(false)
+  const [liveTheme, setLiveTheme] = useState(false)
+  const [customTheme, setCustomTheme] = useState<Theme>()
+  const [editingTheme, setEditingTheme] = useState(false)
 
-  const themeUploadFile = createRef<any>();
+  const themeUploadFile = createRef<any>()
 
-  let notificationTypes: DropdownValue[] = [
+  const notificationTypes: DropdownValue[] = [
     { key: 'info', displayName: 'Info' },
     { key: 'success', displayName: 'Success' },
     { key: 'warning', displayName: 'Warning' },
-    { key: 'error', displayName: 'Error' }
-  ];
+    { key: 'error', displayName: 'Error' },
+  ]
 
-  const [notificationType, setNotificationType] = useState(notificationTypes[0]);
+  const [notificationType, setNotificationType] = useState(notificationTypes[0])
 
-  const exampleChartRef = useRef<any>(null);
+  const exampleChartRef = useRef<any>(null)
 
   useEffect(() => {
-    let exampleChart: any;
+    let exampleChart: any
 
     if (liveTheme && customTheme) {
-      themeService.applyTheme(customTheme);
+      themeService.applyTheme(customTheme)
 
-      Chart.defaults.color = customTheme.colors.chartText;
-      Chart.defaults.borderColor = themeService.hexToRgbA(customTheme.colors.chartText, 0.1);
+      Chart.defaults.color = customTheme.colors.chartText
+      Chart.defaults.borderColor = themeService.hexToRgbA(
+        customTheme.colors.chartText,
+        0.1
+      )
 
       exampleChart = new Chart(exampleChartRef.current, {
         type: 'line',
@@ -62,307 +65,337 @@ const CustomizationHandler = () => {
               label: 'Data 1',
               data: [1, 3, 5, 4],
               backgroundColor: customTheme.colors.chartColor1,
-              borderColor: customTheme.colors.chartColor1
+              borderColor: customTheme.colors.chartColor1,
             },
             {
               label: 'Data 2',
               data: [3, 3, 1, 3],
               backgroundColor: customTheme.colors.chartColor2,
-              borderColor: customTheme.colors.chartColor2
+              borderColor: customTheme.colors.chartColor2,
             },
             {
               label: 'Data 3',
               data: [2, 1, 2, 1],
               backgroundColor: customTheme.colors.chartColor3,
-              borderColor: customTheme.colors.chartColor3
+              borderColor: customTheme.colors.chartColor3,
             },
             {
               label: 'Data 4',
               data: [2, 5, 3, 2],
               backgroundColor: customTheme.colors.chartColor4,
-              borderColor: customTheme.colors.chartColor4
+              borderColor: customTheme.colors.chartColor4,
             },
             {
               label: 'Data 5',
               data: [5, 2, 4, 1],
               backgroundColor: customTheme.colors.chartColor5,
-              borderColor: customTheme.colors.chartColor5
-            }
-          ]
+              borderColor: customTheme.colors.chartColor5,
+            },
+          ],
         },
         options: {
           plugins: {
             tooltip: {
-              intersect: false
-            }
+              intersect: false,
+            },
           },
           animation: {
-            duration: 0
-          }
-        }
-      });
+            duration: 0,
+          },
+        },
+      })
     }
-    return (() => {
+    return () => {
       if (exampleChart) {
-        exampleChart.destroy();
+        exampleChart.destroy()
       }
-    });
-  }, [customTheme]);
+    }
+  }, [customTheme])
 
   useEffect(() => {
     if (themeType && customTheme) {
-      setCustomTheme({ ...customTheme, type: themeType.key });
+      setCustomTheme({ ...customTheme, type: themeType.key })
     }
-  }, [themeType]);
+  }, [themeType])
 
   const applyNewTheme = (theme: Theme) => {
-    themeService.applyTheme(theme);
-  };
+    themeService.applyTheme(theme)
+  }
 
   const initCustomTheme = (editSelected: boolean) => {
-    setEditingTheme(editSelected);
-    setOriginalTheme(selectedTheme);
+    setEditingTheme(editSelected)
+    setOriginalTheme(selectedTheme)
     const theme = createTheme({
       displayName: editSelected ? selectedTheme?.displayName : '',
       type: selectedTheme?.type ? selectedTheme?.type : 'dark',
-      colors: selectedTheme?.colors ? createThemeColors(selectedTheme?.colors) : createThemeColors({}),
+      colors: selectedTheme?.colors
+        ? createThemeColors(selectedTheme?.colors)
+        : createThemeColors({}),
       key: editSelected ? selectedTheme?.key : 'custom',
-      official: false
-    });
-    const newType = themeTypes.find(type => type.key === theme.type);
+      official: false,
+    })
+    const newType = themeTypes.find((type) => type.key === theme.type)
     if (newType) {
-      setThemeType(newType);
+      setThemeType(newType)
     }
-    setCustomTheme(theme);
-    setCreatingCustomTheme(true);
-  };
+    setCustomTheme(theme)
+    setCreatingCustomTheme(true)
+  }
 
   const switchLiveTheme = () => {
     if (liveTheme && originalTheme) {
-      themeService.applyTheme(originalTheme);
+      themeService.applyTheme(originalTheme)
     }
-    setLiveTheme(!liveTheme);
+    setLiveTheme(!liveTheme)
     if (customTheme) {
-      setCustomTheme({ ...customTheme });
+      setCustomTheme({ ...customTheme })
     }
-  };
+  }
 
   const cancelCustomTheme = () => {
     if (originalTheme) {
-      themeService.applyTheme(originalTheme);
+      themeService.applyTheme(originalTheme)
     }
-    setCreatingCustomTheme(false);
-  };
+    setCreatingCustomTheme(false)
+  }
 
   const downloadTheme = () => {
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(selectedTheme)));
-    element.setAttribute('download', `${selectedTheme?.displayName}.json`);
+    const element = document.createElement('a')
+    element.setAttribute(
+      'href',
+      'data:application/json;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(selectedTheme))
+    )
+    element.setAttribute('download', `${selectedTheme?.displayName}.json`)
 
-    element.style.display = 'none';
-    document.body.appendChild(element);
+    element.style.display = 'none'
+    document.body.appendChild(element)
 
-    element.click();
+    element.click()
 
-    document.body.removeChild(element);
+    document.body.removeChild(element)
 
     const notification = createNotification({
       content: 'Theme downloaded!',
       duration: 5000,
-      type: 'success'
-    });
-    notificationService.addNotification(notification);
-  };
+      type: 'success',
+    })
+    notificationService.addNotification(notification)
+  }
 
   const saveCustomTheme = () => {
     if (!customTheme?.displayName) {
       const notification = createNotification({
         content: 'Please give your theme a name.',
         duration: 5000,
-        type: 'warning'
-      });
-      notificationService.addNotification(notification);
-      return;
+        type: 'warning',
+      })
+      notificationService.addNotification(notification)
+      return
     }
-    if (!editingTheme && allThemes?.find(theme => theme.key === customTheme.displayName.toLowerCase().replaceAll(' ', '-'))) {
+    if (
+      !editingTheme &&
+      allThemes?.find(
+        (theme) =>
+          theme.key ===
+          customTheme.displayName.toLowerCase().replaceAll(' ', '-')
+      )
+    ) {
       const notification = createNotification({
         content: 'There is already a theme with the same name',
         duration: 5000,
-        type: 'warning'
-      });
-      notificationService.addNotification(notification);
-      return;
+        type: 'warning',
+      })
+      notificationService.addNotification(notification)
+      return
     }
     if (!/^[a-zA-Z0-9 _-]*$/.test(customTheme.displayName)) {
       const notification = createNotification({
-        content: 'Theme names can only contain letters, numbers, -, _ and spaces',
+        content:
+          'Theme names can only contain letters, numbers, -, _ and spaces',
         duration: 5000,
-        type: 'warning'
-      });
-      notificationService.addNotification(notification);
-      return;
+        type: 'warning',
+      })
+      notificationService.addNotification(notification)
+      return
     }
-    const customThemesString = localStorage.getItem('customThemes');
-    let customThemes: Theme[] = [];
+    const customThemesString = localStorage.getItem('customThemes')
+    let customThemes: Theme[] = []
     if (customThemesString) {
-      customThemes = JSON.parse(customThemesString);
+      customThemes = JSON.parse(customThemesString)
     }
     if (customTheme) {
       if (editingTheme) {
-        const oldThemeIndex = customThemes.findIndex(ct => ct.key === customTheme.key);
-        customThemes[oldThemeIndex] = customTheme;
-        themeService.applyTheme(customTheme);
+        const oldThemeIndex = customThemes.findIndex(
+          (ct) => ct.key === customTheme.key
+        )
+        customThemes[oldThemeIndex] = customTheme
+        themeService.applyTheme(customTheme)
       } else {
-        const tempCustomTheme = { ...customTheme, key: customTheme.displayName.toLowerCase().replaceAll(' ', '-') };
-        customThemes.push(tempCustomTheme);
-        themeService.applyTheme(tempCustomTheme);
+        const tempCustomTheme = {
+          ...customTheme,
+          key: customTheme.displayName.toLowerCase().replaceAll(' ', '-'),
+        }
+        customThemes.push(tempCustomTheme)
+        themeService.applyTheme(tempCustomTheme)
       }
     }
-    localStorage.setItem('customThemes', JSON.stringify(customThemes));
+    localStorage.setItem('customThemes', JSON.stringify(customThemes))
 
-    themeService.loadCustomThemes();
+    themeService.loadCustomThemes()
 
-    setCreatingCustomTheme(false);
+    setCreatingCustomTheme(false)
 
     const notification = createNotification({
       content: 'Theme saved!',
       duration: 5000,
-      type: 'success'
-    });
-    notificationService.addNotification(notification);
-  };
+      type: 'success',
+    })
+    notificationService.addNotification(notification)
+  }
 
   const deleteTheme = () => {
-    const customThemesString = localStorage.getItem('customThemes');
-    let customThemes: Theme[] = [];
+    const customThemesString = localStorage.getItem('customThemes')
+    let customThemes: Theme[] = []
     if (customThemesString) {
-      customThemes = JSON.parse(customThemesString);
+      customThemes = JSON.parse(customThemesString)
     }
     if (selectedTheme) {
-      const index = customThemes.findIndex(theme => theme.key === selectedTheme.key);
+      const index = customThemes.findIndex(
+        (theme) => theme.key === selectedTheme.key
+      )
       if (index >= 0) {
-        customThemes.splice(index, 1);
+        customThemes.splice(index, 1)
         const notification = createNotification({
           content: 'Theme deleted',
           duration: 5000,
-          type: 'success'
-        });
-        notificationService.addNotification(notification);
+          type: 'success',
+        })
+        notificationService.addNotification(notification)
       }
     }
-    localStorage.setItem('customThemes', JSON.stringify(customThemes));
+    localStorage.setItem('customThemes', JSON.stringify(customThemes))
 
-    themeService.loadCustomThemes();
+    themeService.loadCustomThemes()
 
     if (allThemes) {
-      themeService.applyTheme(allThemes[0]);
+      themeService.applyTheme(allThemes[0])
     }
-  };
+  }
 
   const checkThemeInputFile = () => {
     if (!themeUploadFile.current.files[0]) {
-      return;
+      return
     }
 
-    let reader = new FileReader();
-    reader.readAsText(themeUploadFile.current.files[0]);
+    const reader = new FileReader()
+    reader.readAsText(themeUploadFile.current.files[0])
 
     reader.onload = () => {
       if (reader.result) {
-        let importedObject: Theme;
+        let importedObject: Theme
 
         // try parsing json to object
         try {
-          importedObject = JSON.parse(reader.result as string);
+          importedObject = JSON.parse(reader.result as string)
         } catch {
           const notification = createNotification({
             content: 'Error while parsing file',
             duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-          return;
+            type: 'error',
+          })
+          notificationService.addNotification(notification)
+          return
         }
 
-        const importedColors = createThemeColors(importedObject.colors);
-        const importedTheme = createTheme({ ...importedObject, colors: importedColors, official: false });
+        const importedColors = createThemeColors(importedObject.colors)
+        const importedTheme = createTheme({
+          ...importedObject,
+          colors: importedColors,
+          official: false,
+        })
 
-        if (!importedTheme.key || !importedTheme.type || !importedTheme.displayName) {
+        if (
+          !importedTheme.key ||
+          !importedTheme.type ||
+          !importedTheme.displayName
+        ) {
           const notification = createNotification({
-            content: 'File doesn\'t seem to be a WitchTrade theme file',
+            content: "File doesn't seem to be a WitchTrade theme file",
             duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-          return;
+            type: 'error',
+          })
+          notificationService.addNotification(notification)
+          return
         }
 
         if (!/^[a-zA-Z0-9_-]*$/.test(importedTheme.key)) {
           const notification = createNotification({
             content: 'Theme keys can only contain letters, numbers, - and _',
             duration: 5000,
-            type: 'warning'
-          });
-          notificationService.addNotification(notification);
-          return;
+            type: 'warning',
+          })
+          notificationService.addNotification(notification)
+          return
         }
 
         if (!/^[a-zA-Z0-9 _-]*$/.test(importedTheme.displayName)) {
           const notification = createNotification({
-            content: 'Theme names can only contain letters, numbers, -, _ and spaces',
+            content:
+              'Theme names can only contain letters, numbers, -, _ and spaces',
             duration: 5000,
-            type: 'warning'
-          });
-          notificationService.addNotification(notification);
-          return;
+            type: 'warning',
+          })
+          notificationService.addNotification(notification)
+          return
         }
 
         // get custom themes to add imported theme to
-        const customThemesString = localStorage.getItem('customThemes');
-        let customThemes: Theme[] = [];
+        const customThemesString = localStorage.getItem('customThemes')
+        let customThemes: Theme[] = []
         if (customThemesString) {
-          customThemes = JSON.parse(customThemesString);
+          customThemes = JSON.parse(customThemesString)
         }
 
-        if (customThemes.find(theme => theme.key === importedTheme.key)) {
+        if (customThemes.find((theme) => theme.key === importedTheme.key)) {
           const notification = createNotification({
             content: 'There is already a theme with the same name',
             duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-          return;
+            type: 'error',
+          })
+          notificationService.addNotification(notification)
+          return
         }
 
         // add imported theme to custom themes
-        customThemes.push(importedTheme);
-        localStorage.setItem('customThemes', JSON.stringify(customThemes));
+        customThemes.push(importedTheme)
+        localStorage.setItem('customThemes', JSON.stringify(customThemes))
 
         // reload custom themes
-        themeService.loadCustomThemes();
+        themeService.loadCustomThemes()
 
         // apply imported theme
-        themeService.applyTheme(importedTheme);
+        themeService.applyTheme(importedTheme)
 
         const notification = createNotification({
           content: `${importedTheme.displayName} imported successfully`,
           duration: 5000,
-          type: 'success'
-        });
-        notificationService.addNotification(notification);
-        return;
+          type: 'success',
+        })
+        notificationService.addNotification(notification)
+        return
       }
-    };
-  };
+    }
+  }
 
   const createTestNotification = () => {
     const notification = createNotification({
       content: 'Test notification',
       duration: 2500,
-      type: notificationType.key
-    });
-    notificationService.addNotification(notification);
-  };
+      type: notificationType.key,
+    })
+    notificationService.addNotification(notification)
+  }
 
   return {
     allThemes,
@@ -388,8 +421,8 @@ const CustomizationHandler = () => {
     notificationType,
     setNotificationType,
     createTestNotification,
-    exampleChartRef
-  };
-};
+    exampleChartRef,
+  }
+}
 
-export default CustomizationHandler;
+export default CustomizationHandler

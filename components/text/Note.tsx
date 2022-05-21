@@ -1,13 +1,11 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode } from 'react'
 
 interface Props {
   children: ReactNode
 }
 
 const Note: FunctionComponent<Props> = ({ children }) => {
-  return (
-    <p className="text-center text-wt-accent text-sm">{children}</p>
-  );
-};
+  return <p className='text-sm text-center text-wt-accent'>{children}</p>
+}
 
-export default Note;
+export default Note

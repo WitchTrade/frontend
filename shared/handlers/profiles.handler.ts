@@ -1,40 +1,43 @@
-import { useEffect, useState } from 'react';
-import { PreviewMarket } from '../stores/markets/market.model';
+import { useEffect, useState } from 'react'
+import { PreviewMarket } from '../stores/markets/market.model'
 
 const ProfilesHandler = (profiles: PreviewMarket[]) => {
+  const [filteredProfiles, setFilteredProfiles] = useState<PreviewMarket[]>([])
+  const [loadedProfiles, setLoadedProfiles] = useState<PreviewMarket[]>([])
 
-  const [filteredProfiles, setFilteredProfiles] = useState<PreviewMarket[]>([]);
-  const [loadedProfiles, setLoadedProfiles] = useState<PreviewMarket[]>([]);
-
-  const [searchValue, setSearchValue] = useState('');
-
-  useEffect(() => {
-    setFilteredProfiles(profiles);
-  }, [profiles]);
+  const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    setFilteredProfiles(profiles.filter(p => p.displayName.toLowerCase().includes(searchValue.toLowerCase())));
-  }, [searchValue]);
+    setFilteredProfiles(profiles)
+  }, [profiles])
 
   useEffect(() => {
-    setLoadedProfiles(filteredProfiles.slice(0, 50));
-  }, [filteredProfiles]);
+    setFilteredProfiles(
+      profiles.filter((p) =>
+        p.displayName.toLowerCase().includes(searchValue.toLowerCase())
+      )
+    )
+  }, [searchValue])
+
+  useEffect(() => {
+    setLoadedProfiles(filteredProfiles.slice(0, 50))
+  }, [filteredProfiles])
 
   const loadMoreProfiles = () => {
-    setLoadedProfiles(filteredProfiles.slice(0, loadedProfiles.length + 50));
-  };
+    setLoadedProfiles(filteredProfiles.slice(0, loadedProfiles.length + 50))
+  }
 
   const hasMoreProfiles = () => {
-    return profiles.length > loadedProfiles.length;
-  };
+    return profiles.length > loadedProfiles.length
+  }
 
   return {
     loadedProfiles,
     loadMoreProfiles,
     hasMoreProfiles,
     searchValue,
-    setSearchValue
-  };
-};
+    setSearchValue,
+  }
+}
 
-export default ProfilesHandler;
+export default ProfilesHandler

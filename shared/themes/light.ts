@@ -1,4 +1,4 @@
-import { ThemeColors } from '../stores/theme/themeColor.model';
+import { ThemeColors } from '../stores/theme/themeColor.model'
 
 const lightTheme: ThemeColors = {
   light: '#FFF',
@@ -30,7 +30,7 @@ const lightTheme: ThemeColors = {
   chartColor4: '#33FFE5',
   chartColor5: '#813CF9',
   chartBackground: '#F5F5F5',
-  chartText: '#000'
-};
+  chartText: '#000',
+}
 
-export { lightTheme };
+export { lightTheme }

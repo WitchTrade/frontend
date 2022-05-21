@@ -1,4 +1,4 @@
-import { ThemeColors } from '../stores/theme/themeColor.model';
+import { ThemeColors } from '../stores/theme/themeColor.model'
 
 const draculaTheme: ThemeColors = {
   light: '#FFF',
@@ -30,7 +30,7 @@ const draculaTheme: ThemeColors = {
   chartColor4: '#8CCFFF',
   chartColor5: '#FF91AE',
   chartBackground: '#282A36',
-  chartText: '#FFF'
-};
+  chartText: '#FFF',
+}
 
-export { draculaTheme };
+export { draculaTheme }

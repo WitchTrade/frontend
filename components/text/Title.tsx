@@ -1,13 +1,13 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { FunctionComponent, ReactNode } from 'react'
 
 interface Types {
-  [key: string]: string;
+  [key: string]: string
 }
 
 interface Props {
   children: ReactNode
-  level: number;
-  id?: string;
+  level: number
+  id?: string
 }
 
 const Title: FunctionComponent<Props> = ({ level, id, children }) => {
@@ -16,11 +16,13 @@ const Title: FunctionComponent<Props> = ({ level, id, children }) => {
     level2: 'text-center text-wt-accent text-2xl font-bold pt-4',
     level3: 'text-center text-wt-accent text-xl font-bold',
     level4: 'text-wt-accent text-lg font-bold pt-4',
-  };
+  }
 
   return (
-    <p id={id} className={levels['level' + level]}>{children}</p>
-  );
-};
+    <p id={id} className={levels['level' + level]}>
+      {children}
+    </p>
+  )
+}
 
-export default Title;
+export default Title

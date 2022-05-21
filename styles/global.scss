@@ -8,7 +8,7 @@ html {
   font-family: "Inter", sans-serif;
 }
 
-.emoteWrapper > span {
+.emoteWrapper>span {
   vertical-align: middle;
 }
 
@@ -16,21 +16,27 @@ html {
   h1 {
     @apply text-2xl font-bold;
   }
+
   h2 {
     @apply text-xl font-bold;
   }
+
   h3 {
     @apply text-lg font-bold;
   }
+
   blockquote {
     @apply border-l-4 border-wt-accent pl-1;
   }
+
   ul {
     @apply list-disc ml-4;
   }
+
   ol {
     @apply list-decimal ml-4;
   }
+
   hr {
     @apply border-t border-wt-accent pl-1;
   }
@@ -139,27 +145,35 @@ a.kofi-button:active {
   0% {
     transform: rotate(0) scale(1);
   }
+
   60% {
     transform: rotate(0) scale(1);
   }
+
   75% {
     transform: rotate(0) scale(1.12);
   }
+
   80% {
     transform: rotate(0) scale(1.1);
   }
+
   84% {
     transform: rotate(-10deg) scale(1.1);
   }
+
   88% {
     transform: rotate(10deg) scale(1.1);
   }
+
   92% {
     transform: rotate(-10deg) scale(1.1);
   }
+
   96% {
     transform: rotate(10deg) scale(1.1);
   }
+
   100% {
     transform: rotate(0) scale(1);
   }

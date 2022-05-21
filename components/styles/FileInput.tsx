@@ -1,29 +1,37 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent } from 'react'
 
 interface Props {
-  inputId: string;
-  text: string;
-  inputChanged?: () => void;
-  inputRef: any;
+  inputId: string
+  text: string
+  inputChanged?: () => void
+  inputRef: any
 }
 
-const FileInput: FunctionComponent<Props> = ({ inputId, text, inputChanged, inputRef }) => {
-
+const FileInput: FunctionComponent<Props> = ({
+  inputId,
+  text,
+  inputChanged,
+  inputRef,
+}) => {
   return (
-    <div className="relative" >
+    <div className='relative'>
       <input
         id={inputId}
-        type="file"
-        className="hidden"
-        accept="application/json"
+        type='file'
+        className='hidden'
+        accept='application/json'
         ref={inputRef}
         onChange={inputChanged}
       />
-      <label htmlFor={inputId} tabIndex={0} className="px-3 py-2 focus:outline-none rounded-md text-sm font-medium cursor-pointer focus:ring-2 focus:ring-wt-accent flex text-wt-light bg-wt-success-dark hover:bg-wt-success">
+      <label
+        htmlFor={inputId}
+        tabIndex={0}
+        className='flex py-2 px-3 text-sm font-medium text-wt-light bg-wt-success-dark hover:bg-wt-success rounded-md focus:outline-none focus:ring-2 focus:ring-wt-accent cursor-pointer'
+      >
         <p>{text}</p>
       </label>
     </div>
-  );
-};
+  )
+}
 
-export default FileInput;
+export default FileInput

@@ -1,42 +1,42 @@
-import { setEntities } from '@ngneat/elf-entities';
-import { of } from 'rxjs';
-import { fromFetch } from 'rxjs/fetch';
-import { tap } from 'rxjs/operators';
-import { createNotification } from '../notification/notification.model';
-import { notificationService } from '../notification/notification.service';
-import { pricesStore } from './prices.store';
+import { setEntities } from '@ngneat/elf-entities'
+import { of } from 'rxjs'
+import { fromFetch } from 'rxjs/fetch'
+import { tap } from 'rxjs/operators'
+import { createNotification } from '../notification/notification.model'
+import { notificationService } from '../notification/notification.service'
+import { pricesStore } from './prices.store'
 
 export class PricesService {
-
   public fetchPrices() {
-    return fromFetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/prices`).pipe(
+    return fromFetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/markets/prices`
+    ).pipe(
       tap({
         next: async (res) => {
-          const json = await res.json();
+          const json = await res.json()
           if (res.ok) {
-            pricesStore.update(setEntities(json));
+            pricesStore.update(setEntities(json))
           } else {
             const notification = createNotification({
               content: json.message,
               duration: 5000,
-              type: 'error'
-            });
-            notificationService.addNotification(notification);
+              type: 'error',
+            })
+            notificationService.addNotification(notification)
           }
         },
-        error: err => {
+        error: (err) => {
           const notification = createNotification({
             content: err,
             duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-          return of(err);
-        }
+            type: 'error',
+          })
+          notificationService.addNotification(notification)
+          return of(err)
+        },
       })
-    );
+    )
   }
-
 }
 
-export const pricesService = new PricesService();
+export const pricesService = new PricesService()

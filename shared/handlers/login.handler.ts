@@ -1,32 +1,32 @@
-import { useRouter } from 'next/dist/client/router';
-import { useState } from 'react';
-import { createNotification } from '../stores/notification/notification.model';
-import { notificationService } from '../stores/notification/notification.service';
-import { userService } from '../stores/user/user.service';
+import { useRouter } from 'next/dist/client/router'
+import { useState } from 'react'
+import { createNotification } from '../stores/notification/notification.model'
+import { notificationService } from '../stores/notification/notification.service'
+import { userService } from '../stores/user/user.service'
 
 const LoginHandler = () => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [stayLoggedIn, setStayLoggedIn] = useState(false);
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [stayLoggedIn, setStayLoggedIn] = useState(false)
 
   const login = () => {
     if (!username || !password) {
       const notification = createNotification({
         content: 'Please fill out every field',
         duration: 5000,
-        type: 'warning'
-      });
-      notificationService.addNotification(notification);
-      return;
+        type: 'warning',
+      })
+      notificationService.addNotification(notification)
+      return
     }
-    userService.login(username, password, stayLoggedIn).subscribe(res => {
+    userService.login(username, password, stayLoggedIn).subscribe((res) => {
       if (res.ok) {
-        router.push('/');
+        router.push('/')
       }
-    });
-  };
+    })
+  }
 
   return {
     username,
@@ -35,8 +35,8 @@ const LoginHandler = () => {
     setPassword,
     stayLoggedIn,
     setStayLoggedIn,
-    login
-  };
-};
+    login,
+  }
+}
 
-export default LoginHandler;
+export default LoginHandler

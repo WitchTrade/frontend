@@ -1,27 +1,29 @@
-import '../styles/global.scss';
+import '../styles/global.scss'
 
-import { useEffect, useState } from 'react';
-import type { AppProps } from 'next/app';
-import { useObservable } from '@ngneat/react-rxjs';
+import { useObservable } from '@ngneat/react-rxjs'
 import {
   Chart,
   PieController,
-  LineController, ArcElement,
+  LineController,
+  ArcElement,
   PointElement,
   LineElement,
   CategoryScale,
   LinearScale,
   Title,
   Legend,
-  Tooltip
-} from 'chart.js';
-import Layout from '../components/core/Layout';
-import appService from '../shared/services/app.service';
-import { themeStore } from '../shared/stores/theme/theme.store';
+  Tooltip,
+} from 'chart.js'
+import { useEffect, useState } from 'react'
+import Layout from '../components/core/Layout'
+import appService from '../shared/services/app.service'
+import { themeStore } from '../shared/stores/theme/theme.store'
+import { ThemeStyle } from '../shared/stores/theme/themeColor.model'
+import type { AppProps } from 'next/app'
 
 function WitchTrade({ Component, pageProps }: AppProps) {
-  const [theme] = useObservable(themeStore);
-  const [themeStyles, setThemeStyles] = useState<any>();
+  const [theme] = useObservable(themeStore)
+  const [themeStyles, setThemeStyles] = useState<ThemeStyle | null>()
 
   useEffect(() => {
     if (theme && theme.colors) {
@@ -51,30 +53,43 @@ function WitchTrade({ Component, pageProps }: AppProps) {
         '--wt-error-light': theme.colors.errorLight,
         '--wt-chartbg': theme.colors.chartBackground,
         'background-color': 'var(--wt-surface)',
-        'color': 'var(--wt-text)'
-      });
+        color: 'var(--wt-text)',
+      })
     }
-  }, [theme]);
+  }, [theme])
 
   useEffect(() => {
-    Chart.register(PieController, LineController, ArcElement, PointElement, LineElement, CategoryScale, LinearScale, Title, Legend, Tooltip);
-    appService.init();
-  }, []);
+    Chart.register(
+      PieController,
+      LineController,
+      ArcElement,
+      PointElement,
+      LineElement,
+      CategoryScale,
+      LinearScale,
+      Title,
+      Legend,
+      Tooltip
+    )
+    appService.init()
+  }, [])
 
   useEffect(() => {
-    if (!themeStyles) return;
+    if (!themeStyles) return
     for (const themeStyle in themeStyles) {
       if (themeStyles.hasOwnProperty(themeStyle)) {
-        document.documentElement.style.setProperty(themeStyle, themeStyles[themeStyle]);
+        document.documentElement.style.setProperty(
+          themeStyle,
+          themeStyles[themeStyle]
+        )
       }
     }
-  }, [themeStyles]);
-
+  }, [themeStyles])
 
   return (
     <Layout>
       <Component {...pageProps} />
     </Layout>
-  );
+  )
 }
-export default WitchTrade;
+export default WitchTrade

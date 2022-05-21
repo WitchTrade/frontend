@@ -1,46 +1,59 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react'
 
-const useDetectOutsideClick = (initState: boolean, closeWhenUsed: boolean = false, closeWhenToggled: boolean = true) => {
-  const toggleRef = useRef<any>(null); // optional
-  const nodeRef = useRef<any>(null); // required
-  const secondNodeRef = useRef<any>(null); // optional
+const useDetectOutsideClick = (
+  initState: boolean,
+  closeWhenUsed = false,
+  closeWhenToggled = true
+) => {
+  const toggleRef = useRef<any>(null) // optional
+  const nodeRef = useRef<any>(null) // required
+  const secondNodeRef = useRef<any>(null) // optional
 
-  const [show, setShow] = useState(initState);
+  const [show, setShow] = useState(initState)
 
   const handleClickOutside = (event: any) => {
     //if modal is open and click is outside modal, close it
-    if (nodeRef.current &&
+    if (
+      nodeRef.current &&
       !nodeRef.current.contains(event.target) &&
-      (!secondNodeRef.current || !secondNodeRef.current.contains(event.target)) &&
+      (!secondNodeRef.current ||
+        !secondNodeRef.current.contains(event.target)) &&
       (!toggleRef.current || !toggleRef.current.contains(event.target))
     ) {
-      return setShow(false);
+      return setShow(false)
     }
-  };
+  }
 
   const handleClickToggle = (event: any) => {
     //if click is on trigger element, toggle modal
-    if (toggleRef.current && toggleRef.current.contains(event.target) && (!show || closeWhenToggled) || nodeRef.current && nodeRef.current.contains(event.target) && closeWhenUsed) {
-      return setShow(!show);
+    if (
+      (toggleRef.current &&
+        toggleRef.current.contains(event.target) &&
+        (!show || closeWhenToggled)) ||
+      (nodeRef.current &&
+        nodeRef.current.contains(event.target) &&
+        closeWhenUsed)
+    ) {
+      return setShow(!show)
     }
-  };
+  }
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside, true);
-    document.addEventListener('click', handleClickToggle, true);
+    document.addEventListener('mousedown', handleClickOutside, true)
+    document.addEventListener('click', handleClickToggle, true)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside, true);
-      document.removeEventListener('click', handleClickToggle, true);
-    };
-  });
+      document.removeEventListener('mousedown', handleClickOutside, true)
+      document.removeEventListener('click', handleClickToggle, true)
+    }
+  })
 
   return {
     toggleRef,
     nodeRef,
     secondNodeRef,
     show,
-    setShow
-  };
-};
+    setShow,
+  }
+}
 
-export default useDetectOutsideClick;
+export default useDetectOutsideClick

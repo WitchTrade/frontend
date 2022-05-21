@@ -1,71 +1,95 @@
-import { useEffect, useState } from 'react';
-import { tap } from 'rxjs';
-import { selectAllEntities } from '@ngneat/elf-entities';
-import { useObservable } from '@ngneat/react-rxjs';
-import { Item } from '../stores/items/item.model';
-import { AdminUser } from '../stores/admin/admin.model';
-import { adminStore } from '../stores/admin/admin.store';
-import { AdminFilterValues, createDefaultAdminFilter } from '../static/adminFilterValues';
+import { selectAllEntities } from '@ngneat/elf-entities'
+import { useObservable } from '@ngneat/react-rxjs'
+import { useEffect, useState } from 'react'
+import { tap } from 'rxjs'
+import {
+  AdminFilterValues,
+  createDefaultAdminFilter,
+} from '../static/adminFilterValues'
+import { AdminUser } from '../stores/admin/admin.model'
+import { adminStore } from '../stores/admin/admin.store'
+import { Item } from '../stores/items/item.model'
 
 const AdminFilterHandler = (itemsToLoad: number) => {
+  const [adminUsers] = useObservable(
+    adminStore.pipe(
+      selectAllEntities(),
+      tap((users) => users.sort((a, b) => a.username.localeCompare(b.username)))
+    )
+  )
 
-  const [adminUsers] = useObservable(adminStore.pipe(selectAllEntities(), tap(users => users.sort((a, b) => a.username.localeCompare(b.username)))));
+  const [filteredAdminUsers, setFilteredAdminUsers] = useState<AdminUser[]>([])
+  const [loadedAdminUsers, setLoadedAdminUsers] = useState<AdminUser[]>([])
 
-  const [filteredAdminUsers, setFilteredAdminUsers] = useState<AdminUser[]>([]);
-  const [loadedAdminUsers, setLoadedAdminUsers] = useState<AdminUser[]>([]);
-
-  const [adminFilterValues, setAdminFilterValues] = useState<AdminFilterValues>(createDefaultAdminFilter());
+  const [adminFilterValues, setAdminFilterValues] = useState<AdminFilterValues>(
+    createDefaultAdminFilter()
+  )
 
   useEffect(() => {
-    filterAdminUsers();
-  }, [adminUsers, adminFilterValues]);
+    filterAdminUsers()
+  }, [adminUsers, adminFilterValues])
 
   useEffect(() => {
-    setLoadedAdminUsers(filteredAdminUsers.slice(0, itemsToLoad));
-  }, [filteredAdminUsers]);
+    setLoadedAdminUsers(filteredAdminUsers.slice(0, itemsToLoad))
+  }, [filteredAdminUsers])
 
   const filterAdminUsers = () => {
-    let filteredItems = adminUsers.filter((adminUser) => {
-      const searchString = adminUser.username.toLowerCase().includes(adminFilterValues.searchString.toLowerCase()) || adminUser.displayName.toLowerCase().includes(adminFilterValues.searchString.toLowerCase());
+    const filteredItems = adminUsers.filter((adminUser) => {
+      const searchString =
+        adminUser.username
+          .toLowerCase()
+          .includes(adminFilterValues.searchString.toLowerCase()) ||
+        adminUser.displayName
+          .toLowerCase()
+          .includes(adminFilterValues.searchString.toLowerCase())
 
-      const verified = adminFilterValues.verified.key !== 'any' ? (adminUser.verified && adminFilterValues.verified.key === 'verified') || (!adminUser.verified && adminFilterValues.verified.key === 'notverified') : true;
-      const badge = adminFilterValues.badge.key !== 'any' ? adminUser.badges.some(b => b.id === adminFilterValues.badge.key) : true;
+      const verified =
+        adminFilterValues.verified.key !== 'any'
+          ? (adminUser.verified &&
+              adminFilterValues.verified.key === 'verified') ||
+            (!adminUser.verified &&
+              adminFilterValues.verified.key === 'notverified')
+          : true
+      const badge =
+        adminFilterValues.badge.key !== 'any'
+          ? adminUser.badges.some((b) => b.id === adminFilterValues.badge.key)
+          : true
 
-      return searchString &&
-        verified &&
-        badge;
-    });
+      return searchString && verified && badge
+    })
 
     filteredItems.sort((a, b) => {
-      const key = adminFilterValues.orderBy.key as keyof Item;
-      let one = a[key];
-      let two = b[key];
+      const key = adminFilterValues.orderBy.key as keyof Item
+      const one = a[key]
+      const two = b[key]
       if (one === undefined || two === undefined) {
-        return 0;
+        return 0
       }
-      let returnValue = 0;
+      let returnValue = 0
       if (one > two) {
-        returnValue = 1;
+        returnValue = 1
       }
       if (two > one) {
-        returnValue = -1;
+        returnValue = -1
       }
       if (adminFilterValues.orderDirection.key === 'desc') {
-        returnValue *= -1;
+        returnValue *= -1
       }
-      return returnValue;
-    });
+      return returnValue
+    })
 
-    setFilteredAdminUsers(filteredItems);
-  };
+    setFilteredAdminUsers(filteredItems)
+  }
 
   const loadMoreAdminUsers = () => {
-    setLoadedAdminUsers(filteredAdminUsers.slice(0, loadedAdminUsers.length + 25));
-  };
+    setLoadedAdminUsers(
+      filteredAdminUsers.slice(0, loadedAdminUsers.length + 25)
+    )
+  }
 
   const hasMoreAdminUsers = () => {
-    return adminUsers.length > loadedAdminUsers.length;
-  };
+    return adminUsers.length > loadedAdminUsers.length
+  }
 
   return {
     totalAdminUserCount: adminUsers.length,
@@ -74,8 +98,8 @@ const AdminFilterHandler = (itemsToLoad: number) => {
     loadMoreAdminUsers,
     hasMoreAdminUsers,
     adminFilterValues,
-    setAdminFilterValues
-  };
-};
+    setAdminFilterValues,
+  }
+}
 
-export default AdminFilterHandler;
+export default AdminFilterHandler

@@ -1,64 +1,66 @@
-import { useState } from 'react';
-import { Observable, of, tap } from 'rxjs';
-import { Quest } from '../models/quest.model';
-import authService from '../services/auth.service';
-import { createNotification } from '../stores/notification/notification.model';
-import { notificationService } from '../stores/notification/notification.service';
+import { useState } from 'react'
+import { Observable, of, tap } from 'rxjs'
+import { Quest } from '../models/quest.model'
+import authService from '../services/auth.service'
+import { createNotification } from '../stores/notification/notification.model'
+import { notificationService } from '../stores/notification/notification.service'
 
 const useQuestsHandler = () => {
-  const [quests, setQuests] = useState<Quest[]>([]);
-  const [cachedAt, setCachedAt] = useState<Date>(new Date());
+  const [quests, setQuests] = useState<Quest[]>([])
+  const [cachedAt, setCachedAt] = useState<Date>(new Date())
 
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true)
 
   const getQuests = async () => {
-    setLoading(true);
+    setLoading(true)
 
     const fetchQuestSub = fetchQuests().subscribe(() => {
-      setLoading(false);
-    });
+      setLoading(false)
+    })
 
     return () => {
-      fetchQuestSub.unsubscribe();
+      fetchQuestSub.unsubscribe()
     }
-  };
+  }
 
   const fetchQuests = (): Observable<Response> => {
-    return authService.request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/quests`).pipe(
-      tap({
-        next: async res => {
-          const json = await res.json();
-          if (res.ok) {
-            setQuests(json.quests);
-            setCachedAt(json.cachedAt);
-          } else {
+    return authService
+      .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/quests`)
+      .pipe(
+        tap({
+          next: async (res) => {
+            const json = await res.json()
+            if (res.ok) {
+              setQuests(json.quests)
+              setCachedAt(json.cachedAt)
+            } else {
+              const notification = createNotification({
+                content: json.message,
+                duration: 5000,
+                type: 'error',
+              })
+              notificationService.addNotification(notification)
+            }
+          },
+          error: (err) => {
             const notification = createNotification({
-              content: json.message,
+              content: err,
               duration: 5000,
-              type: 'error'
-            });
-            notificationService.addNotification(notification);
-          }
-        },
-        error: err => {
-          const notification = createNotification({
-            content: err,
-            duration: 5000,
-            type: 'error'
-          });
-          notificationService.addNotification(notification);
-          return of(err);
-        }
-      })
-    );
-  };
+              type: 'error',
+            })
+            notificationService.addNotification(notification)
+            return of(err)
+          },
+        })
+      )
+  }
 
   return {
     quests,
     loading,
     getQuests,
-    cachedAt
-  };
-};
+    cachedAt,
+  }
+}
 
-export default useQuestsHandler;
+export default useQuestsHandler

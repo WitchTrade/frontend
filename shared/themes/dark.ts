@@ -1,4 +1,4 @@
-import { ThemeColors } from '../stores/theme/themeColor.model';
+import { ThemeColors } from '../stores/theme/themeColor.model'
 
 const darkTheme: ThemeColors = {
   light: '#FFF',
@@ -30,7 +30,7 @@ const darkTheme: ThemeColors = {
   chartColor4: '#8CCFFF',
   chartColor5: '#FF91AE',
   chartBackground: '#1F2937',
-  chartText: '#FFF'
-};
+  chartText: '#FFF',
+}
 
-export { darkTheme };
+export { darkTheme }
