@@ -146,7 +146,9 @@ const Quests = () => {
           {loading && <Loading text='Loading quests' />}
           {!loading && (
             <div className='flex flex-col'>
-              <p className='text-2xl font-bold'>Weekly</p>
+              <p className='text-2xl font-bold'>
+                Weekly <NextQuest type='weekly' />
+              </p>
               <div className='flex flex-wrap justify-center'>
                 {quests
                   .filter((q) => q.type === 'weekly')
@@ -157,11 +159,10 @@ const Quests = () => {
                       openItemDetails={openItemDetails}
                     />
                   ))}
-                {quests.filter((q) => q.type === 'weekly').length < 2 && (
-                  <NextQuest type='weekly' />
-                )}
               </div>
-              <p className='text-2xl font-bold'>Daily</p>
+              <p className='text-2xl font-bold'>
+                Daily <NextQuest type='daily' />
+              </p>
               <div className='flex flex-wrap justify-center'>
                 {quests
                   .filter((q) => q.type === 'daily')
@@ -172,9 +173,6 @@ const Quests = () => {
                       openItemDetails={openItemDetails}
                     />
                   ))}
-                {quests.filter((q) => q.type === 'daily').length < 3 && (
-                  <NextQuest type='daily' />
-                )}
               </div>
             </div>
           )}

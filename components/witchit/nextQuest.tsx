@@ -45,24 +45,19 @@ const NextQuest: FunctionComponent<Props> = ({ type }) => {
   const formatDate = () => {
     if (type === 'daily') {
       setTimeString(
-        dayjs.duration(nextQuestDate.diff(dayjs())).format('HH:mm:ss')
+        dayjs.duration(nextQuestDate.diff(dayjs())).format('HH[h] mm[min]')
       )
     } else {
       setTimeString(
-        dayjs.duration(nextQuestDate.diff(dayjs())).format('D:HH:mm:ss')
+        dayjs.duration(nextQuestDate.diff(dayjs())).format('D[d] HH[h] mm[min]')
       )
     }
   }
 
   return (
-    <div
-      className='flex justify-center items-center p-2 m-2 w-full bg-wt-surface-dark rounded-lg border-2 border-wt-accent'
-      style={{ maxWidth: '300px', height: '100px' }}
-    >
-      <p className='text-xl'>
-        Next quest in <span className='text-wt-accent'>{timeString}</span>
-      </p>
-    </div>
+    <span className='text-base'>
+      (next in <span className='text-wt-accent'>{timeString}</span>)
+    </span>
   )
 }
 
