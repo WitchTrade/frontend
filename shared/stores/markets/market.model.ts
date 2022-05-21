@@ -18,6 +18,7 @@ export interface Offer {
   secondaryPrice?: Price
   secondaryPriceAmount?: number
   quantity: number
+  oldQuantity?: number
 }
 
 export function createOffer(params: Partial<Offer>) {

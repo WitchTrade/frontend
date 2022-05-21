@@ -37,8 +37,19 @@ const MarketHandler = () => {
 
   const [market, setMarket] = useState<Market>(createMarket({}))
   const [type, setType] = useState(MARKET_TYPE.OFFER)
-  const [newOfferView, setNewOfferView] = useState(false)
-  const [allOffers, setAllOffers] = useState<Offer[]>([])
+  const [changedOfferView, setChangedOfferView] = useState(false)
+  const [changedOffers, setChangedOffers] = useState<{
+    new: any
+    updated: any
+    deleted: any
+  }>({
+    new: [],
+    updated: [],
+    deleted: [],
+  })
+  const [selectedChangedOffers, setSelectedChangedOffers] = useState<0 | 1 | 2>(
+    0
+  )
 
   const [editingNote, setEditingNote] = useState(false)
   const [localNote, setLocalNote] = useState('')
@@ -221,13 +232,45 @@ const MarketHandler = () => {
             } else if (market.wishlistNote) {
               setLocalNote(market.wishlistNote)
             }
-            if (json.newOffersCount > 0) {
-              setAllOffers(market.offers)
-              market.offers = market.offers.filter((o) =>
-                json.newOffers.includes(o.id)
-              )
+            if (
+              json.newOffersCount > 0 ||
+              json.updatedOffersCount > 0 ||
+              json.deletedOffersCount > 0
+            ) {
+              setChangedOffers({
+                new: market.offers.filter((offer) =>
+                  json.newOffers.includes(offer.id)
+                ),
+                updated: market.offers
+                  .filter((offer) =>
+                    json.updatedOffers.some(
+                      (updateOffer) => updateOffer.id === offer.id
+                    )
+                  )
+                  .map((offer) => {
+                    offer.oldQuantity = json.updatedOffers.find(
+                      (updateOffer) => updateOffer.id === offer.id
+                    ).oldQuantity
+                    return offer
+                  }),
+                deleted: json.deletedOffers,
+              })
               setMarket(market)
-              setNewOfferView(true)
+              setCreatingNew(false)
+              setSelectedChangedOffers(
+                market.offers.filter((offer) =>
+                  json.newOffers.includes(offer.id)
+                ).length !== 0
+                  ? 0
+                  : market.offers.filter((offer) =>
+                      json.updatedOffers.some(
+                        (updateOffer) => updateOffer.id === offer.id
+                      )
+                    ).length !== 0
+                  ? 1
+                  : 2
+              )
+              setChangedOfferView(true)
             } else {
               setMarket(market)
             }
@@ -244,9 +287,12 @@ const MarketHandler = () => {
         if (res.ok) {
           const newOffers = market.offers.filter((o) => o.id !== trade.id)
           setMarket({ ...market, offers: newOffers })
-          if (newOfferView) {
-            const newAllOffers = allOffers.filter((o) => o.id !== trade.id)
-            setAllOffers(newAllOffers)
+          if (changedOfferView) {
+            setChangedOffers({
+              new: changedOffers.new.filter((o) => o.id !== trade.id),
+              updated: changedOffers.updated.filter((o) => o.id !== trade.id),
+              deleted: changedOffers.deleted,
+            })
           }
         }
       })
@@ -283,13 +329,25 @@ const MarketHandler = () => {
           const updatedIndex = newOffers.findIndex((o) => o.id === trade.id)
           newOffers[updatedIndex] = updatedOffer
           setMarket({ ...market, offers: [...newOffers] })
-          if (newOfferView) {
-            const newAllOffers = [...allOffers]
-            const updatedIndex = newAllOffers.findIndex(
-              (o) => o.id === trade.id
-            )
-            newAllOffers[updatedIndex] = updatedOffer
-            setAllOffers(newAllOffers)
+          if (changedOfferView) {
+            const newOffers = [...changedOffers.new]
+            const newIndex = newOffers.findIndex((o) => o.id === trade.id)
+            if (newIndex >= 0) {
+              newOffers[newIndex] = updatedOffer
+            }
+
+            const updatedOffers = [...changedOffers.updated]
+            const upIndex = updatedOffers.findIndex((o) => o.id === trade.id)
+            updatedOffer.oldQuantity = updatedOffers[upIndex].oldQuantity
+            if (upIndex >= 0) {
+              updatedOffers[upIndex] = updatedOffer
+            }
+
+            setChangedOffers({
+              new: newOffers,
+              updated: updatedOffers,
+              deleted: changedOffers.deleted,
+            })
           }
           finished()
         }
@@ -308,15 +366,19 @@ const MarketHandler = () => {
     }
   }
 
-  const closeNewOfferView = () => {
-    setMarket({ ...market, offers: allOffers })
-    setNewOfferView(false)
+  const closeChangedOfferView = () => {
+    setChangedOffers({
+      new: [],
+      updated: [],
+      deleted: [],
+    })
+    setChangedOfferView(false)
   }
 
   return {
     market,
     prices,
-    newOfferView,
+    changedOfferView,
     editingNote,
     setEditingNote,
     localNote,
@@ -333,7 +395,10 @@ const MarketHandler = () => {
     syncOffers,
     deleteTrade,
     updateTrade,
-    closeNewOfferView,
+    closeChangedOfferView,
+    changedOffers,
+    selectedChangedOffers,
+    setSelectedChangedOffers,
   }
 }
 

@@ -15,6 +15,7 @@ import EditTradeDialog from './EditTradeDialog'
 
 interface TradeWish extends Wish {
   quantity: number
+  oldQuantity?: number
 }
 
 export enum TRADE_TYPE {
@@ -32,6 +33,8 @@ interface Props {
   deleteTrade?: (trade: Offer | Wish) => void
   updateTrade?: (trade: any, finished: () => void) => void
   openItemDetails: (item: Item) => void
+  deleted?: boolean
+  updated?: boolean
 }
 
 const TradeView: FunctionComponent<Props> = ({
@@ -42,6 +45,8 @@ const TradeView: FunctionComponent<Props> = ({
   deleteTrade,
   updateTrade,
   openItemDetails,
+  deleted,
+  updated,
 }) => {
   const [item] = useObservable(
     itemsStore.pipe(
@@ -85,9 +90,19 @@ const TradeView: FunctionComponent<Props> = ({
               type === TRADE_TYPE.PROFILE_OFFER) && (
               <div className='flex justify-between mx-4'>
                 <p className='p-1 text-sm break-words'>In stock:</p>
-                <p className='p-1 text-sm font-bold break-words'>
-                  {trade.quantity}
-                </p>
+                {!updated && (
+                  <p className='p-1 text-sm font-bold break-words'>
+                    {trade.quantity}
+                  </p>
+                )}
+                {updated && (
+                  <p className='p-1 text-sm font-bold break-words'>
+                    <span className='text-wt-error line-through'>
+                      {trade.oldQuantity}
+                    </span>
+                    /<span className='text-wt-success'>{trade.quantity}</span>
+                  </p>
+                )}
               </div>
             )}
             <div className='mx-2 mb-2 rounded-lg border border-wt-accent'>
@@ -145,7 +160,8 @@ const TradeView: FunctionComponent<Props> = ({
               type === TRADE_TYPE.MANAGE_WISH) &&
               updateTrade &&
               deleteTrade &&
-              prices && (
+              prices &&
+              !deleted && (
                 <>
                   <div className='flex justify-between py-1 px-2'>
                     <EditTradeDialog

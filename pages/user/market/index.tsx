@@ -11,6 +11,7 @@ import ItemFilter from '../../../components/items/ItemFilter'
 import CreateNewTrade from '../../../components/market/CreateNewTrade'
 import SyncOffersDialog from '../../../components/market/SyncOffersDialog'
 import TradeView, { TRADE_TYPE } from '../../../components/market/TradeView'
+import ChangedOffersNav from '../../../components/navs/ChangedOffersNav'
 import MarketNav from '../../../components/navs/MarketNav'
 import ActionButton from '../../../components/styles/ActionButton'
 import Loading from '../../../components/styles/Loading'
@@ -32,7 +33,7 @@ const Market: NextPage = () => {
   const {
     market,
     prices,
-    newOfferView,
+    changedOfferView,
     editingNote,
     setEditingNote,
     localNote,
@@ -49,7 +50,10 @@ const Market: NextPage = () => {
     syncOffers,
     deleteTrade,
     updateTrade,
-    closeNewOfferView,
+    closeChangedOfferView,
+    changedOffers,
+    selectedChangedOffers,
+    setSelectedChangedOffers,
   } = MarketHandler()
 
   const {
@@ -243,7 +247,7 @@ const Market: NextPage = () => {
             )}
           </div>
           <div className='flex flex-wrap justify-center mt-10'>
-            {(type === MARKET_TYPE.WISH || !newOfferView) && (
+            {(type === MARKET_TYPE.WISH || !changedOfferView) && (
               <div className='m-1'>
                 <ActionButton
                   type='success'
@@ -259,7 +263,7 @@ const Market: NextPage = () => {
                 </ActionButton>
               </div>
             )}
-            {type === MARKET_TYPE.OFFER && !newOfferView && (
+            {type === MARKET_TYPE.OFFER && !changedOfferView && (
               <div className='m-1'>
                 <SyncOffersDialog
                   localSyncSettings={localSyncSettings}
@@ -271,7 +275,7 @@ const Market: NextPage = () => {
             )}
             {((type === MARKET_TYPE.OFFER &&
               market.offers.length > 3 &&
-              !newOfferView) ||
+              !changedOfferView) ||
               (type === MARKET_TYPE.WISH && market.wishes.length > 3)) && (
               <div className='m-1'>
                 <ActionButton
@@ -302,65 +306,116 @@ const Market: NextPage = () => {
               openItemDetails={openItemDetails}
             />
           </div>
-          <div className='w-full'>
-            <ItemFilter
-              itemFilterValues={itemFilterValues}
-              setItemFilterValues={setItemFilterValues}
-              initialOpen={false}
-              type={FILTER_TYPE.MARKET}
-            />
-          </div>
-          {newOfferView && type === MARKET_TYPE.OFFER && (
+          {changedOfferView && type === MARKET_TYPE.OFFER && (
             <div className='flex justify-center items-center py-2 px-8 mx-auto mt-4 max-w-6xl bg-wt-success rounded-lg'>
               <p className='mr-10 text-2xl font-bold'>
-                Showing created offers ({market.offers.length})
+                Showing changed offers{' '}
+                <span className='text-base'>
+                  ({changedOffers.new.length} new,{' '}
+                  {changedOffers.updated.length} updated,{' '}
+                  {changedOffers.deleted.length} deleted)
+                </span>
               </p>
-              <ActionButton type='cancel' onClick={() => closeNewOfferView()}>
+              <ActionButton
+                type='cancel'
+                onClick={() => closeChangedOfferView()}
+              >
                 Close
               </ActionButton>
             </div>
           )}
-          <p className='mt-2 text-center'>
-            <span className='font-bold text-wt-accent'>{totalItemCount}</span>{' '}
-            {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
-            {totalItemCount === 1 ? '' : 's'}
-            {totalItemCount !== filteredItems.length ? (
-              <>
-                {' '}
-                in total,{' '}
+          {!changedOfferView && (
+            <>
+              <div className='w-full'>
+                <ItemFilter
+                  itemFilterValues={itemFilterValues}
+                  setItemFilterValues={setItemFilterValues}
+                  initialOpen={false}
+                  type={FILTER_TYPE.MARKET}
+                />
+              </div>
+              <p className='mt-2 text-center'>
                 <span className='font-bold text-wt-accent'>
-                  {filteredItems.length}
+                  {totalItemCount}
                 </span>{' '}
-                filtered
-              </>
-            ) : (
-              ''
-            )}
-          </p>
-          <InfiniteScroll
-            className='flex flex-row flex-wrap justify-center py-2 mx-6 h-full'
-            dataLength={loadedItems.length}
-            next={loadMoreItems}
-            hasMore={hasMoreItems()}
-            loader={<p></p>}
-          >
-            {loadedItems.map((item) => (
-              <TradeView
-                key={item.id}
-                type={
-                  type === MARKET_TYPE.OFFER
-                    ? TRADE_TYPE.MANAGE_OFFER
-                    : TRADE_TYPE.MANAGE_WISH
-                }
-                trade={item}
-                inventory={inventory}
-                deleteTrade={deleteTrade}
-                updateTrade={updateTrade}
-                prices={prices}
-                openItemDetails={openItemDetails}
-              />
-            ))}
-          </InfiniteScroll>
+                {type === MARKET_TYPE.OFFER ? 'offer' : 'wishlist item'}
+                {totalItemCount === 1 ? '' : 's'}
+                {totalItemCount !== filteredItems.length ? (
+                  <>
+                    {' '}
+                    in total,{' '}
+                    <span className='font-bold text-wt-accent'>
+                      {filteredItems.length}
+                    </span>{' '}
+                    filtered
+                  </>
+                ) : (
+                  ''
+                )}
+              </p>
+              <InfiniteScroll
+                className='flex flex-row flex-wrap justify-center py-2 mx-6 h-full'
+                dataLength={loadedItems.length}
+                next={loadMoreItems}
+                hasMore={hasMoreItems()}
+                loader={<p></p>}
+              >
+                {loadedItems.map((item) => (
+                  <TradeView
+                    key={item.id}
+                    type={
+                      type === MARKET_TYPE.OFFER
+                        ? TRADE_TYPE.MANAGE_OFFER
+                        : TRADE_TYPE.MANAGE_WISH
+                    }
+                    trade={item}
+                    inventory={inventory}
+                    deleteTrade={deleteTrade}
+                    updateTrade={updateTrade}
+                    prices={prices}
+                    openItemDetails={openItemDetails}
+                  />
+                ))}
+              </InfiniteScroll>
+            </>
+          )}
+          {changedOfferView && (
+            <>
+              <div className='pt-3'>
+                <ChangedOffersNav
+                  changedOffers={changedOffers}
+                  type={selectedChangedOffers}
+                  setType={setSelectedChangedOffers}
+                />
+              </div>
+              <div className='flex flex-row flex-wrap justify-center py-2 mx-6 h-full'>
+                {changedOffers[
+                  selectedChangedOffers === 0
+                    ? 'new'
+                    : selectedChangedOffers === 1
+                    ? 'updated'
+                    : 'deleted'
+                ].map((item) => (
+                  <TradeView
+                    key={item.id}
+                    type={
+                      type === MARKET_TYPE.OFFER
+                        ? TRADE_TYPE.MANAGE_OFFER
+                        : TRADE_TYPE.MANAGE_WISH
+                    }
+                    trade={item}
+                    inventory={inventory}
+                    deleteTrade={deleteTrade}
+                    updateTrade={updateTrade}
+                    prices={prices}
+                    openItemDetails={openItemDetails}
+                    deleted={selectedChangedOffers === 2}
+                    updated={selectedChangedOffers === 1}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </>
       )) || <Loading />}
     </LoginWrapper>
