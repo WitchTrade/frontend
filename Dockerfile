@@ -2,15 +2,15 @@
 FROM node:lts-alpine3.14 AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM node:lts-alpine3.14 AS builder
 WORKDIR /app
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
-RUN NEXT_PUBLIC_BASE_API_URL=BASE_API_URL npm run build && npm install
+RUN NEXT_PUBLIC_BASE_API_URL=BASE_API_URL yarn build && yarn install
 
 # Production image, copy all the files and run next
 FROM node:lts-alpine3.14 AS runner
