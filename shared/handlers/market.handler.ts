@@ -3,6 +3,7 @@ import { useObservable } from '@ngneat/react-rxjs'
 import { useEffect, useState } from 'react'
 import { Subscription } from 'rxjs'
 import { wantsBothValues } from '../../components/market/CreateNewTrade'
+import { getItemRarities, itemsStore } from '../stores/items/items.store'
 import {
   createMarket,
   createOffer,
@@ -34,6 +35,7 @@ const MarketHandler = () => {
   const [user] = useObservable(userStore)
   const [syncSettings] = useObservable(syncSettingsStore)
   const [prices] = useObservable(pricesStore.pipe(selectAllEntities()))
+  const [items] = useObservable(itemsStore.pipe(selectAllEntities()))
 
   const [market, setMarket] = useState<Market>(createMarket({}))
   const [type, setType] = useState(MARKET_TYPE.OFFER)
@@ -238,9 +240,31 @@ const MarketHandler = () => {
               json.deletedOffersCount > 0
             ) {
               setChangedOffers({
-                new: market.offers.filter((offer) =>
-                  json.newOffers.includes(offer.id)
-                ),
+                new: market.offers
+                  .filter((offer) => json.newOffers.includes(offer.id))
+                  .sort((aTrade, bTrade) => {
+                    let a = items.find((i) => i.id === aTrade.item.id)
+                    let b = items.find((i) => i.id === bTrade.item.id)
+                    if (!a) {
+                      a = items[0]
+                    }
+                    if (!b) {
+                      b = items[0]
+                    }
+                    const one = getItemRarities().indexOf(a.tagRarity as string)
+                    const two = getItemRarities().indexOf(b.tagRarity as string)
+                    let returnValue = 0
+                    if (one > two) {
+                      returnValue = -1
+                    }
+                    if (two > one) {
+                      returnValue = 1
+                    }
+                    if (one === two) {
+                      returnValue = a.id - b.id
+                    }
+                    return returnValue
+                  }),
                 updated: market.offers
                   .filter((offer) =>
                     json.updatedOffers.some(
@@ -252,8 +276,53 @@ const MarketHandler = () => {
                       (updateOffer) => updateOffer.id === offer.id
                     ).oldQuantity
                     return offer
+                  })
+                  .sort((aTrade, bTrade) => {
+                    let a = items.find((i) => i.id === aTrade.item.id)
+                    let b = items.find((i) => i.id === bTrade.item.id)
+                    if (!a) {
+                      a = items[0]
+                    }
+                    if (!b) {
+                      b = items[0]
+                    }
+                    const one = getItemRarities().indexOf(a.tagRarity as string)
+                    const two = getItemRarities().indexOf(b.tagRarity as string)
+                    let returnValue = 0
+                    if (one > two) {
+                      returnValue = 1
+                    }
+                    if (two > one) {
+                      returnValue = -1
+                    }
+                    if (one === two) {
+                      returnValue = a.id - b.id
+                    }
+                    return returnValue
                   }),
-                deleted: json.deletedOffers,
+                deleted: json.deletedOffers.sort((aTrade, bTrade) => {
+                  let a = items.find((i) => i.id === aTrade.item.id)
+                  let b = items.find((i) => i.id === bTrade.item.id)
+                  if (!a) {
+                    a = items[0]
+                  }
+                  if (!b) {
+                    b = items[0]
+                  }
+                  const one = getItemRarities().indexOf(a.tagRarity as string)
+                  const two = getItemRarities().indexOf(b.tagRarity as string)
+                  let returnValue = 0
+                  if (one > two) {
+                    returnValue = 1
+                  }
+                  if (two > one) {
+                    returnValue = -1
+                  }
+                  if (one === two) {
+                    returnValue = a.id - b.id
+                  }
+                  return returnValue
+                }),
               })
               setMarket(market)
               setCreatingNew(false)
