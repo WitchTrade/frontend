@@ -14,6 +14,10 @@ import {
   Legend,
   Tooltip,
 } from 'chart.js'
+import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
 import { useEffect, useState } from 'react'
 import Layout from '../components/core/Layout'
 import appService from '../shared/services/app.service'
@@ -22,6 +26,10 @@ import { ThemeStyle } from '../shared/stores/theme/themeColor.model'
 import type { AppProps } from 'next/app'
 
 function WitchTrade({ Component, pageProps }: AppProps) {
+  dayjs.extend(relativeTime)
+  dayjs.extend(duration)
+  dayjs.extend(utc)
+
   const [theme] = useObservable(themeStore)
   const [themeStyles, setThemeStyles] = useState<ThemeStyle | null>()
 

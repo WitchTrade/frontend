@@ -1,6 +1,5 @@
 import { useObservable } from '@ngneat/react-rxjs'
 import dayjs from 'dayjs'
-import duration from 'dayjs/plugin/duration'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
@@ -32,10 +31,6 @@ const Quests = () => {
     openItemDetails,
     capitalizeFirstLetter,
   } = ItemsHandler()
-
-  useEffect(() => {
-    dayjs.extend(duration)
-  }, [])
 
   useEffect(() => {
     if (user.loggedIn && user.verifiedSteamProfileLink) {

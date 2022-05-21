@@ -1,7 +1,3 @@
-import dayjs from 'dayjs'
-import duration from 'dayjs/plugin/duration'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import utc from 'dayjs/plugin/utc'
 import { pairwise } from 'rxjs'
 
 import { inventoryService } from '../stores/inventory/inventory.service'
@@ -36,10 +32,6 @@ class AppService {
         navigator.serviceWorker.register('/sw.js')
       })
     }
-
-    dayjs.extend(relativeTime)
-    dayjs.extend(duration)
-    dayjs.extend(utc)
 
     themeService.init()
     userService.init()
