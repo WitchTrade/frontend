@@ -407,8 +407,8 @@ const MarketHandler = () => {
 
             const updatedOffers = [...changedOffers.updated]
             const upIndex = updatedOffers.findIndex((o) => o.id === trade.id)
-            updatedOffer.oldQuantity = updatedOffers[upIndex].oldQuantity
             if (upIndex >= 0) {
+              updatedOffer.oldQuantity = updatedOffers[upIndex].oldQuantity
               updatedOffers[upIndex] = updatedOffer
             }
 
