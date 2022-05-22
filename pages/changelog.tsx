@@ -15,6 +15,25 @@ const Changelog: NextPage = () => {
         <div className='mb-2'>
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={4}>Version 1.3.0 (22.05.2022)</Title>
+        <p>
+          <b>Added:</b>
+        </p>
+        <ul className='pl-8 list-disc'>
+          <li>
+            When syncing your market, you can now see which items have been
+            updated and which have been deleted
+          </li>
+        </ul>
+        <p>
+          <b>Changed:</b>
+        </p>
+        <ul className='pl-8 list-disc'>
+          <li>
+            The remaining time until a new quest is available is now always
+            displayed, even if all quest slots are occupied
+          </li>
+        </ul>
         <Title level={4}>Version 1.2.0 (21.03.2022)</Title>
         <p>
           <b>Added:</b>
