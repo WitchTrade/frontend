@@ -34,7 +34,7 @@ const NextQuest: FunctionComponent<Props> = ({ type }) => {
     formatDate()
     const interval = setInterval(() => {
       formatDate()
-    }, 1000)
+    }, 60000)
 
     return () => {
       clearInterval(interval)
