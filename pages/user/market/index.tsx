@@ -324,7 +324,7 @@ const Market: NextPage = () => {
               </ActionButton>
             </div>
           )}
-          {!changedOfferView && (
+          {(!changedOfferView || type === MARKET_TYPE.WISH) && (
             <>
               <div className='w-full'>
                 <ItemFilter
@@ -379,7 +379,7 @@ const Market: NextPage = () => {
               </InfiniteScroll>
             </>
           )}
-          {changedOfferView && (
+          {changedOfferView && type === MARKET_TYPE.OFFER && (
             <>
               <div className='pt-3'>
                 <ChangedOffersNav
