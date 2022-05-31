@@ -37,8 +37,10 @@ const Server: FunctionComponent<Props> = ({
         ref={toggleRef}
       >
         <p>
-          <span className='font-bold'>{server.name}</span> |{' '}
-          <span className='text-sm'>{server.gameMode}</span>
+          <span className='font-bold'>
+            {server.name.replace('Anniversary', '🎂')}
+          </span>{' '}
+          | <span className='text-sm'>{server.gameMode}</span>
         </p>
         <div className='flex items-center'>
           {(server.players && (
