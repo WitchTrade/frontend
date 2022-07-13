@@ -60,8 +60,11 @@ const ItemDetailDialog: FunctionComponent<Props> = ({
         .subscribe(async (res) => {
           if (res.ok) {
             const result = await res.json()
-            if (result.offers[0]) {
-              setSearchOffer(result.offers[0])
+            const itemoffer = result.offers.find(
+              (o: SearchOffer) => o.id === item.id
+            )
+            if (itemoffer) {
+              setSearchOffer(itemoffer)
             }
           }
           setLoading(false)

@@ -13,7 +13,6 @@ import {
   itemSlotValues,
   orderByValues,
   orderDirectionValues,
-  tradeableItemRarityValues,
 } from '../static/filterValues'
 import { inventoryStore } from '../stores/inventory/inventory.store'
 import { Item } from '../stores/items/item.model'
@@ -143,6 +142,8 @@ const FilterHandler = (
       setQueryLoaded(true)
       setUsernameChanged(false)
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query, queryLoaded, usernameChanged])
 
   useEffect(() => {
@@ -153,6 +154,8 @@ const FilterHandler = (
 
   useEffect(() => {
     filterItems()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items, trades, inventory])
 
   useEffect(() => {
@@ -162,6 +165,8 @@ const FilterHandler = (
         loadedItems.length > itemsToLoad ? loadedItems.length : itemsToLoad
       )
     )
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredItems])
 
   useEffect(() => {
@@ -229,6 +234,8 @@ const FilterHandler = (
       query[key] === undefined ? delete query[key] : {}
     )
     router.replace({ query }, undefined, { scroll: false })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemFilterValues, marketType])
 
   const filterItems = () => {
@@ -358,8 +365,12 @@ const FilterHandler = (
           return 0
         }
         if (itemFilterValues.orderBy.key === 'tagRarity') {
-          one = getItemRarities().indexOf(one as string)
-          two = getItemRarities().indexOf(two as string)
+          one = `${getItemRarities().indexOf(one as string)}${a.id}}`
+          two = `${getItemRarities().indexOf(two as string)}${b.id}}`
+        }
+        if (itemFilterValues.orderBy.key === 'tradeable') {
+          one = `${one}${getItemRarities().indexOf(a.tagRarity)}${a.id}}`
+          two = `${two}${getItemRarities().indexOf(b.tagRarity)}${b.id}}`
         }
         let returnValue = 0
         if (one > two) {
