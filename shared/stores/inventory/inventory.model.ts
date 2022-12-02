@@ -26,5 +26,4 @@ export function createInventory(params: Partial<Inventory>) {
 
 export interface InventoryChangeDTO {
   showInTrading: boolean
-  automaticSync: boolean
 }
