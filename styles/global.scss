@@ -12,6 +12,10 @@ html {
   vertical-align: middle;
 }
 
+.pixelImage {
+  image-rendering: pixelated;
+}
+
 .markdown-content {
   h1 {
     @apply text-2xl font-bold;

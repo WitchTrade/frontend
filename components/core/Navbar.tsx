@@ -5,6 +5,7 @@ import dayjs from 'dayjs'
 import { useRouter } from 'next/dist/client/router'
 import Image from 'next/image'
 import Link from 'next/link'
+import Script from 'next/script'
 import { Fragment, FunctionComponent, useEffect, useState } from 'react'
 import useDetectOutsideClick from '../../shared/hooks/useDetectOutsideClick'
 import { inventoryStore } from '../../shared/stores/inventory/inventory.store'
@@ -86,7 +87,14 @@ const Navbar: FunctionComponent = () => {
 
   return (
     <div>
-      <nav className='fixed top-0 z-40 w-full text-wt-text bg-wt-surface-dark'>
+      <Script src='https://cdn.jsdelivr.net/npm/@erikwatson/snowfall/dist/snowfall.min.js' />
+      <Script src='/assets/snowflakes.js' />
+      <div
+        id='snow-container'
+        className='z-30 bg-wt-surface-dark'
+        style={{ height: '64px', width: '100%', position: 'fixed', top: 0 }}
+      ></div>
+      <nav className='fixed top-0 z-40 w-full text-wt-text'>
         <>
           <div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
             <div className='flex justify-between items-center h-16'>
@@ -94,9 +102,21 @@ const Navbar: FunctionComponent = () => {
                 <div className='shrink-0'>
                   <Link href='/'>
                     <a>
-                      <p className='text-3xl font-bold'>
-                        <span className='text-wt-accent'>Witch</span>Trade
-                      </p>
+                      <div className='relative'>
+                        <p className='text-3xl font-bold'>
+                          <span className='text-wt-accent'>Witch</span>Trade
+                        </p>
+                        <div className='absolute -top-5 -left-4'>
+                          <Image
+                            className='pixelImage'
+                            src={`/assets/images/christmasHat.png`}
+                            height={44}
+                            width={44}
+                            quality={100}
+                            alt='Christmas Hat'
+                          />
+                        </div>
+                      </div>
                     </a>
                   </Link>
                 </div>
@@ -435,7 +455,7 @@ const Navbar: FunctionComponent = () => {
             </div>
           </div>
 
-          <div className='md:hidden' ref={hamburgerMenuRef}>
+          <div className='bg-wt-surface-dark md:hidden' ref={hamburgerMenuRef}>
             <Transition
               show={showhamburgerMenu}
               as='div'
