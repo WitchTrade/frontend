@@ -40,13 +40,15 @@ const useGameserverHandler = () => {
     setLoading(false)
 
     setEuServers(
-      gameServersFormServer.filter((server) => server.name.startsWith('EU'))
+      gameServersFormServer.filter((server) => server.name.startsWith('Europe'))
     )
     setHkServers(
-      gameServersFormServer.filter((server) => server.name.startsWith('HK'))
+      gameServersFormServer.filter((server) => server.name.startsWith('Asia'))
     )
     setUsServers(
-      gameServersFormServer.filter((server) => server.name.startsWith('US'))
+      gameServersFormServer.filter((server) =>
+        server.name.startsWith('America')
+      )
     )
   }
 
