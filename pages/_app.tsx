@@ -18,6 +18,7 @@ import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import utc from 'dayjs/plugin/utc'
+import Script from 'next/script'
 import { useEffect, useState } from 'react'
 import Layout from '../components/core/Layout'
 import appService from '../shared/services/app.service'
@@ -95,9 +96,18 @@ function WitchTrade({ Component, pageProps }: AppProps) {
   }, [themeStyles])
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      {process.env.NODE_ENV === 'production' && (
+        <Script
+          defer
+          data-domain='witchtrade.org'
+          src='https://stats.witchtrade.org/js/script.js'
+        />
+      )}
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
   )
 }
 export default WitchTrade
