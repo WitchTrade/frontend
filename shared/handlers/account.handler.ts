@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { createNotification } from '../stores/notification/notification.model'
 import { notificationService } from '../stores/notification/notification.service'
 import {
-  discordTagRegex,
   steamTradeLinkRegex,
   steamProfileLinkRegex,
 } from '../stores/user/user.model'
@@ -118,19 +117,6 @@ const AccountSettingsHandler = () => {
     ) {
       const notification = createNotification({
         content: 'Please provide either a steam profile link or trade link.',
-        duration: 5000,
-        type: 'warning',
-      })
-      notificationService.addNotification(notification)
-      return
-    }
-
-    if (
-      formValue.discordTag.trim() &&
-      !discordTagRegex.test(formValue.discordTag)
-    ) {
-      const notification = createNotification({
-        content: 'Invalid Discord tag',
         duration: 5000,
         type: 'warning',
       })

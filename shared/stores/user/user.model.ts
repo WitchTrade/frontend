@@ -114,6 +114,5 @@ const steamProfileLinkRegex =
   /^(?:https?:\/\/)?steamcommunity\.com\/(?:profiles|id)\/[a-zA-Z0-9\-._~]+\/?$/
 const steamTradeLinkRegex =
   /^(?:https?:\/\/)?steamcommunity\.com\/tradeoffer\/new\/?\?partner=[0-9]+&token=[a-zA-Z0-9_-]+$/
-const discordTagRegex = /^.{2,32}#[0-9]{4}$/
 
-export { steamProfileLinkRegex, steamTradeLinkRegex, discordTagRegex }
+export { steamProfileLinkRegex, steamTradeLinkRegex }
