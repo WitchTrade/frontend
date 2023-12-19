@@ -188,6 +188,11 @@ export const itemEventValues: DropdownValue[] = [
     imagePath: '/assets/images/eventIcons/winterdream2022.png',
   },
   {
+    key: 'winterdream2023',
+    displayName: 'Winterdream 2023',
+    imagePath: '/assets/images/eventIcons/winterdream2023.png',
+  },
+  {
     key: 'winterdream witch',
     displayName: 'Winterdream Witch',
     imagePath: '/assets/images/eventIcons/winterdreamwitch.png',
