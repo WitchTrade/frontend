@@ -63,7 +63,7 @@ const SyncOffersDialog: FunctionComponent<Props> = ({
             <p className='text-xl font-bold text-center'>Sync Offers</p>
             <p className='mt-1 text-sm'>
               This feature synchronises the offers in your market with the items
-              in your Steam inventory.
+              in your Witch It inventory.
             </p>
             <p className='mt-1 text-sm'>
               <span className='font-bold text-wt-accent-light'>Mode:</span>{' '}

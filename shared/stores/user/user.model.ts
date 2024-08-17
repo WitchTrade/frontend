@@ -11,9 +11,8 @@ export interface User {
   displayName: string
   steamProfileLink: string
   verifiedSteamProfileLink: boolean
-  steamTradeLink: string
+  witchItUserId: string
   discordTag: string
-  usingSteamGuard: boolean
   verified: boolean
   hidden: boolean
   banned: boolean
@@ -45,12 +44,8 @@ export function createUser(params: Partial<User>) {
       params.verifiedSteamProfileLink === false
         ? params.verifiedSteamProfileLink
         : null,
-    steamTradeLink: params.steamTradeLink ? params.steamTradeLink : null,
+    witchItUserId: params.witchItUserId ? params.witchItUserId : null,
     discordTag: params.discordTag ? params.discordTag : null,
-    usingSteamGuard:
-      params.usingSteamGuard || params.usingSteamGuard === false
-        ? params.usingSteamGuard
-        : null,
     verified:
       params.verified || params.verified === false ? params.verified : null,
     hidden: params.hidden || params.hidden === false ? params.hidden : null,
@@ -68,9 +63,8 @@ export interface UserInfo {
   displayName: string
   steamProfileLink: string
   verifiedSteamProfileLink: string
-  steamTradeLink: string
+  witchItUserId: string
   discordTag: string
-  usingSteamGuard: boolean
   verified: boolean
   hidden: boolean
   badges: Badge[]
@@ -86,14 +80,11 @@ export function createUserInfo(userInfo: Partial<UserInfo>): UserInfo {
     steamProfileLink: userInfo.steamProfileLink
       ? userInfo.steamProfileLink
       : '',
+    witchItUserId: userInfo.witchItUserId,
     verifiedSteamProfileLink: userInfo.verifiedSteamProfileLink
       ? userInfo.verifiedSteamProfileLink
       : false,
-    steamTradeLink: userInfo.steamTradeLink ? userInfo.steamTradeLink : '',
     discordTag: userInfo.discordTag ? userInfo.discordTag : '',
-    usingSteamGuard: userInfo.usingSteamGuard
-      ? userInfo.usingSteamGuard
-      : false,
     hidden: userInfo.hidden ? userInfo.hidden : false,
     verified: userInfo.verified ? userInfo.verified : false,
     badges: userInfo.badges ? userInfo.badges : [],
@@ -107,12 +98,9 @@ export interface RegisterUser {
   password: string
   email: string
   steamProfileLink?: string
-  steamTradeLink?: string
 }
 
 const steamProfileLinkRegex =
   /^(?:https?:\/\/)?steamcommunity\.com\/(?:profiles|id)\/[a-zA-Z0-9\-._~]+\/?$/
-const steamTradeLinkRegex =
-  /^(?:https?:\/\/)?steamcommunity\.com\/tradeoffer\/new\/?\?partner=[0-9]+&token=[a-zA-Z0-9_-]+$/
 
-export { steamProfileLinkRegex, steamTradeLinkRegex }
+export { steamProfileLinkRegex }

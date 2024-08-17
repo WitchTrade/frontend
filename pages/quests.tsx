@@ -3,18 +3,17 @@ import dayjs from 'dayjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import CustomHeader from '../../components/core/CustomHeader'
-import ItemDetailDialog from '../../components/items/ItemDetailDialog'
-import WitchItNav from '../../components/navs/WitchItNav'
-import ActionButton from '../../components/styles/ActionButton'
-import Loading from '../../components/styles/Loading'
-import PageHeader from '../../components/styles/PageHeader'
-import NextQuest from '../../components/witchit/nextQuest'
-import Quest from '../../components/witchit/quest'
-import ItemsHandler from '../../shared/handlers/items.handler'
-import useQuestsHandler from '../../shared/handlers/quests.handler'
-import { inventoryStore } from '../../shared/stores/inventory/inventory.store'
-import { userStore } from '../../shared/stores/user/user.store'
+import CustomHeader from '../components/core/CustomHeader'
+import ItemDetailDialog from '../components/items/ItemDetailDialog'
+import ActionButton from '../components/styles/ActionButton'
+import Loading from '../components/styles/Loading'
+import PageHeader from '../components/styles/PageHeader'
+import NextQuest from '../components/witchit/nextQuest'
+import Quest from '../components/witchit/quest'
+import ItemsHandler from '../shared/handlers/items.handler'
+import useQuestsHandler from '../shared/handlers/quests.handler'
+import { inventoryStore } from '../shared/stores/inventory/inventory.store'
+import { userStore } from '../shared/stores/user/user.store'
 
 const Quests = () => {
   const [user] = useObservable(userStore)
@@ -69,7 +68,7 @@ const Quests = () => {
       <CustomHeader
         title='WitchTrade | Quests'
         description='View your Witch It quests on WitchTrade.'
-        url='https://witchtrade.org/witchit/quests'
+        url='https://witchtrade.org/quests'
       />
       <ItemDetailDialog
         dialogOpen={dialogOpen}
@@ -78,18 +77,17 @@ const Quests = () => {
         inventory={inventory}
         capitalizeFirstLetter={capitalizeFirstLetter}
       />
-      <WitchItNav />
-      <PageHeader title='Witch It Quests' description='Ingame quest overview' />
+      <PageHeader title='Witch It Quests' />
       {user.loggedIn && user.verifiedSteamProfileLink && (
         <p className='-mt-2 mb-2 text-sm text-center'>
-          <span className='text-wt-warning'>Warning:</span> Quests are cached
-          for 5 minutes
+          <span className='text-wt-info'>Info:</span> Quests are cached for 5
+          minutes
         </p>
       )}
       {!user.loggedIn && (
         <div className='flex flex-col text-center'>
           <p className='pt-2 text-xl text-center text-wt-warning-light'>
-            Please log in to access this page
+            Please log in to see your current Witch It Quests
           </p>
           <div>
             <Image

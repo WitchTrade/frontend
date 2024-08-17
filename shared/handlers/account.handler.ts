@@ -3,10 +3,7 @@ import { useRouter } from 'next/dist/client/router'
 import { useEffect, useState } from 'react'
 import { createNotification } from '../stores/notification/notification.model'
 import { notificationService } from '../stores/notification/notification.service'
-import {
-  steamTradeLinkRegex,
-  steamProfileLinkRegex,
-} from '../stores/user/user.model'
+import { steamProfileLinkRegex } from '../stores/user/user.model'
 import { userService } from '../stores/user/user.service'
 import { userStore } from '../stores/user/user.store'
 
@@ -21,8 +18,6 @@ const AccountSettingsHandler = () => {
     displayName: '',
     email: '',
     steamProfileLink: '',
-    steamTradeLink: '',
-    usingSteamGuard: false,
     discordTag: '',
     hidden: false,
   })
@@ -57,8 +52,6 @@ const AccountSettingsHandler = () => {
       displayName: user.displayName,
       email: user.email,
       steamProfileLink: user.steamProfileLink ? user.steamProfileLink : '',
-      steamTradeLink: user.steamTradeLink ? user.steamTradeLink : '',
-      usingSteamGuard: user.usingSteamGuard ? user.usingSteamGuard : false,
       discordTag: user.discordTag ? user.discordTag : '',
       hidden: user.hidden ? user.hidden : false,
     })
@@ -98,32 +91,6 @@ const AccountSettingsHandler = () => {
       return
     }
 
-    if (
-      formValue.steamTradeLink.trim() &&
-      !steamTradeLinkRegex.test(formValue.steamTradeLink)
-    ) {
-      const notification = createNotification({
-        content: 'Invalid steam trade link',
-        duration: 5000,
-        type: 'warning',
-      })
-      notificationService.addNotification(notification)
-      return
-    }
-
-    if (
-      !formValue.steamProfileLink.trim() &&
-      !formValue.steamTradeLink.trim()
-    ) {
-      const notification = createNotification({
-        content: 'Please provide either a steam profile link or trade link.',
-        duration: 5000,
-        type: 'warning',
-      })
-      notificationService.addNotification(notification)
-      return
-    }
-
     userService
       .updateAccountSettings({
         displayName: formValue.displayName,
@@ -131,10 +98,6 @@ const AccountSettingsHandler = () => {
         steamProfileLink: formValue.steamProfileLink.trim()
           ? formValue.steamProfileLink
           : undefined,
-        steamTradeLink: formValue.steamTradeLink.trim()
-          ? formValue.steamTradeLink
-          : undefined,
-        usingSteamGuard: formValue.usingSteamGuard,
         discordTag: formValue.discordTag.trim()
           ? formValue.discordTag
           : undefined,

@@ -25,8 +25,6 @@ const Register: NextPage = () => {
     setEmail,
     steamProfileLink,
     setSteamProfileLink,
-    steamTradeLink,
-    setSteamTradeLink,
     acceptedLegal,
     setAcceptedLegal,
     acceptedRules,
@@ -132,18 +130,6 @@ const Register: NextPage = () => {
             value={steamProfileLink}
             required={false}
             setValue={setSteamProfileLink}
-            svgPath={`/assets/svgs/steam/${
-              theme?.type === 'light' ? 'black' : 'white'
-            }.svg`}
-          />
-        </div>
-        <div className='m-1'>
-          <TextInput
-            type='text'
-            placeholder='Steam Trade Link'
-            value={steamTradeLink}
-            required={false}
-            setValue={setSteamTradeLink}
             svgPath={`/assets/svgs/steam/${
               theme?.type === 'light' ? 'black' : 'white'
             }.svg`}

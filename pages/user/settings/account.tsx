@@ -154,25 +154,22 @@ const Account: NextPage = () => {
           </div>
           <div className='m-1'>
             <ValueDisplay
-              name='Steam Trade Link'
-              value={user.steamTradeLink}
-              link={true}
-              svgPath={`/assets/svgs/steam/${
+              name='Witch It Id'
+              value={user.witchItUserId}
+              svgPath={`/assets/svgs/userbadge/${
                 theme?.type === 'light' ? 'black' : 'white'
               }.svg`}
             />
           </div>
-          <div className='m-1'>
-            <BooleanDisplay
-              name='Using Steam Guard'
-              value={user.usingSteamGuard}
-              trueIconPath='/assets/svgs/booleanIcons/lock.svg'
-              falseIconPath='/assets/svgs/booleanIcons/warning.svg'
-            />
-          </div>
+          {!user.verifiedSteamProfileLink && (
+            <p className='px-2 text-xs'>
+              The Witch It Id is connected to your steam profile and will be
+              automatically added once you verify your steam profile.
+            </p>
+          )}
           <div className='m-1 mt-4'>
             <ValueDisplay
-              name='Discord Tag'
+              name='Discord Username'
               value={user.discordTag}
               svgPath={`/assets/svgs/discord/${
                 theme?.type === 'light' ? 'black' : 'white'
@@ -260,29 +257,6 @@ const Account: NextPage = () => {
               }.svg`}
             />
           </div>
-          <div className='m-1'>
-            <TextInput
-              type='input'
-              value={formValue.steamTradeLink}
-              setValue={(value) =>
-                setFormValue({ ...formValue, steamTradeLink: value })
-              }
-              placeholder='Steam Trade Link'
-              required={false}
-              svgPath={`/assets/svgs/steam/${
-                theme?.type === 'light' ? 'black' : 'white'
-              }.svg`}
-            />
-          </div>
-          <div className='m-1'>
-            <CheckboxInput
-              placeholder='Using Steam Guard'
-              value={formValue.usingSteamGuard}
-              setValue={(value) =>
-                setFormValue({ ...formValue, usingSteamGuard: value })
-              }
-            />
-          </div>
           <div className='m-1 mt-4'>
             <TextInput
               type='input'
@@ -290,7 +264,7 @@ const Account: NextPage = () => {
               setValue={(value) =>
                 setFormValue({ ...formValue, discordTag: value })
               }
-              placeholder='Discord Tag'
+              placeholder='Discord Username'
               required={false}
               svgPath={`/assets/svgs/discord/${
                 theme?.type === 'light' ? 'black' : 'white'

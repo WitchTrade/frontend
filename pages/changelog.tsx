@@ -15,6 +15,39 @@ const Changelog: NextPage = () => {
         <div className='mb-2'>
           <Title level={1}>Changelog</Title>
         </div>
+        <Title level={4}>Version 1.4.0 (xx.xx.2024)</Title>
+        <p>
+          <b>Added:</b>
+        </p>
+        <ul className='pl-8 list-disc'>
+          <li>
+            You can now sync your Witch It inventory! Make sure to verify your
+            steam profile first.
+          </li>
+        </ul>
+        <p>
+          <b>Changed:</b>
+        </p>
+        <ul className='pl-8 list-disc'>
+          <li>
+            Verifing your Steam profile is now required to sync the inventory.
+          </li>
+          <li>
+            Verifing your Steam profile adds the Witch It User Id to your
+            profile.
+          </li>
+        </ul>
+        <p>
+          <b>Removed:</b>
+        </p>
+        <ul className='pl-8 list-disc'>
+          <li>
+            Removed the Game server page. Witch It changed the server
+            infrastructure and it&apos;s no longer possible to retrieve the
+            server information.
+          </li>
+          <li>Removed the Game server stats page.</li>
+        </ul>
         <Title level={4}>Version 1.3.0 (22.05.2022)</Title>
         <p>
           <b>Added:</b>
@@ -41,7 +74,7 @@ const Changelog: NextPage = () => {
         <ul className='pl-8 list-disc'>
           <li>
             Witch It quests! View your current ingame quests{' '}
-            <Link href='/witchit/quests'>
+            <Link href='/quests'>
               <a className='text-wt-accent hover:underline cursor-pointer'>
                 here
               </a>

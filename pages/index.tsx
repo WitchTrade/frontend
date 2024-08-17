@@ -107,44 +107,8 @@ const Home: NextPage = () => {
         </div>
         <div className='flex justify-center items-center w-full sm:w-1/2'>
           <p className='text-xl text-center sm:text-2xl'>
-            Sync your Steam Witch It inventory to unlock the full potential of
+            Sync your Witch It inventory to unlock the full potential of
             WitchTrade!
-          </p>
-        </div>
-      </div>
-      <div className='flex flex-wrap p-1 my-4 bg-wt-surface-dark rounded-lg border-4 border-wt-accent'>
-        <div className='flex justify-center items-center w-full sm:w-1/2'>
-          <p className='text-xl text-center sm:text-2xl'>
-            Look up all the official servers of Witch It and see if your friends
-            are currently playing!
-          </p>
-        </div>
-        <div className='flex justify-center p-2 w-full sm:w-1/2'>
-          <Image
-            className='rounded-xl'
-            src='/assets/images/home/gameServers.png'
-            width={335}
-            height={356}
-            quality={100}
-            alt='Game servers'
-          />
-        </div>
-      </div>
-      <div className='flex flex-wrap p-1 my-4 bg-wt-surface-dark rounded-lg border-4 border-wt-accent'>
-        <div className='flex justify-center p-2 w-full sm:w-1/2'>
-          <Image
-            className='rounded-xl'
-            src='/assets/images/home/gameServerStats.png'
-            width={401}
-            height={408}
-            quality={100}
-            alt='Game server stats'
-          />
-        </div>
-        <div className='flex justify-center items-center w-full sm:w-1/2'>
-          <p className='text-xl text-center sm:text-2xl'>
-            Have a look at detailed stats of the Witch It game servers and see
-            what gamemodes are trending!
           </p>
         </div>
       </div>
