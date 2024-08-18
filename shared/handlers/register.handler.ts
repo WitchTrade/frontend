@@ -2,7 +2,6 @@ import { useRouter } from 'next/dist/client/router'
 import { useState } from 'react'
 import { createNotification } from '../stores/notification/notification.model'
 import { notificationService } from '../stores/notification/notification.service'
-import { steamProfileLinkRegex } from '../stores/user/user.model'
 import { userService } from '../stores/user/user.service'
 
 const RegisterHandler = () => {
@@ -13,7 +12,6 @@ const RegisterHandler = () => {
   const [repeatPassword, setRepeatPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
-  const [steamProfileLink, setSteamProfileLink] = useState('')
   const [acceptedLegal, setAcceptedLegal] = useState(false)
   const [acceptedRules, setAcceptedRules] = useState(false)
 
@@ -48,19 +46,6 @@ const RegisterHandler = () => {
       return
     }
 
-    if (
-      steamProfileLink.trim() &&
-      !steamProfileLinkRegex.test(steamProfileLink)
-    ) {
-      const notification = createNotification({
-        content: 'Invalid steam profile url',
-        duration: 5000,
-        type: 'warning',
-      })
-      notificationService.addNotification(notification)
-      return
-    }
-
     if (!acceptedRules) {
       const notification = createNotification({
         content: 'Please agree to our Trading Rules',
@@ -87,9 +72,6 @@ const RegisterHandler = () => {
         displayName,
         password,
         email,
-        steamProfileLink: steamProfileLink.trim()
-          ? steamProfileLink
-          : undefined,
       })
       .subscribe((res) => {
         if (res.ok) {
@@ -109,8 +91,6 @@ const RegisterHandler = () => {
     setRepeatPassword,
     email,
     setEmail,
-    steamProfileLink,
-    setSteamProfileLink,
     acceptedLegal,
     setAcceptedLegal,
     acceptedRules,

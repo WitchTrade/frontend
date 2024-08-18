@@ -32,7 +32,7 @@ const Quests = () => {
   } = ItemsHandler()
 
   useEffect(() => {
-    if (user.loggedIn && user.verifiedSteamProfileLink) {
+    if (user.loggedIn && user.witchItUserId) {
       getQuests()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,7 +78,7 @@ const Quests = () => {
         capitalizeFirstLetter={capitalizeFirstLetter}
       />
       <PageHeader title='Witch It Quests' />
-      {user.loggedIn && user.verifiedSteamProfileLink && (
+      {user.loggedIn && user.witchItUserId && (
         <p className='-mt-2 mb-2 text-sm text-center'>
           <span className='text-wt-info'>Info:</span> Quests are cached for 5
           minutes
@@ -99,10 +99,10 @@ const Quests = () => {
           </div>
         </div>
       )}
-      {user.loggedIn && !user.verifiedSteamProfileLink && (
+      {user.loggedIn && !user.witchItUserId && (
         <div className='flex flex-col text-center'>
           <p className='pt-2 text-xl text-center text-wt-warning-light'>
-            Please verify your steam profile link in your{' '}
+            Please link your steam profile in your{' '}
             <Link href='/user/settings/account'>
               <a className='text-wt-accent hover:underline cursor-pointer'>
                 account settings
@@ -119,7 +119,7 @@ const Quests = () => {
           </div>
         </div>
       )}
-      {user.loggedIn && user.verifiedSteamProfileLink && (
+      {user.loggedIn && user.witchItUserId && (
         <div className='flex flex-col justify-center text-center'>
           <div className='flex justify-center pb-2'>
             <ActionButton

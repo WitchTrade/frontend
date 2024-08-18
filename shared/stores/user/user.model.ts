@@ -10,7 +10,6 @@ export interface User {
   lastOnline: Date
   displayName: string
   steamProfileLink: string
-  verifiedSteamProfileLink: boolean
   witchItUserId: string
   discordTag: string
   verified: boolean
@@ -39,11 +38,6 @@ export function createUser(params: Partial<User>) {
     lastOnline: params.lastOnline ? params.lastOnline : null,
     displayName: params.displayName ? params.displayName : null,
     steamProfileLink: params.steamProfileLink ? params.steamProfileLink : null,
-    verifiedSteamProfileLink:
-      params.verifiedSteamProfileLink ||
-      params.verifiedSteamProfileLink === false
-        ? params.verifiedSteamProfileLink
-        : null,
     witchItUserId: params.witchItUserId ? params.witchItUserId : null,
     discordTag: params.discordTag ? params.discordTag : null,
     verified:
@@ -62,7 +56,6 @@ export interface UserInfo {
   lastOnline: Date
   displayName: string
   steamProfileLink: string
-  verifiedSteamProfileLink: string
   witchItUserId: string
   discordTag: string
   verified: boolean
@@ -81,9 +74,6 @@ export function createUserInfo(userInfo: Partial<UserInfo>): UserInfo {
       ? userInfo.steamProfileLink
       : '',
     witchItUserId: userInfo.witchItUserId,
-    verifiedSteamProfileLink: userInfo.verifiedSteamProfileLink
-      ? userInfo.verifiedSteamProfileLink
-      : false,
     discordTag: userInfo.discordTag ? userInfo.discordTag : '',
     hidden: userInfo.hidden ? userInfo.hidden : false,
     verified: userInfo.verified ? userInfo.verified : false,
@@ -97,10 +87,4 @@ export interface RegisterUser {
   displayName: string
   password: string
   email: string
-  steamProfileLink?: string
 }
-
-const steamProfileLinkRegex =
-  /^(?:https?:\/\/)?steamcommunity\.com\/(?:profiles|id)\/[a-zA-Z0-9\-._~]+\/?$/
-
-export { steamProfileLinkRegex }

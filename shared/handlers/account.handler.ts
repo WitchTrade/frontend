@@ -3,7 +3,6 @@ import { useRouter } from 'next/dist/client/router'
 import { useEffect, useState } from 'react'
 import { createNotification } from '../stores/notification/notification.model'
 import { notificationService } from '../stores/notification/notification.service'
-import { steamProfileLinkRegex } from '../stores/user/user.model'
 import { userService } from '../stores/user/user.service'
 import { userStore } from '../stores/user/user.store'
 
@@ -17,7 +16,6 @@ const AccountSettingsHandler = () => {
   const [formValue, setFormValue] = useState({
     displayName: '',
     email: '',
-    steamProfileLink: '',
     discordTag: '',
     hidden: false,
   })
@@ -40,7 +38,7 @@ const AccountSettingsHandler = () => {
       }
       router.replace('/user/settings/account', undefined, { shallow: true })
 
-      userService.verifySteamProfileUrl(queryString).subscribe(() => {
+      userService.setSteamProfileUrl(queryString).subscribe(() => {
         setSteamVerificationState('')
       })
     }
@@ -51,7 +49,6 @@ const AccountSettingsHandler = () => {
     setFormValue({
       displayName: user.displayName,
       email: user.email,
-      steamProfileLink: user.steamProfileLink ? user.steamProfileLink : '',
       discordTag: user.discordTag ? user.discordTag : '',
       hidden: user.hidden ? user.hidden : false,
     })
@@ -78,26 +75,10 @@ const AccountSettingsHandler = () => {
       return
     }
 
-    if (
-      formValue.steamProfileLink.trim() &&
-      !steamProfileLinkRegex.test(formValue.steamProfileLink)
-    ) {
-      const notification = createNotification({
-        content: 'Invalid steam profile url',
-        duration: 5000,
-        type: 'warning',
-      })
-      notificationService.addNotification(notification)
-      return
-    }
-
     userService
       .updateAccountSettings({
         displayName: formValue.displayName,
         email: formValue.email,
-        steamProfileLink: formValue.steamProfileLink.trim()
-          ? formValue.steamProfileLink
-          : undefined,
         discordTag: formValue.discordTag.trim()
           ? formValue.discordTag
           : undefined,
@@ -159,6 +140,10 @@ const AccountSettingsHandler = () => {
     })
   }
 
+  const removeSteamProfileLink = () => {
+    userService.removeSteamProfileLink().subscribe()
+  }
+
   return {
     user,
     formValue,
@@ -175,6 +160,7 @@ const AccountSettingsHandler = () => {
     setNewRepeatPassword,
     changePassword,
     verifySteamProfileLink,
+    removeSteamProfileLink,
     steamVerificationState,
   }
 }

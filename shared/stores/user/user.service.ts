@@ -217,6 +217,51 @@ export class UserService {
       )
   }
 
+  public removeSteamProfileLink() {
+    return authService
+      .request(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/unlink/steam`,
+        {
+          method: 'PATCH',
+        }
+      )
+      .pipe(
+        tap({
+          next: async (res) => {
+            const json = await res.json()
+            if (res.ok) {
+              authService.setTokens(json.token, json.refreshToken)
+              const user = createUser(json)
+              user.loggedIn = true
+              userStore.update(() => user)
+              const notification = createNotification({
+                content: 'Removed Steam connection',
+                duration: 5000,
+                type: 'success',
+              })
+              notificationService.addNotification(notification)
+            } else {
+              const notification = createNotification({
+                content: json.message,
+                duration: 5000,
+                type: 'error',
+              })
+              notificationService.addNotification(notification)
+            }
+          },
+          error: (err) => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error',
+            })
+            notificationService.addNotification(notification)
+            return of(err)
+          },
+        })
+      )
+  }
+
   public updateSyncSettings(syncSettings: any) {
     return authService
       .request(
@@ -388,26 +433,6 @@ export class UserService {
     )
   }
 
-  public getSteamFriends() {
-    // login user and save info to store
-    return authService
-      .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/friends`)
-      .pipe(
-        tap({
-          next: async () => {},
-          error: (err) => {
-            const notification = createNotification({
-              content: err,
-              duration: 5000,
-              type: 'error',
-            })
-            notificationService.addNotification(notification)
-            return of(err)
-          },
-        })
-      )
-  }
-
   public getSteamLoginUrl() {
     return authService
       .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/login`)
@@ -436,7 +461,7 @@ export class UserService {
       )
   }
 
-  public verifySteamProfileUrl(query: string) {
+  public setSteamProfileUrl(query: string) {
     return authService
       .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/auth${query}`)
       .pipe(
