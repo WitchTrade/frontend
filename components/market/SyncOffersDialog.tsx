@@ -383,7 +383,7 @@ const SyncOffersDialog: FunctionComponent<Props> = ({
           src='/assets/svgs/sync.svg'
           height='24px'
           width='24px'
-          alt='Sync Steam Friends'
+          alt='Sync Offers'
         />
         Sync offers
       </ActionButton>

@@ -25,6 +25,7 @@ const AccountSettingsHandler = () => {
   const [newRepeatPassword, setNewRepeatPassword] = useState('')
 
   const [steamVerificationState, setSteamVerificationState] = useState('')
+  const [epicVerificationState, setEpicVerificationState] = useState('')
 
   useEffect(() => {
     if (router.query['openid.ns'] && steamVerificationState === '') {
@@ -41,8 +42,16 @@ const AccountSettingsHandler = () => {
       userService.setSteamProfileUrl(queryString).subscribe(() => {
         setSteamVerificationState('')
       })
+    } else if (router.query['code'] && steamVerificationState === '') {
+      setEpicVerificationState('Verifing...')
+      router.replace('/user/settings/account', undefined, { shallow: true })
+      userService
+        .setEpicAccountId(`?code=${router.query.code}`)
+        .subscribe(() => {
+          setEpicVerificationState('')
+        })
     }
-  })
+  }, [router.query])
 
   const editAccountSettings = () => {
     setEditing(true)
@@ -140,8 +149,22 @@ const AccountSettingsHandler = () => {
     })
   }
 
+  const verifyEpicAccountId = () => {
+    setEpicVerificationState('Redirecting...')
+    userService.getEpicLoginUrl().subscribe(async (res) => {
+      if (res.status === 200) {
+        const text = await res.text()
+        router.push(text)
+      }
+    })
+  }
+
   const removeSteamProfileLink = () => {
     userService.removeSteamProfileLink().subscribe()
+  }
+
+  const removeEpicAccountId = () => {
+    userService.removeEpicAccountId().subscribe()
   }
 
   return {
@@ -160,8 +183,11 @@ const AccountSettingsHandler = () => {
     setNewRepeatPassword,
     changePassword,
     verifySteamProfileLink,
+    verifyEpicAccountId,
     removeSteamProfileLink,
+    removeEpicAccountId,
     steamVerificationState,
+    epicVerificationState,
   }
 }
 

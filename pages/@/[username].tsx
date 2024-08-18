@@ -155,7 +155,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                                 }.svg`}
                                 height={36}
                                 width={36}
-                                alt='Steam Profile Link'
+                                alt='Steam Profile'
                               />
                             </div>
                           </a>

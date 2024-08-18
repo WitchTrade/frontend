@@ -102,7 +102,7 @@ const Quests = () => {
       {user.loggedIn && !user.witchItUserId && (
         <div className='flex flex-col text-center'>
           <p className='pt-2 text-xl text-center text-wt-warning-light'>
-            Please link your steam profile in your{' '}
+            Please link your Witch It Id profile in your{' '}
             <Link href='/user/settings/account'>
               <a className='text-wt-accent hover:underline cursor-pointer'>
                 account settings

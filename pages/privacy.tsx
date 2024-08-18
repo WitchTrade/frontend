@@ -151,8 +151,8 @@ const Privacy: NextPage = () => {
         </Section>
         <Section>
           <b>Personal Information Provided by You.</b> We collect usernames;
-          passwords; steam profile links (optional); steam trade links
-          (optional); Discord tags (optional); steam witch it inventory
+          passwords; steam profile links (optional); epic games account id
+          (optional); Discord usernames (optional); witch it inventory
           information (optional); email addresses; and other similar
           information.
         </Section>

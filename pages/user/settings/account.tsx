@@ -29,8 +29,11 @@ const Account: NextPage = () => {
     updateAccountSettings,
     cancelEditAccountSettings,
     verifySteamProfileLink,
+    verifyEpicAccountId,
     removeSteamProfileLink,
+    removeEpicAccountId,
     steamVerificationState,
+    epicVerificationState,
   } = AccountSettingsHandler()
 
   return (
@@ -223,53 +226,97 @@ const Account: NextPage = () => {
       <div className='flex flex-col justify-center py-2 px-4 mx-auto max-w-xl sm:px-6 lg:px-8'>
         <h2 className='text-lg font-extrabold'>Witch It Connection</h2>
         <p className='mt-2 text-sm'>
-          Authorize with your steam account to get access to Witch It related
-          features like quests and syncing your inventory. WitchTrade will only
-          save your Steam Id and Witch It Id and link them to your account.
+          Authorize with your Steam or Epic Games account to get access to Witch
+          It related features like quests and syncing your inventory. WitchTrade
+          will only save your respective Account Id and Witch It Id and link
+          them to your account.
         </p>
-        <div className='m-1 mt-4'>
-          <div className='flex justify-between items-center px-2 h-11 bg-wt-surface-dark rounded-lg'>
-            <div className='flex items-center'>
-              <Image
-                src={`/assets/svgs/steam/${
-                  theme?.type === 'light' ? 'black' : 'white'
-                }.svg`}
-                height='24px'
-                width='24px'
-                alt='Value Icon'
-              />
-              <p className='ml-1'>Steam Profile:</p>
-            </div>
-            <div className='flex items-center'>
-              {user.steamProfileLink && (
-                <a
-                  className='text-wt-accent-light hover:underline rounded-md focus:outline-none focus:ring-2 focus:ring-wt-accent'
-                  href={user.steamProfileLink}
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  open profile
-                </a>
-              )}
-              {user.steamProfileLink && (
-                <div className='flex items-center ml-1'>
-                  <ActionButton type='info' onClick={removeSteamProfileLink}>
-                    Remove
-                  </ActionButton>
-                </div>
-              )}
-              {!user.steamProfileLink && (
-                <div className='flex justify-center items-center ml-1'>
-                  <ActionButton type='info' onClick={verifySteamProfileLink}>
-                    {steamVerificationState
-                      ? steamVerificationState
-                      : 'Connect'}
-                  </ActionButton>
-                </div>
-              )}
+        {!user.epicAccountId && (
+          <div className='m-1 mt-4'>
+            <div className='flex justify-between items-center px-2 h-11 bg-wt-surface-dark rounded-lg'>
+              <div className='flex items-center'>
+                <Image
+                  src={`/assets/svgs/steam/${
+                    theme?.type === 'light' ? 'black' : 'white'
+                  }.svg`}
+                  height='24px'
+                  width='24px'
+                  alt='Value Icon'
+                />
+                <p className='ml-1'>Steam Profile:</p>
+              </div>
+              <div className='flex items-center'>
+                {user.steamProfileLink && (
+                  <>
+                    <a
+                      className='text-wt-accent-light hover:underline rounded-md focus:outline-none focus:ring-2 focus:ring-wt-accent'
+                      href={user.steamProfileLink}
+                      target='_blank'
+                      rel='noreferrer'
+                    >
+                      open profile
+                    </a>
+                    <div className='flex items-center ml-1'>
+                      <ActionButton
+                        type='info'
+                        onClick={removeSteamProfileLink}
+                      >
+                        Remove
+                      </ActionButton>
+                    </div>
+                  </>
+                )}
+                {!user.steamProfileLink && (
+                  <div className='flex justify-center items-center ml-1'>
+                    <ActionButton type='info' onClick={verifySteamProfileLink}>
+                      {steamVerificationState
+                        ? steamVerificationState
+                        : 'Connect'}
+                    </ActionButton>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
+        {!user.steamProfileLink && (
+          <div className='m-1'>
+            <div className='flex justify-between items-center px-2 h-11 bg-wt-surface-dark rounded-lg'>
+              <div className='flex items-center'>
+                <Image
+                  src={`/assets/svgs/epic/${
+                    theme?.type === 'light' ? 'black' : 'white'
+                  }.svg`}
+                  height='24px'
+                  width='24px'
+                  alt='Value Icon'
+                />
+                <p className='ml-1'>Epic Games Account:</p>
+              </div>
+              <div className='flex items-center'>
+                {user.epicAccountId && (
+                  <>
+                    <p>connected</p>
+                    <div className='flex items-center ml-1'>
+                      <ActionButton type='info' onClick={removeEpicAccountId}>
+                        Remove
+                      </ActionButton>
+                    </div>
+                  </>
+                )}
+                {!user.epicAccountId && (
+                  <div className='flex justify-center items-center ml-1'>
+                    <ActionButton type='info' onClick={verifyEpicAccountId}>
+                      {epicVerificationState
+                        ? epicVerificationState
+                        : 'Connect'}
+                    </ActionButton>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
         <div className='m-1'>
           <ValueDisplay
             name='Witch It Id'
