@@ -46,7 +46,7 @@ const Sync: NextPage = () => {
                 {!inventory.id && <p>Last synced: Never</p>}
               </div>
               <p className='mt-1 text-sm text-center'>
-                You can sync your inventory every 30 minutes
+                You can sync your inventory every 5 minutes
               </p>
             </>
           )}
