@@ -65,8 +65,8 @@ const Home: NextPage = () => {
           <Image
             className='rounded-xl'
             src='/assets/images/home/profile.png'
-            width={620}
-            height={400}
+            width={741}
+            height={353}
             quality={100}
             alt='Profile'
           />
@@ -99,8 +99,8 @@ const Home: NextPage = () => {
           <Image
             className='rounded-xl'
             src='/assets/images/home/inventory.png'
-            width={471}
-            height={189}
+            width={484}
+            height={267}
             quality={100}
             alt='Inventory'
           />
@@ -110,6 +110,23 @@ const Home: NextPage = () => {
             Sync your Witch It inventory to unlock the full potential of
             WitchTrade!
           </p>
+        </div>
+      </div>
+      <div className='flex flex-wrap p-1 my-4 bg-wt-surface-dark rounded-lg border-4 border-wt-accent'>
+        <div className='flex justify-center items-center w-full sm:w-1/2'>
+          <p className='text-xl text-center sm:text-2xl'>
+            See your current in-game quests without having to start up the game.
+          </p>
+        </div>
+        <div className='flex justify-center p-2 w-full sm:w-1/2'>
+          <Image
+            className='rounded-xl'
+            src='/assets/images/home/quests.png'
+            width={960}
+            height={425}
+            quality={100}
+            alt='Inventory'
+          />
         </div>
       </div>
     </div>
