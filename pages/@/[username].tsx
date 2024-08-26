@@ -41,7 +41,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
 
   const oneMonthAgo = new Date().setDate(new Date().getDate() - 30)
 
-  const { copyDiscordTag, type, setType } = ProfileHandler()
+  const { copyDiscordTag, copyWitchItUserId, type, setType } = ProfileHandler()
 
   const {
     inventory,
@@ -102,7 +102,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
             inventory={inventory}
             capitalizeFirstLetter={capitalizeFirstLetter}
           />
-          <div className='flex flex-col justify-center py-2 px-4 mx-auto max-w-2xl sm:px-6 lg:px-8'>
+          <div className='flex flex-col justify-center py-2 px-4 mx-auto max-w-3xl sm:px-6 lg:px-8'>
             <div className='flex justify-center items-center pt-3'>
               <p className='text-3xl font-bold text-center text-wt-accent'>
                 {profile.displayName}
@@ -140,10 +140,10 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                   </div>
                 </div>
               )}
-              <div className='flex flex-col justify-evenly p-2 m-1 bg-wt-surface-dark rounded-lg border border-wt-accent'>
-                <p className='font-bold text-center'>Steam</p>
-                <div className='flex flex-wrap justify-center items-center'>
-                  {profile.steamProfileLink && (
+              {profile.steamProfileLink && (
+                <div className='flex flex-col justify-evenly p-2 m-1 bg-wt-surface-dark rounded-lg border border-wt-accent'>
+                  <p className='font-bold text-center'>Steam</p>
+                  <div className='flex flex-wrap justify-center items-center'>
                     <div className='flex flex-col items-center my-1 mx-2'>
                       <Tooltip text='Click to open'>
                         <Link href={profile.steamProfileLink}>
@@ -155,7 +155,7 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                                 }.svg`}
                                 height={36}
                                 width={36}
-                                alt='Steam Profile Link'
+                                alt='Steam Profile'
                               />
                             </div>
                           </a>
@@ -163,64 +163,43 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                       </Tooltip>
                       <div className='flex mt-1'>
                         <p className='text-sm'>Profile</p>
-                        {profile.verifiedSteamProfileLink && (
-                          <div className='flex items-center ml-1 w-5 h-5'>
-                            <div className='w-4 h-4'>
-                              <Verified />
-                            </div>
-                          </div>
-                        )}
                       </div>
                     </div>
-                  )}
-                  {profile.steamTradeLink && (
-                    <div className='flex flex-col items-center my-1 mx-2'>
-                      <Tooltip text='Click to open'>
-                        <Link href={profile.steamTradeLink}>
-                          <a target='_blank' rel='noreferrer'>
-                            <div className='p-1 w-9 h-9 bg-wt-surface hover:bg-wt-accent rounded-full transition duration-100 hover:scale-110 cursor-pointer'>
-                              <Image
-                                src={`/assets/svgs/steam/${
-                                  theme?.type === 'light' ? 'black' : 'white'
-                                }.svg`}
-                                height={36}
-                                width={36}
-                                alt='Steam Trade link'
-                              />
-                            </div>
-                          </a>
-                        </Link>
+                  </div>
+                </div>
+              )}
+              {profile.witchItUserId && (
+                <div className='flex flex-col justify-evenly p-2 m-1 bg-wt-surface-dark rounded-lg border border-wt-accent'>
+                  <p className='font-bold text-center'>Witch It Id</p>
+                  <div className='flex flex-wrap justify-center items-center'>
+                    <div className='flex flex-col items-center m-1'>
+                      <Tooltip text='Click to copy'>
+                        <div
+                          className='p-1 w-9 h-9 bg-wt-surface hover:bg-wt-accent rounded-full transition duration-100 hover:scale-110 cursor-pointer'
+                          onClick={() =>
+                            copyWitchItUserId(profile.witchItUserId)
+                          }
+                        >
+                          <Image
+                            src={`/assets/svgs/userbadge/${
+                              theme?.type === 'light' ? 'black' : 'white'
+                            }.svg`}
+                            height={36}
+                            width={36}
+                            alt='Witch It Id'
+                          />
+                        </div>
                       </Tooltip>
-                      <p className='mt-1 text-sm'>Trade link</p>
+                      <p className='mt-1 font-mono text-xs'>
+                        {profile.witchItUserId}
+                      </p>
                     </div>
-                  )}
+                  </div>
                 </div>
-                <div className='flex justify-center items-center'>
-                  {(profile.usingSteamGuard && (
-                    <Image
-                      src='/assets/svgs/booleanIcons/lock.svg'
-                      height={14}
-                      width={14}
-                      alt='Lock'
-                    />
-                  )) || (
-                    <Image
-                      src='/assets/svgs/booleanIcons/warning.svg'
-                      height={14}
-                      width={14}
-                      alt='Warning'
-                    />
-                  )}
-                  <p className='ml-1 text-sm text-center'>
-                    {profile.usingSteamGuard
-                      ? 'Uses Steam Guard'
-                      : "Doesn't use Steam Guard"}
-                  </p>
-                </div>
-              </div>
+              )}
               {profile.discordTag && (
                 <div className='flex flex-col justify-evenly p-2 m-1 bg-wt-surface-dark rounded-lg border border-wt-accent'>
-                  <p className='font-bold text-center'>Discord Tag</p>
+                  <p className='font-bold text-center'>Discord Username</p>
                   <div className='flex flex-wrap justify-center items-center'>
                     <div className='flex flex-col items-center m-1'>
                       <Tooltip text='Click to copy'>

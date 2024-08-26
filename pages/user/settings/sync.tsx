@@ -27,11 +27,13 @@ const Sync: NextPage = () => {
       <SettingNav />
       <PageHeader
         title='Sync Settings'
-        description='Sync your steam inventory'
+        description='Sync your Witch It inventory'
       />
       <div className='flex flex-col justify-center px-4 mx-auto max-w-lg sm:px-6'>
         <div className='p-1 my-3 bg-wt-surface-dark rounded-lg'>
-          <p className='text-xl font-bold text-center'>Steam Inventory Sync</p>
+          <p className='text-xl font-bold text-center'>
+            Witch It Inventory Sync
+          </p>
           {!invLoading && (
             <>
               <div className='flex justify-evenly items-center mt-2'>
@@ -44,7 +46,7 @@ const Sync: NextPage = () => {
                 {!inventory.id && <p>Last synced: Never</p>}
               </div>
               <p className='mt-1 text-sm text-center'>
-                You can sync your inventory every 30 minutes
+                You can sync your inventory every 5 minutes
               </p>
             </>
           )}

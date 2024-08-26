@@ -217,6 +217,96 @@ export class UserService {
       )
   }
 
+  public removeSteamProfileLink() {
+    return authService
+      .request(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/unlink/steam`,
+        {
+          method: 'PATCH',
+        }
+      )
+      .pipe(
+        tap({
+          next: async (res) => {
+            const json = await res.json()
+            if (res.ok) {
+              authService.setTokens(json.token, json.refreshToken)
+              const user = createUser(json)
+              user.loggedIn = true
+              userStore.update(() => user)
+              const notification = createNotification({
+                content: 'Removed Steam connection',
+                duration: 5000,
+                type: 'success',
+              })
+              notificationService.addNotification(notification)
+            } else {
+              const notification = createNotification({
+                content: json.message,
+                duration: 5000,
+                type: 'error',
+              })
+              notificationService.addNotification(notification)
+            }
+          },
+          error: (err) => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error',
+            })
+            notificationService.addNotification(notification)
+            return of(err)
+          },
+        })
+      )
+  }
+
+  public removeEpicAccountId() {
+    return authService
+      .request(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/users/unlink/epic`,
+        {
+          method: 'PATCH',
+        }
+      )
+      .pipe(
+        tap({
+          next: async (res) => {
+            const json = await res.json()
+            if (res.ok) {
+              authService.setTokens(json.token, json.refreshToken)
+              const user = createUser(json)
+              user.loggedIn = true
+              userStore.update(() => user)
+              const notification = createNotification({
+                content: 'Removed Epic Games connection',
+                duration: 5000,
+                type: 'success',
+              })
+              notificationService.addNotification(notification)
+            } else {
+              const notification = createNotification({
+                content: json.message,
+                duration: 5000,
+                type: 'error',
+              })
+              notificationService.addNotification(notification)
+            }
+          },
+          error: (err) => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error',
+            })
+            notificationService.addNotification(notification)
+            return of(err)
+          },
+        })
+      )
+  }
+
   public updateSyncSettings(syncSettings: any) {
     return authService
       .request(
@@ -388,29 +478,9 @@ export class UserService {
     )
   }
 
-  public getSteamFriends() {
-    // login user and save info to store
-    return authService
-      .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/friends`)
-      .pipe(
-        tap({
-          next: async () => {},
-          error: (err) => {
-            const notification = createNotification({
-              content: err,
-              duration: 5000,
-              type: 'error',
-            })
-            notificationService.addNotification(notification)
-            return of(err)
-          },
-        })
-      )
-  }
-
   public getSteamLoginUrl() {
     return authService
-      .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/login`)
+      .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/oauth/steam/login`)
       .pipe(
         tap({
           next: async (res) => {
@@ -436,9 +506,39 @@ export class UserService {
       )
   }
 
-  public verifySteamProfileUrl(query: string) {
+  public getEpicLoginUrl() {
     return authService
-      .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/auth${query}`)
+      .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/oauth/epic/login`)
+      .pipe(
+        tap({
+          next: async (res) => {
+            if (!res.ok) {
+              const notification = createNotification({
+                content: res.statusText,
+                duration: 5000,
+                type: 'error',
+              })
+              notificationService.addNotification(notification)
+            }
+          },
+          error: (err) => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error',
+            })
+            notificationService.addNotification(notification)
+            return of(err)
+          },
+        })
+      )
+  }
+
+  public setSteamProfileUrl(query: string) {
+    return authService
+      .request(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/oauth/steam/auth${query}`
+      )
       .pipe(
         tap({
           next: async (res) => {
@@ -449,7 +549,49 @@ export class UserService {
               user.loggedIn = true
               userStore.update(() => user)
               const notification = createNotification({
-                content: 'Steam Profile Link verified',
+                content: 'Steam Profile connected',
+                duration: 5000,
+                type: 'success',
+              })
+              notificationService.addNotification(notification)
+            } else {
+              const notification = createNotification({
+                content: json.message,
+                duration: 5000,
+                type: 'error',
+              })
+              notificationService.addNotification(notification)
+            }
+          },
+          error: (err) => {
+            const notification = createNotification({
+              content: err,
+              duration: 5000,
+              type: 'error',
+            })
+            notificationService.addNotification(notification)
+            return of(err)
+          },
+        })
+      )
+  }
+
+  public setEpicAccountId(query: string) {
+    return authService
+      .request(
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/api/oauth/epic/auth${query}`
+      )
+      .pipe(
+        tap({
+          next: async (res) => {
+            const json = await res.json()
+            if (res.ok) {
+              authService.setTokens(json.token, json.refreshToken)
+              const user = createUser(json)
+              user.loggedIn = true
+              userStore.update(() => user)
+              const notification = createNotification({
+                content: 'Epic Games Account connected',
                 duration: 5000,
                 type: 'success',
               })

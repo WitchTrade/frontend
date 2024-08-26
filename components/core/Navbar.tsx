@@ -135,15 +135,15 @@ const Navbar: FunctionComponent = () => {
                         Items
                       </NavbarLink>
                     </Link>
-                    <Link href='/witchit' passHref>
+                    <Link href='/quests' passHref>
                       <NavbarLink
                         type={
-                          router.pathname.startsWith('/witchit')
+                          router.pathname.startsWith('/quests')
                             ? 'navSelected'
                             : 'nav'
                         }
                       >
-                        Witch It
+                        Quests
                       </NavbarLink>
                     </Link>
                     {user.roles?.length > 0 && (
@@ -480,15 +480,15 @@ const Navbar: FunctionComponent = () => {
                     Items
                   </NavbarLink>
                 </Link>
-                <Link href='/witchit' passHref>
+                <Link href='/quests' passHref>
                   <NavbarLink
                     type={
-                      router.pathname.startsWith('/witchit')
+                      router.pathname.startsWith('/quests')
                         ? 'hamburgerSelected'
                         : 'hamburger'
                     }
                   >
-                    Witch It
+                    Quests
                   </NavbarLink>
                 </Link>
                 {user.roles?.length > 0 && (

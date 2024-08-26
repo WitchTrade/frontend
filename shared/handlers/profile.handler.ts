@@ -9,7 +9,17 @@ const ProfileHandler = () => {
   const copyDiscordTag = (discordTag: string) => {
     navigator.clipboard.writeText(discordTag)
     const notification = createNotification({
-      content: 'Discord Tag copied to clipboard',
+      content: 'Discord Username copied to clipboard',
+      duration: 5000,
+      type: 'success',
+    })
+    notificationService.addNotification(notification)
+  }
+
+  const copyWitchItUserId = (witchItUserId: string) => {
+    navigator.clipboard.writeText(witchItUserId)
+    const notification = createNotification({
+      content: 'Witch It Id copied to clipboard',
       duration: 5000,
       type: 'success',
     })
@@ -18,6 +28,7 @@ const ProfileHandler = () => {
 
   return {
     copyDiscordTag,
+    copyWitchItUserId,
     type,
     setType,
   }

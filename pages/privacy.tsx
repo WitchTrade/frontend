@@ -14,7 +14,7 @@ const Privacy: NextPage = () => {
       />
       <div className='px-4 mx-auto max-w-6xl sm:px-6 lg:px-8'>
         <Title level={1}>Privacy Policy</Title>
-        <Note>Last updated November 22, 2021</Note>
+        <Note>Last updated August 26, 2024</Note>
         <Section>
           Thank you for choosing to be part of our community at WitchTrade
           (&quot;<b>Company</b>&quot; &quot;<b>we</b>,&quot; &quot;<b>us</b>
@@ -151,8 +151,8 @@ const Privacy: NextPage = () => {
         </Section>
         <Section>
           <b>Personal Information Provided by You.</b> We collect usernames;
-          passwords; steam profile links (optional); steam trade links
-          (optional); Discord tags (optional); steam witch it inventory
+          passwords; steam profile links (optional); epic games account id
+          (optional); Discord usernames (optional); witch it inventory
           information (optional); email addresses; and other similar
           information.
         </Section>

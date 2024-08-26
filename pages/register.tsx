@@ -23,10 +23,6 @@ const Register: NextPage = () => {
     setRepeatPassword,
     email,
     setEmail,
-    steamProfileLink,
-    setSteamProfileLink,
-    steamTradeLink,
-    setSteamTradeLink,
     acceptedLegal,
     setAcceptedLegal,
     acceptedRules,
@@ -121,30 +117,6 @@ const Register: NextPage = () => {
             setValue={setEmail}
             required={true}
             svgPath={`/assets/svgs/email/${
-              theme?.type === 'light' ? 'black' : 'white'
-            }.svg`}
-          />
-        </div>
-        <div className='m-1 mt-4'>
-          <TextInput
-            type='text'
-            placeholder='Steam Profile Link'
-            value={steamProfileLink}
-            required={false}
-            setValue={setSteamProfileLink}
-            svgPath={`/assets/svgs/steam/${
-              theme?.type === 'light' ? 'black' : 'white'
-            }.svg`}
-          />
-        </div>
-        <div className='m-1'>
-          <TextInput
-            type='text'
-            placeholder='Steam Trade Link'
-            value={steamTradeLink}
-            required={false}
-            setValue={setSteamTradeLink}
-            svgPath={`/assets/svgs/steam/${
               theme?.type === 'light' ? 'black' : 'white'
             }.svg`}
           />

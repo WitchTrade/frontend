@@ -29,7 +29,11 @@ const Account: NextPage = () => {
     updateAccountSettings,
     cancelEditAccountSettings,
     verifySteamProfileLink,
+    verifyEpicAccountId,
+    removeSteamProfileLink,
+    removeEpicAccountId,
     steamVerificationState,
+    epicVerificationState,
   } = AccountSettingsHandler()
 
   return (
@@ -107,72 +111,8 @@ const Account: NextPage = () => {
             />
           </div>
           <div className='m-1 mt-4'>
-            <div className='flex justify-between items-center px-2 h-11 bg-wt-surface-dark rounded-lg'>
-              <div className='flex items-center'>
-                <Image
-                  src={`/assets/svgs/steam/${
-                    theme?.type === 'light' ? 'black' : 'white'
-                  }.svg`}
-                  height='24px'
-                  width='24px'
-                  alt='Value Icon'
-                />
-                <p className='ml-1'>Steam Profile Link:</p>
-              </div>
-              <div className='flex items-center'>
-                {(user.steamProfileLink && (
-                  <a
-                    className='text-wt-accent-light hover:underline rounded-md focus:outline-none focus:ring-2 focus:ring-wt-accent'
-                    href={user.steamProfileLink}
-                    target='_blank'
-                    rel='noreferrer'
-                  >
-                    click here
-                  </a>
-                )) || <p>Not set</p>}
-                {(user.steamProfileLink && user.verifiedSteamProfileLink && (
-                  <div className='flex items-center ml-1 w-4 h-6'>
-                    <div className='w-4 h-4'>
-                      <Verified />
-                    </div>
-                  </div>
-                )) ||
-                  (user.steamProfileLink && (
-                    <div className='flex justify-center items-center ml-1'>
-                      <ActionButton
-                        type='info'
-                        onClick={verifySteamProfileLink}
-                      >
-                        {steamVerificationState
-                          ? steamVerificationState
-                          : 'Verify'}
-                      </ActionButton>
-                    </div>
-                  ))}
-              </div>
-            </div>
-          </div>
-          <div className='m-1'>
             <ValueDisplay
-              name='Steam Trade Link'
-              value={user.steamTradeLink}
-              link={true}
-              svgPath={`/assets/svgs/steam/${
-                theme?.type === 'light' ? 'black' : 'white'
-              }.svg`}
-            />
-          </div>
-          <div className='m-1'>
-            <BooleanDisplay
-              name='Using Steam Guard'
-              value={user.usingSteamGuard}
-              trueIconPath='/assets/svgs/booleanIcons/lock.svg'
-              falseIconPath='/assets/svgs/booleanIcons/warning.svg'
-            />
-          </div>
-          <div className='m-1 mt-4'>
-            <ValueDisplay
-              name='Discord Tag'
+              name='Discord Username'
               value={user.discordTag}
               svgPath={`/assets/svgs/discord/${
                 theme?.type === 'light' ? 'black' : 'white'
@@ -246,43 +186,6 @@ const Account: NextPage = () => {
               will have to apply again.
             </p>
           )}
-          <div className='m-1'>
-            <TextInput
-              type='input'
-              value={formValue.steamProfileLink}
-              setValue={(value) =>
-                setFormValue({ ...formValue, steamProfileLink: value })
-              }
-              placeholder='Steam Profile Link'
-              required={false}
-              svgPath={`/assets/svgs/steam/${
-                theme?.type === 'light' ? 'black' : 'white'
-              }.svg`}
-            />
-          </div>
-          <div className='m-1'>
-            <TextInput
-              type='input'
-              value={formValue.steamTradeLink}
-              setValue={(value) =>
-                setFormValue({ ...formValue, steamTradeLink: value })
-              }
-              placeholder='Steam Trade Link'
-              required={false}
-              svgPath={`/assets/svgs/steam/${
-                theme?.type === 'light' ? 'black' : 'white'
-              }.svg`}
-            />
-          </div>
-          <div className='m-1'>
-            <CheckboxInput
-              placeholder='Using Steam Guard'
-              value={formValue.usingSteamGuard}
-              setValue={(value) =>
-                setFormValue({ ...formValue, usingSteamGuard: value })
-              }
-            />
-          </div>
           <div className='m-1 mt-4'>
             <TextInput
               type='input'
@@ -290,7 +193,7 @@ const Account: NextPage = () => {
               setValue={(value) =>
                 setFormValue({ ...formValue, discordTag: value })
               }
-              placeholder='Discord Tag'
+              placeholder='Discord Username'
               required={false}
               svgPath={`/assets/svgs/discord/${
                 theme?.type === 'light' ? 'black' : 'white'
@@ -320,6 +223,110 @@ const Account: NextPage = () => {
           </div>
         </div>
       )}
+      <div className='flex flex-col justify-center py-2 px-4 mx-auto max-w-xl sm:px-6 lg:px-8'>
+        <h2 className='text-lg font-extrabold'>Witch It Connection</h2>
+        <p className='mt-2 text-sm'>
+          Authorize with your Steam or Epic Games account to get access to Witch
+          It related features like quests and syncing your inventory. WitchTrade
+          will only save your respective Account Id and Witch It Id and link
+          them to your account.
+        </p>
+        {!user.epicAccountId && (
+          <div className='m-1 mt-4'>
+            <div className='flex justify-between items-center px-2 h-11 bg-wt-surface-dark rounded-lg'>
+              <div className='flex items-center'>
+                <Image
+                  src={`/assets/svgs/steam/${
+                    theme?.type === 'light' ? 'black' : 'white'
+                  }.svg`}
+                  height='24px'
+                  width='24px'
+                  alt='Value Icon'
+                />
+                <p className='ml-1'>Steam Profile:</p>
+              </div>
+              <div className='flex items-center'>
+                {user.steamProfileLink && (
+                  <>
+                    <a
+                      className='text-wt-accent-light hover:underline rounded-md focus:outline-none focus:ring-2 focus:ring-wt-accent'
+                      href={user.steamProfileLink}
+                      target='_blank'
+                      rel='noreferrer'
+                    >
+                      open profile
+                    </a>
+                    <div className='flex items-center ml-1'>
+                      <ActionButton
+                        type='info'
+                        onClick={removeSteamProfileLink}
+                      >
+                        Remove
+                      </ActionButton>
+                    </div>
+                  </>
+                )}
+                {!user.steamProfileLink && (
+                  <div className='flex justify-center items-center ml-1'>
+                    <ActionButton type='info' onClick={verifySteamProfileLink}>
+                      {steamVerificationState
+                        ? steamVerificationState
+                        : 'Connect'}
+                    </ActionButton>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+        {!user.steamProfileLink && (
+          <div className='m-1'>
+            <div className='flex justify-between items-center px-2 h-11 bg-wt-surface-dark rounded-lg'>
+              <div className='flex items-center'>
+                <Image
+                  src={`/assets/svgs/epic/${
+                    theme?.type === 'light' ? 'black' : 'white'
+                  }.svg`}
+                  height='24px'
+                  width='24px'
+                  alt='Value Icon'
+                />
+                <p className='ml-1'>Epic Games Account:</p>
+              </div>
+              <div className='flex items-center'>
+                {user.epicAccountId && (
+                  <>
+                    <p>connected</p>
+                    <div className='flex items-center ml-1'>
+                      <ActionButton type='info' onClick={removeEpicAccountId}>
+                        Remove
+                      </ActionButton>
+                    </div>
+                  </>
+                )}
+                {!user.epicAccountId && (
+                  <div className='flex justify-center items-center ml-1'>
+                    <ActionButton type='info' onClick={verifyEpicAccountId}>
+                      {epicVerificationState
+                        ? epicVerificationState
+                        : 'Connect'}
+                    </ActionButton>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+        <div className='m-1'>
+          <ValueDisplay
+            name='Witch It Id'
+            value={user.witchItUserId}
+            svgPath={`/assets/svgs/userbadge/${
+              theme?.type === 'light' ? 'black' : 'white'
+            }.svg`}
+          />
+        </div>
+      </div>
       {!user.verified && (
         <p className='mb-2 text-center'>
           <span className='text-wt-success'>Notice:</span> If you want to get

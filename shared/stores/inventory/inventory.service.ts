@@ -44,7 +44,7 @@ export class InventoryService {
 
   public syncInventory() {
     return authService
-      .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/steam/inventory`, {
+      .request(`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/inventory`, {
         method: 'PATCH',
       })
       .pipe(

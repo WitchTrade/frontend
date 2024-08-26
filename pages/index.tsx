@@ -65,8 +65,8 @@ const Home: NextPage = () => {
           <Image
             className='rounded-xl'
             src='/assets/images/home/profile.png'
-            width={620}
-            height={400}
+            width={741}
+            height={353}
             quality={100}
             alt='Profile'
           />
@@ -99,15 +99,15 @@ const Home: NextPage = () => {
           <Image
             className='rounded-xl'
             src='/assets/images/home/inventory.png'
-            width={471}
-            height={189}
+            width={484}
+            height={267}
             quality={100}
             alt='Inventory'
           />
         </div>
         <div className='flex justify-center items-center w-full sm:w-1/2'>
           <p className='text-xl text-center sm:text-2xl'>
-            Sync your Steam Witch It inventory to unlock the full potential of
+            Sync your Witch It inventory to unlock the full potential of
             WitchTrade!
           </p>
         </div>
@@ -115,37 +115,18 @@ const Home: NextPage = () => {
       <div className='flex flex-wrap p-1 my-4 bg-wt-surface-dark rounded-lg border-4 border-wt-accent'>
         <div className='flex justify-center items-center w-full sm:w-1/2'>
           <p className='text-xl text-center sm:text-2xl'>
-            Look up all the official servers of Witch It and see if your friends
-            are currently playing!
+            See your current in-game quests without having to start up the game.
           </p>
         </div>
         <div className='flex justify-center p-2 w-full sm:w-1/2'>
           <Image
             className='rounded-xl'
-            src='/assets/images/home/gameServers.png'
-            width={335}
-            height={356}
+            src='/assets/images/home/quests.png'
+            width={960}
+            height={425}
             quality={100}
-            alt='Game servers'
+            alt='Inventory'
           />
-        </div>
-      </div>
-      <div className='flex flex-wrap p-1 my-4 bg-wt-surface-dark rounded-lg border-4 border-wt-accent'>
-        <div className='flex justify-center p-2 w-full sm:w-1/2'>
-          <Image
-            className='rounded-xl'
-            src='/assets/images/home/gameServerStats.png'
-            width={401}
-            height={408}
-            quality={100}
-            alt='Game server stats'
-          />
-        </div>
-        <div className='flex justify-center items-center w-full sm:w-1/2'>
-          <p className='text-xl text-center sm:text-2xl'>
-            Have a look at detailed stats of the Witch It game servers and see
-            what gamemodes are trending!
-          </p>
         </div>
       </div>
     </div>

@@ -525,7 +525,8 @@ const FAQ: NextPage = () => {
               </li>
               <li>your prices are real.</li>
               <li>
-                you have a steam profile AND trade link linked to your account.
+                you have a Witch It Id linked to your account that they can use
+                to send trade requests.
               </li>
             </ul>
           </li>
@@ -539,8 +540,7 @@ const FAQ: NextPage = () => {
         Yes, you could. If:
         <ul className='pl-8 list-disc'>
           <li>
-            you change your steam profile or trade link, you will get unverified
-            automatically.
+            unlink your Witch It Id, you will get unverified automatically.
           </li>
           <li>
             you break any criteria for being verified, WitchTrade is allowed to
@@ -550,14 +550,7 @@ const FAQ: NextPage = () => {
         <Title level={4}>How do I get verified?</Title>
         Make sure you meet the following criteria:
         <ul className='pl-8 list-disc'>
-          <li>
-            You have both a valid steam profile and trade link linked to your
-            WitchTrade account.
-          </li>
-          <li>
-            To make sure you are really the Steam user you linked, you need to
-            verify your Steam account in your account settings.
-          </li>
+          <li>You have linked your Witch It Id to your WitchTrade account.</li>
           <li>
             Your market is real and you are really offering the items present.
           </li>
