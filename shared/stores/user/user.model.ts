@@ -59,7 +59,7 @@ export interface UserInfo {
   displayName: string
   steamProfileLink: string
   epicAccountId: string
-  witchItUserId: string
+  // witchItUserId: string
   discordTag: string
   verified: boolean
   hidden: boolean
@@ -77,7 +77,7 @@ export function createUserInfo(userInfo: Partial<UserInfo>): UserInfo {
       ? userInfo.steamProfileLink
       : '',
     epicAccountId: userInfo.epicAccountId ? userInfo.epicAccountId : '',
-    witchItUserId: userInfo.witchItUserId,
+    // witchItUserId: userInfo.witchItUserId,
     discordTag: userInfo.discordTag ? userInfo.discordTag : '',
     hidden: userInfo.hidden ? userInfo.hidden : false,
     verified: userInfo.verified ? userInfo.verified : false,

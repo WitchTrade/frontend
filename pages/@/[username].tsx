@@ -168,35 +168,35 @@ const Profile: NextPage<Props> = ({ profile, market }) => {
                   </div>
                 </div>
               )}
-              {profile.witchItUserId && (
-                <div className='flex flex-col justify-evenly p-2 m-1 bg-wt-surface-dark rounded-lg border border-wt-accent'>
-                  <p className='font-bold text-center'>Witch It Id</p>
-                  <div className='flex flex-wrap justify-center items-center'>
-                    <div className='flex flex-col items-center m-1'>
-                      <Tooltip text='Click to copy'>
-                        <div
-                          className='p-1 w-9 h-9 bg-wt-surface hover:bg-wt-accent rounded-full transition duration-100 hover:scale-110 cursor-pointer'
-                          onClick={() =>
-                            copyWitchItUserId(profile.witchItUserId)
-                          }
-                        >
-                          <Image
-                            src={`/assets/svgs/userbadge/${
-                              theme?.type === 'light' ? 'black' : 'white'
-                            }.svg`}
-                            height={36}
-                            width={36}
-                            alt='Witch It Id'
-                          />
-                        </div>
-                      </Tooltip>
-                      <p className='mt-1 font-mono text-xs'>
-                        {profile.witchItUserId}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {/* {profile.witchItUserId && ( */}
+              {/*   <div className='flex flex-col justify-evenly p-2 m-1 bg-wt-surface-dark rounded-lg border border-wt-accent'> */}
+              {/*     <p className='font-bold text-center'>Witch It Id</p> */}
+              {/*     <div className='flex flex-wrap justify-center items-center'> */}
+              {/*       <div className='flex flex-col items-center m-1'> */}
+              {/*         <Tooltip text='Click to copy'> */}
+              {/*           <div */}
+              {/*             className='p-1 w-9 h-9 bg-wt-surface hover:bg-wt-accent rounded-full transition duration-100 hover:scale-110 cursor-pointer' */}
+              {/*             onClick={() => */}
+              {/*               copyWitchItUserId(profile.witchItUserId) */}
+              {/*             } */}
+              {/*           > */}
+              {/*             <Image */}
+              {/*               src={`/assets/svgs/userbadge/${ */}
+              {/*                 theme?.type === 'light' ? 'black' : 'white' */}
+              {/*               }.svg`} */}
+              {/*               height={36} */}
+              {/*               width={36} */}
+              {/*               alt='Witch It Id' */}
+              {/*             /> */}
+              {/*           </div> */}
+              {/*         </Tooltip> */}
+              {/*         <p className='mt-1 font-mono text-xs'> */}
+              {/*           {profile.witchItUserId} */}
+              {/*         </p> */}
+              {/*       </div> */}
+              {/*     </div> */}
+              {/*   </div> */}
+              {/* )} */}
               {profile.discordTag && (
                 <div className='flex flex-col justify-evenly p-2 m-1 bg-wt-surface-dark rounded-lg border border-wt-accent'>
                   <p className='font-bold text-center'>Discord Username</p>
