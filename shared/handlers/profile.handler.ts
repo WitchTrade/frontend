@@ -19,7 +19,7 @@ const ProfileHandler = () => {
   const copyWitchItUserId = (witchItUserId: string) => {
     navigator.clipboard.writeText(witchItUserId)
     const notification = createNotification({
-      content: 'Witch It User Id copied to clipboard',
+      content: 'Witch It Id copied to clipboard',
       duration: 5000,
       type: 'success',
     })

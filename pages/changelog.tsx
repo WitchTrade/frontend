@@ -15,7 +15,7 @@ const Changelog: NextPage = () => {
         <div className='mb-2'>
           <Title level={1}>Changelog</Title>
         </div>
-        <Title level={4}>Version 1.4.0 (xx.xx.2024)</Title>
+        <Title level={4}>Version 1.4.0 (26.08.2024)</Title>
         <p>
           <b>Added:</b>
         </p>
@@ -33,8 +33,7 @@ const Changelog: NextPage = () => {
             Verifing your Steam profile is now required to sync the inventory.
           </li>
           <li>
-            Verifing your Steam profile adds the Witch It User Id to your
-            profile.
+            Verifing your Steam profile adds the Witch It Id to your profile.
           </li>
         </ul>
         <p>

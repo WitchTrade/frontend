@@ -74,7 +74,7 @@ const Footer: FunctionComponent = () => {
           </a>
         </div>
         <p className='text-sm'>
-          Version <b>1.4.0</b> • xx.xx.2024
+          Version <b>1.4.0</b> • 26.08.2024
         </p>
         <p className='text-sm'>
           <span className='font-bold text-wt-accent'>{wtStats.users}</span>{' '}
