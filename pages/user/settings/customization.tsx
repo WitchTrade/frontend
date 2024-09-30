@@ -49,14 +49,14 @@ const Customization: NextPage = () => {
     <LoginWrapper>
       <CustomHeader
         title='WitchTrade | Customization'
-        description='Customize your WitchTrade expirience'
+        description='Customize your WitchTrade experience'
         url='https://witchtrade.org/user/settings/customization'
       />
       <SettingNav />
       <div className='flex flex-col justify-center px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
         <PageHeader
           title='Customization'
-          description='Customize your WitchTrade expirience'
+          description='Customize your WitchTrade experience'
         />
         {selectedTheme && !creatingCustomTheme && allThemes && (
           <div className='self-center w-60'>
