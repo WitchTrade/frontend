@@ -113,6 +113,7 @@ const ItemDetailDialog: FunctionComponent<Props> = ({
               <Divider />
             </div>
             <div className='flex flex-wrap justify-center'>
+              <Chip title='ID' text={item.id.toString()} />
               {(item.tradeable && <Chip title='Tradable' text='Yes' />) || (
                 <Chip title='Tradable' text='No' />
               )}

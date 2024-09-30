@@ -36,6 +36,8 @@ export function itemRarityToColor(rarity: string) {
       return '#FF00EA'
     case 'promo':
       return '#00E4FF'
+    case 'dlc':
+      return '#FFA500'
     default:
       return ''
   }
@@ -51,5 +53,6 @@ export function getItemRarities(): string[] {
     'veryrare',
     'whimsical',
     'promo',
+    'dlc',
   ]
 }

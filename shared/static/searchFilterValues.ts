@@ -202,6 +202,11 @@ export const itemEventValues: DropdownValue[] = [
     displayName: 'Witch Forest',
     imagePath: '/assets/images/eventIcons/witchforest.png',
   },
+  {
+    key: 'dreamland',
+    displayName: 'Dreamland',
+    imagePath: '/assets/images/eventIcons/dreamland.png',
+  },
 ]
 
 export const itemRarityValues: DropdownValue[] = [
@@ -245,6 +250,11 @@ export const itemRarityValues: DropdownValue[] = [
     key: 'promo',
     displayName: 'Promo',
     imagePath: '/assets/svgs/rarity_circles/promo.svg',
+  },
+  {
+    key: 'dlc',
+    displayName: 'DLC',
+    imagePath: '/assets/svgs/rarity_circles/dlc.svg',
   },
 ]
 
