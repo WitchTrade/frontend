@@ -22,7 +22,7 @@ const Changelog: NextPage = () => {
         <ul className='pl-8 list-disc'>
           <li>
             You can now sync your Witch It inventory! Make sure to verify your
-            steam profile first.
+            Steam/Epic Games games profile first.
           </li>
         </ul>
         <p>
@@ -30,10 +30,12 @@ const Changelog: NextPage = () => {
         </p>
         <ul className='pl-8 list-disc'>
           <li>
-            Verifing your Steam profile is now required to sync the inventory.
+            Verifing your Steam/Epic Games profile is now required to sync the
+            inventory.
           </li>
           <li>
-            Verifing your Steam profile adds the Witch It Id to your profile.
+            Verifing your Steam/Epic Games profile adds the Witch It Id to your
+            profile.
           </li>
         </ul>
         <p>

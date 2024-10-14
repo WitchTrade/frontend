@@ -54,7 +54,7 @@ export class InventoryService {
             if (res.ok) {
               inventoryStore.update(() => json)
               const notification = createNotification({
-                content: 'Synced inventory from steam!',
+                content: 'Successfully synced inventory!',
                 duration: 5000,
                 type: 'success',
               })
