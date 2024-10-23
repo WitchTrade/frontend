@@ -249,6 +249,12 @@ export const itemEventValues: DropdownValue[] = [
     imagePath: '/assets/images/eventIcons/halloween2023.png',
   },
   {
+    id: 24,
+    key: 'halloween2024',
+    displayName: 'Halloween 2024',
+    imagePath: '/assets/images/eventIcons/halloween2024.png',
+  },
+  {
     id: 7,
     key: 'mystic sands',
     displayName: 'Mystic Sands',
