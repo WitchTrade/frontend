@@ -39,7 +39,7 @@ module.exports = {
       {
         source: '/items/ectoplasm',
         destination:
-          '/items?tradeableOnly=true&itemSlot=2-3-4-5-6-7-8-9-10-11&itemEvent=3-4-5-6&itemRarity=5-6-7',
+          '/items?tradeableOnly=true&itemSlot=2-3-4-5-6-7-8-9-10-11&itemEvent=3-4-5-6-19-21-24&itemRarity=5-6-7',
         permanent: false,
       },
       {
@@ -57,7 +57,7 @@ module.exports = {
       {
         source: '/items/candy_cane',
         destination:
-          '/items?tradeableOnly=true&itemSlot=2-3-4-5-6-7-8-9-10-11&itemEvent=12-13-14-15-16&itemRarity=5-6-7',
+          '/items?tradeableOnly=true&itemSlot=2-3-4-5-6-7-8-9-10-11&itemEvent=12-13-14-15-16-20-22&itemRarity=5-6-7',
         permanent: false,
       },
       {
