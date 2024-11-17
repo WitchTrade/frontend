@@ -74,18 +74,6 @@ module.exports = {
       },
     ]
   },
-  async rewrites() {
-    return [
-      {
-        source: '/blue/script.js',
-        destination: 'https://stats.jasi.dev/js/script.js',
-      },
-      {
-        source: '/blue/event',
-        destination: 'https://stats.jasi.dev/api/event',
-      },
-    ]
-  },
   images: {
     domains: ['www.witchit.com'],
   },
