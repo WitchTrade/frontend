@@ -101,8 +101,8 @@ function WitchTrade({ Component, pageProps }: AppProps) {
         <Script
           defer
           data-domain='witchtrade.org'
-          data-api={`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blue/event`}
-          src={`${process.env.NEXT_PUBLIC_BASE_API_URL}/api/blue/script.js`}
+          data-api='/blue/event'
+          src='/blue/script.js'
         />
       )}
       <Layout>
