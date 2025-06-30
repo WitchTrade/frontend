@@ -96,9 +96,27 @@ function WitchTrade({ Component, pageProps }: AppProps) {
   }, [themeStyles])
 
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      {process.env.NODE_ENV === 'production' && (
+        <>
+          <Script
+            defer
+            data-domain='witchtrade.org'
+            data-api='/lythia/a/event/'
+            src='/lythia/a.js'
+          />
+          <Script
+            defer
+            data-domain='witchtrade.org'
+            data-api='/lythia/m/event/'
+            src='/lythia/m.js'
+          />
+        </>
+      )}
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
   )
 }
 export default WitchTrade

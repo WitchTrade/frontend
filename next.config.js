@@ -74,6 +74,26 @@ module.exports = {
       },
     ]
   },
+  async rewrites() {
+    return [
+      {
+        source: '/lythia/a.js',
+        destination: 'https://app.lythia.dev/collect/analytics/script.js',
+      },
+      {
+        source: '/lythia/a/event/',
+        destination: 'https://app.lythia.dev/collect/analytics/report',
+      },
+      {
+        source: '/lythia/m.js',
+        destination: 'https://app.lythia.dev/collect/metrics/script.js',
+      },
+      {
+        source: '/lythia/m/event/',
+        destination: 'https://app.lythia.dev/collect/metrics/report',
+      },
+    ]
+  },
   images: {
     domains: ['www.witchit.com'],
   },
