@@ -102,13 +102,13 @@ function WitchTrade({ Component, pageProps }: AppProps) {
           <Script
             defer
             data-domain='witchtrade.org'
-            data-api='/lythia/a/event/'
+            data-api='/lythia/a/event'
             src='/lythia/a.js'
           />
           <Script
             defer
             data-domain='witchtrade.org'
-            data-api='/lythia/m/event/'
+            data-api='/lythia/m/event'
             src='/lythia/m.js'
           />
         </>

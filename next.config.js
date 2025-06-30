@@ -81,7 +81,7 @@ module.exports = {
         destination: 'https://app.lythia.dev/collect/analytics/script.js',
       },
       {
-        source: '/lythia/a/event/',
+        source: '/lythia/a/event',
         destination: 'https://app.lythia.dev/collect/analytics/report',
       },
       {
@@ -89,7 +89,7 @@ module.exports = {
         destination: 'https://app.lythia.dev/collect/metrics/script.js',
       },
       {
-        source: '/lythia/m/event/',
+        source: '/lythia/m/event',
         destination: 'https://app.lythia.dev/collect/metrics/report',
       },
     ]
