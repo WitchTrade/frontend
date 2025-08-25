@@ -57,7 +57,7 @@ module.exports = {
       {
         source: '/items/candy_cane',
         destination:
-          '/items?tradeableOnly=true&itemSlot=2-3-4-5-6-7-8-9-10-11&itemEvent=12-13-14-15-16-20-22&itemRarity=5-6-7',
+          '/items?tradeableOnly=true&itemSlot=2-3-4-5-6-7-8-9-10-11&itemEvent=12-13-14-15-16-20-22-25&itemRarity=5-6-7',
         permanent: false,
       },
       {
@@ -70,6 +70,12 @@ module.exports = {
         source: '/items/scarab',
         destination:
           '/items?tradeableOnly=true&itemSlot=2-3-4-5-6-7-8-9-10-11&itemEvent=7&itemRarity=5-6-7',
+        permanent: false,
+      },
+      {
+        source: '/items/dreamy_fluff',
+        destination:
+          '/items?tradeableOnly=true&itemSlot=2-3-4-5-6-7-8-9-10-11&itemEvent=23&itemRarity=5-6-7',
         permanent: false,
       },
     ]
