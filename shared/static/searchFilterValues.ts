@@ -138,6 +138,11 @@ export const itemEventValues: DropdownValue[] = [
     imagePath: '/assets/images/eventIcons/halloween2024.png',
   },
   {
+    key: 'halloween2025',
+    displayName: 'Halloween 2025',
+    imagePath: '/assets/images/eventIcons/halloween2025.png',
+  },
+  {
     key: 'mystic sands',
     displayName: 'Mystic Sands',
     imagePath: '/assets/images/eventIcons/mysticSands.png',
@@ -201,6 +206,11 @@ export const itemEventValues: DropdownValue[] = [
     key: 'winterdream2024',
     displayName: 'Winterdream 2024',
     imagePath: '/assets/images/eventIcons/winterdream2024.png',
+  },
+  {
+    key: 'winterdream2025',
+    displayName: 'Winterdream 2025',
+    imagePath: '/assets/images/eventIcons/winterdream2025.png',
   },
   {
     key: 'winterdream witch',
